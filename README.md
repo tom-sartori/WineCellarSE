@@ -1,3 +1,1 @@
 # WineCellarSE
-
-Réalisé par
