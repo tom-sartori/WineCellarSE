@@ -1,10 +1,10 @@
-package connectiontodb;
+package model;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.*;
 import com.mongodb.client.result.InsertOneResult;
-import model.Partner;
+import entity.partner.Partner;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -30,7 +30,8 @@ public class Connection {
 		catch (Exception e) {
 			System.out.println("Error: " + Arrays.toString(e.getStackTrace()));
 			throw new RuntimeException();
-		}	}
+		}
+	}
 
 	public static Partner findFirst(String collectionName) {
 		ConnectionString connectionString = new ConnectionString(uri);

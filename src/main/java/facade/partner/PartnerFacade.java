@@ -1,11 +1,12 @@
-package facade;
+package facade.partner;
 
-import controller.PartnerController;
-import model.Partner;
+import controller.partner.PartnerController;
+import entity.partner.Partner;
 
 public class PartnerFacade {
+    /// TODO : Make this a singleton.
 
-    private PartnerController partnerController;
+    private final PartnerController partnerController;
 
     public PartnerFacade() {
         partnerController = new PartnerController();

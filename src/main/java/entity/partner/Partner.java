@@ -1,11 +1,12 @@
-package model;
+package entity.partner;
 
+import entity.Entity;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.Objects;
 
-public class Partner implements Comparable<Partner> {
+public class Partner implements Entity<Partner> {
 
 	private ObjectId id;
 	private String name;

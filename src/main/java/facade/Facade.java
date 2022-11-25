@@ -1,17 +1,18 @@
 package facade;
 
-import model.Partner;
+import entity.partner.Partner;
+import facade.partner.PartnerFacade;
 
-public class Facade {
+public class Facade implements FacadeInterface {
+    /// TODO : Make this a singleton.
 
-    private PartnerFacade partnerFacade;
+    private final PartnerFacade partnerFacade;
 
     public Facade() {
         this.partnerFacade = new PartnerFacade();
     }
 
-    public Partner getPartners(){
+    public Partner getPartners() {
         return partnerFacade.getPartners();
     }
-
 }
