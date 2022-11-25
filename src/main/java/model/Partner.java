@@ -1,10 +1,13 @@
+package model;
+
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.Objects;
 
 public class Partner implements Comparable<Partner> {
 
-	private int id;
+	private ObjectId id;
 	private String name;
 	private String link;
 	private String matIcon;
@@ -18,7 +21,7 @@ public class Partner implements Comparable<Partner> {
 	public Partner() {
 	}
 
-	public int getId() {
+	public ObjectId get_id() {
 		return id;
 	}
 
