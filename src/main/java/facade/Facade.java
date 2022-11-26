@@ -4,12 +4,20 @@ import entity.partner.Partner;
 import facade.partner.PartnerFacade;
 
 public class Facade implements FacadeInterface {
-    /// TODO : Make this a singleton.
+
+    private static Facade instance = null;
 
     private final PartnerFacade partnerFacade;
 
-    public Facade() {
-        this.partnerFacade = new PartnerFacade();
+    private Facade() {
+        this.partnerFacade = PartnerFacade.getInstance();
+    }
+
+    public static Facade getInstance(){
+        if (instance == null){
+            instance = new Facade();
+        }
+        return instance;
     }
 
     public Partner getPartners() {

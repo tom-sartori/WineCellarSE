@@ -4,12 +4,20 @@ import controller.partner.PartnerController;
 import entity.partner.Partner;
 
 public class PartnerFacade {
-    /// TODO : Make this a singleton.
+
+    private static PartnerFacade instance = null;
 
     private final PartnerController partnerController;
 
-    public PartnerFacade() {
+    private PartnerFacade() {
         partnerController = new PartnerController();
+    }
+
+    public static PartnerFacade getInstance(){
+        if(instance == null){
+            instance = new PartnerFacade();
+        }
+        return instance;
     }
 
     public Partner getPartners(){
