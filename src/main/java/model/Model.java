@@ -8,9 +8,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import entity.Entity;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+/// TODO : Comments.
 public abstract class Model <T extends Entity<T>> implements ModelInterface<T> {
 
 	protected static final String uri = "mongodb+srv://michel:michel@cluster0.54bwiq3.mongodb.net/?retryWrites=true&w=majority";
@@ -29,6 +32,7 @@ public abstract class Model <T extends Entity<T>> implements ModelInterface<T> {
 
 	protected abstract Class<T> getEntityClass();
 
+	@Override
 	public ObjectId insertOne(T entity) {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
@@ -43,6 +47,7 @@ public abstract class Model <T extends Entity<T>> implements ModelInterface<T> {
 		}
 	}
 
+	@Override
 	public ArrayList<T> findAll() {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
@@ -56,6 +61,7 @@ public abstract class Model <T extends Entity<T>> implements ModelInterface<T> {
 		}
 	}
 
+	@Override
 	public T findOne(ObjectId id) {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
@@ -69,6 +75,22 @@ public abstract class Model <T extends Entity<T>> implements ModelInterface<T> {
 		}
 	}
 
+	@Override
+	public long updateOne(ObjectId id, T newEntity) {
+		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
+			MongoDatabase database = mongoClient.getDatabase(databaseName);
+			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
+			UpdateResult updateResult = collection.updateOne(eq("_id", id), getSetOnUpdate(newEntity));
+			return updateResult.getModifiedCount();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			/// TODO: handle exception.
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public long deleteOne(ObjectId id) {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
@@ -92,4 +114,16 @@ public abstract class Model <T extends Entity<T>> implements ModelInterface<T> {
 				.codecRegistry(codecRegistry)
 				.build();
 	}
+
+	/**
+	 * Function used in updateOne() to set the fields to update.
+	 * Must be implemented in the child class.
+	 *
+	 * @return the Bson object to use in updateOne(). Must be something like this :
+	 *  	Updates.combine(
+	 *      	Updates.set("runtime", 99),
+	 *       	Updates.addToSet("genres", "Sports"),
+	 *      	Updates.currentTimestamp("lastUpdated"));
+	 */
+	abstract protected Bson getSetOnUpdate(T entity);
 }

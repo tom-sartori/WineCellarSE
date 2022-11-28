@@ -5,11 +5,12 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
+/// TODO : Comments.
 public interface ModelInterface<T extends Entity<T>> {
 
-    public T findOne(ObjectId id);
-    public List<T> findAll();
-    public ObjectId insertOne(T t);
-//    public void updateOne(ObjectId id, T t);
-    public long deleteOne(ObjectId id);
+	T findOne(ObjectId id);
+	List<T> findAll();
+	ObjectId insertOne(T t);
+	long updateOne(ObjectId id, T newEntity);
+	long deleteOne(ObjectId id);
 }
