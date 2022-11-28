@@ -2,6 +2,8 @@ package facade;
 
 import entity.partner.Partner;
 
+import java.util.List;
+
 public class Facade implements FacadeInterface {
 
     private static Facade instance;
@@ -15,7 +17,7 @@ public class Facade implements FacadeInterface {
         return instance;
     }
 
-    public Partner getPartners() {
-        return PartnerFacade.getInstance().getPartners();
+    public List<Partner> getPartnerList() {
+        return PartnerFacade.getInstance().getPartnerList();
     }
 }

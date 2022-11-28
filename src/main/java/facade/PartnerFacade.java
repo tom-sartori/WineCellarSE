@@ -3,15 +3,13 @@ package facade;
 import controller.partner.PartnerController;
 import entity.partner.Partner;
 
+import java.util.List;
+
 class PartnerFacade {
 
     private static PartnerFacade instance;
-
-    private final PartnerController partnerController;
-
-    private PartnerFacade() {
-        partnerController = new PartnerController();
-    }
+    // TODO Comments partoux
+    private PartnerFacade() { }
 
     public static PartnerFacade getInstance() {
         if (instance == null) {
@@ -20,7 +18,7 @@ class PartnerFacade {
         return instance;
     }
 
-    protected Partner getPartners() {
-        return partnerController.getPartners();
+    protected List<Partner> getPartnerList() {
+        return PartnerController.getInstance().findAll();
     }
 }
