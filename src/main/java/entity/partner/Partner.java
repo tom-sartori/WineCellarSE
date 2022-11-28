@@ -1,17 +1,19 @@
 package entity.partner;
 
 import entity.Entity;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Partner implements Entity<Partner> {
+public class Partner implements Entity<Partner>, Serializable {
 
 	private ObjectId id;
 	private String name;
 	private String link;
 	private String matIcon;
+
+	public Partner() { }
 
 	public Partner(String name, String link, String matIcon) {
 		this.name = name;
@@ -19,30 +21,43 @@ public class Partner implements Entity<Partner> {
 		this.matIcon = matIcon;
 	}
 
-	public Partner() {
+	public ObjectId getId() {
+		return id;
 	}
 
-	public ObjectId get_id() {
-		return id;
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getLink() {
 		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public String getMatIcon() {
 		return matIcon;
 	}
 
-	public Document toDocument() {
-		return new Document("name", name)
-				.append("link", link)
-				.append("matIcon", matIcon);
+	public void setMatIcon(String matIcon) {
+		this.matIcon = matIcon;
 	}
+
+//	public Document toDocument() {
+//		return new Document("name", name)
+//				.append("link", link)
+//				.append("matIcon", matIcon);
+//	}
 
 	@Override
 	public boolean equals(Object o) {
