@@ -1,13 +1,13 @@
 package model.partner;
 
+import constant.CollectionNames;
 import entity.partner.Partner;
 import model.Model;
 
 public class PartnerModel extends Model<Partner> {
 	@Override
 	protected String getCollectionName() {
-		/// TODO : Constant file for collection names.
-		return "partners";
+		return CollectionNames.PARTNER;
 	}
 
 	@Override
