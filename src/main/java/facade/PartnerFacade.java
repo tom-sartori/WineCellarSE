@@ -1,11 +1,11 @@
-package facade.partner;
+package facade;
 
 import controller.partner.PartnerController;
 import entity.partner.Partner;
 
-public class PartnerFacade {
+class PartnerFacade {
 
-    private static PartnerFacade instance = null;
+    private static PartnerFacade instance;
 
     private final PartnerController partnerController;
 
@@ -13,14 +13,14 @@ public class PartnerFacade {
         partnerController = new PartnerController();
     }
 
-    public static PartnerFacade getInstance(){
-        if(instance == null){
+    public static PartnerFacade getInstance() {
+        if (instance == null) {
             instance = new PartnerFacade();
         }
         return instance;
     }
 
-    public Partner getPartners(){
+    protected Partner getPartners() {
         return partnerController.getPartners();
     }
 }
