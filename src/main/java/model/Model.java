@@ -20,7 +20,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
-public abstract class Model <T extends Entity<T>> {
+public abstract class Model <T extends Entity<T>> implements ModelInterface<T> {
 
 	protected static final String uri = "mongodb+srv://michel:michel@cluster0.54bwiq3.mongodb.net/?retryWrites=true&w=majority";
 	protected static final String databaseName = "winecellar-db";
