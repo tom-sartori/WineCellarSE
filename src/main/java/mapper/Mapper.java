@@ -1,4 +1,4 @@
 package mapper;
 
-public class Mapper implements MapperInterface {
+public interface Mapper {
 }

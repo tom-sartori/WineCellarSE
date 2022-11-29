@@ -1,6 +1,6 @@
 package controller.partner;
 
-import controller.Controller;
+import controller.AbstractController;
 import entity.partner.Partner;
 import model.Model;
 import model.partner.PartnerModel;
@@ -8,7 +8,7 @@ import model.partner.PartnerModel;
 /**
  * PartnerController class extending Controller class parametized with Partner class.
  */
-public class PartnerController extends Controller<Partner> {
+public class PartnerController extends AbstractController<Partner> {
 
     /**
      * instance of PartnerController to ensure Singleton design pattern

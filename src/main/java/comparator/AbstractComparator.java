@@ -1,14 +1,16 @@
 package comparator;
 
-public abstract class Comparator<T> implements java.util.Comparator<T> {
+import java.util.Comparator;
+
+public abstract class AbstractComparator<T> implements Comparator<T> {
 
 	private Order order;
 
-	public Comparator() {
+	public AbstractComparator() {
 		this(Order.ASC);
 	}
 
-	public Comparator(Order order) {
+	public AbstractComparator(Order order) {
 		this.order = order;
 	}
 

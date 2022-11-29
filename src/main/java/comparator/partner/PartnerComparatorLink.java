@@ -1,10 +1,10 @@
 package comparator.partner;
 
-import comparator.Comparator;
+import comparator.AbstractComparator;
 import comparator.Order;
 import entity.partner.Partner;
 
-public class PartnerComparatorLink extends Comparator<Partner> {
+public class PartnerComparatorLink extends AbstractComparator<Partner> {
 
 	public PartnerComparatorLink() {
 		super();
