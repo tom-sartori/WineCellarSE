@@ -1,64 +1,55 @@
 package controller;
 
 import entity.Entity;
-import model.ModelInterface;
 import org.bson.types.ObjectId;
 
-import java.util.Collections;
 import java.util.List;
 
-//TODO interface
-public abstract class Controller <T extends Entity<T>> {
+/**
+ * Controller interface used to define methods implemented by controllers.
+ * The controller manage the business logic between the model and the facade.
+ *
+ * @param <T> The entity type which the controller manage.
+ */
+public interface Controller<T extends Entity<T>> {
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public T findOne(ObjectId id) {
-        T first = getModel().findOne(id);
-        first.handleOnFind();
-        return first;
-    }
+	/**
+	 * Insert one entity of the parametrized type.
+	 *
+	 * @param entity The entity to insert.
+	 * @return The id of the inserted entity.
+	 */
+	ObjectId insertOne(T entity);
 
-    /**
-     *
-     * @return
-     */
-    public List<T> findAll() {
-        List<T> all = getModel().findAll();
-        all.forEach(Entity::handleOnFind);
-        Collections.sort(all);
-        return all;
-    }
+	/**
+	 * Find one entity of the parametrized type by its id.
+	 *
+	 * @param id The id of the entity to find.
+	 * @return The entity found.
+	 */
+	T findOne(ObjectId id);
 
-    /**
-     *
-     * @param entity
-     * @return
-     */
-    public ObjectId insertOne(T entity) {
-        ObjectId id = getModel().insertOne(entity);
-        entity.handleOnCreate();
-        return id;
-    }
+	/**
+	 * Find all entities of the parametrized type.
+	 *
+	 * @return The list of all entities.
+	 */
+	List<T> findAll();
 
-    //TODO make update function
-//    public void updateOne(ObjectId id, T t){
-//        getModel().updateOne(id,t);
-//        t.handleOnUpdate();
-//    }
+	/**
+	 * Update one entity of the parametrized type.
+	 *
+	 * @param id The id of the entity to update.
+	 * @param t The new entity.
+	 * @return The number of updated entities.
+	 */
+	long updateOne(ObjectId id, T t);
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public long deleteOne(ObjectId id) {
-        T entityToDelete = findOne(id);
-        entityToDelete.handleOnDelete();
-        return getModel().deleteOne(id);
-    }
-
-    protected abstract ModelInterface<T> getModel();
+	/**
+	 * Delete one entity of the parametrized type.
+	 *
+	 * @param id The id of the entity to delete.
+	 * @return The number of deleted entities.
+	 */
+	long deleteOne(ObjectId id);
 }

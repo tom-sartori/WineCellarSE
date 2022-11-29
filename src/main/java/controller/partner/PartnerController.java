@@ -11,17 +11,17 @@ import model.partner.PartnerModel;
 public class PartnerController extends AbstractController<Partner> {
 
     /**
-     * instance of PartnerController to ensure Singleton design pattern
+     * Instance of PartnerController to ensure Singleton design pattern.
      */
     private static PartnerController instance;
 
     /**
-     * private constructor for PartnerController to ensure Singleton design pattern
+     * Private constructor for PartnerController to ensure Singleton design pattern.
      */
     private PartnerController() { }
 
     /**
-     * @return the instance of PartnerController to ensure Singleton design pattern
+     * @return the instance of PartnerController to ensure Singleton design pattern.
      */
     public static PartnerController getInstance() {
         if(instance == null){
@@ -31,7 +31,7 @@ public class PartnerController extends AbstractController<Partner> {
     }
 
     /**
-     * @return the model of the specific Controller (PartnerModel)
+     * @return the model of the specific Controller (PartnerModel).
      */
     @Override
     protected Model<Partner> getModel() {
