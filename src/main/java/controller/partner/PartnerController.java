@@ -2,8 +2,8 @@ package controller.partner;
 
 import controller.AbstractController;
 import entity.partner.Partner;
-import model.Model;
-import model.partner.PartnerModel;
+import dao.AbstractDao;
+import dao.partner.PartnerDao;
 
 /**
  * PartnerController class extending Controller class parametized with Partner class.
@@ -31,10 +31,10 @@ public class PartnerController extends AbstractController<Partner> {
     }
 
     /**
-     * @return the model of the specific Controller (PartnerModel).
+     * @return the DAO of the specific Controller (PartnerDao).
      */
     @Override
-    protected Model<Partner> getModel() {
-        return PartnerModel.getInstance();
+    protected AbstractDao<Partner> getDao() {
+        return PartnerDao.getInstance();
     }
 }

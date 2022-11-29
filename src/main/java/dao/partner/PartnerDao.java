@@ -1,21 +1,21 @@
-package model.partner;
+package dao.partner;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import entity.partner.Partner;
-import model.Model;
+import dao.AbstractDao;
 import org.bson.conversions.Bson;
 
 /// TODO : Comments.
-public class PartnerModel extends Model<Partner> {
+public class PartnerDao extends AbstractDao<Partner> {
 
-	private static PartnerModel instance;
+	private static PartnerDao instance;
 
-	private PartnerModel() { }
+	private PartnerDao() { }
 
-	public static PartnerModel getInstance() {
+	public static PartnerDao getInstance() {
 		if (instance == null) {
-			instance = new PartnerModel();
+			instance = new PartnerDao();
 		}
 		return instance;
 	}

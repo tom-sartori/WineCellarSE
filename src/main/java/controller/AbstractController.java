@@ -1,11 +1,12 @@
 package controller;
 
 import entity.Entity;
-import model.ModelInterface;
+import dao.Dao;
 import org.bson.types.ObjectId;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -24,7 +25,7 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
      */
     @Override
     public ObjectId insertOne(T entity) {
-        ObjectId id = getModel().insertOne(entity);
+        ObjectId id = getDao().insertOne(entity);
         entity.handleOnCreate();
         return id;
     }
@@ -33,13 +34,13 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
      * Generic implementation to find one entity of the parametrized type by its id.
      *
      * @param id The id of the entity to find.
-     * @return The entity found.
+     * @return The entity found or an empty optional.
      */
     @Override
-    public T findOne(ObjectId id) {
-        T first = getModel().findOne(id);
-        first.handleOnFind();
-        return first;
+    public Optional<T> findOne(ObjectId id) {
+        Optional<T> optionalEntity = getDao().findOne(id);
+        optionalEntity.ifPresent(Entity::handleOnFind);
+        return optionalEntity;
     }
 
     /**
@@ -49,7 +50,7 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
      */
     @Override
     public List<T> findAll() {
-        List<T> all = getModel().findAll();
+        List<T> all = getDao().findAll();
         all.forEach(Entity::handleOnFind);
         Collections.sort(all);
         return all;
@@ -64,7 +65,7 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
      */
     @Override
     public long updateOne(ObjectId id, T t){
-        long nbOfUpdated = getModel().updateOne(id, t);
+        long nbOfUpdated = getDao().updateOne(id, t);
         t.handleOnUpdate();
         return nbOfUpdated;
     }
@@ -77,16 +78,16 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
      */
     @Override
     public long deleteOne(ObjectId id) {
-        T entityToDelete = findOne(id);
-        entityToDelete.handleOnDelete();
-        return getModel().deleteOne(id);
+        Optional<T> optionalEntityToDelete = findOne(id);
+        optionalEntityToDelete.ifPresent(Entity::handleOnDelete);
+        return getDao().deleteOne(id);
     }
 
     /**
-     * Get the model used by the specific controller in order to call its model methods.
-     * Should be the model which manage the entity managed by the controller.
+     * Get the DAO used by the specific controller in order to call its DAO methods.
+     * Should be the DAO which manage the entity managed by the controller.
      *
-     * @return The model used by the specific controller.
+     * @return The DAO used by the specific controller.
      */
-    protected abstract ModelInterface<T> getModel();
+    protected abstract Dao<T> getDao();
 }

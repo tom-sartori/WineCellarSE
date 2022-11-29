@@ -2,8 +2,17 @@ package comparator;
 
 import java.util.Comparator;
 
+/**
+ * Abstract comparator.
+ * This class is used to compare two objects.
+ *
+ * @param <T> The type of the objects to compare.
+ */
 public abstract class AbstractComparator<T> implements Comparator<T> {
 
+	/**
+	 * Order used to compare the objects.
+	 */
 	private Order order;
 
 	public AbstractComparator() {

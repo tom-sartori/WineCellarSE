@@ -1,5 +1,8 @@
 package comparator;
 
+/**
+ * Order used to compare the objects in the comparator.
+ */
 public enum Order {
 	ASC(1),
 	DESC(-1);

@@ -53,12 +53,6 @@ public class Partner implements Entity<Partner>, Serializable {
 		this.matIcon = matIcon;
 	}
 
-//	public Document toDocument() {
-//		return new Document("name", name)
-//				.append("link", link)
-//				.append("matIcon", matIcon);
-//	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
