@@ -1,8 +1,8 @@
-package comparator.partner;
+package logic.comparator.partner;
 
-import comparator.AbstractComparator;
-import comparator.Order;
-import entity.partner.Partner;
+import logic.comparator.AbstractComparator;
+import logic.comparator.Order;
+import persistence.entity.partner.Partner;
 
 /**
  * This class is used to compare two partners by their links.

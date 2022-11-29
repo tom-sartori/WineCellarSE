@@ -1,6 +1,6 @@
-package entity.partner;
+package persistence.entity.partner;
 
-import entity.Entity;
+import persistence.entity.Entity;
 import org.bson.types.ObjectId;
 
 import java.io.Serializable;

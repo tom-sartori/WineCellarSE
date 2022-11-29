@@ -1,4 +1,4 @@
-package entity;
+package persistence.entity;
 
 public interface Entity<T extends Entity<T>> extends Comparable<T> {
 

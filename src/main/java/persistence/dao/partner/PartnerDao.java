@@ -1,9 +1,9 @@
-package dao.partner;
+package persistence.dao.partner;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
-import entity.partner.Partner;
-import dao.AbstractDao;
+import persistence.dao.AbstractDao;
+import persistence.entity.partner.Partner;
 import org.bson.conversions.Bson;
 
 /// TODO : Comments.

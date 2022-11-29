@@ -1,7 +1,7 @@
 package facade;
 
-import controller.partner.PartnerController;
-import entity.partner.Partner;
+import logic.controller.partner.PartnerController;
+import persistence.entity.partner.Partner;
 
 import java.util.List;
 

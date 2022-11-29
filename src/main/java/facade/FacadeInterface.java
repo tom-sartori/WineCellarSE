@@ -1,6 +1,6 @@
 package facade;
 
-import entity.partner.Partner;
+import persistence.entity.partner.Partner;
 
 import java.util.List;
 

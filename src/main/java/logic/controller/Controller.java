@@ -1,6 +1,6 @@
-package controller;
+package logic.controller;
 
-import entity.Entity;
+import persistence.entity.Entity;
 import org.bson.types.ObjectId;
 
 import java.util.List;

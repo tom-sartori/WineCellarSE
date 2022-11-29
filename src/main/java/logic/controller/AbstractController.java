@@ -1,7 +1,7 @@
-package controller;
+package logic.controller;
 
-import entity.Entity;
-import dao.Dao;
+import persistence.entity.Entity;
+import persistence.dao.Dao;
 import org.bson.types.ObjectId;
 
 import java.util.Collections;

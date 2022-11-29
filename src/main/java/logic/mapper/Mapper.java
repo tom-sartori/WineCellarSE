@@ -1,4 +1,4 @@
-package mapper;
+package logic.mapper;
 
 public interface Mapper {
 }

@@ -1,4 +1,4 @@
-package comparator;
+package logic.comparator;
 
 /**
  * Order used to compare the objects in the comparator.
