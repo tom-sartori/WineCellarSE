@@ -55,6 +55,9 @@
                     <exclude>**/*.java</exclude>
                 </excludes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
         <plugins>
             <plugin>
@@ -62,7 +65,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>ui.Main</mainClass>
+                    <mainClass>ui.Starter</mainClass>
                 </configuration>
             </plugin>
         </plugins>
