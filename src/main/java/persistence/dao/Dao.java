@@ -4,7 +4,6 @@ import persistence.entity.Entity;
 import org.bson.types.ObjectId;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Data access object pattern which isolate the persistence layer.
@@ -30,27 +29,26 @@ public interface Dao<T extends Entity<T>> {
 
 	/**
 	 * Find one entity of the parametrized type by its id.
-	 * Should return an empty optional if the entity is not found.
 	 *
 	 * @param id The id of the entity to find.
-	 * @return The entity found or an empty optional.
+	 * @return The entity found or null;
 	 */
-	Optional<T> findOne(ObjectId id);
+	T findOne(ObjectId id);
 
 	/**
 	 * Update one entity of the parametrized type.
 	 *
 	 * @param id The id of the entity to update.
 	 * @param newEntity The new entity.
-	 * @return The number of updated entities.
+	 * @return true if the entity has been updated, false otherwise.
 	 */
-	long updateOne(ObjectId id, T newEntity);
+	boolean updateOne(ObjectId id, T newEntity);
 
 	/**
 	 * Delete one entity of the parametrized type.
 	 *
 	 * @param id The id of the entity to delete.
-	 * @return The number of deleted entities.
+	 * @return true if the entity has been deleted, false otherwise.
 	 */
-	long deleteOne(ObjectId id);
+	boolean deleteOne(ObjectId id);
 }

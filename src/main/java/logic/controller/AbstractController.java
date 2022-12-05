@@ -6,7 +6,6 @@ import org.bson.types.ObjectId;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -25,22 +24,21 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
      */
     @Override
     public ObjectId insertOne(T entity) {
-        ObjectId id = getDao().insertOne(entity);
         entity.handleOnCreate();
-        return id;
+        return getDao().insertOne(entity);
     }
 
     /**
      * Generic implementation to find one entity of the parametrized type by its id.
      *
      * @param id The id of the entity to find.
-     * @return The entity found or an empty optional.
+     * @return The entity found or null.
      */
     @Override
-    public Optional<T> findOne(ObjectId id) {
-        Optional<T> optionalEntity = getDao().findOne(id);
-        optionalEntity.ifPresent(Entity::handleOnFind);
-        return optionalEntity;
+    public T findOne(ObjectId id) {
+        T entity = getDao().findOne(id);
+        entity.handleOnFind();
+        return entity;
     }
 
     /**
@@ -61,25 +59,25 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
      *
      * @param id The id of the entity to update.
      * @param t The new entity.
-     * @return The number of updated entities.
+     * @return true if the entity has been updated, false otherwise.
      */
     @Override
-    public long updateOne(ObjectId id, T t){
-        long nbOfUpdated = getDao().updateOne(id, t);
+    public boolean updateOne(ObjectId id, T t){
+        boolean isUpdated = getDao().updateOne(id, t);
         t.handleOnUpdate();
-        return nbOfUpdated;
+        return isUpdated;
     }
 
     /**
      * Generic implementation to delete one entity of the parametrized type.
      *
      * @param id The id of the entity to delete.
-     * @return The number of deleted entities.
+     * @return true if the entity has been deleted, false otherwise.
      */
     @Override
-    public long deleteOne(ObjectId id) {
-        Optional<T> optionalEntityToDelete = findOne(id);
-        optionalEntityToDelete.ifPresent(Entity::handleOnDelete);
+    public boolean deleteOne(ObjectId id) {
+        T entity = findOne(id);
+        entity.handleOnDelete();
         return getDao().deleteOne(id);
     }
 

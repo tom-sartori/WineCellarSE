@@ -6,7 +6,11 @@ import persistence.dao.AbstractDao;
 import persistence.entity.partner.Partner;
 import org.bson.conversions.Bson;
 
-/// TODO : Comments.
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.mongodb.client.model.Updates.combine;
+
 public class PartnerDao extends AbstractDao<Partner> {
 
 	private static PartnerDao instance;
@@ -32,9 +36,37 @@ public class PartnerDao extends AbstractDao<Partner> {
 
 	@Override
 	protected Bson getSetOnUpdate(Partner entity) {
-		return Updates.combine(
-				Updates.set("name", entity.getName()),
-				Updates.set("link", entity.getLink())
-		);
+		List<Bson> updateList = new ArrayList<>();
+		updateList.add(Updates.set("name", entity.getName()));
+		updateList.add(Updates.set("type", entity.getType()));
+		updateList.add(Updates.set("link", entity.getLink()));
+		updateList.add(Updates.set("address", entity.getAddress()));
+		if (entity.getDescription() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("description", entity.getDescription()));
+		}
+		if (entity.getPhone() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("phone", entity.getPhone()));
+		}
+		if (entity.getLogo() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("logo", entity.getLogo()));
+		}
+
+		Bson combine = combine(updateList);
+
+
+//		Bson combine = combine(
+//				Updates.set("name", entity.getName()),
+//				Updates.set("type", entity.getType()),
+//				Updates.set("link", entity.getLink()),
+//				Updates.set("address", entity.getAddress()),
+//				Updates.set("description", entity.getDescription()),
+//				Updates.set("phone", entity.getPhone()),
+//				Updates.set("logo", entity.getLogo())
+//		);
+
+		return combine;
 	}
 }

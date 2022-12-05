@@ -17,7 +17,6 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -89,14 +88,14 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * Find one entity of the parametrized type from the database by its id.
 	 *
 	 * @param id The id of the entity to find.
-	 * @return The entity found or an empty optional.
+	 * @return The entity found or null;
 	 */
 	@Override
-	public Optional<T> findOne(ObjectId id) {
+	public T findOne(ObjectId id) {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
 			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			return Optional.ofNullable(collection.find(eq("_id", id)).first());
+			return collection.find(eq("_id", id)).first();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -109,15 +108,15 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * Update one entity of the parametrized type in the database.
 	 *
 	 * @param newEntity The entity to update.
-	 * @return The number of updated entities.
+	 * @return true if the entity has been updated, false otherwise.
 	 */
 	@Override
-	public long updateOne(ObjectId id, T newEntity) {
+	public boolean updateOne(ObjectId id, T newEntity) {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
 			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
 			UpdateResult updateResult = collection.updateOne(eq("_id", id), getSetOnUpdate(newEntity));
-			return updateResult.getModifiedCount();
+			return updateResult.getModifiedCount() == 1;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -130,15 +129,15 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * Delete one entity of the parametrized type from the database.
 	 *
 	 * @param id The id of the entity to delete.
-	 * @return The number of deleted entities.
+	 * @return true if the entity has been deleted, false otherwise.
 	 */
 	@Override
-	public long deleteOne(ObjectId id) {
+	public boolean deleteOne(ObjectId id) {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
 			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
 			DeleteResult deleteResult = collection.deleteOne(eq("_id", id));
-			return deleteResult.getDeletedCount();
+			return deleteResult.getDeletedCount() == 1;
 		}
 		catch (Exception e) {
 			e.printStackTrace();

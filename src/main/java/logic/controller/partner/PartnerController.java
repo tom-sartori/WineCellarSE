@@ -6,7 +6,7 @@ import persistence.dao.AbstractDao;
 import persistence.dao.partner.PartnerDao;
 
 /**
- * PartnerController class extending Controller class parametized with Partner class.
+ * PartnerController class extending Controller class parametrized with Partner class.
  */
 public class PartnerController extends AbstractController<Partner> {
 
