@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="homePage" fx:id="homePage" prefHeight="362.0" prefWidth="440.0" style="-fx-background-color: #1E1F23;" styleClass="homePage" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.home.HomePage">
+<AnchorPane id="homePage" fx:id="homePage" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" styleClass="homePage" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.home.HomePage">
     <stylesheets>
         <URL value="@/ui/app/page/home/HomePage.css" />
     </stylesheets>

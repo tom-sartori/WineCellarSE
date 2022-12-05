@@ -3,14 +3,14 @@
 <?import java.net.URL?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="contentAreaPane" fx:id="contentAreaPane" layoutX="155.0" layoutY="27.0" prefHeight="362.0" prefWidth="440.0" style="-fx-background-color: #1E1F23;" styleClass="contentAreaPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.theme.contentareapane.ContentAreaPane">
+<AnchorPane id="contentAreaPane" fx:id="contentAreaPane" layoutX="155.0" layoutY="27.0" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #1E1F23;" styleClass="contentAreaPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.theme.contentareapane.ContentAreaPane">
     <stylesheets>
         <URL value="@/ui/app/theme/contentareapane/ContentAreaPane.css" />
     </stylesheets>
     <children>
         <fx:include source="../../page/logs/LogsPage.fxml" />
         <fx:include source="../../page/generalsetting/GeneralSettingsPage.fxml" />
-        <fx:include source="../../page/apidatabase/ApiDatabasePage.fxml" />
+        <fx:include source="../../page/sample/SamplePage.fxml" />
         <fx:include source="../../page/application/ApplicationPage.fxml" />
         <fx:include source="../../page/home/HomePage.fxml" />
     </children>

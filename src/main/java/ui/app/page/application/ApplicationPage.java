@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui.controllers.contentarea;
+package ui.app.page.application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,16 +14,13 @@ import javafx.fxml.Initializable;
  *
  * @author Max
  */
-public class ApplicationPageController implements Initializable
-{
+public class ApplicationPage implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
 }
