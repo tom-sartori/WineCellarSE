@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Event implements Entity<Event>, Serializable {
+public class Event implements Entity<Event> {
 
 	private ObjectId id;
 	private String name;
