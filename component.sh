@@ -55,3 +55,7 @@ gsed -i "s#$samplePath#$1#g" $targetFxmlPath
 gsed -i "s/$samplePackage/$targetPackage/g" $targetFxmlPath
 gsed -i "s/$sampleClass/$2/g" $targetFxmlPath
 gsed -i "s/$sampleFirstLower/$targetFirstLower/g" $targetFxmlPath
+
+echo "TODO : In the file ContentAreaPane.fxml, include the new fxml file. "
+echo "TODO : In the file LeftMenuPane.fxml, duplicate a button and modify values.  "
+echo "TODO : In the file LeftMenuPane.java, declare the new button (line 26).  "
