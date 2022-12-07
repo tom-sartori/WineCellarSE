@@ -8,17 +8,17 @@ import java.util.Objects;
 
 public class Partner implements Entity<Partner> {
 
-	public ObjectId id;
-	public String name;
-	public String type;
-	public String link;
-	public String address;
+	private ObjectId id;
+	private String name;
+	private String type;
+	private String link;
+	private String address;
 	@Nullable
-	public String description;
+	private String description;
 	@Nullable
-	public String phone;
+	private String phone;
 	@Nullable
-	public String logo;
+	private String logo;
 
 
 	public Partner() { }
