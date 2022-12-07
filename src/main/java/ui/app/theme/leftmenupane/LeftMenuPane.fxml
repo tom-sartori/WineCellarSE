@@ -21,7 +21,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button id="generalSettingsButton" fx:id="generalSettingsButton" layoutX="440.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#menuButtonClicked" onMouseEntered="#highlightButton" onMouseExited="#unHighlightButtonIfNotActive" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #3A3C43; -fx-background-radius: 1;" styleClass="leftPaneButton" text="General Settings" textFill="#ddd6d6">
+      <Button id="userButton" fx:id="userButton" layoutX="440.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#menuButtonClicked" onMouseEntered="#highlightButton" onMouseExited="#unHighlightButtonIfNotActive" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #3A3C43; -fx-background-radius: 1;" styleClass="leftPaneButton" text="User" textFill="#ddd6d6">
          <font>
             <Font size="18.0" />
          </font>
