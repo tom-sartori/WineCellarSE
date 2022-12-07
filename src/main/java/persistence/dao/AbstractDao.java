@@ -2,6 +2,7 @@ package persistence.dao;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -9,11 +10,13 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
-import persistence.entity.Entity;
+import exception.NotFoundException;
+import org.bson.BsonDocument;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import persistence.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -51,17 +54,12 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * @return The id of the inserted entity.
 	 */
 	@Override
-	public ObjectId insertOne(T entity) {
+	public ObjectId insertOne(T entity) throws MongoWriteException {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
 			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
 			InsertOneResult insertOneResult = collection.insertOne(entity);
 			return Objects.requireNonNull(insertOneResult.getInsertedId()).asObjectId().getValue();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -85,6 +83,28 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	}
 
 	/**
+	 * Find the first entity which correspond to the filter in parameter.
+	 *
+	 * @param filter The mongo filter to find the entity.
+	 * @return The entity found.
+	 * @throws NotFoundException If no entity is found.
+	 */
+	protected T findOne(BsonDocument filter) throws NotFoundException {
+		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
+			MongoDatabase database = mongoClient.getDatabase(databaseName);
+			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
+			T entity = collection.find(filter).first();
+
+			if (entity == null) {
+				throw new NotFoundException("No entity found with the filter: " + filter);
+			}
+			else {
+				return entity;
+			}
+		}
+	}
+
+	/**
 	 * Find one entity of the parametrized type from the database by its id.
 	 *
 	 * @param id The id of the entity to find.
@@ -92,16 +112,7 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	@Override
 	public T findOne(ObjectId id) {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			return collection.find(eq("_id", id)).first();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
-		}
+		return findOne(eq("_id", id).toBsonDocument());
 	}
 
 	/**
