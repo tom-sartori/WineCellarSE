@@ -2,9 +2,8 @@
 
 # Source file copied : Sample
 
-# if $1 and $2 are set
-if [ -z "$1" ]
-then
+# if something else than $1 is set, then exit.
+if [ $# -ne 1 ]; then
     echo "Invalid arguments. "
     echo "\$1 = you should specify the target you want. Example : User. "
     echo "You must set the first letter in upper case. "
