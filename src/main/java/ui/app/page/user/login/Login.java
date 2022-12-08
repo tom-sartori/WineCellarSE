@@ -4,26 +4,37 @@ import exception.BadCredentialException;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import ui.app.State;
 import ui.app.component.errorLabel.ErrorLabel;
+import ui.app.component.labelField.LabelField;
+import ui.app.component.labelField.labelFieldMasked.LabelFieldMasked;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
 
     @FXML
-    private TextField usernameField, passwordField;
+    private ErrorLabel errorLabelController;
 
     @FXML
-    private ErrorLabel errorLabelController;
+    private LabelField labelFieldUsernameController;
+
+    @FXML
+    private LabelFieldMasked labelFieldPasswordController;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        labelFieldUsernameController.set("Nom d'utilisateur", true);
+
+        labelFieldPasswordController.set("Mot de passe", true);
+
         errorLabelController.hide();
     }
 
@@ -34,7 +45,8 @@ public class Login implements Initializable {
             try {
                 // Try to log in.
                 State.getInstance().setCurrentUser(
-                        Facade.getInstance().login(usernameField.getText(), passwordField.getText())
+                        Facade.getInstance()
+                                .login(labelFieldUsernameController.getValue(), labelFieldPasswordController.getValue())
                 );
             }
             catch (BadCredentialException e) {
@@ -45,6 +57,13 @@ public class Login implements Initializable {
         else {
             // The form isn't valid.
             showErrorLabel("Veuillez remplir tous les champs. ");
+        }
+    }
+
+    public void onKeyEnterSubmitForm(KeyEvent event) {
+        // If the user press enter, we submit the form.
+        if (event.getCode().toString().equals("ENTER")) {
+            submitButtonClicked();
         }
     }
 
@@ -59,6 +78,19 @@ public class Login implements Initializable {
     }
 
     private boolean isFormValid() {
-        return !usernameField.getText().isEmpty() && !passwordField.getText().isEmpty();
+        // For each LabelField, check if it is valid.
+        return Arrays.stream(this.getClass().getDeclaredFields())
+                .filter(field -> field.getType().equals(LabelField.class) || field.getType().equals(LabelFieldMasked.class))
+                .map(field -> {
+                    try {
+                        return (LabelField) field.get(this);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .filter(labelField -> !labelField.isValid())
+                .count() == 0;
     }
 }
