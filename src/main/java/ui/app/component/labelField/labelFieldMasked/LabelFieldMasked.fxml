@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<AnchorPane id="labelFieldMaskedPage" prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.labelField.labelFieldMasked.LabelFieldMasked">
+    <stylesheets>
+        <URL value="@/ui/app/component/labelField/LabelField.css" />
+    </stylesheets>
+    <children>
+        <Label fx:id="label" prefHeight="20.0" prefWidth="180.0" text="Label" />
+        <PasswordField fx:id="textField" layoutY="20.0" prefWidth="180.0" />
+        <Label fx:id="errorLabel" layoutY="45.0" prefHeight="20.0" prefWidth="180.0" text="Ce champ est requis. " />
+    </children>
+</AnchorPane>
