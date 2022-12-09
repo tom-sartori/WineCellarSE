@@ -16,7 +16,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button id="apiDatabaseButton" fx:id="apiDatabaseButton" layoutX="295.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#menuButtonClicked" onMouseEntered="#highlightButton" onMouseExited="#unHighlightButtonIfNotActive" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #3A3C43; -fx-background-radius: 1;" styleClass="leftPaneButton" text="Api/Database" textFill="#ddd6d6">
+      <Button id="partnerButton" fx:id="partnerButton" layoutX="295.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#menuButtonClicked" onMouseEntered="#highlightButton" onMouseExited="#unHighlightButtonIfNotActive" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #3A3C43; -fx-background-radius: 1;" styleClass="leftPaneButton" text="Partner" textFill="#ddd6d6">
          <font>
             <Font size="18.0" />
          </font>

@@ -10,7 +10,7 @@ public class Partner implements Entity<Partner> {
 
 	private ObjectId id;
 	private String name;
-	private String type;
+	private PartnerType type;
 	private String link;
 	private String address;
 	@Nullable
@@ -23,7 +23,7 @@ public class Partner implements Entity<Partner> {
 
 	public Partner() { }
 
-	public Partner(String name, String type, String link, String address) {
+	public Partner(String name, PartnerType type, String link, String address) {
 		this.name = name;
 		this.type = type;
 		this.link = link;
@@ -54,11 +54,11 @@ public class Partner implements Entity<Partner> {
 		this.name = name;
 	}
 
-	public String getType() {
+	public PartnerType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(PartnerType type) {
 		this.type = type;
 	}
 

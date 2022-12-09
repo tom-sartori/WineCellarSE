@@ -23,7 +23,7 @@ public class LeftMenuPane implements Initializable {
     private Boolean logThreadStarted = false;
 
     @FXML
-    private Button homeButton, applicationButton, apiDatabaseButton, userButton, logsButton;
+    private Button homeButton, applicationButton, partnerButton, userButton, logsButton;
 
     @FXML
     private void highlightButton(MouseEvent event) {
