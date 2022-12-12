@@ -9,11 +9,6 @@
         <URL value="@/ui/app/page/user/login/Login.css" />
     </stylesheets>
     <children>
-        <fx:include fx:id="labelFieldUsername" source="../../../component/labelField/LabelField.fxml" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="140.0" />
-        <fx:include fx:id="labelFieldPassword" source="../../../component/labelField/labelFieldMasked/LabelFieldMasked.fxml" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="205.0" />
-
-        <Button layoutX="300.0" layoutY="270.0" mnemonicParsing="false" onAction="#submitButtonClicked" onKeyPressed="#onKeyEnterSubmitForm" prefWidth="180.0" text="Connexion" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="270.0" />
-
-        <fx:include fx:id="errorLabel" source="../../../component/errorLabel/ErrorLabel.fxml" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="300.0" />
+        <fx:include fx:id="form" source="../../../component/form/Form.fxml" />
     </children>
 </AnchorPane>
