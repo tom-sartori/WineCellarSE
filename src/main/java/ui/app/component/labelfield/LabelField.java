@@ -1,4 +1,4 @@
-package ui.app.component.labelField;
+package ui.app.component.labelfield;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

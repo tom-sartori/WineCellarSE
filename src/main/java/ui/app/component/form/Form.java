@@ -8,8 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import ui.app.component.errorLabel.ErrorLabel;
-import ui.app.component.labelField.LabelField;
-import ui.app.component.labelField.labelFieldMasked.LabelFieldMasked;
+import ui.app.component.labelfield.LabelField;
+import ui.app.component.labelfield.labelfieldmasked.LabelFieldMasked;
 
 import java.net.URL;
 import java.util.*;

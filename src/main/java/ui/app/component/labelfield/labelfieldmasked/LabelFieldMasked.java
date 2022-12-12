@@ -1,10 +1,10 @@
-package ui.app.component.labelField.labelFieldMasked;
+package ui.app.component.labelfield.labelfieldmasked;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import ui.app.component.labelField.LabelField;
+import ui.app.component.labelfield.LabelField;
 
 import java.io.IOException;
 import java.net.URL;

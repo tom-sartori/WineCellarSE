@@ -7,8 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import ui.app.State;
 import ui.app.component.form.Form;
-import ui.app.component.labelField.LabelField;
-import ui.app.component.labelField.labelFieldMasked.LabelFieldMasked;
+import ui.app.component.labelfield.LabelField;
+import ui.app.component.labelfield.labelfieldmasked.LabelFieldMasked;
 
 import java.net.URL;
 import java.util.Map;
