@@ -4,6 +4,7 @@ import exception.BadCredentialException;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 import ui.app.State;
 import ui.app.component.form.Form;
 import ui.app.component.labelField.LabelField;
@@ -16,6 +17,9 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable, Observer {
+
+    @FXML
+    private AnchorPane loginPage;
 
     @FXML
     private Form formController;
@@ -50,5 +54,9 @@ public class Login implements Initializable, Observer {
             // Can not log in due to bad credentials.
             formController.showErrorLabel("Identifiant ou mot de passe incorrect. ");
         }
+    }
+
+    public void setVisible(boolean visible) {
+        loginPage.setVisible(visible);
     }
 }
