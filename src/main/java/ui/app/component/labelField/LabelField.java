@@ -1,21 +1,28 @@
 package ui.app.component.labelField;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
-public class LabelField implements Initializable {
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+public class LabelField extends Pane implements Initializable {
 
     @FXML
-    private Label label, errorLabel;
+    protected AnchorPane labelField;
 
     @FXML
-    private TextField textField;
+    protected Label label, errorLabel;
+
+    @FXML
+    protected TextField textField;
 
     private boolean isRequired;
 
@@ -28,13 +35,37 @@ public class LabelField implements Initializable {
         hideError();
     }
 
+    public LabelField() {
+        // Should not be called. Use the constructor with parameters instead.
+        super();
+    }
+
+    public LabelField(String labelText, boolean isRequired) {
+        // The component has been imported from the constructor ok a .java class.
+        super();
+        try {
+            labelField = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LabelField.fxml")));
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        getChildren().add(labelField);
+        label = (Label) labelField.lookup("#label");
+        errorLabel = (Label) labelField.lookup("#errorLabel");
+        textField = (TextField) labelField.lookup("#textField");
+
+        setLabel(labelText);
+        setRequired(isRequired);
+    }
+
     public void set(String label, boolean isRequired) {
         setLabel(label);
         setRequired(isRequired);
     }
 
-    public void setLabel(String label) {
-        this.label.setText(label);
+    public void setLabel(String labelText) {
+        this.label.setText(labelText);
     }
 
     public String getValue() {
@@ -68,5 +99,9 @@ public class LabelField implements Initializable {
 
     private void hideError() {
         errorLabel.setVisible(false);
+    }
+
+    public String getLabel() {
+        return label.getText();
     }
 }
