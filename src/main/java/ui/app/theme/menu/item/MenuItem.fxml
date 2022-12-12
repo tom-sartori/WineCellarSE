@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="menuItemPage" fx:id="menuItem" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/ui/app/theme/menu/item/MenuItem.css" />
+    </stylesheets>
+    <children>
+        <Button fx:id="button" mnemonicParsing="false" prefHeight="60.0" prefWidth="140.0" />
+    </children>
+</AnchorPane>
