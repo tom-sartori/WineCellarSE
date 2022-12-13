@@ -1,4 +1,4 @@
-package ui.app.component.errorLabel;
+package ui.app.component.errorlabel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

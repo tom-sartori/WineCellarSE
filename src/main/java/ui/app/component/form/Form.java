@@ -7,7 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import ui.app.component.errorLabel.ErrorLabel;
+import ui.app.component.errorlabel.ErrorLabel;
 import ui.app.component.labelfield.LabelField;
 import ui.app.component.labelfield.labelfieldmasked.LabelFieldMasked;
 

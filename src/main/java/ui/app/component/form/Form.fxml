@@ -14,6 +14,6 @@
 
         <Button layoutX="558.0" layoutY="431.0" mnemonicParsing="false" onAction="#submitButtonClicked" onKeyPressed="#onKeyEnterSubmitForm" prefWidth="180.0" text="Connexion" AnchorPane.leftAnchor="558.0" AnchorPane.topAnchor="431.0" />
 
-        <fx:include fx:id="errorLabel" source="../../component/errorLabel/ErrorLabel.fxml" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="460.0" />
+        <fx:include fx:id="errorLabel" source="../../component/errorlabel/ErrorLabel.fxml" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="460.0" />
     </children>
 </AnchorPane>
