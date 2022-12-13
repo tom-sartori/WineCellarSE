@@ -1,7 +1,9 @@
 package facade;
 
+import exception.InvalidUsernameException;
 import org.bson.types.ObjectId;
 import persistence.entity.partner.Partner;
+import persistence.entity.user.User;
 
 import java.util.List;
 
@@ -49,4 +51,29 @@ public interface FacadeInterface {
 	 * @return The number of deleted partners.
 	 */
 	boolean deleteOnePartner(ObjectId id);
+
+	/**
+	 * Register a user.
+	 *
+	 * @param user The user to register.
+	 * @return The id of the inserted user.
+	 * @throws InvalidUsernameException if the username is already taken.
+	 */
+	ObjectId register(User user) throws InvalidUsernameException;
+
+	/** Login a user.
+	 *
+	 * @param username The username of the user.
+	 * @param password The password of the user.
+	 * @return The user if the login is successful.
+	 */
+	User login(String username, String password);
+
+	User getOneUser(ObjectId id);
+
+	User getOneUserByUsername(String username);
+
+	boolean updateOneUser(ObjectId id, User user);
+
+	boolean deleteOneUser(ObjectId id);
 }

@@ -2,6 +2,7 @@ package ui.app.helpers.services;
 
 import java.util.ArrayList;
 
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -75,6 +76,10 @@ public  class CustomSceneHelper {
         nodeName = convertNameToID(nodeName, appendingText);
         setMainScene();
         getNodeById(nodeName).toFront();
+    }
+
+    public void bringNodeToFront(String nodeName) {
+        bringNodeToFront(nodeName, "");
     }
 
     //Adds a white line at the bottom border of the tab to look like it is in front of the other tab.

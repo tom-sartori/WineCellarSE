@@ -1,0 +1,8 @@
+#menu {
+    -fx-background-color: #2A2B31;
+}
+
+#itemHolder {
+    -fx-vgap: 5px;
+    -fx-hgap: 5px;
+}

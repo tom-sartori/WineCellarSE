@@ -30,10 +30,5 @@
             <Image url="@../../../assets/MinimizeButton.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="ApplicationIcon" fitHeight="25.0" fitWidth="25.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../assets/ApplicationIcon.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
