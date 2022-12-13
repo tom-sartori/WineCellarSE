@@ -1,0 +1,54 @@
+package logic.controller.guide;
+
+import logic.controller.AbstractController;
+import org.bson.types.ObjectId;
+import persistence.dao.guide.GuideDao;
+import persistence.entity.guide.Guide;
+import persistence.dao.AbstractDao;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+/**
+ * GuideController class extending Controller class parametized with Guide class.
+ */
+public class GuideController extends AbstractController<Guide> {
+
+
+    /**
+     * Instance of GuideController to ensure Singleton design pattern.
+     */
+    private static GuideController instance;
+
+    /**
+     * Private constructor for GuideController to ensure Singleton design pattern.
+     */
+    private GuideController() { }
+
+    /**
+     * @return the instance of GuideController to ensure Singleton design pattern.
+     */
+    public static GuideController getInstance() {
+        if(instance == null){
+            instance = new GuideController();
+        }
+        return instance;
+    }
+
+    /**
+     * @return the DAO of the specific Controller (GuideDao).
+     */
+    @Override
+    protected AbstractDao<Guide> getDao() {
+        return GuideDao.getInstance();
+    }
+
+    protected GuideDao getGuideDao() {
+        return GuideDao.getInstance();
+    }
+
+    public void removeSection(String title){
+
+    }
+}
