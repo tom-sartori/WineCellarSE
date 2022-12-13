@@ -10,8 +10,6 @@ import java.util.List;
  * Specific facade for Referencings.
  */
 class ReferencingFacade {
-    /// TODO : Be sure that you need every methods which are generated in this class. If not, remove them.
-    /// TODO : After that, update Facade and FacadeInterface with those methods.
 
     /**
      * Singleton instance.
@@ -59,6 +57,16 @@ class ReferencingFacade {
      */
     protected Referencing getOneReferencing(ObjectId id) {
         return ReferencingController.getInstance().findOne(id);
+    }
+
+    /**
+     * Get referencings by their importanceLevel.
+     *
+     * @param importanceLevel The level of importance of the searched referencings.
+     * @return A list of referencings.
+     */
+    protected List<Referencing> getReferencingByLevel(int importanceLevel) {
+        return ReferencingController.getInstance().findAllByLevel(importanceLevel);
     }
 
     /**

@@ -26,7 +26,6 @@ public class ReferencingDao extends AbstractDao<Referencing> {
 
 	@Override
 	protected String getCollectionName() {
-		/// TODO : Add this constant in the file CollectionNames.java.
 		return CollectionNames.REFERENCING;
 	}
 
@@ -37,11 +36,15 @@ public class ReferencingDao extends AbstractDao<Referencing> {
 
 	@Override
 	protected Bson getSetOnUpdate(Referencing entity) {
-		/// TODO : Set this method.
 		List<Bson> updateList = new ArrayList<>();
 
-		/// TODO : Do like this for attributes of the entity.
-//		updateList.add(Updates.set("name", entity.getName()));
+		updateList.add(Updates.set("price", entity.getPrice()));
+		updateList.add(Updates.set("paymentDate", entity.getPaymentDate()));
+		updateList.add(Updates.set("startDate", entity.getStartDate()));
+		updateList.add(Updates.set("expirationDate", entity.getExpirationDate()));
+		updateList.add(Updates.set("id", entity.getId()));
+		updateList.add(Updates.set("status", entity.getStatus()));
+		updateList.add(Updates.set("importanceLevel", entity.getImportanceLevel()));
 
 		/// TODO : Do like this for nullable attributes.
 //		if (entity.getDescription() != null) {
