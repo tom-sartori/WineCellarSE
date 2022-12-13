@@ -1,8 +1,11 @@
 package facade;
 
 import org.bson.types.ObjectId;
+import persistence.entity.guide.Guide;
 import persistence.entity.partner.Partner;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -49,4 +52,14 @@ public interface FacadeInterface {
 	 * @return The number of deleted partners.
 	 */
 	boolean deleteOnePartner(ObjectId id);
+
+	ObjectId insertOneGuide(Guide guide);
+
+	List<Guide> getGuideList();
+
+	Guide getOneGuide(ObjectId id);
+
+	boolean updateOneGuide(ObjectId id, Guide guide);
+
+	boolean deleteOneGuide(ObjectId id);
 }

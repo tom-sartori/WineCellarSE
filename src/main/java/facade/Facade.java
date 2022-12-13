@@ -1,8 +1,11 @@
 package facade;
 
 import org.bson.types.ObjectId;
+import persistence.entity.guide.Guide;
 import persistence.entity.partner.Partner;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -84,4 +87,45 @@ public class Facade implements FacadeInterface {
     public boolean deleteOnePartner(ObjectId id) {
         return PartnerFacade.getInstance().deleteOnePartner(id);
     }
+
+    /**
+     * Insert a guide.
+     *
+     * @param guide The partner to insert.
+     * @return The id of the inserted guide.
+     */
+    @Override
+    public ObjectId insertOneGuide(Guide guide) {
+        return GuideFacade.getInstance().insertOneGuide(guide);
+    }
+
+    @Override
+    public List<Guide> getGuideList() {
+        return GuideFacade.getInstance().getGuideList();
+    }
+
+    @Override
+    public Guide getOneGuide(ObjectId id) {
+        return GuideFacade.getInstance().getOneGuide(id);
+    }
+
+    @Override
+    public boolean updateOneGuide(ObjectId id, Guide guide) {
+        return GuideFacade.getInstance().updateOneGuide(id, guide);
+    }
+
+    @Override
+    public boolean deleteOneGuide(ObjectId id) {
+        return GuideFacade.getInstance().deleteOneGuide(id);
+    }
+
+
+
+
+
+
+
+
+
+
 }
