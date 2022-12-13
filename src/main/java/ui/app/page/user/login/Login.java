@@ -7,8 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import ui.app.State;
 import ui.app.component.form.Form;
-import ui.app.component.labelfield.LabelField;
-import ui.app.component.labelfield.labelfieldmasked.LabelFieldMasked;
+import ui.app.component.field.labelfield.LabelField;
+import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 
 import java.net.URL;
 import java.util.Map;
@@ -31,10 +31,10 @@ public class Login implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         formController.addObserver(this);
 
-        formController.clearLabelFieldList();
+        formController.clearFieldList();
 
-        formController.addLabelField(new LabelField("Nom", true));
-        formController.addLabelField(new LabelFieldMasked("Mot de passe", true));
+        formController.addField(new LabelField("Nom", true));
+        formController.addField(new LabelFieldMasked("Mot de passe", true));
 
         formController.initialize(null, null);
     }

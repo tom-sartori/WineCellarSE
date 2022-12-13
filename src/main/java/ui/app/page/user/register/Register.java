@@ -8,8 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.component.form.Form;
-import ui.app.component.labelfield.LabelField;
-import ui.app.component.labelfield.labelfieldmasked.LabelFieldMasked;
+import ui.app.component.field.labelfield.LabelField;
+import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 
 import java.net.URL;
 import java.util.Map;
@@ -32,11 +32,11 @@ public class Register implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         formController.addObserver(this);
 
-        formController.clearLabelFieldList();
+        formController.clearFieldList();
 
-        formController.addLabelField(new LabelField("Nom d'utilisateur", true));
-        formController.addLabelField(new LabelFieldMasked("Mot de passe", true));
-        formController.addLabelField(new LabelFieldMasked("Confirmer le mot de passe", true));
+        formController.addField(new LabelField("Nom d'utilisateur", true));
+        formController.addField(new LabelFieldMasked("Mot de passe", true));
+        formController.addField(new LabelFieldMasked("Confirmer le mot de passe", true));
 
         formController.initialize(null, null);
     }

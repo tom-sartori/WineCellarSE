@@ -1,10 +1,10 @@
-package ui.app.component.labelfield.labelfieldmasked;
+package ui.app.component.field.labelfield.labelfieldmasked;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import ui.app.component.labelfield.LabelField;
+import ui.app.component.field.labelfield.LabelField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,7 +41,7 @@ public class LabelFieldMasked extends LabelField implements Initializable {
         errorLabel = (Label) labelField.lookup("#errorLabel");
         textField = (TextField) labelField.lookup("#textField");
 
-        setLabel(labelText);
-        setRequired(isRequired);
+        this.label.setText(labelText);
+        this.isRequired = isRequired;
     }
 }

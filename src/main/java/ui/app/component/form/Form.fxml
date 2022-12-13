@@ -10,7 +10,7 @@
         <URL value="@/ui/app/component/form/Form.css" />
     </stylesheets>
     <children>
-        <GridPane fx:id="labelFieldHolder" alignment="BOTTOM_CENTER" layoutX="442.0" layoutY="78.0" prefHeight="350.0" prefWidth="400.0" />
+        <GridPane fx:id="fieldHolder" alignment="BOTTOM_CENTER" layoutX="442.0" layoutY="78.0" prefHeight="350.0" prefWidth="400.0" />
 
         <Button layoutX="558.0" layoutY="431.0" mnemonicParsing="false" onAction="#submitButtonClicked" onKeyPressed="#onKeyEnterSubmitForm" prefWidth="180.0" text="Connexion" AnchorPane.leftAnchor="558.0" AnchorPane.topAnchor="431.0" />
 

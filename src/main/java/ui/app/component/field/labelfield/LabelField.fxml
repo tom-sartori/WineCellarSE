@@ -5,9 +5,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="labelField" fx:id="labelField" prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.labelfield.LabelField">
+<AnchorPane id="labelField" fx:id="labelField" prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.field.labelfield.LabelField">
     <stylesheets>
-        <URL value="@/ui/app/component/labelfield/LabelField.css" />
+        <URL value="@/ui/app/component/field/Field.css" />
     </stylesheets>
     <children>
         <Label fx:id="label" prefHeight="20.0" prefWidth="180.0" text="Label" />

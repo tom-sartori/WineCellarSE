@@ -8,8 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import ui.app.component.errorlabel.ErrorLabel;
-import ui.app.component.labelfield.LabelField;
-import ui.app.component.labelfield.labelfieldmasked.LabelFieldMasked;
+import ui.app.component.field.Field;
 
 import java.net.URL;
 import java.util.*;
@@ -20,41 +19,37 @@ public class Form extends Observable implements Initializable {
     private ErrorLabel errorLabelController;
 
     @FXML
-    private GridPane labelFieldHolder;
+    private GridPane fieldHolder;
 
-    private ObservableList<LabelField> labelFieldList = FXCollections.observableArrayList();
+    private ObservableList<Field> fieldList = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        labelFieldHolder.getChildren().clear();
-        labelFieldHolder.setAlignment(Pos.CENTER);
-        labelFieldHolder.setVgap(20.00);
-        labelFieldHolder.setHgap(20.00);
-        labelFieldHolder.setStyle("-fx-padding:10px;");
-        labelFieldHolder.getChildren().clear();
+        fieldHolder.getChildren().clear();
+        fieldHolder.setAlignment(Pos.CENTER);
+        fieldHolder.setVgap(20.00);
+        fieldHolder.setHgap(20.00);
+        fieldHolder.setStyle("-fx-padding:10px;");
+        fieldHolder.getChildren().clear();
 
         int count = 0;
-        for (LabelField labelField : labelFieldList) {
-            labelFieldHolder.add(labelField, count % 2, count / 2);
+        for (Field field : fieldList) {
+            fieldHolder.add(field, count % 2, count / 2);
             count++;
         }
 
         errorLabelController.hide();
     }
 
-    public void clearLabelFieldList() {
-        labelFieldList.clear();
+    public void clearFieldList() {
+        fieldList.clear();
     }
 
-    public void addLabelField(LabelField labelField) {
-        labelFieldList.add(labelField);
-    }
-
-    public void addLabelField(LabelFieldMasked labelFieldMasked) {
-        labelFieldList.add(labelFieldMasked);
+    public void addField(Field field) {
+        fieldList.add(field);
     }
 
     public void submitButtonClicked() {
@@ -62,12 +57,12 @@ public class Form extends Observable implements Initializable {
             hideErrorLabel();
 
             setChanged();
-            Map<String, Object> labelFieldMap = new HashMap<>();
-            labelFieldHolder.getChildren().forEach(node -> {
-                LabelField labelField = (LabelField) node;
-                labelFieldMap.put(labelField.getLabel(), labelField.getValue());
+            Map<String, Object> fieldMap = new HashMap<>();
+            fieldHolder.getChildren().forEach(node -> {
+                Field field = (Field) node;
+                fieldMap.put(field.getLabel(), field.getValue());
             });
-            notifyObservers(labelFieldMap);
+            notifyObservers(fieldMap);
         }
         else {
             // The form isn't valid.
@@ -91,12 +86,12 @@ public class Form extends Observable implements Initializable {
     }
 
     private boolean isFormValid() {
-        // For each LabelField, check if it is valid.
-        return this.labelFieldHolder.getChildren()
+        // For each Field, check if it is valid.
+        return this.fieldHolder.getChildren()
                 .stream()
-                .map(node -> (LabelField) node)
+                .map(node -> (Field) node)
                 .filter(Objects::nonNull)
-                .filter(labelField -> !labelField.isValid())
+                .filter(field -> !field.isValid())
                 .count() == 0;
     }
 }

@@ -1,4 +1,4 @@
-package ui.app.component.labelfield;
+package ui.app.component.field.labelfield;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -6,14 +6,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import ui.app.component.field.Field;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class LabelField extends Pane implements Initializable {
+public class LabelField extends Field implements Initializable {
 
     @FXML
     protected AnchorPane labelField;
@@ -24,7 +24,6 @@ public class LabelField extends Pane implements Initializable {
     @FXML
     protected TextField textField;
 
-    private boolean isRequired;
 
     /**
      * Initializes the controller class.
@@ -55,53 +54,27 @@ public class LabelField extends Pane implements Initializable {
         errorLabel = (Label) labelField.lookup("#errorLabel");
         textField = (TextField) labelField.lookup("#textField");
 
-        setLabel(labelText);
-        setRequired(isRequired);
-    }
-
-    public void set(String label, boolean isRequired) {
-        setLabel(label);
-        setRequired(isRequired);
-    }
-
-    public void setLabel(String labelText) {
         this.label.setText(labelText);
+        this.isRequired = isRequired;
     }
 
+    @Override
+    public String getLabel() {
+        return label.getText();
+    }
+
+    @Override
     public String getValue() {
         return textField.getText();
     }
 
-    public boolean isValid() {
-        if (isRequired && textField.getText().isEmpty()) {
-            // The field is required and empty.
-            showError();
-            return false;
-        }
-        else {
-            // The field is valid.
-            hideError();
-            return true;
-        }
-    }
-
-    public void setRequired(boolean isRequired) {
-        this.isRequired = isRequired;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        errorLabel.setText(errorMessage);
-    }
-
-    private void showError() {
+    @Override
+    public void showError() {
         errorLabel.setVisible(true);
     }
 
-    private void hideError() {
+    @Override
+    public void hideError() {
         errorLabel.setVisible(false);
-    }
-
-    public String getLabel() {
-        return label.getText();
     }
 }
