@@ -26,7 +26,6 @@ public class AdvertizingDao extends AbstractDao<Advertizing> {
 
 	@Override
 	protected String getCollectionName() {
-		/// TODO : Add this constant in the file CollectionNames.java.
 		return CollectionNames.ADVERTIZING;
 	}
 
@@ -37,17 +36,21 @@ public class AdvertizingDao extends AbstractDao<Advertizing> {
 
 	@Override
 	protected Bson getSetOnUpdate(Advertizing entity) {
-		/// TODO : Set this method.
 		List<Bson> updateList = new ArrayList<>();
 
-		/// TODO : Do like this for attributes of the entity.
-//		updateList.add(Updates.set("name", entity.getName()));
+		updateList.add(Updates.set("name", entity.getName()));
+		updateList.add(Updates.set("description", entity.getDescription()));
+		updateList.add(Updates.set("image", entity.getImage()));
+		updateList.add(Updates.set("startDate", entity.getStartDate()));
+		updateList.add(Updates.set("endDate", entity.getEndDate()));
+		updateList.add(Updates.set("nbViews", entity.getNbViews()));
+		updateList.add(Updates.set("price", entity.getPrice()));
+		updateList.add(Updates.set("isActive", entity.isActive()));
 
-		/// TODO : Do like this for nullable attributes.
-//		if (entity.getDescription() != null) {
-//			// Nullable attribute.
-//			updateList.add(Updates.set("description", entity.getDescription()));
-//		}
+		/// TODO : Optionnels ?.
+		if (entity.getLink() != null) {
+			updateList.add(Updates.set("link", entity.getLink()));
+		}
 
 		return combine(updateList);
 	}

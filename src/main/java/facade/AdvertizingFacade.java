@@ -4,14 +4,14 @@ import logic.controller.advertizing.AdvertizingController;
 import org.bson.types.ObjectId;
 import persistence.entity.advertizing.Advertizing;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * Specific facade for Advertizings.
  */
 class AdvertizingFacade {
-    /// TODO : Be sure that you need every methods which are generated in this class. If not, remove them.
-    /// TODO : After that, update Facade and FacadeInterface with those methods.
+    /// TODO : test si admin pour validate ? AddView add plusr views ou une seule ? fonctions séparées ou paramètre pour dire ce qu'on change ?
 
     /**
      * Singleton instance.
@@ -52,7 +52,7 @@ class AdvertizingFacade {
     }
 
     /**
-     * Get a advertizing by its id.
+     * Get an advertizing by its id.
      *
      * @param id The id of the advertizing.
      * @return The advertizing or null if not found.
@@ -80,5 +80,47 @@ class AdvertizingFacade {
      */
     protected boolean deleteOneAdvertizing(ObjectId id) {
         return AdvertizingController.getInstance().deleteOne(id);
+    }
+
+    /**
+     * Renew an advertizing.
+     *
+     * @param id The id of the advertizing to renew.
+     * @param endDate The new end date of the advertizing.
+     * @return true if the advertizing has been renewed, false otherwise.
+     */
+    protected boolean renewOneAdvertizing(ObjectId id, Date endDate) {
+        return AdvertizingController.getInstance().renewOneAdvertizing(id, endDate);
+    }
+
+    /**
+     * Pay for an advertizing.
+     *
+     * @param id The id of the advertizing to pay for.
+     * @return true if the advertizing has been paid, false otherwise.
+     */
+    protected boolean payOneAdvertizing(ObjectId id) {
+        return AdvertizingController.getInstance().payOneAdvertizing(id);
+    }
+
+    /**
+     * add views to an advertizing.
+     *
+     * @param id The id of the advertizing to pay for.
+     * @param number The number of views to add.
+     * @return true if the advertizing has been paid, false otherwise.
+     */
+    protected boolean addViews(ObjectId id, int number) {
+        return AdvertizingController.getInstance().addViews(id, number);
+    }
+
+    /**
+     * validate an advertizing.
+     *
+     * @param id The id of the advertizing to validate.
+     * @return true if the advertizing has been validated, false otherwise.
+     */
+    protected boolean validateAdvertizing(ObjectId id) {
+        return AdvertizingController.getInstance().validateAdvertizing(id);
     }
 }
