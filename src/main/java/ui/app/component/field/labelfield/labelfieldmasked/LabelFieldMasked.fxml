@@ -4,7 +4,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
-<AnchorPane id="labelFieldMaskedPage" prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked">
+<AnchorPane prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked">
     <stylesheets>
         <URL value="@/ui/app/component/field/Field.css" />
     </stylesheets>

@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 public class Login implements Initializable, Observer {
 
     @FXML
-    private AnchorPane loginPage;
+    private AnchorPane login;
 
     @FXML
     private Form formController;
@@ -57,6 +57,6 @@ public class Login implements Initializable, Observer {
     }
 
     public void setVisible(boolean visible) {
-        loginPage.setVisible(visible);
+        login.setVisible(visible);
     }
 }

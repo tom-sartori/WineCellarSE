@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <?import javafx.scene.control.Label?>
-<AnchorPane id="select" fx:id="select" prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.field.select.Select">
+<AnchorPane fx:id="select" prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.field.select.Select">
     <stylesheets>
         <URL value="@/ui/app/component/field/Field.css" />
     </stylesheets>
