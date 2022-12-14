@@ -8,22 +8,22 @@ import java.util.Objects;
 
 public class Partner implements Entity<Partner> {
 
-	public ObjectId id;
-	public String name;
-	public String type;
-	public String link;
-	public String address;
+	private ObjectId id;
+	private String name;
+	private PartnerType type;
+	private String link;
+	private String address;
 	@Nullable
-	public String description;
+	private String description;
 	@Nullable
-	public String phone;
+	private String phone;
 	@Nullable
-	public String logo;
+	private String logo;
 
 
 	public Partner() { }
 
-	public Partner(String name, String type, String link, String address) {
+	public Partner(String name, PartnerType type, String link, String address) {
 		this.name = name;
 		this.type = type;
 		this.link = link;
@@ -54,11 +54,11 @@ public class Partner implements Entity<Partner> {
 		this.name = name;
 	}
 
-	public String getType() {
+	public PartnerType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(PartnerType type) {
 		this.type = type;
 	}
 

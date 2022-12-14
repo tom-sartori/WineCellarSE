@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="partnerPage" fx:id="partnerPage" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" styleClass="partnerPage" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.partner.PartnerPage">
+    <stylesheets>
+        <URL value="@/ui/app/page/partner/PartnerPage.css" />
+    </stylesheets>
+    <children>
+
+        <fx:include fx:id="partnerList" source="list/PartnerList.fxml" />
+        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
+<!--        <fx:include source="detail/PartnerDetail.fxml" />-->
+    </children>
+</AnchorPane>
