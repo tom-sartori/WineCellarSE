@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="labelField" prefHeight="65.0" prefWidth="18.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.component.field.labelfield.LabelField">
+    <stylesheets>
+        <URL value="@/ui/app/component/field/Field.css" />
+    </stylesheets>
+    <children>
+        <Label fx:id="label" prefHeight="20.0" prefWidth="180.0" text="Label" />
+        <TextField fx:id="textField" layoutY="20.0" prefWidth="180.0" />
+        <Label fx:id="errorLabel" layoutY="45.0" prefHeight="20.0" prefWidth="180.0" text="Ce champ est requis. " />
+    </children>
+</AnchorPane>

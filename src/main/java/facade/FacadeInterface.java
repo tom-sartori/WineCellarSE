@@ -1,5 +1,6 @@
 package facade;
 
+import exception.InvalidUsernameException;
 import org.bson.types.ObjectId;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
@@ -7,6 +8,7 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.partner.Partner;
+import persistence.entity.user.User;
 
 import java.util.List;
 
@@ -265,4 +267,29 @@ public interface FacadeInterface {
 	 * @return A list of all the cellars where the user is a manager.
 	 */
 	List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws Exception;
+
+	/**
+	 * Register a user.
+	 *
+	 * @param user The user to register.
+	 * @return The id of the inserted user.
+	 * @throws InvalidUsernameException if the username is already taken.
+	 */
+	ObjectId register(User user) throws InvalidUsernameException;
+
+	/** Login a user.
+	 *
+	 * @param username The username of the user.
+	 * @param password The password of the user.
+	 * @return The user if the login is successful.
+	 */
+	User login(String username, String password);
+
+	User getOneUser(ObjectId id);
+
+	User getOneUserByUsername(String username);
+
+	boolean updateOneUser(ObjectId id, User user);
+
+	boolean deleteOneUser(ObjectId id);
 }
