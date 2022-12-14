@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class Point implements Entity<Point> {
 
-    private ObjectId id;
     private int x;
     private int y;
 
@@ -17,19 +16,6 @@ public class Point implements Entity<Point> {
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-    @Override
-    public void handleOnCreate() {
-        setId(null);
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
     }
 
     public int getX() {
@@ -53,12 +39,12 @@ public class Point implements Entity<Point> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return x == point.x && y == point.y && Objects.equals(id, point.id);
+        return x == point.x && y == point.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, x, y);
+        return Objects.hash(x, y);
     }
 
     @Override

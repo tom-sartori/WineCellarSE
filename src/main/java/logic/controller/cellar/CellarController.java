@@ -229,7 +229,7 @@ public class CellarController extends AbstractController<Cellar> {
     }
 
     @Override
-    protected Dao<Cellar> getDao() {
+    protected CellarDAO getDao() {
         return CellarDAO.getInstance();
     }
 

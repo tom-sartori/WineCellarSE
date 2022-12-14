@@ -17,6 +17,7 @@ import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -78,7 +79,7 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 *
 	 * @throws Exception If no entity is returned.
 	 */
-	protected ArrayList<T> findAllWithFilter(BsonDocument filter) throws Exception {
+	protected List<T> findAllWithFilter(BsonDocument filter) throws Exception {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
 			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());

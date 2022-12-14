@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class BottleQuantity implements Entity<BottleQuantity> {
 
-    private ObjectId id;
     private Bottle bottle;
     private int quantity;
 
@@ -18,22 +17,6 @@ public class BottleQuantity implements Entity<BottleQuantity> {
     public BottleQuantity(Bottle bottle, int quantity) {
         this.bottle = bottle;
         this.quantity = quantity;
-    }
-
-    /**
-    * Sets the id to null, to prevent the user from setting it
-    */
-    @Override
-    public void handleOnCreate() {
-        setId(null);
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
     }
 
     public Bottle getBottle() {
@@ -57,12 +40,12 @@ public class BottleQuantity implements Entity<BottleQuantity> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BottleQuantity that = (BottleQuantity) o;
-        return quantity == that.quantity && Objects.equals(id, that.id) && Objects.equals(bottle, that.bottle);
+        return quantity == that.quantity && Objects.equals(bottle, that.bottle);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bottle, quantity);
+        return Objects.hash(bottle, quantity);
     }
 
     @Override
