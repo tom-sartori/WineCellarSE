@@ -75,7 +75,13 @@ public  class CustomSceneHelper {
     public void bringNodeToFront(String nodeName, String appendingText) {   //Appending text is the suffix of node name, such as "Page" or "Button" (first letter capiatlized).
         nodeName = convertNameToID(nodeName, appendingText);
         setMainScene();
-        getNodeById(nodeName).toFront();
+
+        Node node = getNodeById(nodeName);
+        node.toFront();
+        while (! node.getParent().getId().equals("contentAreaPane")) {
+            node = node.getParent();
+            node.toFront();
+        }
     }
 
     public void bringNodeToFront(String nodeName) {

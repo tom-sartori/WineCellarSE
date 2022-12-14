@@ -11,42 +11,11 @@ import java.util.ResourceBundle;
 
 public class UserPage implements Initializable {
 
-    @FXML
-    private Login loginController;
-
-    @FXML
-    private Register registerController;
-
-    @FXML
-    private ChoiceBox<String> choiceBox;
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setLoginVisible();
 
-        choiceBox.getItems().add("Se connecter");
-        choiceBox.getItems().add("S'inscrire");
-    }
-
-    public void setRegisterVisible() {
-        loginController.setVisible(false);
-        registerController.setVisible(true);
-    }
-
-    public void setLoginVisible() {
-        registerController.setVisible(false);
-        loginController.setVisible(true);
-    }
-
-    public void onAction() {
-        if (choiceBox.getValue().equals("Se connecter")) {
-            setLoginVisible();
-        }
-        else {
-            setRegisterVisible();
-        }
     }
 }
