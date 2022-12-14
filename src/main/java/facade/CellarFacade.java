@@ -1,92 +1,31 @@
 package facade;
 
+import logic.controller.cellar.CellarController;
 import org.bson.types.ObjectId;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
-import persistence.entity.partner.Partner;
 
 import java.util.List;
 
-/**
- * Global facade class.
- */
-public class Facade implements FacadeInterface {
+public class CellarFacade {
 
-    /**
-     * Singleton instance.
-     */
-    private static Facade instance;
+    private static CellarFacade instance;
 
-    private Facade() { }
+    private CellarFacade() { }
 
     /**
      * Get the singleton instance of the facade.
      *
      * @return The singleton instance.
      */
-    public static Facade getInstance() {
-        if (instance == null) {
-            instance = new Facade();
+    public static CellarFacade getInstance() {
+        if(instance == null) {
+            instance = new CellarFacade();
         }
         return instance;
-    }
-
-    /**
-     * Insert a partner.
-     *
-     * @param partner The partner to insert.
-     * @return The id of the inserted partner.
-     */
-    @Override
-    public ObjectId insertOnePartner(Partner partner) {
-        return PartnerFacade.getInstance().insertOnePartner(partner);
-    }
-
-    /**
-     * Get all partners.
-     *
-     * @return A list of partners.
-     */
-    @Override
-    public List<Partner> getPartnerList() {
-        return PartnerFacade.getInstance().getPartnerList();
-    }
-
-    /**
-     * Get a partner by its id.
-     *
-     * @param id The id of the partner.
-     * @return The partner.
-     */
-    @Override
-    public Partner getOnePartner(ObjectId id) {
-        return PartnerFacade.getInstance().getOnePartner(id);
-    }
-
-    /**
-     * Update a partner.
-     *
-     * @param id The id of the partner to update.
-     * @param partner The new partner.
-     * @return true if the partner has been updated, false otherwise.
-     */
-    @Override
-    public boolean updateOnePartner(ObjectId id, Partner partner) {
-        return PartnerFacade.getInstance().updateOnePartner(id, partner);
-    }
-
-    /**
-     * Delete a partner.
-     *
-     * @param id The id of the partner to delete.
-     * @return true if the partner has been deleted, false otherwise.
-     */
-    @Override
-    public boolean deleteOnePartner(ObjectId id) {
-        return PartnerFacade.getInstance().deleteOnePartner(id);
     }
 
     /**
@@ -95,9 +34,8 @@ public class Facade implements FacadeInterface {
      * @param cellar The cellar to insert.
      * @return The id of the inserted cellar.
      */
-    @Override
-    public ObjectId insertOneCellar(Cellar cellar) {
-        return CellarFacade.getInstance().insertOneCellar(cellar);
+    protected ObjectId insertOneCellar(Cellar cellar) {
+        return CellarController.getInstance().insertOne(cellar);
     }
 
     /**
@@ -105,9 +43,8 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of cellars.
      */
-    @Override
-    public List<Cellar> getCellarList() {
-        return CellarFacade.getInstance().getCellarList();
+    protected List<Cellar> getCellarList() {
+        return CellarController.getInstance().findAll();
     }
 
     /**
@@ -116,9 +53,8 @@ public class Facade implements FacadeInterface {
      * @param id The id of the cellar.
      * @return The cellar or null if not found.
      */
-    @Override
-    public Cellar getOneCellar(ObjectId id) {
-        return CellarFacade.getInstance().getOneCellar(id);
+    protected Cellar getOneCellar(ObjectId id) {
+        return CellarController.getInstance().findOne(id);
     }
 
     /**
@@ -128,9 +64,8 @@ public class Facade implements FacadeInterface {
      * @param cellar The new cellar.
      * @return true if the cellar has been updated, false otherwise.
      */
-    @Override
-    public boolean updateOneCellar(ObjectId id, Cellar cellar) {
-        return CellarFacade.getInstance().updateOneCellar(id, cellar);
+    protected boolean updateOneCellar(ObjectId id, Cellar cellar) {
+        return CellarController.getInstance().updateOne(id, cellar);
     }
 
     /**
@@ -139,9 +74,8 @@ public class Facade implements FacadeInterface {
      * @param id The id of the cellar to delete.
      * @return true if the cellar has been deleted, false otherwise.
      */
-    @Override
-    public boolean deleteOneCellar(ObjectId id) {
-        return CellarFacade.getInstance().deleteOneCellar(id);
+    protected boolean deleteOneCellar(ObjectId id) {
+        return CellarController.getInstance().deleteOne(id);
     }
 
     /**
@@ -152,9 +86,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
-    public ObjectId addCellarReader(ObjectId user, ObjectId cellar) {
-        return CellarFacade.getInstance().addCellarReader(user,cellar);
+    public ObjectId addCellarReader(ObjectId user, ObjectId cellar){
+        return CellarController.getInstance().addCellarReader(user,cellar);
     }
 
     /**
@@ -165,9 +98,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
-    public ObjectId removeCellarReader(ObjectId user, ObjectId cellar) {
-        return CellarFacade.getInstance().removeCellarReader(user, cellar);
+    public ObjectId removeCellarReader(ObjectId user, ObjectId cellar){
+        return CellarController.getInstance().removeCellarReader(user,cellar);
     }
 
     /**
@@ -178,9 +110,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
-    public ObjectId addCellarManager(ObjectId user, ObjectId cellar) {
-        return CellarFacade.getInstance().addCellarManager(user, cellar);
+    public ObjectId addCellarManager(ObjectId user, ObjectId cellar){
+        return CellarController.getInstance().addCellarManager(user,cellar);
     }
 
     /**
@@ -191,9 +122,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
-    public ObjectId removeCellarManager(ObjectId user, ObjectId cellar) {
-        return CellarFacade.getInstance().removeCellarManager(user, cellar);
+    public ObjectId removeCellarManager(ObjectId user, ObjectId cellar){
+        return CellarController.getInstance().removeCellarManager(user,cellar);
     }
 
     /**
@@ -204,9 +134,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
-    public ObjectId addWall(Wall wall, ObjectId cellar) {
-        return CellarFacade.getInstance().addWall(wall,cellar);
+    public ObjectId addWall(Wall wall, ObjectId cellar){
+        return CellarController.getInstance().addWall(wall,cellar);
     }
 
     /**
@@ -217,9 +146,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
-    public ObjectId removeWall(Wall wall, ObjectId cellar) {
-        return CellarFacade.getInstance().removeWall(wall,cellar);
+    public ObjectId removeWall(Wall wall, ObjectId cellar){
+        return CellarController.getInstance().removeWall(wall,cellar);
     }
 
     /**
@@ -233,7 +161,7 @@ public class Facade implements FacadeInterface {
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
     public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle){
-        return CellarFacade.getInstance().addBottle(wall, cellar, bottle, emplacementBottle);
+        return CellarController.getInstance().addBottle(wall,cellar,bottle,emplacementBottle);
     }
 
     /**
@@ -247,7 +175,7 @@ public class Facade implements FacadeInterface {
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
     public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle){
-        return CellarFacade.getInstance().removeBottle(wall, cellar, bottle, emplacementBottle);
+        return CellarController.getInstance().removeBottle(wall,cellar,bottle,emplacementBottle);
     }
 
     /**
@@ -259,9 +187,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
     public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle){
-        return CellarFacade.getInstance().addEmplacement(cellar, wall, emplacementBottle);
+        return CellarController.getInstance().addEmplacement(cellar,wall,emplacementBottle);
     }
 
     /**
@@ -273,9 +200,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, null otherwise.
      */
-    @Override
     public ObjectId removeEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle){
-        return CellarFacade.getInstance().removeEmplacement(cellar, wall, emplacementBottle);
+        return CellarController.getInstance().removeEmplacement(cellar,wall,emplacementBottle);
     }
 
     /**
@@ -291,9 +217,8 @@ public class Facade implements FacadeInterface {
      *               The bottle must be in the emplacement.
      * @return The id of the updated cellar if the bottle was found and updated, null otherwise.
      */
-    @Override
     public ObjectId increaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity){
-        return CellarFacade.getInstance().increaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
+        return CellarController.getInstance().increaseBottleQuantity(cellar,wall,emplacementBottle,bottleQuantity);
     }
 
     /**
@@ -310,9 +235,8 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the quantity is greater than 0 and the field has been updated, null otherwise.
      */
-    @Override
     public ObjectId decreaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity){
-        return CellarFacade.getInstance().decreaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
+        return CellarController.getInstance().decreaseBottleQuantity(cellar,wall,emplacementBottle,bottleQuantity);
     }
 
     /**
@@ -321,7 +245,7 @@ public class Facade implements FacadeInterface {
      * @return A list of all public cellars.
      */
     public List<Cellar> getPublicCellars() throws Exception {
-        return CellarFacade.getInstance().getPublicCellars();
+        return CellarController.getInstance().getPublicCellars();
     }
 
     /**
@@ -332,7 +256,7 @@ public class Facade implements FacadeInterface {
      * @return A list of all the cellars of the user.
      */
     public List<Cellar> getCellarsFromUser(ObjectId userId) throws Exception {
-        return CellarFacade.getInstance().getCellarsFromUser(userId);
+        return CellarController.getInstance().getCellarsFromUser(userId);
     }
 
     /**
@@ -343,7 +267,7 @@ public class Facade implements FacadeInterface {
      * @return A list of all the cellars where the user is a reader.
      */
     public List<Cellar> getReadOnlyCellarsFromUser(ObjectId userId) throws Exception {
-        return CellarFacade.getInstance().getReadOnlyCellarsFromUser(userId);
+        return CellarController.getInstance().getReadOnlyCellarsFromUser(userId);
     }
 
     /**
@@ -354,6 +278,6 @@ public class Facade implements FacadeInterface {
      * @return A list of all the cellars where the user is a manager.
      */
     public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws Exception {
-        return CellarFacade.getInstance().getCellarsWhereUserIsManager(userId);
+        return CellarController.getInstance().getCellarsWhereUserIsManager(userId);
     }
 }
