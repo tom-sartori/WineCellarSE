@@ -26,7 +26,6 @@ public class RateDao extends AbstractDao<Rate> {
 
 	@Override
 	protected String getCollectionName() {
-		/// TODO : Add this constant in the file CollectionNames.java.
 		return CollectionNames.RATE;
 	}
 
@@ -37,18 +36,12 @@ public class RateDao extends AbstractDao<Rate> {
 
 	@Override
 	protected Bson getSetOnUpdate(Rate entity) {
-		/// TODO : Set this method.
-		List<Bson> updateList = new ArrayList<>();
+		return Updates.combine(
+				Updates.set("rate", entity.getRate()),
+				Updates.set("comment", entity.getComment()),
+				Updates.set("lastModified", entity.getLastModified()),
+				Updates.set("modified", entity.isModified())
+		);
 
-		/// TODO : Do like this for attributes of the entity.
-//		updateList.add(Updates.set("name", entity.getName()));
-
-		/// TODO : Do like this for nullable attributes.
-//		if (entity.getDescription() != null) {
-//			// Nullable attribute.
-//			updateList.add(Updates.set("description", entity.getDescription()));
-//		}
-
-		return combine(updateList);
 	}
 }
