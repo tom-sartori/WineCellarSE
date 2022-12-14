@@ -19,6 +19,7 @@ import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -60,6 +61,31 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
 			InsertOneResult insertOneResult = collection.insertOne(entity);
 			return Objects.requireNonNull(insertOneResult.getInsertedId()).asObjectId().getValue();
+		}
+	}
+
+	/**
+	 * Find all entities of the parametrized type in the database that match the filter given in parameter.
+	 *
+	 * @param filter The filter to apply.
+	 *               Example :
+	 *                  BsonDocument filter = new BsonDocument();
+	 * 					filter.append("username", new org.bson.BsonString(username));
+	 *
+	 * @return A list of entities.
+	 *
+	 * @throws Exception If no entity is returned.
+	 */
+	protected List<T> findAllWithFilter(BsonDocument filter) throws Exception {
+		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
+			MongoDatabase database = mongoClient.getDatabase(databaseName);
+			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
+			ArrayList<T> response = collection.find(filter).into(new ArrayList<>());
+			if (response.isEmpty()) {
+				// TODO replace with Tom's custom exception.
+				throw new Exception("not found");
+			}
+			return response;
 		}
 	}
 
@@ -118,15 +144,14 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	/**
 	 * Update one entity of the parametrized type in the database.
 	 *
-	 * @param newEntity The entity to update.
+	 * @param updateField fields to update ex: Updates.set("name", "Jean").
 	 * @return true if the entity has been updated, false otherwise.
 	 */
-	@Override
-	public boolean updateOne(ObjectId id, T newEntity) {
+	protected boolean updateOne(ObjectId id, Bson updateField) {
 		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
 			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			UpdateResult updateResult = collection.updateOne(eq("_id", id), getSetOnUpdate(newEntity));
+			UpdateResult updateResult = collection.updateOne(eq("_id", id), updateField);
 			return updateResult.getModifiedCount() == 1;
 		}
 		catch (Exception e) {
@@ -134,6 +159,18 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 			/// TODO: handle exception.
 			throw new RuntimeException(e);
 		}
+	}
+
+
+	/**
+	 * Update one entity of the parametrized type in the database.
+	 *
+	 * @param newEntity The entity to update.
+	 * @return true if the entity has been updated, false otherwise.
+	 */
+	@Override
+	public boolean updateOne(ObjectId id, T newEntity) {
+		return updateOne(id, getSetOnUpdate(newEntity));
 	}
 
 	/**
