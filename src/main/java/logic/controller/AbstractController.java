@@ -53,7 +53,6 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
         Collections.sort(all);
         return all;
     }
-
     /**
      * Generic implementation to update one entity of the parametrized type.
      *

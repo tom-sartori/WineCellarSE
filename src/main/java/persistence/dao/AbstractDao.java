@@ -109,6 +109,31 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	}
 
 	/**
+	 * Find all entities of the parametrized type in the database that match the filter given in parameter.
+	 *
+	 * @param filter The filter to apply.
+	 *               Example :
+	 *                  BsonDocument filter = new BsonDocument();
+	 * 					filter.append("username", new org.bson.BsonString(username));
+	 *
+	 * @return A list of entities.
+	 *
+	 * @throws Exception If no entity is returned.
+	 */
+	public ArrayList<T> findAllWithFilter(BsonDocument filter) throws Exception {
+		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
+			MongoDatabase database = mongoClient.getDatabase(databaseName);
+			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
+			ArrayList<T> response = collection.find(filter).into(new ArrayList<>());
+			if (response.isEmpty()) {
+				// TODO replace with Tom's custom exception.
+				throw new Exception("not found");
+			}
+			return response;
+		}
+	}
+
+	/**
 	 * Find the first entity which correspond to the filter in parameter.
 	 *
 	 * @param filter The mongo filter to find the entity.
