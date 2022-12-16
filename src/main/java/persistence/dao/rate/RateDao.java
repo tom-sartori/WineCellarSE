@@ -2,14 +2,9 @@ package persistence.dao.rate;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
+import org.bson.conversions.Bson;
 import persistence.dao.AbstractDao;
 import persistence.entity.rate.Rate;
-import org.bson.conversions.Bson;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.mongodb.client.model.Updates.combine;
 
 public class RateDao extends AbstractDao<Rate> {
 

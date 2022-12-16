@@ -1,6 +1,5 @@
 package persistence.entity.cellar;
 
-import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
 import java.util.Objects;

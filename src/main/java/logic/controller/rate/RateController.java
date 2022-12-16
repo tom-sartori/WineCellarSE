@@ -2,7 +2,6 @@ package logic.controller.rate;
 
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
-import org.bson.types.ObjectId;
 import persistence.dao.rate.RateDao;
 import persistence.entity.Entity;
 import persistence.entity.rate.Rate;

@@ -2,7 +2,6 @@ package logic.controller.cellar;
 
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
-import persistence.dao.Dao;
 import persistence.dao.cellar.CellarDAO;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;

@@ -1,15 +1,15 @@
 package ui.app.businesslogic;
 
-import static ui.app.helpers.abstractsandenums.Duration.MEDIUM;
-
-import java.awt.AWTException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import ui.app.page.home.HomePage;
 import ui.app.helpers.abstractsandenums.Routine;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.helpers.services.RobotService;
+import ui.app.page.home.HomePage;
+
+import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static ui.app.helpers.abstractsandenums.Duration.MEDIUM;
 
 public class MainBotRoutine extends Routine {
 

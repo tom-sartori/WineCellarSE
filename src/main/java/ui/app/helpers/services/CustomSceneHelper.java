@@ -1,14 +1,13 @@
 package ui.app.helpers.services;
 
-import java.util.ArrayList;
-
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import ui.Starter;
+
+import java.util.ArrayList;
 
 /*
  * This class helps get FXML components from the main scene and can call functions from different controllers to change then.
