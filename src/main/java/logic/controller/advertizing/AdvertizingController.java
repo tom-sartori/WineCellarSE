@@ -47,12 +47,11 @@ public class AdvertizingController extends AbstractController<Advertizing> {
         return this.updateOne(id, updated);
     }
 
-    /// TODO : Validate teste isPayed et d'autres trucs ?
     /**
      * Pay for an advertizing.
      *
      * @param id The id of the advertizing to pay for.
-     * @return true if the advertizing has been payed, false otherwise.
+     * @return true if the advertizing has been paid, false otherwise.
      */
     public boolean payOneAdvertizing(ObjectId id) {
         Advertizing payed = getDao().findOne(id);
@@ -61,15 +60,14 @@ public class AdvertizingController extends AbstractController<Advertizing> {
     }
 
     /**
-     * add views to an advertizing.
+     * add view to an advertizing.
      *
-     * @param id The id of the advertizing to pay for.
-     * @param number The number of views to add.
-     * @return true if the advertizing has been paid, false otherwise.
+     * @param id The id of the advertizing.
+     * @return true if the view was added to advertizing, false otherwise.
      */
-    public boolean addViews(ObjectId id, int number) {
+    public boolean addView(ObjectId id) {
         Advertizing updated = getDao().findOne(id);
-        int newNb = updated.getNbViews() + number;
+        int newNb = updated.getNbViews() + 1;
         updated.setNbViews(newNb);
         return this.updateOne(id, updated);
     }
@@ -82,8 +80,11 @@ public class AdvertizingController extends AbstractController<Advertizing> {
      */
     public boolean validateAdvertizing(ObjectId id) {
         Advertizing validated = getDao().findOne(id);
-        validated.setActive(true);
-        return this.updateOne(id, validated);
+        if (validated.isPayed() && validated.getStartDate().before(validated.getEndDate())){
+            validated.setActive(true);
+            return this.updateOne(id, validated);
+        }
+        return false;
     }
 
     /**

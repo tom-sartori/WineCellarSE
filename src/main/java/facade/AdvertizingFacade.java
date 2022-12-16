@@ -11,7 +11,6 @@ import java.util.List;
  * Specific facade for Advertizings.
  */
 class AdvertizingFacade {
-    /// TODO : test si admin pour validate ? AddView add plusr views ou une seule ? fonctions séparées ou paramètre pour dire ce qu'on change ?
 
     /**
      * Singleton instance.
@@ -104,14 +103,13 @@ class AdvertizingFacade {
     }
 
     /**
-     * add views to an advertizing.
+     * add a view to an advertizing.
      *
-     * @param id The id of the advertizing to pay for.
-     * @param number The number of views to add.
-     * @return true if the advertizing has been paid, false otherwise.
+     * @param id The id of the advertizing.
+     * @return true if the view was added to the advertizing, false otherwise.
      */
-    protected boolean addViews(ObjectId id, int number) {
-        return AdvertizingController.getInstance().addViews(id, number);
+    protected boolean addView(ObjectId id) {
+        return AdvertizingController.getInstance().addView(id);
     }
 
     /**
