@@ -1,5 +1,6 @@
 package persistence.entity.rate;
 
+import exception.BadValueException;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
@@ -10,15 +11,23 @@ import java.util.Objects;
 public class Rate implements Entity<Rate> {
 
 	private ObjectId id;
-	private String rate;
+	private ObjectId subject;
+	private int rate;
 	private String comment;
 	private boolean isModified;
 	private Date lastModified;
 
+	public Rate(){}
 
-	public Rate() { }
+	public Rate(int rate, String comment, boolean isModified, Date lastModified) {
+		this.rate = rate;
+		this.comment = comment;
+		this.isModified = isModified;
+		this.lastModified = lastModified;
+	}
 
-	public Rate(String rate, String comment, boolean isModified, Date lastModified) {
+	public Rate(ObjectId subject, int rate, String comment, boolean isModified, Date lastModified) {
+		this.subject = subject;
 		this.rate = rate;
 		this.comment = comment;
 		this.isModified = isModified;
@@ -26,8 +35,19 @@ public class Rate implements Entity<Rate> {
 	}
 
 	@Override
-	public void handleOnCreate() {
+	public void handleOnCreate() throws BadValueException{
 		this.id = null;
+		if (rate < 0 || rate > 5) {
+			throw new BadValueException("la note choisit doit être entre 0 et 5");
+		}
+
+	}
+
+	@Override
+	public void handleOnUpdate() throws BadValueException{
+		if (rate < 0 || rate > 5) {
+			throw new BadValueException("la note choisi doit être entre 0 et 5");
+		}
 	}
 
 	public ObjectId getId() {
@@ -38,11 +58,19 @@ public class Rate implements Entity<Rate> {
 		this.id = id;
 	}
 
-	public String getRate() {
+	public ObjectId getSubject() {
+		return subject;
+	}
+
+	public void setSubject(ObjectId subject) {
+		this.subject = subject;
+	}
+
+	public int getRate() {
 		return rate;
 	}
 
-	public void setRate(String rate) {
+	public void setRate(int rate) {
 		this.rate = rate;
 	}
 
@@ -83,9 +111,10 @@ public class Rate implements Entity<Rate> {
 	public int hashCode() {
 		return Objects.hash(id, rate, isModified, lastModified);
 	}
+
 	@Override
 	public int compareTo(Rate o) {
-		return rate.compareTo(o.rate);
+		return lastModified.compareTo(o.lastModified);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package facade;
 
 import logic.controller.rate.RateController;
+import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
 import persistence.entity.rate.Rate;
 
@@ -10,8 +11,6 @@ import java.util.List;
  * Specific facade for Rates.
  */
 class RateFacade {
-    /// TODO : Be sure that you need every methods which are generated in this class. If not, remove them.
-    /// TODO : After that, update Facade and FacadeInterface with those methods.
 
     /**
      * Singleton instance.
@@ -49,6 +48,16 @@ class RateFacade {
      */
     protected List<Rate> getRateList() {
         return RateController.getInstance().findAll();
+    }
+
+    /**
+     * Get all rates with filter.
+     * @param filter The filter to apply
+     *
+     * @return A list of rates.
+     */
+    protected List<Rate> getRateListWithFilter(BsonDocument filter) throws Exception {
+        return RateController.getInstance().findAllWithFilter(filter);
     }
 
     /**

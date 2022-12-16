@@ -1,5 +1,6 @@
 package facade;
 
+import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +16,21 @@ public class RateFacadeTest {
 
     private final RateFacade facade = RateFacade.getInstance();
     private Rate rate;
+    private Rate rateTest;
+    private Rate rateSubject;
+    private Rate rateSubject2;
+    private ObjectId idsubjet;
 
     @BeforeEach
     void init() {
+        idsubjet = new ObjectId("6398c428ba6578737cbd9184");
         Calendar cal = Calendar.getInstance();
         cal.set(2022, Calendar.DECEMBER,13);
         Date date = cal.getTime();
-        rate = new Rate("5 etoiles", "il est très bon", false, date);
+        rate = new Rate(5, "il est très bon", false, date);
+        rateTest = new Rate(6, "il est incroyable", false, date);
+        rateSubject = new Rate(idsubjet,3, "bof", false, date );
+        rateSubject2 = new Rate(idsubjet,4, "pas mal du tout", false, date );
     }
 
     @Test
@@ -35,8 +44,27 @@ public class RateFacadeTest {
         assertNotEquals(idShouldBeOverridden, idReceivedAfterCreation);	// The user should not be able to set the id.
 
         Rate receivedRate = facade.getOneRate(idReceivedAfterCreation);
+
         assertEquals(rate.getRate(), receivedRate.getRate());
         assertEquals(rate.getLastModified(), receivedRate.getLastModified());
+
+
+    }
+    @Test
+    void test_create_OK2() {
+        ObjectId idShouldBeOverridden = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
+        rateSubject.setId(idShouldBeOverridden);
+
+        ObjectId idReceivedAfterCreation = facade.insertOneRate(rateSubject);
+        facade.insertOneRate(rateSubject2);
+
+        assertNotNull(idReceivedAfterCreation);
+        assertNotEquals(idShouldBeOverridden, idReceivedAfterCreation);	// The user should not be able to set the id.
+
+        Rate receivedRate = facade.getOneRate(idReceivedAfterCreation);
+
+        assertEquals(rateSubject.getRate(), receivedRate.getRate());
+        assertEquals(rateSubject.getLastModified(), receivedRate.getLastModified());
     }
 
     @Test
@@ -48,6 +76,22 @@ public class RateFacadeTest {
         facade.insertOneRate(rate);
 
         List<Rate> receivedRateList = facade.getRateList();
+
+        assertEquals(3 + initialNumberOfEvents, receivedRateList.size());
+        assertTrue(receivedRateList.contains(facade.getOneRate(idOfInsertedRate)));
+    }
+
+    @Test
+    void test_find_with_filter() throws Exception {
+        BsonDocument filter = new BsonDocument();
+        filter.append("subject", new org.bson.BsonObjectId(idsubjet));
+        int initialNumberOfEvents = facade.getRateListWithFilter(filter).size();
+
+        ObjectId idOfInsertedRate = facade.insertOneRate(rateSubject);
+        facade.insertOneRate(rateSubject);
+        facade.insertOneRate(rateSubject);
+
+        List<Rate> receivedRateList = facade.getRateListWithFilter(filter);
 
         assertEquals(3 + initialNumberOfEvents, receivedRateList.size());
         assertTrue(receivedRateList.contains(facade.getOneRate(idOfInsertedRate)));
@@ -69,7 +113,7 @@ public class RateFacadeTest {
         ObjectId idOfInsertedRate = facade.insertOneRate(rate);
 
         Rate receivedRate = facade.getOneRate(idOfInsertedRate);
-        receivedRate.setRate("4 étoiles");
+        receivedRate.setRate(4);
         receivedRate.setComment("Après reflexion il a perdu du gout");
         receivedRate.setModified(true);
         Calendar cal = Calendar.getInstance();
