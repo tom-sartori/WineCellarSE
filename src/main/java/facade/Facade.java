@@ -359,6 +359,7 @@ public class Facade implements FacadeInterface {
      */
     public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws Exception {
         return CellarFacade.getInstance().getCellarsWhereUserIsManager(userId);
+    }
 
     @Override
     public ObjectId register(User user) throws InvalidUsernameException {

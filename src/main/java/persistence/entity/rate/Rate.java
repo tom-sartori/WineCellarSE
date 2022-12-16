@@ -35,7 +35,7 @@ public class Rate implements Entity<Rate> {
 	}
 
 	@Override
-	public void handleOnCreate() throws BadValueException{
+	public void handleOnCreate() throws BadValueException {
 		this.id = null;
 		if (rate < 0 || rate > 5) {
 			throw new BadValueException("la note choisit doit être entre 0 et 5");
