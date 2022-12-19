@@ -13,14 +13,16 @@ public class Guide implements Entity<Guide>{
     private ObjectId id;
     private String title;
     private LinkedHashMap<String, List<String>> sectionList;
+    private GuideCategory category;
     private Date creationDate;
 
     public Guide() {
     }
 
-    public Guide(String title, LinkedHashMap<String, List<String>> sectionList, Date creationDate) {
+    public Guide(String title, LinkedHashMap<String, List<String>> sectionList, GuideCategory category, Date creationDate) {
         this.title = title;
         this.sectionList = sectionList;
+        this.category = category;
         this.creationDate = creationDate;
     }
 
@@ -56,6 +58,14 @@ public class Guide implements Entity<Guide>{
         this.sectionList = sectionList;
     }
 
+    public GuideCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(GuideCategory category) {
+        this.category = category;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
@@ -69,12 +79,12 @@ public class Guide implements Entity<Guide>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Guide guide = (Guide) o;
-        return Objects.equals(id, guide.id) && Objects.equals(title, guide.title) && Objects.equals(sectionList, guide.sectionList) && Objects.equals(creationDate, guide.creationDate);
+        return Objects.equals(id, guide.id) && Objects.equals(title, guide.title) && Objects.equals(sectionList, guide.sectionList) && category == guide.category && Objects.equals(creationDate, guide.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, sectionList, creationDate);
+        return Objects.hash(id, title, sectionList, category, creationDate);
     }
 
     @Override

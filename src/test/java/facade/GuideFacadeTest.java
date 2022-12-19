@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.entity.guide.Guide;
+import persistence.entity.guide.GuideCategory;
 
 import java.util.*;
 
@@ -20,7 +21,7 @@ class GuideFacadeTest {
         List<String> list = new ArrayList<>();
         list.add("paragraph");
         sectionMap.put("Section1",list);
-        guide = new Guide("test", sectionMap, new Date());
+        guide = new Guide("test", sectionMap, GuideCategory.TUTORIAL,new Date());
     }
 
     @Test
