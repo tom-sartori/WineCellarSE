@@ -1,9 +1,5 @@
 package persistence.dao.cellar;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import constant.CollectionNames;
@@ -59,22 +55,12 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @return the object id of the updated cellar if the update was successful, null otherwise.
      */
     public ObjectId addOrRemoveFromSet(ObjectId cellar, Object o, String field, boolean add) {
-        try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-            MongoDatabase database = mongoClient.getDatabase(databaseName);
-            MongoCollection<Cellar> collection = database.getCollection(getCollectionName(), getEntityClass());
-
-            Bson update = add ? Updates.push(field, o) : Updates.pull(field, o);
-            UpdateResult id = collection.updateOne(eq("_id", cellar), update);
-            if(id.getModifiedCount() == 0) {
-                return null;
-            }else {
-                return cellar;
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            /// TODO: handle exception.
-            throw new RuntimeException(e);
+        Bson update = add ? Updates.push(field, o) : Updates.pull(field, o);
+        UpdateResult id = getCollection().updateOne(eq("_id", cellar), update);
+        if(id.getModifiedCount() == 0) {
+            return null;
+        }else {
+            return cellar;
         }
     }
 
