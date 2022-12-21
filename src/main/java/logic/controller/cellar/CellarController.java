@@ -100,34 +100,6 @@ public class CellarController extends AbstractController<Cellar> {
     }
 
     /**
-     * Add a bottle to a cellar.
-     *
-     * @param wall The wall to add the bottle to.
-     * @param cellar The cellar to add the bottle to.
-     * @param bottle The bottle to add.
-     * @param emplacementBottle The emplacement of the bottle.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException{
-        return BottleDao.getInstance().insertBottle(wall, cellar, bottle, emplacementBottle);
-    }
-
-    /**
-     * Remove a bottle from a cellar.
-     *
-     * @param wall The wall to remove the bottle from.
-     * @param cellar The cellar to remove the bottle from.
-     * @param bottle The bottle to remove.
-     * @param emplacementBottle The emplacement to remove the bottle from.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
-        return BottleDao.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
-    }
-
-    /**
      * Add an emplacement to a wall.
      *
      * @param cellar The cellar to add the emplacement to.
