@@ -18,8 +18,6 @@ public class MongoConnector {
 
     protected final String uri = "mongodb+srv://michel:michel@cluster0.54bwiq3.mongodb.net/?retryWrites=true&w=majority";
 
-//    protected final String databaseName = "winecellar-db";
-
     private MongoConnector() {
         mongoClient = MongoClients.create(getClientSettings());
     }

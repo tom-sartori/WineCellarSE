@@ -26,8 +26,6 @@ import static com.mongodb.client.model.Filters.eq;
  * @param <T> The entity class which extends the Entity interface.
  */
 public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
-
-	protected static final String uri = "mongodb+srv://michel:michel@cluster0.54bwiq3.mongodb.net/?retryWrites=true&w=majority";
 	protected static final String databaseName = "winecellar-db";
 	protected static final MongoConnector mongoConnector = MongoConnector.getInstance();
 
