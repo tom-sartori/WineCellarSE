@@ -2,9 +2,11 @@ package persistence.dao;
 
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import exception.BadArgumentsException;
 import exception.NotFoundException;
 import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
@@ -151,6 +153,27 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	public boolean deleteOne(ObjectId id) {
 		DeleteResult deleteResult = getCollection().deleteOne(eq("_id", id));
 		return deleteResult.getDeletedCount() == 1;
+	}
+
+	/**
+	 * Add or remove from a set in a given MongoCollection
+	 *
+	 * @param collectionId the collection to insert or remove from.
+	 * @param o the object to insert or remove.
+	 * @param field the field to insert or remove from.
+	 * @param add true to add, false to remove.
+	 *
+	 * @return the object id of the updated collection if the update was successful, otherwise throws a BadArgumentsException.
+	 */
+	protected ObjectId addOrRemoveFromSet(ObjectId collectionId, Object o, String field, boolean add) throws BadArgumentsException {
+		Bson update = add ? Updates.push(field, o) : Updates.pull(field, o);
+		UpdateResult id = getCollection().updateOne(eq("_id", collectionId), update);
+		if(id.getModifiedCount() == 0) {
+			throw new BadArgumentsException("Mauvais arguments dans la mise à jour d'une collection");
+		}
+		else {
+			return collectionId;
+		}
 	}
 
 	/**

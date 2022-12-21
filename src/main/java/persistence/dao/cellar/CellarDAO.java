@@ -47,26 +47,6 @@ public class CellarDAO extends AbstractDao<Cellar> {
     }
 
     /**
-     *
-     * @param cellar the cellar to insert or remove from.
-     * @param o the object to insert or remove.
-     * @param field the field to insert or remove from.
-     * @param add true to add, false to remove.
-     *
-     * @return the object id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId addOrRemoveFromSet(ObjectId cellar, Object o, String field, boolean add) throws BadArgumentsException {
-        Bson update = add ? Updates.push(field, o) : Updates.pull(field, o);
-        UpdateResult id = getCollection().updateOne(eq("_id", cellar), update);
-        if(id.getModifiedCount() == 0) {
-            throw new BadArgumentsException("Mauvais arguments dans la mise à jour d'une cave");
-        }
-        else {
-            return cellar;
-        }
-    }
-
-    /**
      * Get all public cellars.
      *
      * @return A list of all public cellars if there are any, otherwise throws a NotFoundException.
