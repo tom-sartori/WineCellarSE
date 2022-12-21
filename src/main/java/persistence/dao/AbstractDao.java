@@ -1,21 +1,15 @@
 package persistence.dao;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoWriteException;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import exception.NotFoundException;
 import org.bson.BsonDocument;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import persistence.connector.MongoConnector;
 import persistence.entity.Entity;
 
 import java.util.ArrayList;
@@ -23,8 +17,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.mongodb.client.model.Filters.eq;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 /**
  * DAO abstract class which implements the DAO interface with generic methods.
@@ -34,9 +26,8 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
  * @param <T> The entity class which extends the Entity interface.
  */
 public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
-
-	protected static final String uri = "mongodb+srv://michel:michel@cluster0.54bwiq3.mongodb.net/?retryWrites=true&w=majority";
 	protected static final String databaseName = "winecellar-db";
+	protected static final MongoConnector mongoConnector = MongoConnector.getInstance();
 
 	/**
 	 * @return The name of the collection in the database.
@@ -49,6 +40,13 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	protected abstract Class<T> getEntityClass();
 
 	/**
+	 * @return The Collection of the generic type used.
+	 */
+	protected MongoCollection<T> getCollection(){
+		return mongoConnector.getDatabaseByName(databaseName).getCollection(getCollectionName(), getEntityClass());
+	}
+
+	/**
 	 * Insert one entity of the parametrized type in the database.
 	 *
 	 * @param entity The entity to insert.
@@ -56,12 +54,8 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	@Override
 	public ObjectId insertOne(T entity) throws MongoWriteException {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			InsertOneResult insertOneResult = collection.insertOne(entity);
-			return Objects.requireNonNull(insertOneResult.getInsertedId()).asObjectId().getValue();
-		}
+		InsertOneResult insertOneResult = getCollection().insertOne(entity);
+		return Objects.requireNonNull(insertOneResult.getInsertedId()).asObjectId().getValue();
 	}
 
 	/**
@@ -77,16 +71,12 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * @throws Exception If no entity is returned.
 	 */
 	public List<T> findAllWithFilter(BsonDocument filter) throws Exception {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			ArrayList<T> response = collection.find(filter).into(new ArrayList<>());
-			if (response.isEmpty()) {
-				// TODO replace with Tom's custom exception.
-				throw new Exception("not found");
-			}
-			return response;
+		ArrayList<T> response = getCollection().find(filter).into(new ArrayList<>());
+		if (response.isEmpty()) {
+			// TODO replace with Tom's custom exception.
+			throw new Exception("not found");
 		}
+		return response;
 	}
 
 	/**
@@ -96,16 +86,7 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	@Override
 	public ArrayList<T> findAll() {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			return collection.find().into(new ArrayList<>());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
-		}
+		return getCollection().find().into(new ArrayList<>());
 	}
 
 	/**
@@ -116,18 +97,15 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * @throws NotFoundException If no entity is found.
 	 */
 	protected T findOne(BsonDocument filter) throws NotFoundException {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			T entity = collection.find(filter).first();
+		T entity = getCollection().find(filter).first();
 
-			if (entity == null) {
-				throw new NotFoundException("No entity found with the filter: " + filter);
-			}
-			else {
-				return entity;
-			}
+		if (entity == null) {
+			throw new NotFoundException("No entity found with the filter: " + filter);
 		}
+		else {
+			return entity;
+		}
+
 	}
 
 	/**
@@ -148,17 +126,8 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * @return true if the entity has been updated, false otherwise.
 	 */
 	protected boolean updateOne(ObjectId id, Bson updateField) {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			UpdateResult updateResult = collection.updateOne(eq("_id", id), updateField);
-			return updateResult.getModifiedCount() == 1;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
-		}
+		UpdateResult updateResult = getCollection().updateOne(eq("_id", id), updateField);
+		return updateResult.getModifiedCount() == 1;
 	}
 
 
@@ -181,32 +150,8 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	@Override
 	public boolean deleteOne(ObjectId id) {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			DeleteResult deleteResult = collection.deleteOne(eq("_id", id));
-			return deleteResult.getDeletedCount() == 1;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
-		}
-	}
-
-	/**
-	 * Get MongoDb settings in order to map data with the entity class.
-	 *
-	 * @return The settings.
-	 */
-	protected MongoClientSettings getClientSettings() {
-		ConnectionString connectionString = new ConnectionString(uri);
-		CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
-		CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
-		return MongoClientSettings.builder()
-				.applyConnectionString(connectionString)
-				.codecRegistry(codecRegistry)
-				.build();
+		DeleteResult deleteResult = getCollection().deleteOne(eq("_id", id));
+		return deleteResult.getDeletedCount() == 1;
 	}
 
 	/**
