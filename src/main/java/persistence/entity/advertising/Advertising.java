@@ -1,15 +1,14 @@
-package persistence.entity.advertizing;
+package persistence.entity.advertising;
 
 import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
-import java.awt.*;
 import java.util.Date;
 import java.util.Objects;
 
 
-public class Advertizing implements Entity<Advertizing> {
+public class Advertising implements Entity<Advertising> {
 
 	public ObjectId id;
 	public String name;
@@ -26,9 +25,9 @@ public class Advertizing implements Entity<Advertizing> {
 	public boolean isActive;
 	public boolean isPayed;
 
-	public Advertizing() { }
+	public Advertising() { }
 
-	public Advertizing(String name, String description, String url, @Nullable String link, Date startDate, Date endDate, double price) {
+	public Advertising(String name, String description, String url, @Nullable String link, Date startDate, Date endDate, double price) {
 		this.name = name;
 		this.description = description;
 		this.url = url;
@@ -138,7 +137,7 @@ public class Advertizing implements Entity<Advertizing> {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Advertizing that = (Advertizing) o;
+		Advertising that = (Advertising) o;
 		return nbViews == that.nbViews && Double.compare(that.price, price) == 0 && isActive == that.isActive && isPayed == that.isPayed && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(url, that.url) && Objects.equals(link, that.link) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate);
 	}
 
@@ -148,13 +147,13 @@ public class Advertizing implements Entity<Advertizing> {
 	}
 
 	@Override
-	public int compareTo(Advertizing o) {
+	public int compareTo(Advertising o) {
 		return name.compareTo(o.name);
 	}
 
 	@Override
 	public String toString() {
-		return "Advertizing{" +
+		return "Advertising{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
