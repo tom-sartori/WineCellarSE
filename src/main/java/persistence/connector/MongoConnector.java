@@ -15,7 +15,6 @@ public class MongoConnector {
 
     private static MongoConnector instance;
     private final MongoClient mongoClient;
-
     protected final String uri = "mongodb+srv://michel:michel@cluster0.54bwiq3.mongodb.net/?retryWrites=true&w=majority";
 
     private MongoConnector() {
@@ -29,11 +28,13 @@ public class MongoConnector {
         return instance;
     }
 
-    // TODO TRY CATCH
     public MongoDatabase getDatabaseByName(String databaseName) {
         return this.mongoClient.getDatabase(databaseName);
     }
 
+    /**
+     * @return the settings to apply to the client.
+     */
     private MongoClientSettings getClientSettings() {
         ConnectionString connectionString = new ConnectionString(uri);
         CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
