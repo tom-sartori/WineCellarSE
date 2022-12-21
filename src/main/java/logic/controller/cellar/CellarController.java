@@ -4,6 +4,7 @@ import exception.BadArgumentsException;
 import exception.NotFoundException;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
+import persistence.dao.bottle.BottleDao;
 import persistence.dao.cellar.CellarDAO;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
@@ -109,7 +110,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException{
-        return CellarDAO.getInstance().addBottle(wall, cellar, bottle, emplacementBottle);
+        return BottleDao.getInstance().insertBottle(wall, cellar, bottle, emplacementBottle);
     }
 
     /**
@@ -123,7 +124,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
-        return CellarDAO.getInstance().removeBottle(wall, cellar, bottle, emplacementBottle);
+        return BottleDao.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
     }
 
     /**
@@ -190,7 +191,7 @@ public class CellarController extends AbstractController<Cellar> {
         }
         else{
             // remove the bottle
-            return CellarDAO.getInstance().removeBottle(wall, cellar, bottleQuantity.getBottle(), emplacementBottle);
+            return BottleDao.getInstance().deleteBottle(wall, cellar, bottleQuantity.getBottle(), emplacementBottle);
         }
 
     }

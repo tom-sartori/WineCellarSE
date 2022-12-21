@@ -169,46 +169,6 @@ public class CellarDAO extends AbstractDao<Cellar> {
     }
 
     /**
-     * Add a bottle to a cellar.
-     *
-     * @param wall The wall to add the bottle to.
-     * @param cellar The cellar to add the bottle to.
-     * @param bottle The bottle to add.
-     * @param emplacementBottle The emplacement of the bottle.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
-        BottleQuantity bottleQuantity = new BottleQuantity(bottle, 1);
-        int indexOfWall = cellar.getWalls().indexOf(wall);
-        int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
-        return addOrRemoveFromSet(cellar.getId(), bottleQuantity, "walls." + indexOfWall + ".emplacementBottleMap." + indexOfEmplacement + ".bottleList", true);
-    }
-
-    /**
-     * Remove a bottle from a cellar.
-     *
-     * @param wall The wall to remove the bottle from.
-     * @param cellar The cellar to remove the bottle from.
-     * @param bottle The bottle to remove.
-     * @param emplacementBottle The emplacement to remove the bottle from.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException{
-        int indexOfWall = cellar.getWalls().indexOf(wall);
-        int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
-
-        // Looking for the bottle in the list of bottles to remove it.
-        for (int i = 0; i < emplacementBottle.getBottleList().size(); i++) {
-            if(emplacementBottle.getBottleList().get(i).getBottle().equals(bottle)){
-                return addOrRemoveFromSet(cellar.getId(), emplacementBottle.getBottleList().get(i), "walls." + indexOfWall + ".emplacementBottleMap." + indexOfEmplacement + ".bottleList", false);
-            }
-        }
-        return null;
-    }
-
-    /**
      * Add an emplacement to a wall.
      *
      * @param cellar The cellar to add the emplacement to.
