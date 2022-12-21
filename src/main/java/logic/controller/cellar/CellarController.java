@@ -184,7 +184,15 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the quantity is greater than 0 and the field has been updated, otherwise throws a BadArgumentsException.
      */
     public ObjectId decreaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) throws BadArgumentsException {
-        return CellarDAO.getInstance().decreaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
+        if (bottleQuantity.getQuantity() > 0) {
+            // decrease the quantity
+            return CellarDAO.getInstance().decreaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
+        }
+        else{
+            // remove the bottle
+            return CellarDAO.getInstance().removeBottle(wall, cellar, bottleQuantity.getBottle(), emplacementBottle);
+        }
+
     }
 
     /**

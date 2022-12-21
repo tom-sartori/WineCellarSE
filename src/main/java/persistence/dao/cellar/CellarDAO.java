@@ -219,6 +219,7 @@ public class CellarDAO extends AbstractDao<Cellar> {
         int indexOfWall = cellar.getWalls().indexOf(wall);
         int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
 
+        // Looking for the bottle in the list of bottles to remove it.
         for (int i = 0; i < emplacementBottle.getBottleList().size(); i++) {
             if(emplacementBottle.getBottleList().get(i).getBottle().equals(bottle)){
                 return addOrRemoveFromSet(cellar.getId(), emplacementBottle.getBottleList().get(i), "walls." + indexOfWall + ".emplacementBottleMap." + indexOfEmplacement + ".bottleList", false);
@@ -274,8 +275,8 @@ public class CellarDAO extends AbstractDao<Cellar> {
         int indexOfBottle = emplacementBottle.getBottleList().indexOf(bottleQuantity);
 
         bottleQuantity.setQuantity( bottleQuantity.getQuantity() + 1 );
-
         boolean hasBeenModified = super.updateOne(cellar.getId(), Updates.set("walls." + indexOfWall + ".emplacementBottleMap." + indexOfEmplacement + ".bottleList." + indexOfBottle + ".quantity", bottleQuantity.getQuantity()));
+
         if(hasBeenModified){
             return cellar.getId();
         }
@@ -303,17 +304,15 @@ public class CellarDAO extends AbstractDao<Cellar> {
         int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
         int indexOfBottle = emplacementBottle.getBottleList().indexOf(bottleQuantity);
 
-        if (bottleQuantity.getQuantity() > 0) {
-            bottleQuantity.setQuantity(bottleQuantity.getQuantity() - 1);
-            boolean hasBeenModified = super.updateOne(cellar.getId(), Updates.set("walls." + indexOfWall + ".emplacementBottleMap." + indexOfEmplacement + ".bottleList." + indexOfBottle + ".quantity", bottleQuantity.getQuantity()));
-            if(hasBeenModified){
-                return cellar.getId();
-            }
+        bottleQuantity.setQuantity(bottleQuantity.getQuantity() - 1);
+        boolean hasBeenModified = super.updateOne(cellar.getId(), Updates.set("walls." + indexOfWall + ".emplacementBottleMap." + indexOfEmplacement + ".bottleList." + indexOfBottle + ".quantity", bottleQuantity.getQuantity()));
+
+        if(hasBeenModified){
+            return cellar.getId();
         }
-        else{
-            return removeBottle(wall, cellar, bottleQuantity.getBottle(), emplacementBottle);
+        else {
+            throw new BadArgumentsException("Mauvais arguments");
         }
-        throw new BadArgumentsException("Mauvais arguments");
     }
 
     /**
