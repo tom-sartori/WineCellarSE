@@ -1,10 +1,6 @@
 package exception;
 
-public class BadArgumentsException extends RuntimeException {
-
-    public BadArgumentsException() {
-        super();
-    }
+public class BadArgumentsException extends Exception {
 
     public BadArgumentsException(String message) {
         super(message);
