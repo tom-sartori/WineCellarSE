@@ -39,7 +39,9 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	protected abstract Class<T> getEntityClass();
 
-	// TODO COMMENT
+	/**
+	 * @return The Collection of the generic type used.
+	 */
 	protected MongoCollection<T> getCollection(){
 		return mongoConnector.getDatabaseByName(databaseName).getCollection(getCollectionName(), getEntityClass());
 	}
