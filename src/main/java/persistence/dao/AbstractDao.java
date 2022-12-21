@@ -68,13 +68,12 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 *
 	 * @return A list of entities.
 	 *
-	 * @throws Exception If no entity is returned.
+	 * @throws NotFoundException If no entity is returned.
 	 */
-	public List<T> findAllWithFilter(BsonDocument filter) throws Exception {
+	public List<T> findAllWithFilter(BsonDocument filter) throws NotFoundException {
 		ArrayList<T> response = getCollection().find(filter).into(new ArrayList<>());
 		if (response.isEmpty()) {
-			// TODO replace with Tom's custom exception.
-			throw new Exception("not found");
+			throw new NotFoundException("No entity found with the given filter.");
 		}
 		return response;
 	}

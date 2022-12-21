@@ -3,6 +3,8 @@ package persistence.dao.cellar;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import constant.CollectionNames;
+import exception.BadArgumentsException;
+import exception.NotFoundException;
 import org.bson.BsonBoolean;
 import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
@@ -44,22 +46,22 @@ public class CellarDAO extends AbstractDao<Cellar> {
         return instance;
     }
 
-    // Auxiliary methods
-
     /**
      *
      * @param cellar the cellar to insert or remove from.
      * @param o the object to insert or remove.
      * @param field the field to insert or remove from.
      * @param add true to add, false to remove.
-     * @return the object id of the updated cellar if the update was successful, null otherwise.
+     *
+     * @return the object id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addOrRemoveFromSet(ObjectId cellar, Object o, String field, boolean add) {
+    public ObjectId addOrRemoveFromSet(ObjectId cellar, Object o, String field, boolean add) throws BadArgumentsException {
         Bson update = add ? Updates.push(field, o) : Updates.pull(field, o);
         UpdateResult id = getCollection().updateOne(eq("_id", cellar), update);
         if(id.getModifiedCount() == 0) {
-            return null;
-        }else {
+            throw new BadArgumentsException("Mauvais arguments dans la mise à jour d'une cave");
+        }
+        else {
             return cellar;
         }
     }
@@ -67,9 +69,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
     /**
      * Get all public cellars.
      *
-     * @return A list of all public cellars.
+     * @return A list of all public cellars if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getPublicCellars() throws Exception {
+    public List<Cellar> getPublicCellars() throws NotFoundException {
         BsonDocument filter = new BsonDocument();
         filter.append("public", BsonBoolean.TRUE);
         return findAllWithFilter(filter);
@@ -80,9 +82,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      *
      * @param userId The id of the user.
      *
-     * @return A list of all the cellars of the user.
+     * @return A list of all the cellars of the user if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getCellarsFromUser(ObjectId userId) throws Exception {
+    public List<Cellar> getCellarsFromUser(ObjectId userId) throws NotFoundException {
         BsonDocument filter = new BsonDocument();
         filter.append("ownerRef", new org.bson.BsonObjectId(userId));
         return findAllWithFilter(filter);
@@ -93,9 +95,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      *
      * @param userId The id of the user.
      *
-     * @return A list of all the cellars where the user is a reader.
+     * @return A list of all the cellars where the user is a reader if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getReadOnlyCellarsFromUser(ObjectId userId) throws Exception {
+    public List<Cellar> getReadOnlyCellarsFromUser(ObjectId userId) throws NotFoundException {
         BsonDocument filter = new BsonDocument();
         filter.append("readers", new org.bson.BsonObjectId(userId));
         return findAllWithFilter(filter);
@@ -106,9 +108,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      *
      * @param userId The id of the user.
      *
-     * @return A list of all the cellars where the user is a manager.
+     * @return A list of all the cellars where the user is a manager if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws Exception {
+    public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws NotFoundException {
         BsonDocument filter = new BsonDocument();
         filter.append("managers", new org.bson.BsonObjectId(userId));
         return findAllWithFilter(filter);
@@ -120,9 +122,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param user The user to add to managers.
      * @param cellar The cellar to add the user to.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addCellarManager(ObjectId user, ObjectId cellar) {
+    public ObjectId addCellarManager(ObjectId user, ObjectId cellar) throws BadArgumentsException {
         return addOrRemoveFromSet(cellar, user, "managers", true);
     }
 
@@ -132,9 +134,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param user The user to remove from managers.
      * @param cellar The cellar to remove the user from.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeCellarManager(ObjectId user, ObjectId cellar) {
+    public ObjectId removeCellarManager(ObjectId user, ObjectId cellar) throws BadArgumentsException {
         return addOrRemoveFromSet(cellar, user, "managers", false);
     }
 
@@ -144,9 +146,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param user The user to add to readers.
      * @param cellar The cellar to add the user to.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addCellarReader(ObjectId user, ObjectId cellar) {
+    public ObjectId addCellarReader(ObjectId user, ObjectId cellar) throws BadArgumentsException {
         return addOrRemoveFromSet(cellar, user, "readers", true);
     }
 
@@ -156,9 +158,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param user The user to remove from readers.
      * @param cellar The cellar to remove the user from.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeCellarReader(ObjectId user, ObjectId cellar) {
+    public ObjectId removeCellarReader(ObjectId user, ObjectId cellar) throws BadArgumentsException {
         return addOrRemoveFromSet(cellar, user, "readers", false);
     }
 
@@ -168,9 +170,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param cellar The cellar to add the wall to.
      * @param wall The wall to add.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addWall(Wall wall, ObjectId cellar) {
+    public ObjectId addWall(Wall wall, ObjectId cellar) throws BadArgumentsException {
         return addOrRemoveFromSet(cellar, wall, "walls", true);
     }
 
@@ -180,9 +182,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param cellar The cellar to remove the wall from.
      * @param wall The wall to remove.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeWall(Wall wall, ObjectId cellar) {
+    public ObjectId removeWall(Wall wall, ObjectId cellar) throws BadArgumentsException {
         return addOrRemoveFromSet(cellar, wall, "walls", false);
     }
 
@@ -194,9 +196,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param bottle The bottle to add.
      * @param emplacementBottle The emplacement of the bottle.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) {
+    public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         BottleQuantity bottleQuantity = new BottleQuantity(bottle, 1);
         int indexOfWall = cellar.getWalls().indexOf(wall);
         int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
@@ -211,9 +213,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param bottle The bottle to remove.
      * @param emplacementBottle The emplacement to remove the bottle from.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) {
+    public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException{
         int indexOfWall = cellar.getWalls().indexOf(wall);
         int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
 
@@ -232,9 +234,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param wall The wall to add the emplacement to.
      * @param emplacementBottle The emplacement to add.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) {
+    public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         int indexOfWall = cellar.getWalls().indexOf(wall);
         return addOrRemoveFromSet(cellar.getId(), emplacementBottle, "walls." + indexOfWall + ".emplacementBottleMap", true);
     }
@@ -246,9 +248,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param wall The wall to remove the emplacement from.
      * @param emplacementBottle The emplacement to remove.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) {
+    public ObjectId removeEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         int indexOfWall = cellar.getWalls().indexOf(wall);
         return addOrRemoveFromSet(cellar.getId(), emplacementBottle, "walls." + indexOfWall + ".emplacementBottleMap", false);
     }
@@ -264,9 +266,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      *                          The emplacement must be in the wall and contain the bottle.
      * @param bottleQuantity The bottle to increase the quantity of.
      *               The bottle must be in the emplacement.
-     * @return The id of the updated cellar if the bottle was found and updated, null otherwise.
+     * @return The id of the updated cellar if the bottle was found and updated, otherwise throws a BadArgumentsException.
      */
-    public ObjectId increaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) {
+    public ObjectId increaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) throws BadArgumentsException {
         int indexOfWall = cellar.getWalls().indexOf(wall);
         int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
         int indexOfBottle = emplacementBottle.getBottleList().indexOf(bottleQuantity);
@@ -278,7 +280,7 @@ public class CellarDAO extends AbstractDao<Cellar> {
             return cellar.getId();
         }
         else {
-            return null;
+            throw new BadArgumentsException("Mauvais arguments");
         }
     }
 
@@ -294,9 +296,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      * @param bottleQuantity The bottle to increase the quantity of.
      *               The bottle must be in the emplacement.
      *
-     * @return The id of the updated cellar if the quantity is greater than 0 and the field has been updated, null otherwise.
+     * @return The id of the updated cellar if the quantity is greater than 0 and the field has been updated, otherwise throws a BadArgumentsException.
      */
-    public ObjectId decreaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) {
+    public ObjectId decreaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) throws BadArgumentsException {
         int indexOfWall = cellar.getWalls().indexOf(wall);
         int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);
         int indexOfBottle = emplacementBottle.getBottleList().indexOf(bottleQuantity);
@@ -311,7 +313,7 @@ public class CellarDAO extends AbstractDao<Cellar> {
         else{
             return removeBottle(wall, cellar, bottleQuantity.getBottle(), emplacementBottle);
         }
-        return null;
+        throw new BadArgumentsException("Mauvais arguments");
     }
 
     /**
