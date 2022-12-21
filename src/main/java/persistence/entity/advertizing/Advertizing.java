@@ -11,12 +11,10 @@ import java.util.Objects;
 
 public class Advertizing implements Entity<Advertizing> {
 
-	/// TODO : Vérifier quels attributs sont optionnels.
-	/// TODO : isActive faux à la création, nbViews = 0
 	public ObjectId id;
 	public String name;
 	public String description;
-	public Image image;
+	public String url;
 
 	@Nullable
 	public String link;
@@ -29,6 +27,23 @@ public class Advertizing implements Entity<Advertizing> {
 	public boolean isPayed;
 
 	public Advertizing() { }
+
+	public Advertizing(String name, String description, String url, @Nullable String link, Date startDate, Date endDate, double price) {
+		this.name = name;
+		this.description = description;
+		this.url = url;
+		this.link = link;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
+	public void handleOnCreate(){
+		this.id = null;
+		this.nbViews = 0;
+		this.isActive = false;
+		this.isPayed = false;
+		price = (endDate.getTime() - startDate.getTime())*100;
+	}
 
 	public ObjectId getId() {
 		return id;
@@ -54,12 +69,12 @@ public class Advertizing implements Entity<Advertizing> {
 		this.description = description;
 	}
 
-	public Image getImage() {
-		return image;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Nullable
@@ -124,17 +139,33 @@ public class Advertizing implements Entity<Advertizing> {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Advertizing that = (Advertizing) o;
-		return nbViews == that.nbViews && Double.compare(that.price, price) == 0 && isActive == that.isActive && isPayed == that.isPayed && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(image, that.image) && Objects.equals(link, that.link) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate);
+		return nbViews == that.nbViews && Double.compare(that.price, price) == 0 && isActive == that.isActive && isPayed == that.isPayed && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(url, that.url) && Objects.equals(link, that.link) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, description, image, link, startDate, endDate, nbViews, price, isActive, isPayed);
+		return Objects.hash(id, name, description, url, link, startDate, endDate, nbViews, price, isActive, isPayed);
 	}
 
-	/// TODO : Update compareTo method if needed.
 	@Override
 	public int compareTo(Advertizing o) {
 		return name.compareTo(o.name);
+	}
+
+	@Override
+	public String toString() {
+		return "Advertizing{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", url=" + url +
+				", link='" + link + '\'' +
+				", startDate=" + startDate +
+				", endDate=" + endDate +
+				", nbViews=" + nbViews +
+				", price=" + price +
+				", isActive=" + isActive +
+				", isPayed=" + isPayed +
+				'}';
 	}
 }
