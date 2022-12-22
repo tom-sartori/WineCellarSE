@@ -7,5 +7,5 @@ public final class CollectionNames {
 
     public final static String PARTNER = "partners";
     public final static String SAMPLE = null;
-    public final static String ADVERTISING = "advertising";
+    public final static String ADVERTISING = "advertisings";
 }

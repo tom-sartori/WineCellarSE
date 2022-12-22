@@ -42,6 +42,7 @@ public class Advertising implements Entity<Advertising> {
 		this.isActive = false;
 		this.isPayed = false;
 		price = (endDate.getTime() - startDate.getTime())*100;
+		this.price = (this.getEndDate().getTime() - this.getStartDate().getTime())/(8640000);
 	}
 
 	public ObjectId getId() {

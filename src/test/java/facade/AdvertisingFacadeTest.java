@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AdvertisingFacadeTest {
 
-	private final AdvertisingFacade facade = AdvertisingFacade.getInstance();
+	private final Facade facade = Facade.getInstance();
 	private Advertising advertising;
 
 	@BeforeEach
