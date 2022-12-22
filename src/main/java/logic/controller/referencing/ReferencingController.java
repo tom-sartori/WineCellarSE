@@ -2,16 +2,17 @@ package logic.controller.referencing;
 
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
+import org.bson.types.ObjectId;
 import persistence.dao.referencing.ReferencingDao;
 import persistence.entity.referencing.Referencing;
 
+import java.sql.Ref;
+import java.util.Date;
 import java.util.List;
 
 /**
  * ReferencingController class extending Controller class parametrized with Referencing class.
  */
-
-///TODO: Autres fonctions nécessaires?
 public class ReferencingController extends AbstractController<Referencing> {
 
     /**
@@ -43,7 +44,28 @@ public class ReferencingController extends AbstractController<Referencing> {
     public List<Referencing> findAllByLevel(int importanceLevel) {
         BsonDocument filter = new BsonDocument();
         filter.append("importanceLevel", new org.bson.BsonInt64(importanceLevel));
-        return getDao().findWithFilter(filter);
+        return getDao().findAllWithFilter(filter);
+    }
+
+    public boolean updateStatus(ObjectId id, Referencing referencing){
+        Date now = new Date();
+        if(referencing.getStartDate().before(now)){
+            if(now.before(referencing.getExpirationDate())){
+                if(referencing.getStatus() != "En cours"){
+                    referencing.setStatus("En cours");
+                    return getDao().updateOne(id,referencing);
+                }
+            }
+            if(referencing.getStatus() != "Passe"){
+                referencing.setStatus("Passe");
+                return getDao().updateOne(id, referencing);
+            }
+        }
+        if(referencing.getStatus() != "A venir"){
+            referencing.setStatus("A venir");
+            return getDao().updateOne(id, referencing);
+        }
+        return true;
     }
 
     /**

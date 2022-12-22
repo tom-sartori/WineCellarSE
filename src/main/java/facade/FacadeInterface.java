@@ -1,8 +1,10 @@
 package facade;
 
 import exception.InvalidUsernameException;
+import logic.controller.referencing.ReferencingController;
 import org.bson.types.ObjectId;
 import persistence.entity.partner.Partner;
+import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
 
 import java.util.List;
@@ -76,4 +78,61 @@ public interface FacadeInterface {
 	boolean updateOneUser(ObjectId id, User user);
 
 	boolean deleteOneUser(ObjectId id);
+
+	/**
+	 * Insert a referencing.
+	 *
+	 * @param referencing The referencing to insert.
+	 * @return The id of the inserted referencing.
+	 */
+	ObjectId insertOneReferencing(Referencing referencing);
+
+	/**
+	 * Get all referencings.
+	 *
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingList();
+
+	/**
+	 * Get a referencing by its id.
+	 *
+	 * @param id The id of the referencing.
+	 * @return The referencing or null if not found.
+	 */
+	Referencing getOneReferencing(ObjectId id);
+
+	/**
+	 * Get referencings by their importanceLevel.
+	 *
+	 * @param importanceLevel The level of importance of the searched referencings.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByLevel(int importanceLevel);
+
+	/**
+	 * Update a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateOneReferencing(ObjectId id, Referencing referencing);
+
+	/**
+	 * Delete a referencing.
+	 *
+	 * @param id The id of the referencing to delete.
+	 * @return true if the referencing has been deleted, false otherwise.
+	 */
+	boolean deleteOneReferencing(ObjectId id);
+
+	/**
+	 * Update the status of a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateStatus(ObjectId id, Referencing referencing);
 }

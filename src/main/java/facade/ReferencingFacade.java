@@ -4,6 +4,7 @@ import logic.controller.referencing.ReferencingController;
 import org.bson.types.ObjectId;
 import persistence.entity.referencing.Referencing;
 
+import java.sql.Ref;
 import java.util.List;
 
 /**
@@ -89,4 +90,13 @@ class ReferencingFacade {
     protected boolean deleteOneReferencing(ObjectId id) {
         return ReferencingController.getInstance().deleteOne(id);
     }
+
+    /**
+     * Update the status of a referencing.
+     *
+     * @param id The id of the referencing to update.
+     * @param referencing The new referencing.
+     * @return true if the referencing has been updated, false otherwise.
+     */
+    public boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingController.getInstance().updateStatus(id, referencing);}
 }

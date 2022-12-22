@@ -8,7 +8,6 @@ import java.util.Objects;
 
 
 public class Referencing implements Entity<Referencing> {
-	///TODO: Optionnelles ?
 	private ObjectId id;
 	public Referencing() { }
 	private double price;
@@ -64,6 +63,12 @@ public class Referencing implements Entity<Referencing> {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	@Override
+	public void handleOnCreate() {
+		this.id = null;
+		this.price = ((this.getExpirationDate().getTime() - this.getStartDate().getTime())*this.getImportanceLevel())/(8640000);
 	}
 
 	public int getImportanceLevel() {
