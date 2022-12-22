@@ -162,30 +162,6 @@ public interface FacadeInterface {
 	ObjectId removeWall(Wall wall, ObjectId cellar) throws BadArgumentsException;
 
 	/**
-	 * Add a bottle to a cellar.
-	 *
-	 * @param wall The wall to add the bottle to.
-	 * @param cellar The cellar to add the bottle to.
-	 * @param bottle The bottle to add.
-	 * @param emplacementBottle The emplacement of the bottle.
-	 *
-	 * @return The id of the updated cellar if the update was successful otherwise throws a BadArgumentsException.
-	 */
-	ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
-
-	/**
-	 * Remove a bottle from a cellar.
-	 *
-	 * @param wall The wall to remove the bottle from.
-	 * @param cellar The cellar to remove the bottle from.
-	 * @param bottle The bottle to remove.
-	 * @param emplacementBottle The emplacement to remove the bottle from.
-	 *
-	 * @return The id of the updated cellar if the update was successful otherwise throws a BadArgumentsException.
-	 */
-	ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
-
-	/**
 	 * Add an emplacement to a wall.
 	 *
 	 * @param cellar The cellar to add the emplacement to.
@@ -297,4 +273,53 @@ public interface FacadeInterface {
 	boolean updateOneUser(ObjectId id, User user);
 
 	boolean deleteOneUser(ObjectId id);
+
+	/**
+	 * Insert a bottle to a cellar.
+	 *
+	 * @param wall The wall to add the bottle to.
+	 * @param cellar The cellar to add the bottle to.
+	 * @param bottle The bottle to insert.
+	 * @param emplacementBottle The emplacement of the bottle.
+	 *
+	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
+	 */
+	ObjectId insertBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
+
+	/**
+	 * Get all bottles from a cellar.
+	 *
+	 * @param cellarId The id of the cellar to get the bottles from.
+	 *                 The cellar must exist.
+	 *
+	 * @return A list of all bottles from the cellar if there is at least one, otherwise throws NotFoundException.
+	 */
+	List<Bottle> getBottlesFromCellar(ObjectId cellarId) throws NotFoundException;
+
+	/**
+	 * Update a bottle in a cellar.
+	 *
+	 * @param wall The wall to update the bottle in.
+	 * @param cellar The cellar to update the bottle in.
+	 * @param bottle The bottle to update.
+	 * @param emplacementBottle The emplacement of the bottle.
+	 * @param updatedBottle The updated bottle.
+	 *
+	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
+	 *
+	 * @throws BadArgumentsException If the update was not successful.
+	 */
+	ObjectId updateBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle, Bottle updatedBottle) throws BadArgumentsException;
+
+	/**
+	 * Delete a bottle from a cellar.
+	 *
+	 * @param wall The wall to remove the bottle from.
+	 * @param cellar The cellar to remove the bottle from.
+	 * @param bottle The bottle to remove.
+	 * @param emplacementBottle The emplacement to remove the bottle from.
+	 *
+	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
+	 */
+	ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
 }

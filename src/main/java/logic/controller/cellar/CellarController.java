@@ -4,6 +4,7 @@ import exception.BadArgumentsException;
 import exception.NotFoundException;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
+import persistence.dao.bottle.BottleDao;
 import persistence.dao.cellar.CellarDAO;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
@@ -99,34 +100,6 @@ public class CellarController extends AbstractController<Cellar> {
     }
 
     /**
-     * Add a bottle to a cellar.
-     *
-     * @param wall The wall to add the bottle to.
-     * @param cellar The cellar to add the bottle to.
-     * @param bottle The bottle to add.
-     * @param emplacementBottle The emplacement of the bottle.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException{
-        return CellarDAO.getInstance().addBottle(wall, cellar, bottle, emplacementBottle);
-    }
-
-    /**
-     * Remove a bottle from a cellar.
-     *
-     * @param wall The wall to remove the bottle from.
-     * @param cellar The cellar to remove the bottle from.
-     * @param bottle The bottle to remove.
-     * @param emplacementBottle The emplacement to remove the bottle from.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
-        return CellarDAO.getInstance().removeBottle(wall, cellar, bottle, emplacementBottle);
-    }
-
-    /**
      * Add an emplacement to a wall.
      *
      * @param cellar The cellar to add the emplacement to.
@@ -190,7 +163,7 @@ public class CellarController extends AbstractController<Cellar> {
         }
         else{
             // remove the bottle
-            return CellarDAO.getInstance().removeBottle(wall, cellar, bottleQuantity.getBottle(), emplacementBottle);
+            return BottleDao.getInstance().deleteBottle(wall, cellar, bottleQuantity.getBottle(), emplacementBottle);
         }
 
     }

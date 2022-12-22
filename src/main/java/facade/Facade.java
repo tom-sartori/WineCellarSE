@@ -228,34 +228,6 @@ public class Facade implements FacadeInterface {
     }
 
     /**
-     * Add a bottle to a cellar.
-     *
-     * @param wall The wall to add the bottle to.
-     * @param cellar The cellar to add the bottle to.
-     * @param bottle The bottle to add.
-     * @param emplacementBottle The emplacement of the bottle.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException{
-        return CellarFacade.getInstance().addBottle(wall, cellar, bottle, emplacementBottle);
-    }
-
-    /**
-     * Remove a bottle from a cellar.
-     *
-     * @param wall The wall to remove the bottle from.
-     * @param cellar The cellar to remove the bottle from.
-     * @param bottle The bottle to remove.
-     * @param emplacementBottle The emplacement to remove the bottle from.
-     *
-     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
-     */
-    public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
-        return CellarFacade.getInstance().removeBottle(wall, cellar, bottle, emplacementBottle);
-    }
-
-    /**
      * Add an emplacement to a wall.
      *
      * @param cellar The cellar to add the emplacement to.
@@ -416,4 +388,62 @@ public class Facade implements FacadeInterface {
     public boolean deleteOneUser(ObjectId id) {
         return UserFacade.getInstance().deleteOneUser(id);
     }
+
+    /**
+     * Insert a bottle to a cellar.
+     *
+     * @param wall The wall to add the bottle to.
+     * @param cellar The cellar to add the bottle to.
+     * @param bottle The bottle to insert.
+     * @param emplacementBottle The emplacement of the bottle.
+     *
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
+     */
+    public ObjectId insertBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
+        return BottleFacade.getInstance().insertBottle(wall, cellar, bottle, emplacementBottle);
+    }
+
+    /**
+     * Get all bottles from a cellar.
+     *
+     * @param cellarId The id of the cellar to get the bottles from.
+     *                 The cellar must exist.
+     *
+     * @return A list of all bottles from the cellar if there is at least one, otherwise throws NotFoundException.
+     */
+    public List<Bottle> getBottlesFromCellar(ObjectId cellarId) throws NotFoundException {
+        return BottleFacade.getInstance().getBottlesFromCellar(cellarId);
+    }
+
+    /**
+     * Update a bottle in a cellar.
+     *
+     * @param wall The wall to update the bottle in.
+     * @param cellar The cellar to update the bottle in.
+     * @param bottle The bottle to update.
+     * @param emplacementBottle The emplacement of the bottle.
+     * @param updatedBottle The updated bottle.
+     *
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
+     *
+     * @throws BadArgumentsException If the update was not successful.
+     */
+    public ObjectId updateBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle, Bottle updatedBottle) throws BadArgumentsException {
+        return BottleFacade.getInstance().updateBottle(wall, cellar, bottle, emplacementBottle, updatedBottle);
+    }
+
+    /**
+     * Delete a bottle from a cellar.
+     *
+     * @param wall The wall to remove the bottle from.
+     * @param cellar The cellar to remove the bottle from.
+     * @param bottle The bottle to remove.
+     * @param emplacementBottle The emplacement to remove the bottle from.
+     *
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
+     */
+    public ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
+        return BottleFacade.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
+    }
+
 }
