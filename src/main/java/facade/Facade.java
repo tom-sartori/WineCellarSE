@@ -10,6 +10,7 @@ import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.user.User;
 
@@ -444,6 +445,59 @@ public class Facade implements FacadeInterface {
      */
     public ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         return BottleFacade.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
+    }
+
+    /**
+     * Insert a company.
+     *
+     * @param company The company to insert.
+     * @return The id of the inserted company.
+     */
+    public ObjectId insertOneCompany(Company company) {
+        return CompanyFacade.getInstance().insertOneCompany(company);
+    }
+
+    /**
+     * Get all companies.
+     *
+     * @return A list of companys.
+     */
+    public List<Company> getCompanyList() {
+        return CompanyFacade.getInstance().getCompanyList();
+    }
+
+    /**
+     * Get a company by its id.
+     *
+     * @param id The id of the company.
+     *
+     * @return The company or null if not found.
+     */
+    public Company getOneCompany(ObjectId id) {
+        return CompanyFacade.getInstance().getOneCompany(id);
+    }
+
+    /**
+     * Update a company.
+     *
+     * @param id The id of the company to update.
+     * @param company The new company.
+     *
+     * @return true if the company has been updated, false otherwise.
+     */
+    public boolean updateOneCompany(ObjectId id, Company company) {
+        return CompanyFacade.getInstance().updateOneCompany(id, company);
+    }
+
+    /**
+     * Delete a company.
+     *
+     * @param id The id of the company to delete.
+     *
+     * @return true if the company has been deleted, false otherwise.
+     */
+    public boolean deleteOneCompany(ObjectId id) {
+        return CompanyFacade.getInstance().deleteOneCompany(id);
     }
 
 }

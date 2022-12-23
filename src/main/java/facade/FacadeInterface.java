@@ -9,6 +9,7 @@ import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.user.User;
 
@@ -322,4 +323,48 @@ public interface FacadeInterface {
 	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
 	 */
 	ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
+
+	/**
+	 * Insert a company.
+	 *
+	 * @param company The company to insert.
+	 * @return The id of the inserted company.
+	 */
+	ObjectId insertOneCompany(Company company);
+
+	/**
+	 * Get all companies.
+	 *
+	 * @return A list of companys.
+	 */
+	List<Company> getCompanyList();
+
+	/**
+	 * Get a company by its id.
+	 *
+	 * @param id The id of the company.
+	 *
+	 * @return The company or null if not found.
+	 */
+	Company getOneCompany(ObjectId id);
+
+	/**
+	 * Update a company.
+	 *
+	 * @param id The id of the company to update.
+	 * @param company The new company.
+	 *
+	 * @return true if the company has been updated, false otherwise.
+	 */
+	boolean updateOneCompany(ObjectId id, Company company);
+
+	/**
+	 * Delete a company.
+	 *
+	 * @param id The id of the company to delete.
+	 *
+	 * @return true if the company has been deleted, false otherwise.
+	 */
+	boolean deleteOneCompany(ObjectId id);
+
 }
