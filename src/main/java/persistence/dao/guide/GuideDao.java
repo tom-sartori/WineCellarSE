@@ -26,11 +26,17 @@ public class GuideDao extends AbstractDao<Guide> {
         return instance;
     }
 
+    /**
+     * @return the constant name of the specific Collection (Notification).
+     */
     @Override
     protected String getCollectionName() {
         return CollectionNames.GUIDE;
     }
 
+    /**
+     * @return the class of the specific Entity (Notification).
+     */
     @Override
     protected Class<Guide> getEntityClass() {
         return Guide.class;
@@ -46,8 +52,6 @@ public class GuideDao extends AbstractDao<Guide> {
 
 
 }
-
-
 
 
 
