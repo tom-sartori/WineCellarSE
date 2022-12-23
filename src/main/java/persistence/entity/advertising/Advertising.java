@@ -10,20 +10,20 @@ import java.util.Objects;
 
 public class Advertising implements Entity<Advertising> {
 
-	public ObjectId id;
-	public String name;
-	public String description;
-	public String url;
+	private ObjectId id;
+	private String name;
+	private String description;
+	private String url;
 
 	@Nullable
-	public String link;
+	private String link;
 
-	public Date startDate;
-	public Date endDate;
-	public int nbViews;
-	public double price;
-	public boolean isActive;
-	public boolean isPayed;
+	private Date startDate;
+	private Date endDate;
+	private int nbViews;
+	private double price;
+	private boolean isActive;
+	private boolean isPayed;
 
 	public Advertising() { }
 
@@ -39,9 +39,8 @@ public class Advertising implements Entity<Advertising> {
 	public void handleOnCreate(){
 		this.id = null;
 		this.nbViews = 0;
-		this.isActive = false;
-		this.isPayed = false;
-		price = (endDate.getTime() - startDate.getTime())*100;
+		setActive(false);
+		setPayed(false);
 		this.price = (this.getEndDate().getTime() - this.getStartDate().getTime())/(8640000);
 	}
 

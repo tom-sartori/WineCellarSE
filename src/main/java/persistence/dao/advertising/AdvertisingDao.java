@@ -61,7 +61,7 @@ public class AdvertisingDao extends AbstractDao<Advertising> {
 		updateList.add(Updates.set("url", entity.getUrl()));
 		updateList.add(Updates.set("startDate", entity.getStartDate()));
 		updateList.add(Updates.set("endDate", entity.getEndDate()));
-		updateList.add(Updates.set("isActive", entity.isActive()));
+		updateList.add(Updates.set("active", entity.isActive()));
 		updateList.add(Updates.set("payed", entity.isPayed()));
 		updateList.add(Updates.set("nbViews", entity.getNbViews()));
 
