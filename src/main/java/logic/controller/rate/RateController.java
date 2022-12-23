@@ -1,9 +1,13 @@
 package logic.controller.rate;
 
+import exception.NotFoundException;
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
+import org.bson.types.ObjectId;
+import persistence.dao.cellar.CellarDAO;
 import persistence.dao.rate.RateDao;
 import persistence.entity.Entity;
+import persistence.entity.cellar.Cellar;
 import persistence.entity.rate.Rate;
 
 import java.util.Collections;
@@ -44,16 +48,13 @@ public class RateController extends AbstractController<Rate> {
 
 
     /**
-     * implementation to find all rates with filter of the parametrized type.
+     * Get all the rates of a user.
      *
-     * @param filter The filter to apply
-     * @return The list of all rates with filter.
+     * @param userId The id of the user.
+     *
+     * @return A list of all the rates of the user if there are any, otherwise throws a NotFoundException.
      */
-
-    public List<Rate> findAllWithFilter(BsonDocument filter) throws Exception {
-        List<Rate> all = getDao().findAllWithFilter(filter);
-        all.forEach((Entity::handleOnFind));
-        Collections.sort(all);
-        return all;
+    public List<Rate> getRateFromUser(ObjectId userId) throws NotFoundException {
+        return RateDao.getInstance().getRateFromUser(userId);
     }
 }

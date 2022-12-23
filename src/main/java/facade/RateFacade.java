@@ -1,8 +1,11 @@
 package facade;
 
+import exception.NotFoundException;
+import logic.controller.cellar.CellarController;
 import logic.controller.rate.RateController;
 import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
+import persistence.entity.cellar.Cellar;
 import persistence.entity.rate.Rate;
 
 import java.util.List;
@@ -51,13 +54,14 @@ class RateFacade {
     }
 
     /**
-     * Get all rates with filter.
-     * @param filter The filter to apply
+     * Get all the rates of a user.
      *
-     * @return A list of rates.
+     * @param userId The id of the user.
+     *
+     * @return A list of all the rates of the user if there are any, otherwise throws a NotFoundException.
      */
-    protected List<Rate> getRateListWithFilter(BsonDocument filter) throws Exception {
-        return RateController.getInstance().findAllWithFilter(filter);
+    public List<Rate> getRateFromUser(ObjectId userId) throws NotFoundException {
+        return RateController.getInstance().getRateFromUser(userId);
     }
 
     /**

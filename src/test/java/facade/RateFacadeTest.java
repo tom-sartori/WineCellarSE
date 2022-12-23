@@ -1,6 +1,5 @@
 package facade;
 
-import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,23 +13,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RateFacadeTest {
 
-    private final RateFacade facade = RateFacade.getInstance();
+    private final FacadeInterface facade = Facade.getInstance();
     private Rate rate;
-    private Rate rateTest;
     private Rate rateSubject;
     private Rate rateSubject2;
-    private ObjectId idsubjet;
 
     @BeforeEach
     void init() {
-        idsubjet = new ObjectId("6398c428ba6578737cbd9184");
+        ObjectId ownerRef = new ObjectId("6398c428ba6578737cbd9184");
         Calendar cal = Calendar.getInstance();
         cal.set(2022, Calendar.DECEMBER,13);
         Date date = cal.getTime();
         rate = new Rate(5, "il est très bon", false, date);
-        rateTest = new Rate(6, "il est incroyable", false, date);
-        rateSubject = new Rate(idsubjet,3, "bof", false, date );
-        rateSubject2 = new Rate(idsubjet,4, "pas mal du tout", false, date );
+        rateSubject = new Rate(ownerRef,3, "bof", false, date );
+        rateSubject2 = new Rate(ownerRef,4, "pas mal du tout", false, date );
     }
 
     @Test
@@ -81,20 +77,35 @@ public class RateFacadeTest {
         assertTrue(receivedRateList.contains(facade.getOneRate(idOfInsertedRate)));
     }
 
+    /**
+     * Test the getRateFromUser method.
+     */
     @Test
-    void test_find_with_filter() throws Exception {
-        BsonDocument filter = new BsonDocument();
-        filter.append("subject", new org.bson.BsonObjectId(idsubjet));
-        int initialNumberOfEvents = facade.getRateListWithFilter(filter).size();
+    void getRateFromUser(){
+        try {
+            ObjectId userId = rateSubject.getOwnerRef();
 
-        ObjectId idOfInsertedRate = facade.insertOneRate(rateSubject);
-        facade.insertOneRate(rateSubject);
-        facade.insertOneRate(rateSubject);
+            ObjectId rateId = facade.insertOneRate(rateSubject);
 
-        List<Rate> receivedRateList = facade.getRateListWithFilter(filter);
+            List<Rate> ratesFromUserBefore = facade.getRateFromUser(userId);
 
-        assertEquals(3 + initialNumberOfEvents, receivedRateList.size());
-        assertTrue(receivedRateList.contains(facade.getOneRate(idOfInsertedRate)));
+            int sizeBefore = ratesFromUserBefore.size();
+
+            ObjectId rateId1 = facade.insertOneRate(rateSubject);
+
+            List<Rate> ratesFromUserAfter = facade.getRateFromUser(userId);
+
+            int sizeAfter = ratesFromUserAfter.size();
+
+            assertEquals(sizeBefore + 1, sizeAfter);
+
+            // CLEAN UP
+
+            facade.deleteOneRate(rateId);
+            facade.deleteOneRate(rateId1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

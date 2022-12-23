@@ -11,6 +11,7 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.partner.Partner;
+import persistence.entity.rate.Rate;
 import persistence.entity.user.User;
 
 import java.util.List;
@@ -444,6 +445,72 @@ public class Facade implements FacadeInterface {
      */
     public ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         return BottleFacade.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
+    }
+
+    /**
+     * Insert a rate.
+     *
+     * @param rate The rate to insert.
+     * @return The id of the inserted rate.
+     */
+    @Override
+    public ObjectId insertOneRate(Rate rate) {
+        return RateFacade.getInstance().insertOneRate(rate);
+    }
+
+    /**
+     * Get all rates.
+     *
+     * @return A list of rates.
+     */
+    @Override
+    public List<Rate> getRateList() {
+        return RateFacade.getInstance().getRateList();
+    }
+
+    /**
+     * Get a rate by its id.
+     *
+     * @param id The id of the rate.
+     * @return The rate.
+     */
+    @Override
+    public Rate getOneRate(ObjectId id) {
+        return RateFacade.getInstance().getOneRate(id);
+    }
+
+    /**
+     * Get all the rates of a user.
+     *
+     * @param userId The id of the user.
+     *
+     * @return A list of all the rates of the user if there are any, otherwise throws a NotFoundException.
+     */
+    public List<Rate> getRateFromUser(ObjectId userId) throws NotFoundException {
+        return RateFacade.getInstance().getRateFromUser(userId);
+    }
+
+    /**
+     * Update a rate.
+     *
+     * @param id The id of the rate to update.
+     * @param rate The new rate.
+     * @return true if the rate has been updated, false otherwise.
+     */
+    @Override
+    public boolean updateOneRate(ObjectId id, Rate rate) {
+        return RateFacade.getInstance().updateOneRate(id, rate);
+    }
+
+    /**
+     * Delete a rate.
+     *
+     * @param id The id of the rate to delete.
+     * @return true if the rate has been deleted, false otherwise.
+     */
+    @Override
+    public boolean deleteOneRate(ObjectId id) {
+        return RateFacade.getInstance().deleteOneRate(id);
     }
 
 }
