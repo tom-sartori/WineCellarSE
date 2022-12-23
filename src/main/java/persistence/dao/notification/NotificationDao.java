@@ -9,13 +9,24 @@ import persistence.dao.AbstractDao;
 import persistence.entity.notification.Notification;
 import java.util.List;
 
-
+/**
+ * NotificationDao class extending Dao class parametrized with Notification class.
+ */
 public class NotificationDao extends AbstractDao<Notification> {
 
+	/**
+	 * Instance of NotificationDao to ensure Singleton design pattern.
+	 */
 	private static NotificationDao instance;
 
+	/**
+	 * Private constructor for NotificationDao to ensure Singleton design pattern.
+	 */
 	private NotificationDao() { }
 
+	/**
+	 * @return the instance of NotificationDao to ensure Singleton design pattern.
+	 */
 	public static NotificationDao getInstance() {
 		if (instance == null) {
 			instance = new NotificationDao();
@@ -23,24 +34,17 @@ public class NotificationDao extends AbstractDao<Notification> {
 		return instance;
 	}
 
+	/**
+	 * @return the constant name of the specific Collection (Notification).
+	 */
 	@Override
 	protected String getCollectionName() {
 		return CollectionNames.NOTIFICATION;
 	}
 
 	/**
-	 * Get all notifications of a user.
-	 *
-	 * @param userId The id of the user.
-	 *
-	 * @return A list of all the notifications of the user.
+	 * @return the class of the specific Entity (Notification).
 	 */
-	public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
-		BsonDocument filter = new BsonDocument();
-		filter.append("ownerRef", new org.bson.BsonObjectId(userId));
-		return findAllWithFilter(filter);
-	}
-
 	@Override
 	protected Class<Notification> getEntityClass() {
 		return Notification.class;
@@ -53,5 +57,20 @@ public class NotificationDao extends AbstractDao<Notification> {
 				Updates.set("read", entity.isRead()),
 				Updates.set("date", entity.getDate())
 		);
+	}
+
+	//methodes annexes
+
+	/**
+	 * Get all notifications of a user.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return A list of all the notifications of the user.
+	 */
+	public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
+		BsonDocument filter = new BsonDocument();
+		filter.append("ownerRef", new org.bson.BsonObjectId(userId));
+		return findAllWithFilter(filter);
 	}
 }
