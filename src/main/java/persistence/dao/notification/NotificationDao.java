@@ -7,11 +7,8 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import persistence.dao.AbstractDao;
 import persistence.entity.notification.Notification;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Updates.combine;
 
 public class NotificationDao extends AbstractDao<Notification> {
 

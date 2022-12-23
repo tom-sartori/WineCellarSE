@@ -2,7 +2,6 @@ package persistence.entity.notification;
 
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
-
 import java.util.Date;
 import java.util.Objects;
 

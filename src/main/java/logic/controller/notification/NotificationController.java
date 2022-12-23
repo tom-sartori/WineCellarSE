@@ -1,15 +1,9 @@
 package logic.controller.notification;
 
 import logic.controller.AbstractController;
-import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.dao.cellar.CellarDAO;
 import persistence.dao.notification.NotificationDao;
-import persistence.entity.Entity;
-import persistence.entity.cellar.Cellar;
 import persistence.entity.notification.Notification;
-
-import java.util.Collections;
 import java.util.List;
 
 /**

@@ -1,10 +1,7 @@
 package facade;
 
-import logic.controller.cellar.CellarController;
 import logic.controller.notification.NotificationController;
-import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.entity.cellar.Cellar;
 import persistence.entity.notification.Notification;
 
 import java.util.List;
