@@ -16,8 +16,6 @@ public class Guide implements Entity<Guide>{
     private GuideCategory category;
     private Date creationDate;
 
-    public Guide() {
-    }
 
     public Guide(String title, LinkedHashMap<String, List<String>> sectionList, GuideCategory category, Date creationDate) {
         this.title = title;

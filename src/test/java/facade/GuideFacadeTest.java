@@ -24,6 +24,9 @@ class GuideFacadeTest {
         guide = new Guide("test", sectionMap, GuideCategory.TUTORIAL,new Date());
     }
 
+    /**
+     * Test the insertOneGuide method.
+     */
     @Test
     void insertOneGuide() {
         ObjectId idShouldBeOverridden = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
@@ -39,6 +42,9 @@ class GuideFacadeTest {
         assertEquals(guide.getSectionList(), receivedGuide.getSectionList());
     }
 
+    /**
+     * Test l'ajout d'une section.
+     */
     @Test
     void ajoutSection() {
 
@@ -71,6 +77,9 @@ class GuideFacadeTest {
         assertEquals(receivedGuide.getSectionList(), updatedGuide.getSectionList());
     }
 
+    /**
+     * Test l'ajout de section par index : si on veut ajouter une section dans un ordre précis.
+     */
     @Test
     void ajoutSectionParIndex(){
         ObjectId idOfInsertedGuide = facade.insertOneGuide(guide);
@@ -128,6 +137,9 @@ class GuideFacadeTest {
         assertEquals(newMap, mapBonOrdre);
     }
 
+    /**
+     * Test the getGuideList method.
+     */
     @Test
     void test_findAll_OK() {
         int initialNumberOfGuides = facade.getGuideList().size();
@@ -142,6 +154,9 @@ class GuideFacadeTest {
         assertTrue(receivedGuideList.contains(facade.getOneGuide(idOfInsertedGuide)));
     }
 
+    /**
+     * Test the getOneGuide method.
+     */
     @Test
     void test_findOne_OK() {
         ObjectId idOfInsertedGuide = facade.insertOneGuide(guide);
@@ -154,6 +169,9 @@ class GuideFacadeTest {
 
     }
 
+    /**
+     * Test the updateOneGuide method.
+     */
     @Test
     void test_update_OK() {
         ObjectId idOfInsertedGuide = facade.insertOneGuide(guide);
@@ -178,6 +196,9 @@ class GuideFacadeTest {
 
     }
 
+    /**
+     * Test the deleteOneGuide method.
+     */
     @Test
     void test_delete_OK() {
         ObjectId guideIdInserted = facade.insertOneGuide(guide);
