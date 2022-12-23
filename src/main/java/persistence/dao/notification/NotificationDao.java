@@ -1,7 +1,10 @@
 package persistence.dao.notification;
 
+import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
+import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import persistence.dao.AbstractDao;
 import persistence.entity.notification.Notification;
 
@@ -25,8 +28,20 @@ public class NotificationDao extends AbstractDao<Notification> {
 
 	@Override
 	protected String getCollectionName() {
-		/// TODO : Add this constant in the file CollectionNames.java.
 		return CollectionNames.NOTIFICATION;
+	}
+
+	/**
+	 * Get all notifications of a user.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return A list of all the notifications of the user.
+	 */
+	public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
+		BsonDocument filter = new BsonDocument();
+		filter.append("ownerRef", new org.bson.BsonObjectId(userId));
+		return findAllWithFilter(filter);
 	}
 
 	@Override
@@ -36,18 +51,10 @@ public class NotificationDao extends AbstractDao<Notification> {
 
 	@Override
 	protected Bson getSetOnUpdate(Notification entity) {
-		/// TODO : Set this method.
-		List<Bson> updateList = new ArrayList<>();
-
-		/// TODO : Do like this for attributes of the entity.
-//		updateList.add(Updates.set("name", entity.getName()));
-
-		/// TODO : Do like this for nullable attributes.
-//		if (entity.getDescription() != null) {
-//			// Nullable attribute.
-//			updateList.add(Updates.set("description", entity.getDescription()));
-//		}
-
-		return combine(updateList);
+		return Updates.combine(
+				Updates.set("message", entity.getMessage()),
+				Updates.set("read", entity.isRead()),
+				Updates.set("date", entity.getDate())
+		);
 	}
 }

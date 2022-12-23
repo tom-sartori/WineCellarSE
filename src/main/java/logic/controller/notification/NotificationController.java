@@ -1,8 +1,16 @@
 package logic.controller.notification;
 
 import logic.controller.AbstractController;
+import org.bson.BsonDocument;
+import org.bson.types.ObjectId;
+import persistence.dao.cellar.CellarDAO;
 import persistence.dao.notification.NotificationDao;
+import persistence.entity.Entity;
+import persistence.entity.cellar.Cellar;
 import persistence.entity.notification.Notification;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * NotificationController class extending Controller class parametrized with Notification class.
@@ -35,5 +43,17 @@ public class NotificationController extends AbstractController<Notification> {
     @Override
     protected NotificationDao getDao() {
         return NotificationDao.getInstance();
+    }
+
+
+    /**
+     * Get all the notifications of a user.
+     *
+     * @param userId The id of the user.
+     *
+     * @return A list of all the notifications of the user.
+     */
+    public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
+        return NotificationDao.getInstance().getNotificationFromUser(userId);
     }
 }

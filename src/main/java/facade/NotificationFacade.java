@@ -1,7 +1,10 @@
 package facade;
 
+import logic.controller.cellar.CellarController;
 import logic.controller.notification.NotificationController;
+import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
+import persistence.entity.cellar.Cellar;
 import persistence.entity.notification.Notification;
 
 import java.util.List;
@@ -10,8 +13,6 @@ import java.util.List;
  * Specific facade for Notifications.
  */
 class NotificationFacade {
-    /// TODO : Be sure that you need every methods which are generated in this class. If not, remove them.
-    /// TODO : After that, update Facade and FacadeInterface with those methods.
 
     /**
      * Singleton instance.
@@ -49,6 +50,18 @@ class NotificationFacade {
      */
     protected List<Notification> getNotificationList() {
         return NotificationController.getInstance().findAll();
+    }
+
+
+    /**
+     * Get all the notifications of a user.
+     *
+     * @param userId The id of the user.
+     *
+     * @return A list of all the notifications of the user.
+     */
+    public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
+        return NotificationController.getInstance().getNotificationFromUser(userId);
     }
 
     /**
