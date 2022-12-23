@@ -4,7 +4,6 @@ import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 import persistence.entity.cellar.Cellar;
-import persistence.entity.user.User;
 
 import java.util.List;
 import java.util.Objects;
