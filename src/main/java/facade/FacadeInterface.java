@@ -4,8 +4,6 @@ import org.bson.types.ObjectId;
 import persistence.entity.guide.Guide;
 import persistence.entity.partner.Partner;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**

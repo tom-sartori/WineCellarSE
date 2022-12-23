@@ -5,13 +5,20 @@ import persistence.dao.AbstractDao;
 import persistence.entity.guide.Guide;
 import org.bson.conversions.Bson;
 
-/// TODO : Comments.
 public class GuideDao extends AbstractDao<Guide> {
 
     private static GuideDao instance;
 
+    /**
+     * Singleton instance.
+     */
     private GuideDao() { }
 
+    /**
+     * Get the singleton instance of the DAO.
+     *
+     * @return The singleton instance.
+     */
     public static GuideDao getInstance() {
         if (instance == null) {
             instance = new GuideDao();
@@ -39,3 +46,9 @@ public class GuideDao extends AbstractDao<Guide> {
 
 
 }
+
+
+
+
+
+
