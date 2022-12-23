@@ -1,14 +1,9 @@
 package logic.controller.guide;
 
 import logic.controller.AbstractController;
-import org.bson.types.ObjectId;
 import persistence.dao.guide.GuideDao;
 import persistence.entity.guide.Guide;
 import persistence.dao.AbstractDao;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * GuideController class extending Controller class parametized with Guide class.
@@ -44,11 +39,4 @@ public class GuideController extends AbstractController<Guide> {
         return GuideDao.getInstance();
     }
 
-    protected GuideDao getGuideDao() {
-        return GuideDao.getInstance();
-    }
-
-    public void removeSection(String title){
-
-    }
 }
