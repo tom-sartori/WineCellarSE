@@ -47,6 +47,7 @@ public class Company implements Entity<Company> {
 	@Override
 	public void handleOnCreate() {
 		setId(null);
+		setAccessible(false);
 	}
 
 	public ObjectId getId() {
