@@ -507,10 +507,12 @@ class CellarFacadeTest {
     @Test
     void getPublicCellars() {
         try {
+            ObjectId objectId = facade.insertOneCellar(cellar);
+
             List<Cellar> cellarListBefore = facade.getPublicCellars();
 
             cellar.setPublic(false);
-            ObjectId objectId = facade.insertOneCellar(cellar);
+
             ObjectId objectId1 = facade.insertOneCellar(cellar);
             ObjectId objectId2 = facade.insertOneCellar(cellar);
 
