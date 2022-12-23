@@ -39,7 +39,7 @@ public class CompanyDao extends AbstractDao<Company> {
 	protected List<Company> findAllCompaniesByAccessibility(boolean isAccessible) {
 		BsonDocument filter = new BsonDocument();
 
-		filter.append("isAccessible", new BsonBoolean(isAccessible));
+		filter.append("accessible", new BsonBoolean(isAccessible));
 
 		return super.findAllWithFilter(filter);
 	}
