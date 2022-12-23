@@ -16,8 +16,8 @@ public class Company implements Entity<Company> {
 	private String type;
 	private String address;
 	private boolean isAccessible;
-	private User masterManager;
-	private List<User> managerList;
+	private ObjectId masterManager;
+	private List<ObjectId> managerList;
 	private Cellar cellar;
 	@Nullable
 	private String phoneNumber;
@@ -30,7 +30,7 @@ public class Company implements Entity<Company> {
 
 	public Company() { }
 
-	public Company(String name, String type, String address, boolean isAccessible, User masterManager, List<User> managerList, Cellar cellar, @Nullable String phoneNumber, @Nullable String description, @Nullable String websiteLink, @Nullable String logoLink) {
+	public Company(String name, String type, String address, boolean isAccessible, ObjectId masterManager, List<ObjectId> managerList, Cellar cellar, @Nullable String phoneNumber, @Nullable String description, @Nullable String websiteLink, @Nullable String logoLink) {
 		this.name = name;
 		this.type = type;
 		this.address = address;
@@ -90,19 +90,19 @@ public class Company implements Entity<Company> {
 		isAccessible = accessible;
 	}
 
-	public User getMasterManager() {
+	public ObjectId getMasterManager() {
 		return masterManager;
 	}
 
-	public void setMasterManager(User masterManager) {
+	public void setMasterManager(ObjectId masterManager) {
 		this.masterManager = masterManager;
 	}
 
-	public List<User> getManagerList() {
+	public List<ObjectId> getManagerList() {
 		return managerList;
 	}
 
-	public void setManagerList(List<User> managerList) {
+	public void setManagerList(List<ObjectId> managerList) {
 		this.managerList = managerList;
 	}
 
