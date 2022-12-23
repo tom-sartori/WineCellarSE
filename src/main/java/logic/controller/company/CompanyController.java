@@ -43,7 +43,6 @@ public class CompanyController extends AbstractController<Company> {
         return CompanyDao.getInstance();
     }
 
-    // TODO COMMENT AND TEST
     // TODO Only available to current masterManager
     /**
      * Promote a user to masterManager.
@@ -79,7 +78,6 @@ public class CompanyController extends AbstractController<Company> {
         }
     }
 
-    // TODO TEST
     // TODO available only for Admin
     // TODO SEND NOTIF
     /**
@@ -112,7 +110,6 @@ public class CompanyController extends AbstractController<Company> {
         }
     }
 
-    // TODO TEST
     // TODO available only for Admin
     // TODO SEND NOTIF
     /**

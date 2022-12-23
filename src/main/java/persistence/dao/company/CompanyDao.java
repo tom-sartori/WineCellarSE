@@ -28,7 +28,6 @@ public class CompanyDao extends AbstractDao<Company> {
 		return instance;
 	}
 
-	// TODO TEST
 	/**
 	 * Get the list of companies that are accessible or not depending on parameter
 	 *
@@ -44,7 +43,6 @@ public class CompanyDao extends AbstractDao<Company> {
 		return super.findAllWithFilter(filter);
 	}
 
-	// TODO TEST
 	/**
 	 * Return the list of companies that are accessible.
 	 *
@@ -54,7 +52,6 @@ public class CompanyDao extends AbstractDao<Company> {
 		return findAllCompaniesByAccessibility(true);
 	}
 
-	// TODO TEST
 	/**
 	 * Return the list of companies that are not accessible.
 	 *
@@ -64,7 +61,6 @@ public class CompanyDao extends AbstractDao<Company> {
 		return findAllCompaniesByAccessibility(false);
 	}
 
-	// TODO TEST
 	// TODO SEND NOTIF
 	/**
 	 * Add a manager to a company.
@@ -79,7 +75,6 @@ public class CompanyDao extends AbstractDao<Company> {
 		return addOrRemoveFromSet(companyId, managerId, "managerList", true);
 	}
 
-	// TODO TEST
 	// TODO SEND NOTIF
 	/**
 	 * Removes a manager from a company.
