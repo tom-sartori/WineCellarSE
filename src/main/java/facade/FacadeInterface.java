@@ -367,4 +367,70 @@ public interface FacadeInterface {
 	 */
 	boolean deleteOneCompany(ObjectId id);
 
+	/**
+	 * Return the list of companies that are accessible.
+	 *
+	 * @return The list of accessible companies if any, throws a NotFoundException otherwise.
+	 */
+	List<Company> findAllAccessibleCompanies();
+
+	/**
+	 * Return the list of companies that are not accessible.
+	 *
+	 * @return The list of companies that are not accessible if there are any, a NotFoundException is thrown otherwise.
+	 */
+	List<Company> findAllUnaccessibleCompanies();
+
+	/**
+	 * Add a manager to a company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param managerId The id of the manager to add.
+	 *
+	 * @return The id of the updated company if the manager was added, throws a BadArgumentsException otherwise.
+	 * @throws BadArgumentsException if the manager was not added.
+	 */
+	ObjectId addManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException;
+
+	/**
+	 * Removes a manager from a company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param managerId The id of the manager.
+	 *
+	 * @return The id of the company if the manager was removed successfully, else throws a BadArgumentsException.
+	 * @throws BadArgumentsException If the company or the manager does not exist.
+	 */
+	ObjectId removeManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException;
+
+	/**
+	 * Refuse a request to publish a new Company.
+	 *
+	 * @param companyId The id of the company to refuse.
+	 *
+	 * @return The id of the refused company if the operation was successful, else throw an exception.
+	 * @throws BadArgumentsException If the company does not exist or if the company has already been accepted by an Admin.
+	 */
+	ObjectId refuseRequest(ObjectId companyId) throws BadArgumentsException;
+
+	/**
+	 *  Accept a request to create a Company.
+	 *
+	 * @param companyId The id of the company to accept.
+	 *
+	 * @return The id of the accepted company if the operation is successful, else throws an exception.
+	 * @throws BadArgumentsException If the company does not exist or if the company is already accepted.
+	 */
+	ObjectId acceptRequest(ObjectId companyId) throws BadArgumentsException;
+
+	/**
+	 * Promote a user to masterManager.
+	 *
+	 * @param companyId The id of the company.
+	 * @param newMasterManagerId The id of the new masterManager.
+	 *
+	 * @return The id of the updated company if the promotion was successful, throws a BadArgumentsException otherwise.
+	 * @throws BadArgumentsException if the user or the company doesn't exist.
+	 */
+	ObjectId promoteNewMasterManager(ObjectId companyId, ObjectId newMasterManagerId) throws BadArgumentsException;
 }
