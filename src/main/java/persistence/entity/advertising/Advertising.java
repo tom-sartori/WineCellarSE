@@ -151,21 +151,4 @@ public class Advertising implements Entity<Advertising> {
 	public int compareTo(Advertising o) {
 		return name.compareTo(o.name);
 	}
-
-	@Override
-	public String toString() {
-		return "Advertising{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
-				", url=" + url +
-				", link='" + link + '\'' +
-				", startDate=" + startDate +
-				", endDate=" + endDate +
-				", nbViews=" + nbViews +
-				", price=" + price +
-				", isActive=" + isActive +
-				", isPayed=" + isPayed +
-				'}';
-	}
 }
