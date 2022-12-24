@@ -45,12 +45,7 @@ public class ReferencingDao extends AbstractDao<Referencing> {
 		updateList.add(Updates.set("id", entity.getId()));
 		updateList.add(Updates.set("status", entity.getStatus()));
 		updateList.add(Updates.set("importanceLevel", entity.getImportanceLevel()));
-
-		/// TODO : Do like this for nullable attributes.
-//		if (entity.getDescription() != null) {
-//			// Nullable attribute.
-//			updateList.add(Updates.set("description", entity.getDescription()));
-//		}
+		updateList.add(Updates.set("company", entity.getCompany()));
 
 		return combine(updateList);
 	}

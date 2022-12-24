@@ -71,6 +71,16 @@ class ReferencingFacade {
     }
 
     /**
+     * Get referencings by their company id.
+     *
+     * @param company The id of the referenced company.
+     * @return A list of referencings.
+     */
+    protected List<Referencing> getReferencingByCompany(ObjectId company) {
+        return ReferencingController.getInstance().findAllByCompany(company);
+    }
+
+    /**
      * Update a referencing.
      *
      * @param id The id of the referencing to update.

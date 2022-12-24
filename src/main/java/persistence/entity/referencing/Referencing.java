@@ -17,10 +17,11 @@ public class Referencing implements Entity<Referencing> {
 	private String status;
 	private int importanceLevel;
 
+	private ObjectId company;
+
 	public ObjectId getId() {
 		return id;
 	}
-
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
@@ -65,6 +66,14 @@ public class Referencing implements Entity<Referencing> {
 		this.status = status;
 	}
 
+	public ObjectId getCompany() {
+		return company;
+	}
+
+	public void setCompany(ObjectId company) {
+		this.company = company;
+	}
+
 	@Override
 	public void handleOnCreate() {
 		this.id = null;
@@ -84,13 +93,14 @@ public class Referencing implements Entity<Referencing> {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Referencing that = (Referencing) o;
-		return Double.compare(that.price, price) == 0 && importanceLevel == that.importanceLevel && Objects.equals(id, that.id) && Objects.equals(paymentDate, that.paymentDate) && Objects.equals(startDate, that.startDate) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(status, that.status);
+		return Double.compare(that.price, price) == 0 && importanceLevel == that.importanceLevel && Objects.equals(id, that.id) && Objects.equals(paymentDate, that.paymentDate) && Objects.equals(startDate, that.startDate) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(status, that.status) && Objects.equals(company, that.company);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, price, paymentDate, startDate, expirationDate, status, importanceLevel);
+		return Objects.hash(id, price, paymentDate, startDate, expirationDate, status, importanceLevel, company);
 	}
+
 	@Override
 	public int compareTo(Referencing o) {
 		return importanceLevel-o.getImportanceLevel();

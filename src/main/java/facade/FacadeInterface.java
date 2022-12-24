@@ -111,6 +111,13 @@ public interface FacadeInterface {
 	List<Referencing> getReferencingByLevel(int importanceLevel);
 
 	/**
+	 * Get referencings by their company id.
+	 *
+	 * @param company The id of the referenced company.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByCompany(ObjectId company);
+	/**
 	 * Update a referencing.
 	 *
 	 * @param id The id of the referencing to update.

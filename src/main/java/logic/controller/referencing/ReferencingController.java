@@ -47,6 +47,18 @@ public class ReferencingController extends AbstractController<Referencing> {
         return getDao().findAllWithFilter(filter);
     }
 
+    /**
+     * Get referencings by their company id.
+     *
+     * @param company The id of the referenced company.
+     * @return A list of referencings.
+     */
+    public List<Referencing> findAllByCompany(ObjectId company) {
+        BsonDocument filter = new BsonDocument();
+        filter.append("company", new org.bson.BsonObjectId(company));
+        return getDao().findAllWithFilter(filter);
+    }
+
     public boolean updateStatus(ObjectId id, Referencing referencing){
         Date now = new Date();
         if(referencing.getStartDate().before(now)){

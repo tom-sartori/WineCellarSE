@@ -187,6 +187,16 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Get referencings by their company id.
+     *
+     * @param company The id of the referenced company.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingByCompany(ObjectId company) {
+        return ReferencingFacade.getInstance().getReferencingByCompany(company);
+    }
+
+    /**
      * Update a referencing.
      *
      * @param id The id of the referencing to update.

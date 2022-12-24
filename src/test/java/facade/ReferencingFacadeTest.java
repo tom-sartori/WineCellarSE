@@ -31,10 +31,12 @@ class ReferencingFacadeTest {
         Calendar cal2 = Calendar.getInstance();
         cal2.set(2023, Calendar.JANUARY,17);
         Date fin = cal2.getTime();
+        ObjectId company = new ObjectId("63a5c45048f0c9194a9295ef");
         referencing.setStartDate(debut);
         referencing.setPaymentDate(payment);
         referencing.setImportanceLevel(1);
         referencing.setExpirationDate(fin);
+        referencing.setCompany(company);
     }
 
     @Test
@@ -50,6 +52,7 @@ class ReferencingFacadeTest {
         Referencing receivedEvent = facade.getOneReferencing(idReceivedAfterCreation);
         assertEquals(referencing.getStartDate(), receivedEvent.getStartDate());
         assertEquals(referencing.getPaymentDate(), receivedEvent.getPaymentDate());
+        facade.deleteOneReferencing(idReceivedAfterCreation);
     }
 
     @Test
@@ -57,13 +60,16 @@ class ReferencingFacadeTest {
         int initialNumberOfReferencing = facade.getReferencingList().size();
 
         ObjectId idOfInsertedReferencing = facade.insertOneReferencing(referencing);
-        facade.insertOneReferencing(referencing);
-        facade.insertOneReferencing(referencing);
+        ObjectId id2 = facade.insertOneReferencing(referencing);
+        ObjectId id3 = facade.insertOneReferencing(referencing);
 
         List<Referencing> receivedReferencingList = facade.getReferencingList();
 
         assertEquals(3 + initialNumberOfReferencing, receivedReferencingList.size());
         assertTrue(receivedReferencingList.contains(facade.getOneReferencing(idOfInsertedReferencing)));
+        facade.deleteOneReferencing(idOfInsertedReferencing);
+        facade.deleteOneReferencing(id2);
+        facade.deleteOneReferencing(id3);
     }
 
     @Test
@@ -78,7 +84,7 @@ class ReferencingFacadeTest {
         assertEquals(referencing.getStatus(), receivedReferencing.getStatus());
         assertEquals(referencing.getExpirationDate(), receivedReferencing.getExpirationDate());
         assertEquals(referencing.getPaymentDate(), receivedReferencing.getPaymentDate());
-
+        facade.deleteOneReferencing(idOfInsertedReferencing);
     }
 
     @Test
@@ -111,6 +117,7 @@ class ReferencingFacadeTest {
         assertEquals(receivedEvent.getExpirationDate(), updatedReferencing.getExpirationDate());
         assertEquals(receivedEvent.getStartDate(), updatedReferencing.getStartDate());
         assertEquals(receivedEvent.getImportanceLevel(), updatedReferencing.getImportanceLevel());
+        facade.deleteOneReferencing(idOfInsertedReferencing);
     }
 
     @Test
@@ -147,6 +154,8 @@ class ReferencingFacadeTest {
         facade.updateStatus(idOfInsertedReferencing, referencing);
         Referencing updatedPasse = facade.getOneReferencing(idOfInsertedReferencing);
         assertEquals(updatedPasse.getStatus(), "Passe");
+
+        facade.deleteOneReferencing(idOfInsertedReferencing);
     }
 
     @Test
@@ -164,13 +173,37 @@ class ReferencingFacadeTest {
     @Test
     void test_findByLevel_OK() {
 
-        referencing.setImportanceLevel(11);
+        referencing.setImportanceLevel(1);
         ObjectId idOfInsertedReferencing = facade.insertOneReferencing(referencing);
+        referencing.setImportanceLevel(12);
+        ObjectId idOfInsertedReferencing1 = facade.insertOneReferencing(referencing);
         ObjectId idOfInsertedReferencing2 = facade.insertOneReferencing(referencing);
         ObjectId idOfInsertedReferencing3 = facade.insertOneReferencing(referencing);
 
-        List<Referencing> referencingList = facade.getReferencingByLevel(11);
+        List<Referencing> referencingList = facade.getReferencingByLevel(12);
 
         assertEquals(referencingList.size(), 3);
+        facade.deleteOneReferencing(idOfInsertedReferencing);
+        facade.deleteOneReferencing(idOfInsertedReferencing2);
+        facade.deleteOneReferencing(idOfInsertedReferencing3);
+        facade.deleteOneReferencing(idOfInsertedReferencing1);
+    }
+
+    @Test
+    void test_findByCompany_OK() {
+        ObjectId company = new ObjectId("63a5ce5496a16445da19e223");
+        ObjectId company2 = new ObjectId("63a5ce5496a16445da19e224");
+        referencing.setCompany(company);
+        ObjectId idOfInsertedReferencing = facade.insertOneReferencing(referencing);
+        referencing.setCompany(company2);
+        ObjectId idOfInsertedReferencing2 = facade.insertOneReferencing(referencing);
+        ObjectId idOfInsertedReferencing3 = facade.insertOneReferencing(referencing);
+
+        List<Referencing> referencingList = facade.getReferencingByCompany(company);
+
+        assertEquals(referencingList.size(), 1);
+        facade.deleteOneReferencing(idOfInsertedReferencing);
+        facade.deleteOneReferencing(idOfInsertedReferencing2);
+        facade.deleteOneReferencing(idOfInsertedReferencing3);
     }
 }
