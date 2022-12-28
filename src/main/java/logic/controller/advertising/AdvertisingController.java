@@ -44,8 +44,10 @@ public class AdvertisingController extends AbstractController<Advertising> {
      */
     public boolean renewOneAdvertising(ObjectId id, Date endDate) {
         Advertising updated = getDao().findOne(id);
+        updated.setPrice((updated.getEndDate().getTime() - endDate.getTime())/(8640000));
         updated.setEndDate(endDate);
         updated.setActive(true);
+        updated.setPayed(false);
         return this.updateOne(id, updated);
     }
 
