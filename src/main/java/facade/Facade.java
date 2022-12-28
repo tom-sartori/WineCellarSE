@@ -160,7 +160,7 @@ public class Facade implements FacadeInterface {
     }
 
     /**
-     * add a view to an advertising.
+     * Add a view to an advertising.
      *
      * @param id The id of the advertising.
      * @return true if the view was added to the advertising, false otherwise.
@@ -170,7 +170,7 @@ public class Facade implements FacadeInterface {
     }
 
     /**
-     * validate an advertising.
+     * Validate an advertising.
      *
      * @param id The id of the advertising to validate.
      * @return true if the advertising has been validated, false otherwise.
