@@ -7,8 +7,8 @@ import persistence.entity.Entity;
 public class Sample implements Entity<Sample> {
 
 	/// TODO : Set the fields that you need for your entity.
-	public ObjectId id;
-	public String name;
+	private ObjectId id;
+	private String name;
 //	@Nullable
 //	public String description;
 

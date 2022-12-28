@@ -1,13 +1,13 @@
 package ui.app.helpers.services;
 
-import java.util.ArrayList;
-
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import ui.Starter;
+
+import java.util.ArrayList;
 
 /*
  * This class helps get FXML components from the main scene and can call functions from different controllers to change then.
@@ -74,7 +74,17 @@ public  class CustomSceneHelper {
     public void bringNodeToFront(String nodeName, String appendingText) {   //Appending text is the suffix of node name, such as "Page" or "Button" (first letter capiatlized).
         nodeName = convertNameToID(nodeName, appendingText);
         setMainScene();
-        getNodeById(nodeName).toFront();
+
+        Node node = getNodeById(nodeName);
+        node.toFront();
+        while (! node.getParent().getId().equals("contentAreaPane")) {
+            node = node.getParent();
+            node.toFront();
+        }
+    }
+
+    public void bringNodeToFront(String nodeName) {
+        bringNodeToFront(nodeName, "");
     }
 
     //Adds a white line at the bottom border of the tab to look like it is in front of the other tab.

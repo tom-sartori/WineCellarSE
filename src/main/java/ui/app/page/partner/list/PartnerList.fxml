@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import java.net.URL?>
+<AnchorPane id="partnerList" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.partner.list.PartnerList">
+    <stylesheets>
+        <URL value="@/ui/app/page/partner/list/PartnerList.css" />
+    </stylesheets>
+
+    <children>
+        <Rectangle fill="#0d47a1" height="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Nos partenaires" />
+        <ScrollPane layoutX="4.0" layoutY="47.0" prefHeight="575.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <GridPane fx:id="cardHolder" alignment="TOP_CENTER" layoutX="12.0" layoutY="109.0" />
+        </ScrollPane>
+    </children>
+</AnchorPane>

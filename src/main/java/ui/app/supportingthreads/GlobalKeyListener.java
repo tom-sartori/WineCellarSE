@@ -1,13 +1,13 @@
 package ui.app.supportingthreads;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import ui.app.helpers.abstractsandenums.Routine;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
+import ui.app.helpers.abstractsandenums.Routine;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GlobalKeyListener extends Thread implements NativeKeyListener {
     private Routine routine;

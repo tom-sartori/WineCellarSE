@@ -1,8 +1,8 @@
 package logic.controller;
 
-import persistence.entity.Entity;
-import persistence.dao.Dao;
 import org.bson.types.ObjectId;
+import persistence.dao.Dao;
+import persistence.entity.Entity;
 
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +53,6 @@ public abstract class AbstractController<T extends Entity<T>> implements Control
         Collections.sort(all);
         return all;
     }
-
     /**
      * Generic implementation to update one entity of the parametrized type.
      *

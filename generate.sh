@@ -2,9 +2,8 @@
 
 # Source file copied : Sample
 
-# if $1 and $2 are set
-if [ -z "$1" ]
-then
+# if something else than $1 is set, then exit.
+if [ $# -ne 1 ]; then
     echo "Invalid arguments. "
     echo "\$1 = you should specify the target you want. Example : User. "
     echo "You must set the first letter in upper case. "
@@ -70,4 +69,5 @@ echo "Update CollectionNames with CollectionNames.$targetUpper. "
 echo "Update function getSetOnUpdate() from $1Dao.java. "
 echo "Be sure that you need every function in $1Facade.java. "
 echo "Update Facade and FacadeInterface with functions from $1Facade.java. "
-eche "TODO : Check every TODO which have been added if there still relevant. "
+echo "TODO : Check every TODO which have been added if there still relevant. "
+echo "TODO : Test file. "

@@ -1,9 +1,9 @@
 package logic.controller.partner;
 
 import logic.controller.AbstractController;
-import persistence.entity.partner.Partner;
 import persistence.dao.AbstractDao;
 import persistence.dao.partner.PartnerDao;
+import persistence.entity.partner.Partner;
 
 /**
  * PartnerController class extending Controller class parametrized with Partner class.

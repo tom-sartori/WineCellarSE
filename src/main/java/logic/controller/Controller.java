@@ -1,7 +1,7 @@
 package logic.controller;
 
-import persistence.entity.Entity;
 import org.bson.types.ObjectId;
+import persistence.entity.Entity;
 
 import java.util.List;
 
@@ -29,6 +29,7 @@ public interface Controller<T extends Entity<T>> {
 	 */
 	T findOne(ObjectId id);
 
+
 	/**
 	 * Find all entities of the parametrized type.
 	 *
@@ -36,7 +37,7 @@ public interface Controller<T extends Entity<T>> {
 	 */
 	List<T> findAll();
 
-	/**
+    /**
 	 * Update one entity of the parametrized type.
 	 *
 	 * @param id The id of the entity to update.

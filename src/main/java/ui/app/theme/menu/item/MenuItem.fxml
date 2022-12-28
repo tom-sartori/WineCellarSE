@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<AnchorPane id="menuItemPage" fx:id="menuItem" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/ui/app/theme/menu/item/MenuItem.css" />
+    </stylesheets>
+    <children>
+        <SplitMenuButton fx:id="menuButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="140.0" text="SplitMenuButton" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <items/>
+        </SplitMenuButton>
+    </children>
+</AnchorPane>
