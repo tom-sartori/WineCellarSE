@@ -1,5 +1,11 @@
 package ui.app.theme.menu;
 
+import ui.app.page.cellar.CellarPage;
+import ui.app.page.cellar.cellarbyuser.CellarByUser;
+import ui.app.page.cellar.details.CellarDetails;
+import ui.app.page.cellar.form.CellarForm;
+import ui.app.page.cellar.publiccellars.PublicCellars;
+import ui.app.page.cellar.updatecellar.UpdateCellarForm;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
@@ -11,7 +17,14 @@ public enum MenuEnum {
 	USER("Utilisateur"),
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Login", Login.class, USER),
-	PARTNER("Partenaires", PartnerPage.class);
+	PARTNER("Partenaires", PartnerPage.class),
+	CELLAR("Caves", CellarPage.class),
+	CELLAR_FORM("Ajouter une cave", CellarForm.class, CELLAR),
+	USER_CELLAR("Mes Caves", CellarByUser.class, CELLAR),
+	CELLAR_DETAILS("Détail d'une cave",CellarDetails .class, CELLAR),
+	PUBLIC_CELLARS("Caves publiques", PublicCellars.class, CELLAR),
+	UPDATE_CELLAR("Modifier une cave", UpdateCellarForm.class, CELLAR),
+	CREATE_BOTTLE("Créer une bouteille", UpdateCellarForm.class, CELLAR);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

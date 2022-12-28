@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.layout.BorderPane?>
+<AnchorPane fx:id="cellarDetails" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.details.CellarDetails">
+    <stylesheets>
+        <URL value="@/ui/app/page/cellar/details/CellarDetails.css" />
+    </stylesheets>
+    <children>
+        <Button layoutX="50" layoutY="15.0" mnemonicParsing="false" onAction="#refresh" text="refresh" />
+        <ScrollPane layoutY="98.0" prefHeight="530.0" prefWidth="1280.0" style="-fx-background-color: #fff;">
+            <content>
+                <BorderPane fx:id="scrollableBorderPane" minHeight="530.0" prefWidth="1260.0" style="-fx-background-color: #fff;" />
+            </content>
+        </ScrollPane>
+        <Label fx:id="cellarName" layoutX="567.0" layoutY="23.0" text="Detail of ">
+            <font>
+                <Font size="35.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
