@@ -60,8 +60,8 @@ class RateFacade {
      *
      * @return A list of all the rates of the user if there are any, otherwise throws a NotFoundException.
      */
-    public List<Rate> getRateFromUser(ObjectId userId) throws NotFoundException {
-        return RateController.getInstance().getRateFromUser(userId);
+    public List<Rate> getListRateFromUser(ObjectId userId) throws NotFoundException {
+        return RateController.getInstance().getListRateFromUser(userId);
     }
 
     /**

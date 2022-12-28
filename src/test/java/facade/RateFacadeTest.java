@@ -78,22 +78,22 @@ public class RateFacadeTest {
     }
 
     /**
-     * Test the getRateFromUser method.
+     * Test the getListRateFromUser method.
      */
     @Test
-    void getRateFromUser(){
+    void getListRateFromUser(){
         try {
             ObjectId userId = rateSubject.getOwnerRef();
 
             ObjectId rateId = facade.insertOneRate(rateSubject);
 
-            List<Rate> ratesFromUserBefore = facade.getRateFromUser(userId);
+            List<Rate> ratesFromUserBefore = facade.getListRateFromUser(userId);
 
             int sizeBefore = ratesFromUserBefore.size();
 
             ObjectId rateId1 = facade.insertOneRate(rateSubject);
 
-            List<Rate> ratesFromUserAfter = facade.getRateFromUser(userId);
+            List<Rate> ratesFromUserAfter = facade.getListRateFromUser(userId);
 
             int sizeAfter = ratesFromUserAfter.size();
 

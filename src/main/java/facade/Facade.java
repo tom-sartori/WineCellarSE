@@ -486,8 +486,8 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all the rates of the user if there are any, otherwise throws a NotFoundException.
      */
-    public List<Rate> getRateFromUser(ObjectId userId) throws NotFoundException {
-        return RateFacade.getInstance().getRateFromUser(userId);
+    public List<Rate> getListRateFromUser(ObjectId userId) throws NotFoundException {
+        return RateFacade.getInstance().getListRateFromUser(userId);
     }
 
     /**
