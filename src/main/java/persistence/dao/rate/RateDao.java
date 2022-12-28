@@ -72,7 +72,7 @@ public class RateDao extends AbstractDao<Rate> {
 	 *
 	 * @return A list of all the rates of the user if there are any, otherwise throws a NotFoundException.
 	 */
-	public List<Rate> getListRateFromUser(ObjectId userId) throws NotFoundException {
+	public List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException {
 		BsonDocument filter = new BsonDocument();
 		filter.append("ownerRef", new org.bson.BsonObjectId(userId));
 		return findAllWithFilter(filter);

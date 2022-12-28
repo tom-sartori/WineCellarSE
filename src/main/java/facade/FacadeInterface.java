@@ -362,7 +362,7 @@ public interface FacadeInterface {
 	 *
 	 * @return A list of all the rates of the user if there are any, an empty list otherwise.
 	 */
-	List<Rate> getListRateFromUser(ObjectId userId) throws NotFoundException;
+	List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException;
 
 
 	/**
