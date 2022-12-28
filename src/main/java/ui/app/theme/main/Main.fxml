@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<AnchorPane id="ui" fx:id="mainWindow" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #1E1F23;" stylesheets="@/ui/app/theme/main/Main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.theme.main.Main">
+    <children>
+        <fx:include source="../../theme/titlebar/TitleBar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+<!--        <fx:include source="../../theme/leftmenupane/LeftMenuPane.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0" />-->
+        <fx:include source="../../theme/menu/Menu.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0" />
+        <fx:include source="../../theme/topmenupane/TopMenuPane.fxml" AnchorPane.topAnchor="0.0" />
+        <fx:include source="../../theme/contentareapane/ContentAreaPane.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="95.0" />
+    </children>
+    <styleClass>
+        <String fx:value="main" />
+        <String fx:value="defaultBorder" />
+    </styleClass>
+</AnchorPane>

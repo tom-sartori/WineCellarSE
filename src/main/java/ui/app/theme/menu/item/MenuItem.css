@@ -1,0 +1,14 @@
+#menuItem {
+
+}
+
+#button {
+    /*-fx-font-size: 18px;*/
+    /*-fx-text-fill: #ddd6d6;*/
+    /*-fx-background-color: #3A3C43;*/
+    /*-fx-background-radius: 1;*/
+}
+
+#button:hover {
+    /*-fx-background-color: red;*/
+}

@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.entity.partner.Partner;
+import persistence.entity.partner.PartnerType;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ class PartnerFacadeTest {
 
 	@BeforeEach
 	void init() {
-		partner = new Partner("Kubavin", "Shop", "https://kuba-vin.fr/", "20 rue du vin, 68000, Colmar");
+		partner = new Partner("Kubavin", PartnerType.WINE_SHOP, "https://kuba-vin.fr/", "20 rue du vin, 68000, Colmar");
 	}
 
 	@Test
@@ -66,7 +67,7 @@ class PartnerFacadeTest {
 
 		Partner receivedPartner = facade.getOnePartner(idOfInsertedPartner);
 		receivedPartner.setName("Kubavin2");
-		receivedPartner.setType("Shop2");
+		receivedPartner.setType(PartnerType.WINE_SHOP);
 		receivedPartner.setLink("https://kuba-vin2.fr/");
 		receivedPartner.setAddress("20 rue du vin, 68000, Colmar2");
 
