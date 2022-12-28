@@ -4,6 +4,8 @@ import exception.BadArgumentsException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
 import org.bson.types.ObjectId;
+
+import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -67,6 +69,46 @@ public interface FacadeInterface {
 	boolean deleteOnePartner(ObjectId id);
 
 	/**
+	 * Insert a guide.
+	 *
+	 * @param guide The guide to insert.
+	 * @return The id of the inserted guide.
+	 */
+	ObjectId insertOneGuide(Guide guide);
+
+	/**
+	 * Get all guides.
+	 *
+	 * @return A list of guides.
+	 */
+	List<Guide> getGuideList();
+
+	/**
+	 * Get a guide by its id.
+	 *
+	 * @param id The id of the guide.
+	 * @return The guide.
+	 */
+	Guide getOneGuide(ObjectId id);
+
+	/**
+	 * Update a guide.
+	 *
+	 * @param id      The id of the guide to update.
+	 * @param guide The guide to update.
+	 * @return The number of updated guides.
+	 */
+	boolean updateOneGuide(ObjectId id, Guide guide);
+
+	/**
+	 * Delete a guide.
+	 *
+	 * @param id The id of the guide to delete.
+	 * @return The number of deleted guides.
+	 */
+	boolean deleteOneGuide(ObjectId id);
+
+   /**
 	 * Insert a cellar.
 	 *
 	 * @param cellar The cellar to insert.
@@ -330,7 +372,6 @@ public interface FacadeInterface {
 	 */
 	ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
 
-
 	/**
 	 * Insert a rate.
 	 *
@@ -338,7 +379,6 @@ public interface FacadeInterface {
 	 * @return The id of the inserted rate.
 	 */
 	ObjectId insertOneRate(Rate rate);
-
 
 	/**
 	 * Get a rate by its id.
@@ -364,7 +404,6 @@ public interface FacadeInterface {
 	 */
 	List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException;
 
-
 	/**
 	 * Update a rate.
 	 *
@@ -374,7 +413,6 @@ public interface FacadeInterface {
 	 */
 	boolean updateOneRate(ObjectId id, Rate rate);
 
-
 	/**
 	 * Delete a rate.
 	 *
@@ -382,4 +420,5 @@ public interface FacadeInterface {
 	 * @return The number of deleted rates.
 	 */
 	boolean deleteOneRate(ObjectId id);
+
 }

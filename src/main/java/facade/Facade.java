@@ -5,15 +5,20 @@ import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
 import org.bson.types.ObjectId;
+
+import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+
 import persistence.entity.partner.Partner;
 import persistence.entity.rate.Rate;
 import persistence.entity.user.User;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -96,6 +101,61 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Insert a guide.
+     *
+     * @param guide The partner to insert.
+     * @return The id of the inserted guide.
+     */
+    @Override
+    public ObjectId insertOneGuide(Guide guide) {
+        return GuideFacade.getInstance().insertOneGuide(guide);
+    }
+
+    /**
+     * Get all guides.
+     *
+     * @return A list of guides.
+     */
+    @Override
+    public List<Guide> getGuideList() {
+        return GuideFacade.getInstance().getGuideList();
+    }
+
+    /**
+     * Get a guide by its id.
+     *
+     * @param id The id of the guide.
+     * @return The guide.
+     */
+    @Override
+    public Guide getOneGuide(ObjectId id) {
+        return GuideFacade.getInstance().getOneGuide(id);
+    }
+
+    /**
+     * Update a guide.
+     *
+     * @param id The id of the guide to update.
+     * @param guide The new guide.
+     * @return true if the guide has been updated, false otherwise.
+     */
+    @Override
+    public boolean updateOneGuide(ObjectId id, Guide guide) {
+        return GuideFacade.getInstance().updateOneGuide(id, guide);
+    }
+
+    /**
+     * Delete a guide.
+     *
+     * @param id The id of the guide to delete.
+     * @return true if the guide has been deleted, false otherwise.
+     */
+    @Override
+    public boolean deleteOneGuide(ObjectId id) {
+        return GuideFacade.getInstance().deleteOneGuide(id);
+    }
+
+     /**
      * Insert a cellar.
      *
      * @param cellar The cellar to insert.
