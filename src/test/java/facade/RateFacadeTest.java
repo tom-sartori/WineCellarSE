@@ -78,7 +78,7 @@ public class RateFacadeTest {
     }
 
     /**
-     * Test the getListRateFromUser method.
+     * Test the getRateListFromUser method.
      */
     @Test
     void getRateListFromUser(){
