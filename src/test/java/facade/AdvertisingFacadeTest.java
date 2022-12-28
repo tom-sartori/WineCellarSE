@@ -25,7 +25,8 @@ class AdvertisingFacadeTest {
 		Calendar cal2 = Calendar.getInstance();
 		cal2.set(2022, Calendar.JANUARY,17);
 		Date fin = cal2.getTime();
-		advertising = new Advertising("Christmas Kubavin", "Une bouteille à -50% pour Noël chez Kubavin !", "http blabla", " http link", debut, fin, 10);
+		ObjectId company = new ObjectId("63a81022d84f20569350aecd");
+		advertising = new Advertising("Christmas Kubavin", "Une bouteille à -50% pour Noël chez Kubavin !", "http blabla", " http link", debut, fin, 10, company);
 	}
 
 	@Test
@@ -45,6 +46,7 @@ class AdvertisingFacadeTest {
 		assertEquals(advertising.getName(), receivedAdvertising.getName());
 		assertEquals(advertising.getLink(), receivedAdvertising.getLink());
 		assertNotEquals(priceAfterCreation, priceShouldBeOverridden);
+		facade.deleteOneAdvertising(idReceivedAfterCreation);
 	}
 
 	@Test
@@ -52,13 +54,17 @@ class AdvertisingFacadeTest {
 		int initialNumberOfAdvertisings = facade.getAdvertisingList().size();
 
 		ObjectId idOfInsertedAdvertising = facade.insertOneAdvertising(advertising);
-		facade.insertOneAdvertising(advertising);
-		facade.insertOneAdvertising(advertising);
+		ObjectId idOfInsertedAdvertising2 = facade.insertOneAdvertising(advertising);
+		ObjectId idOfInsertedAdvertising3 = facade.insertOneAdvertising(advertising);
 
 		List<Advertising> receivedAdvertisingList = facade.getAdvertisingList();
 
 		assertEquals(3 + initialNumberOfAdvertisings, receivedAdvertisingList.size());
 		assertTrue(receivedAdvertisingList.contains(facade.getOneAdvertising(idOfInsertedAdvertising)));
+
+		facade.deleteOneAdvertising(idOfInsertedAdvertising);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising2);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising3);
 	}
 
 	@Test
@@ -77,6 +83,8 @@ class AdvertisingFacadeTest {
 		assertEquals(advertising.getPrice(), receivedAdvertising.getPrice());
 		assertEquals(advertising.isActive(), receivedAdvertising.isActive());
 		assertEquals(advertising.isPayed(), receivedAdvertising.isPayed());
+
+		facade.deleteOneAdvertising(idOfInsertedAdvertising);
 	}
 
 	@Test
@@ -110,6 +118,8 @@ class AdvertisingFacadeTest {
 		assertEquals(receivedAdvertising.getLink(), updatedAdvertising.getLink());
 		assertEquals(receivedAdvertising.getStartDate(), updatedAdvertising.getStartDate());
 		assertEquals(receivedAdvertising.getEndDate(), updatedAdvertising.getEndDate());
+
+		facade.deleteOneAdvertising(idOfInsertedAdvertising);
 	}
 
 	@Test
@@ -136,6 +146,8 @@ class AdvertisingFacadeTest {
 		facade.validateAdvertising(advertisingIdInserted);
 		Advertising updatedValidateAdvertising = facade.getOneAdvertising(advertisingIdInserted);
 		assertTrue(updatedValidateAdvertising.isActive());
+
+		facade.deleteOneAdvertising(advertisingIdInserted);
 	}
 
 	@Test
@@ -150,6 +162,8 @@ class AdvertisingFacadeTest {
 
 		Advertising updatedAdvertising = facade.getOneAdvertising(advertisingIdInserted);
 		assertEquals(updatedAdvertising.getEndDate(), newEnd);
+
+		facade.deleteOneAdvertising(advertisingIdInserted);
 	}
 
 	@Test
@@ -161,5 +175,25 @@ class AdvertisingFacadeTest {
 
 		Advertising updatedAdvertising = facade.getOneAdvertising(advertisingIdInserted);
 		assertEquals(updatedAdvertising.getNbViews(), ancienNb+1);
+
+		facade.deleteOneAdvertising(advertisingIdInserted);
+	}
+
+	@Test
+	void test_findByCompany_OK() {
+		ObjectId company = new ObjectId("63a5ce5496a16445da19e223");
+		ObjectId company2 = new ObjectId("63a5ce5496a16445da19e224");
+		advertising.setCompany(company);
+		ObjectId idOfInsertedAdvertising = facade.insertOneAdvertising(advertising);
+		advertising.setCompany(company2);
+		ObjectId idOfInsertedAdvertising2 = facade.insertOneAdvertising(advertising);
+		ObjectId idOfInsertedAdvertising3 = facade.insertOneAdvertising(advertising);
+
+		List<Advertising> advertisingList = facade.getAdvertisingByCompany(company);
+
+		assertEquals(advertisingList.size(), 1);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising2);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising3);
 	}
 }

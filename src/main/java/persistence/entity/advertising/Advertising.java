@@ -25,15 +25,18 @@ public class Advertising implements Entity<Advertising> {
 	private boolean isActive;
 	private boolean isPayed;
 
+	private ObjectId company;
 	public Advertising() { }
 
-	public Advertising(String name, String description, String url, @Nullable String link, Date startDate, Date endDate, double price) {
+	public Advertising(String name, String description, String url, @Nullable String link, Date startDate, Date endDate, double price, ObjectId company) {
 		this.name = name;
 		this.description = description;
 		this.url = url;
 		this.link = link;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.price = price;
+		this.company = company;
 	}
 
 	public void handleOnCreate(){
@@ -133,17 +136,25 @@ public class Advertising implements Entity<Advertising> {
 		isPayed = payed;
 	}
 
+	public ObjectId getCompany() {
+		return company;
+	}
+
+	public void setCompany(ObjectId company) {
+		this.company = company;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Advertising that = (Advertising) o;
-		return nbViews == that.nbViews && Double.compare(that.price, price) == 0 && isActive == that.isActive && isPayed == that.isPayed && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(url, that.url) && Objects.equals(link, that.link) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate);
+		return nbViews == that.nbViews && Double.compare(that.price, price) == 0 && isActive == that.isActive && isPayed == that.isPayed && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(url, that.url) && Objects.equals(link, that.link) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(company, that.company);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, description, url, link, startDate, endDate, nbViews, price, isActive, isPayed);
+		return Objects.hash(id, name, description, url, link, startDate, endDate, nbViews, price, isActive, isPayed, company);
 	}
 
 	@Override

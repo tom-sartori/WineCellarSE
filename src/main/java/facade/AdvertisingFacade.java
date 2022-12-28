@@ -121,4 +121,14 @@ class AdvertisingFacade {
     protected boolean validateAdvertising(ObjectId id) {
         return AdvertisingController.getInstance().validateAdvertising(id);
     }
+
+    /**
+     * Get advertising by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    protected List<Advertising> getAdvertisingByCompany(ObjectId company) {
+        return AdvertisingController.getInstance().findAllByCompany(company);
+    }
 }

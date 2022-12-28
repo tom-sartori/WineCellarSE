@@ -125,4 +125,12 @@ public interface FacadeInterface {
 	 * @return true if the advertising has been validated, false otherwise.
 	 */
 	boolean validateAdvertising(ObjectId id);
+
+	/**
+	 * Get advertising by their company id.
+	 *
+	 * @param company The id of the advertised company.
+	 * @return A list of advertisings.
+	 */
+	public List<Advertising> getAdvertisingByCompany(ObjectId company);
 }

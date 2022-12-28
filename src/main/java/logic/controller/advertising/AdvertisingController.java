@@ -1,12 +1,14 @@
 package logic.controller.advertising;
 
 import logic.controller.AbstractController;
+import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
 import persistence.entity.advertising.Advertising;
 import persistence.dao.AbstractDao;
 import persistence.dao.advertising.AdvertisingDao;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * AdvertisingController class extending Controller class parametrized with Advertising class.
@@ -93,5 +95,17 @@ public class AdvertisingController extends AbstractController<Advertising> {
     @Override
     protected AbstractDao<Advertising> getDao() {
         return AdvertisingDao.getInstance();
+    }
+
+    /**
+     * Get advertising by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> findAllByCompany(ObjectId company) {
+        BsonDocument filter = new BsonDocument();
+        filter.append("company", new org.bson.BsonObjectId(company));
+        return getDao().findAllWithFilter(filter);
     }
 }
