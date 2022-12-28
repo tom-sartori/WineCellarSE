@@ -12,6 +12,7 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.partner.Partner;
+import persistence.entity.rate.Rate;
 import persistence.entity.user.User;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public interface FacadeInterface {
 	 */
 	ObjectId insertOnePartner(Partner partner);
 
+
+
 	/**
 	 * Get all partners.
 	 *
@@ -44,6 +47,8 @@ public interface FacadeInterface {
 	 */
 	Partner getOnePartner(ObjectId id);
 
+
+
 	/**
 	 * Update a partner.
 	 *
@@ -52,6 +57,8 @@ public interface FacadeInterface {
 	 * @return The number of updated partners.
 	 */
 	boolean updateOnePartner(ObjectId id, Partner partner);
+
+
 
 	/**
 	 * Delete a partner.
@@ -364,5 +371,54 @@ public interface FacadeInterface {
 	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
 	 */
 	ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
+
+	/**
+	 * Insert a rate.
+	 *
+	 * @param rate The partner to insert.
+	 * @return The id of the inserted rate.
+	 */
+	ObjectId insertOneRate(Rate rate);
+
+	/**
+	 * Get a rate by its id.
+	 *
+	 * @param id The id of the rate.
+	 * @return The rate.
+	 */
+	Rate getOneRate(ObjectId id);
+
+	/**
+	 * Get all rates.
+	 *
+	 * @return A list of rates.
+	 */
+	List<Rate> getRateList();
+
+	/**
+	 * Get all the rates of a user.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return A list of all the rates of the user if there are any, an empty list otherwise.
+	 */
+	List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException;
+
+	/**
+	 * Update a rate.
+	 *
+	 * @param id      The id of the rate to update.
+	 * @param rate The rate to update.
+	 * @return The number of updated rates.
+	 */
+	boolean updateOneRate(ObjectId id, Rate rate);
+
+	/**
+	 * Delete a rate.
+	 *
+	 * @param id The id of the rate to delete.
+	 * @return The number of deleted rates.
+	 */
+	boolean deleteOneRate(ObjectId id);
 
 }
