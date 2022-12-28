@@ -99,33 +99,47 @@ public class Facade implements FacadeInterface {
         return GuideFacade.getInstance().insertOneGuide(guide);
     }
 
+    /**
+     * Get all guides.
+     *
+     * @return A list of guides.
+     */
     @Override
     public List<Guide> getGuideList() {
         return GuideFacade.getInstance().getGuideList();
     }
 
+    /**
+     * Get a guide by its id.
+     *
+     * @param id The id of the guide.
+     * @return The guide.
+     */
     @Override
     public Guide getOneGuide(ObjectId id) {
         return GuideFacade.getInstance().getOneGuide(id);
     }
 
+    /**
+     * Update a guide.
+     *
+     * @param id The id of the guide to update.
+     * @param guide The new guide.
+     * @return true if the guide has been updated, false otherwise.
+     */
     @Override
     public boolean updateOneGuide(ObjectId id, Guide guide) {
         return GuideFacade.getInstance().updateOneGuide(id, guide);
     }
 
+    /**
+     * Delete a guide.
+     *
+     * @param id The id of the guide to delete.
+     * @return true if the guide has been deleted, false otherwise.
+     */
     @Override
     public boolean deleteOneGuide(ObjectId id) {
         return GuideFacade.getInstance().deleteOneGuide(id);
     }
-
-
-
-
-
-
-
-
-
-
 }
