@@ -1,19 +1,12 @@
 package ui.app.page.company.advertising.form;
 
-import facade.Facade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import javafx.stage.Modality;
-import org.bson.types.ObjectId;
-import persistence.entity.advertising.Advertising;
 import ui.app.component.errorlabel.ErrorLabel;
 import ui.app.component.field.Field;
 

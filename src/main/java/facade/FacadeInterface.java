@@ -1,20 +1,16 @@
 package facade;
 
-import logic.controller.advertising.AdvertisingController;
-import org.bson.types.ObjectId;
-
 import exception.BadArgumentsException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
 import org.bson.types.ObjectId;
-
 import persistence.entity.advertising.Advertising;
-import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.guide.Guide;
 import persistence.entity.partner.Partner;
 import persistence.entity.rate.Rate;
 import persistence.entity.user.User;

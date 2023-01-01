@@ -3,9 +3,9 @@ package logic.controller.advertising;
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.entity.advertising.Advertising;
 import persistence.dao.AbstractDao;
 import persistence.dao.advertising.AdvertisingDao;
+import persistence.entity.advertising.Advertising;
 
 import java.util.Date;
 import java.util.List;

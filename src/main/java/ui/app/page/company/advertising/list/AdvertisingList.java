@@ -10,7 +10,6 @@ import javafx.scene.layout.GridPane;
 import persistence.entity.advertising.Advertising;
 import ui.app.page.company.advertising.AdvertisingCard;
 
-import java.awt.desktop.AppReopenedEvent;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
