@@ -1,12 +1,10 @@
 package facade;
 
-import javafx.scene.control.TableView;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.entity.referencing.Referencing;
 
-import java.sql.Ref;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReferencingFacadeTest {
 
     private final Facade facade = Facade.getInstance();
-    private Referencing referencing = new Referencing();
+    private Referencing referencing;
 
     @BeforeEach
     void init() {
@@ -32,11 +30,8 @@ class ReferencingFacadeTest {
         cal2.set(2023, Calendar.JANUARY,17);
         Date fin = cal2.getTime();
         ObjectId company = new ObjectId("63a5c45048f0c9194a9295ef");
-        referencing.setStartDate(debut);
-        referencing.setPaymentDate(payment);
-        referencing.setImportanceLevel(1);
-        referencing.setExpirationDate(fin);
-        referencing.setCompany(company);
+
+        referencing = new Referencing(payment,debut,fin,1,company);
     }
 
 
@@ -171,7 +166,7 @@ class ReferencingFacadeTest {
 
         facade.updateStatus(idOfInsertedReferencing, referencing);
         Referencing updatedPasse = facade.getOneReferencing(idOfInsertedReferencing);
-        assertEquals(updatedPasse.getStatus(), "Passe");
+        assertEquals(updatedPasse.getStatus(), "Passé");
 
         facade.deleteOneReferencing(idOfInsertedReferencing);
     }

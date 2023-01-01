@@ -1,12 +1,12 @@
 package facade;
 
 import exception.InvalidUsernameException;
-import logic.controller.referencing.ReferencingController;
 import org.bson.types.ObjectId;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -142,4 +142,20 @@ public interface FacadeInterface {
 	 * @return true if the referencing has been updated, false otherwise.
 	 */
 	boolean updateStatus(ObjectId id, Referencing referencing);
+
+	/**
+	 * Get a random validated referencing.
+	 *
+	 * @return A Referencing.
+	 */
+	Referencing getRandomReferencing();
+
+	/**
+	 * Calculate the price of a referencing.
+	 *
+	 * @param startDate The start date of the referencing.
+	 * @param endDate The end date of the referencing.
+	 * @return The price.
+	 */
+	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
 }

@@ -3,7 +3,6 @@ package facade;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
-import logic.controller.referencing.ReferencingController;
 import org.bson.types.ObjectId;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
@@ -225,4 +224,25 @@ public class Facade implements FacadeInterface {
      * @return true if the referencing has been updated, false otherwise.
      */
     public boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingFacade.getInstance().updateStatus(id, referencing);}
+
+    /**
+     * Get a random validated referencing.
+     *
+     * @return A Referencing.
+     */
+    public Referencing getRandomReferencing() {
+        return ReferencingFacade.getInstance().getRandomReferencing();
+    }
+
+    /**
+     * Calculate the price of a referencing.
+     *
+     * @param startDate The start date of the referencing.
+     * @param endDate The end date of the referencing.
+     * @return The price.
+     */
+    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingFacade.getInstance().calculatePrice(startDate,endDate,importanceLevel);
+    }
+
 }

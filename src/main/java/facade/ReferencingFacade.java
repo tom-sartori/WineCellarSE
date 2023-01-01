@@ -4,7 +4,7 @@ import logic.controller.referencing.ReferencingController;
 import org.bson.types.ObjectId;
 import persistence.entity.referencing.Referencing;
 
-import java.sql.Ref;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -108,5 +108,25 @@ class ReferencingFacade {
      * @param referencing The new referencing.
      * @return true if the referencing has been updated, false otherwise.
      */
-    public boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingController.getInstance().updateStatus(id, referencing);}
+    protected boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingController.getInstance().updateStatus(id, referencing);}
+
+    /**
+     * Get a random validated referencing.
+     *
+     * @return A Referencing.
+     */
+    protected Referencing getRandomReferencing() {
+        return ReferencingController.getInstance().findRandom();
+    }
+
+    /**
+     * Calculate the price of a referencing.
+     *
+     * @param startDate The start date of the referencing.
+     * @param endDate The end date of the referencing.
+     * @return The price.
+     */
+    protected double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingController.getInstance().calculatePrice(startDate,endDate,importanceLevel);
+    }
 }

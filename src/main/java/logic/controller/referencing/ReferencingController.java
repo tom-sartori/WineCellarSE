@@ -1,14 +1,15 @@
 package logic.controller.referencing;
 
+import facade.Facade;
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
 import persistence.dao.referencing.ReferencingDao;
 import persistence.entity.referencing.Referencing;
 
-import java.sql.Ref;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * ReferencingController class extending Controller class parametrized with Referencing class.
@@ -23,13 +24,14 @@ public class ReferencingController extends AbstractController<Referencing> {
     /**
      * Private constructor for ReferencingController to ensure Singleton design pattern.
      */
-    private ReferencingController() { }
+    private ReferencingController() {
+    }
 
     /**
      * @return the instance of ReferencingController to ensure Singleton design pattern.
      */
     public static ReferencingController getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new ReferencingController();
         }
         return instance;
@@ -59,25 +61,55 @@ public class ReferencingController extends AbstractController<Referencing> {
         return getDao().findAllWithFilter(filter);
     }
 
-    public boolean updateStatus(ObjectId id, Referencing referencing){
+    /**
+     * Update the status of a referencing thanks to its startDate and endDate, with the values "Passé", "En cours" and "A venir"
+     *
+     * @param id          The id of the referencing.
+     * @param referencing The referencing.
+     * @return A list of referencings.
+     */
+    public boolean updateStatus(ObjectId id, Referencing referencing) {
         Date now = new Date();
-        if(referencing.getStartDate().before(now)){
-            if(now.before(referencing.getExpirationDate())){
-                if(referencing.getStatus() != "En cours"){
+        if (referencing.getStartDate().before(now)) {
+            if (now.before(referencing.getExpirationDate())) {
+                if (referencing.getStatus() != "En cours") {
                     referencing.setStatus("En cours");
-                    return getDao().updateOne(id,referencing);
+                    return getDao().updateOne(id, referencing);
                 }
             }
-            if(referencing.getStatus() != "Passe"){
-                referencing.setStatus("Passe");
+            if (referencing.getStatus() != "Passé") {
+                referencing.setStatus("Passé");
                 return getDao().updateOne(id, referencing);
             }
         }
-        if(referencing.getStatus() != "A venir"){
+        if (referencing.getStatus() != "A venir") {
             referencing.setStatus("A venir");
             return getDao().updateOne(id, referencing);
         }
         return true;
+    }
+
+    /**
+     * Get a random validated referencing.
+     *
+     * @return A Referencing.
+     */
+    public Referencing findRandom() {
+        List<Referencing> referencingList = Facade.getInstance().getReferencingList();
+        Random rand = new Random();
+        Referencing randomElement = referencingList.get(rand.nextInt(referencingList.size()));
+        return randomElement;
+    }
+
+    /**
+     * Calculate the price of a referencing.
+     *
+     * @param startDate The start date of the referencing.
+     * @param endDate   The end date of the referencing.
+     * @return The price.
+     */
+    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+        return ((endDate.getTime() - startDate.getTime()) * importanceLevel) / (8640000);
     }
 
     /**

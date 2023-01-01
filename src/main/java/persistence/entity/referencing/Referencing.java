@@ -1,5 +1,6 @@
 package persistence.entity.referencing;
 
+import facade.Facade;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
@@ -9,16 +10,13 @@ import java.util.Objects;
 
 public class Referencing implements Entity<Referencing> {
 	private ObjectId id;
-	public Referencing() { }
 	private double price;
 	private Date paymentDate;
 	private Date startDate;
 	private Date expirationDate;
 	private String status;
 	private int importanceLevel;
-
 	private ObjectId company;
-
 	public ObjectId getId() {
 		return id;
 	}
@@ -65,29 +63,27 @@ public class Referencing implements Entity<Referencing> {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 	public ObjectId getCompany() {
 		return company;
 	}
-
 	public void setCompany(ObjectId company) {
 		this.company = company;
 	}
-
-	@Override
-	public void handleOnCreate() {
-		this.id = null;
-		this.price = ((this.getExpirationDate().getTime() - this.getStartDate().getTime())*this.getImportanceLevel())/(8640000);
-	}
-
 	public int getImportanceLevel() {
 		return importanceLevel;
 	}
-
 	public void setImportanceLevel(int importanceLevel) {
 		this.importanceLevel = importanceLevel;
 	}
 
+	public Referencing() { }
+	public Referencing(Date paymentDate, Date startDate, Date expirationDate, int importanceLevel, ObjectId company) {
+		this.paymentDate = paymentDate;
+		this.startDate = startDate;
+		this.expirationDate = expirationDate;
+		this.importanceLevel = importanceLevel;
+		this.company = company;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -95,14 +91,17 @@ public class Referencing implements Entity<Referencing> {
 		Referencing that = (Referencing) o;
 		return Double.compare(that.price, price) == 0 && importanceLevel == that.importanceLevel && Objects.equals(id, that.id) && Objects.equals(paymentDate, that.paymentDate) && Objects.equals(startDate, that.startDate) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(status, that.status) && Objects.equals(company, that.company);
 	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, price, paymentDate, startDate, expirationDate, status, importanceLevel, company);
 	}
-
 	@Override
 	public int compareTo(Referencing o) {
 		return importanceLevel-o.getImportanceLevel();
+	}
+	@Override
+	public void handleOnCreate() {
+		this.id = null;
+		this.price = Facade.getInstance().calculatePrice(getStartDate(),getExpirationDate(),getImportanceLevel());
 	}
 }
