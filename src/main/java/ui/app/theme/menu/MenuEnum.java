@@ -1,5 +1,9 @@
 package ui.app.theme.menu;
 
+import ui.app.page.company.advertising.creation.AdvertisingCreation;
+import ui.app.page.company.advertising.list.AdvertisingList;
+import ui.app.page.company.advertising.requests.AdvertisingRequestsList;
+import ui.app.page.company.CompanyPage;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
@@ -11,7 +15,12 @@ public enum MenuEnum {
 	USER("Utilisateur"),
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Login", Login.class, USER),
-	PARTNER("Partenaires", PartnerPage.class);
+	PARTNER("Partenaires", PartnerPage.class),
+	COMPANY("Entreprise", CompanyPage.class),
+	ADVERTISING("Publicités"),
+	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, ADVERTISING),
+	ADVERTISINGREQUESTS("Demandes de publicités", AdvertisingRequestsList.class, ADVERTISING),
+	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, ADVERTISING);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

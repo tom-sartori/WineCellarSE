@@ -131,4 +131,33 @@ class AdvertisingFacade {
     protected List<Advertising> getAdvertisingByCompany(ObjectId company) {
         return AdvertisingController.getInstance().findAllByCompany(company);
     }
+
+    /**
+     * Get advertisings not validated.
+     *
+     * @return A list of advertisings.
+     */
+    protected List<Advertising> getNotValidatedAdvertisings() {
+        return AdvertisingController.getInstance().findAllNotValidated();
+    }
+
+    /**
+     * Get a random validated advertising.
+     *
+     * @return An advertising.
+     */
+    protected Advertising getRandomAdvertising() {
+        return AdvertisingController.getInstance().findRandom();
+    }
+
+    /**
+     * Calculate the price of an advertising.
+     *
+     * @param startDate The start date of the advertising.
+     * @param endDate The end date of the advertising.
+     * @return The price.
+     */
+    protected double calculatePrice(Date startDate, Date endDate) {
+        return AdvertisingController.getInstance().calculatePrice(startDate,endDate);
+    }
 }

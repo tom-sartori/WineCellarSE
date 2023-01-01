@@ -154,6 +154,29 @@ public interface FacadeInterface {
 	 */
 	public List<Advertising> getAdvertisingByCompany(ObjectId company);
 
+	/**
+	 * Get advertisings not validated.
+	 *
+	 * @return A list of advertisings.
+	 */
+	public List<Advertising> getNotValidatedAdvertisings();
+
+	/**
+	 * Get a random validated advertising.
+	 *
+	 * @return An advertising.
+	 */
+	public Advertising getRandomAdvertising();
+
+	/**
+	 * Calculate the price of an advertising.
+	 *
+	 * @param startDate The start date of the advertising.
+	 * @param endDate The end date of the advertising.
+	 * @return The price.
+	 */
+	public double calculatePrice(Date startDate, Date endDate);
+
   /**
 	 * Insert a guide.
 	 *

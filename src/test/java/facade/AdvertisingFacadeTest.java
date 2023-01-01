@@ -26,7 +26,7 @@ class AdvertisingFacadeTest {
 		cal2.set(2022, Calendar.JANUARY,17);
 		Date fin = cal2.getTime();
 		ObjectId company = new ObjectId("63a81022d84f20569350aecd");
-		advertising = new Advertising("Christmas Kubavin", "Une bouteille à -50% pour Noël chez Kubavin !", "http blabla", " http link", debut, fin, 10, company);
+		advertising = new Advertising("Christmas Kubavin", "Une bouteille à -50% pour Noël chez Kubavin !", "http blabla", "https://media.gettyimages.com/id/157333250/fr/photo/vin-pour.jpg?s=612x612&w=gi&k=20&c=akdiFSo4PMtfJ2PC5IVrPVcQ69XXNCJ1mWCobLHu7_0=", debut, fin, company);
 	}
 
 	/**
@@ -222,5 +222,26 @@ class AdvertisingFacadeTest {
 		facade.deleteOneAdvertising(idOfInsertedAdvertising);
 		facade.deleteOneAdvertising(idOfInsertedAdvertising2);
 		facade.deleteOneAdvertising(idOfInsertedAdvertising3);
+	}
+
+	/**
+	 *  Test if not paid and not validated advertisings can be found.
+	 */
+	@Test
+	void test_findNotValidatedNotPaid_OK() {
+		ObjectId idOfInsertedAdvertising = facade.insertOneAdvertising(advertising);
+		ObjectId idOfInsertedAdvertising2 = facade.insertOneAdvertising(advertising);
+		ObjectId idOfInsertedAdvertising3 = facade.insertOneAdvertising(advertising);
+
+		facade.payOneAdvertising(idOfInsertedAdvertising2);
+		facade.validateAdvertising(idOfInsertedAdvertising2);
+
+		List<Advertising> notValidatedList = facade.getNotValidatedAdvertisings();
+		List<Advertising> notPaidList = facade.getNotValidatedAdvertisings();
+
+		assertEquals(notValidatedList.size(), 2);
+		assertEquals(notPaidList.size(), 2);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising2);
 	}
 }

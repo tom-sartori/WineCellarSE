@@ -9,6 +9,7 @@ import persistence.dao.advertising.AdvertisingDao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * AdvertisingController class extending Controller class parametrized with Advertising class.
@@ -35,6 +36,8 @@ public class AdvertisingController extends AbstractController<Advertising> {
         return instance;
     }
 
+    //TODO : erreur si nouvelle endDate avant now
+
     /**
      * Renew an advertising.
      *
@@ -44,10 +47,15 @@ public class AdvertisingController extends AbstractController<Advertising> {
      */
     public boolean renewOneAdvertising(ObjectId id, Date endDate) {
         Advertising updated = getDao().findOne(id);
-        updated.setPrice((updated.getEndDate().getTime() - endDate.getTime())/(8640000));
-        updated.setEndDate(endDate);
-        updated.setActive(true);
-        updated.setPayed(false);
+        Date now = new Date();
+        if(now.before(endDate)){ //The new endDate is valid
+            if(updated.getEndDate().before(now)){ //The advertising was expired
+                updated.setActive(true);
+            }
+            updated.setPrice((updated.getEndDate().getTime() - endDate.getTime())/(8640000));
+            updated.setEndDate(endDate);
+            updated.setPayed(false);
+        }
         return this.updateOne(id, updated);
     }
 
@@ -109,5 +117,41 @@ public class AdvertisingController extends AbstractController<Advertising> {
         BsonDocument filter = new BsonDocument();
         filter.append("company", new org.bson.BsonObjectId(company));
         return getDao().findAllWithFilter(filter);
+    }
+
+    /**
+     * Get advertisings not validated.
+     *
+     * @return A list of advertisings.
+     */
+    public List<Advertising> findAllNotValidated() {
+        BsonDocument filter = new BsonDocument();
+        filter.append("active", new org.bson.BsonBoolean(false));
+        return getDao().findAllWithFilter(filter);
+    }
+
+    /**
+     * Get a random validated advertising.
+     *
+     * @return An advertising.
+     */
+    public Advertising findRandom() {
+        BsonDocument filter = new BsonDocument();
+        filter.append("active", new org.bson.BsonBoolean(true));
+        List<Advertising> validated = getDao().findAllWithFilter(filter);
+        Random random = new Random();
+        Advertising randomAdvertising = validated.get(random.nextInt(validated.size()));
+        return randomAdvertising;
+    }
+
+    /**
+     * Calculate the price of an advertising.
+     *
+     * @param startDate The start date of the advertising.
+     * @param endDate The end date of the advertising.
+     * @return The price.
+     */
+    public double calculatePrice(Date startDate, Date endDate) {
+        return (endDate.getTime() - startDate.getTime())/(8640000);
     }
 }

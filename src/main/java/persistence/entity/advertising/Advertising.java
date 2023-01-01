@@ -28,14 +28,13 @@ public class Advertising implements Entity<Advertising> {
 	private ObjectId company;
 	public Advertising() { }
 
-	public Advertising(String name, String description, String url, @Nullable String link, Date startDate, Date endDate, double price, ObjectId company) {
+	public Advertising(String name, String description, String url, @Nullable String link, Date startDate, Date endDate, ObjectId company) {
 		this.name = name;
 		this.description = description;
 		this.url = url;
 		this.link = link;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.price = price;
 		this.company = company;
 	}
 
@@ -163,5 +162,16 @@ public class Advertising implements Entity<Advertising> {
 	@Override
 	public int compareTo(Advertising o) {
 		return name.compareTo(o.name);
+	}
+
+	/**
+	 * Calculate the price of an advertising.
+	 *
+	 * @param startDate The start date of the advertising.
+	 * @param endDate The end date of the advertising.
+	 * @return The price.
+	 */
+	protected static double calculatePrice(Date startDate, Date endDate) {
+		return (endDate.getTime() - startDate.getTime())/(8640000);
 	}
 }

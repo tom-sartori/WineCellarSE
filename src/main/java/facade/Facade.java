@@ -206,6 +206,35 @@ public class Facade implements FacadeInterface {
         return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
     }
 
+    /**
+     * Get advertisings not validated.
+     *
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getNotValidatedAdvertisings() {
+        return AdvertisingFacade.getInstance().getNotValidatedAdvertisings();
+    }
+
+    /**
+     * Get a random validated advertising.
+     *
+     * @return An advertising.
+     */
+    public Advertising getRandomAdvertising() {
+        return AdvertisingFacade.getInstance().getRandomAdvertising();
+    }
+
+    /**
+     * Calculate the price of an advertising.
+     *
+     * @param startDate The start date of the advertising.
+     * @param endDate The end date of the advertising.
+     * @return The price.
+     */
+    public double calculatePrice(Date startDate, Date endDate) {
+        return AdvertisingFacade.getInstance().calculatePrice(startDate,endDate);
+    }
+
      /**
      * Insert a guide.
      *

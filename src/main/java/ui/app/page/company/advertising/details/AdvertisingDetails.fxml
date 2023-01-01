@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<?import javafx.scene.shape.Rectangle?>
+<?import java.net.URL?>
+<AnchorPane fx:id="advertisingDetails" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.advertising.details.AdvertisingDetails">
+   <stylesheets>
+      <URL value="@/ui/app/page/company/advertising/details/AdvertisingDetails.css" />
+   </stylesheets>
+   <children>
+      <Rectangle fill="#0d47a1" height="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label fx:id="price" alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Détails" />
+      <ScrollPane layoutX="4.0" layoutY="47.0" prefHeight="575.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <Pane prefHeight="575.0" prefWidth="1280.0">
+            <children>
+               <TextArea fx:id="description" layoutX="270.0" layoutY="207.0" prefHeight="111.0" prefWidth="550.0" />
+               <Button fx:id="statistiques" layoutX="672.0" layoutY="169.0" mnemonicParsing="false" text="Statistiques" />
+               <Button fx:id="modifier" layoutX="759.0" layoutY="169.0" mnemonicParsing="false" text="Modifier" />
+               <TextArea fx:id="urlCompany" layoutX="269.0" layoutY="491.0" prefHeight="25.0" prefWidth="423.0" />
+               <Label fx:id="nom" layoutX="269.0" layoutY="173.0" prefHeight="17.0" prefWidth="113.0" text="Nom" />
+               <ImageView fx:id="image" fitHeight="150.0" fitWidth="135.0" layoutX="477.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+               <Button fx:id="retour" layoutX="2.0" layoutY="37.0" mnemonicParsing="false" text="Retour" />
+               <Button layoutY="2.0" mnemonicParsing="false" onAction="#onAction" text="Refresh" />
+            </children>
+         </Pane>
+      </ScrollPane>
+   </children>
+</AnchorPane>
