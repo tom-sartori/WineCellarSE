@@ -16,6 +16,7 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.partner.Partner;
+import persistence.entity.referencing.Referencing;
 import persistence.entity.rate.Rate;
 import persistence.entity.user.User;
 
@@ -410,6 +411,86 @@ public interface FacadeInterface {
 	boolean deleteOneUser(ObjectId id);
 
 	/**
+	 * Insert a referencing.
+	 *
+	 * @param referencing The referencing to insert.
+	 * @return The id of the inserted referencing.
+	 */
+	ObjectId insertOneReferencing(Referencing referencing);
+
+	/**
+	 * Get all referencings.
+	 *
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingList();
+
+	/**
+	 * Get a referencing by its id.
+	 *
+	 * @param id The id of the referencing.
+	 * @return The referencing or null if not found.
+	 */
+	Referencing getOneReferencing(ObjectId id);
+
+	/**
+	 * Get referencings by their importanceLevel.
+	 *
+	 * @param importanceLevel The level of importance of the searched referencings.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByLevel(int importanceLevel);
+
+	/**
+	 * Get referencings by their company id.
+	 *
+	 * @param company The id of the referenced company.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByCompany(ObjectId company);
+	/**
+	 * Update a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateOneReferencing(ObjectId id, Referencing referencing);
+
+	/**
+	 * Delete a referencing.
+	 *
+	 * @param id The id of the referencing to delete.
+	 * @return true if the referencing has been deleted, false otherwise.
+	 */
+	boolean deleteOneReferencing(ObjectId id);
+
+	/**
+	 * Update the status of a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateStatus(ObjectId id, Referencing referencing);
+
+	/**
+	 * Get a random validated referencing.
+	 *
+	 * @return A Referencing.
+	 */
+	Referencing getRandomReferencing();
+
+	/**
+	 * Calculate the price of a referencing.
+	 *
+	 * @param startDate The start date of the referencing.
+	 * @param endDate The end date of the referencing.
+	 * @return The price.
+	 */
+	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
+  
+  /**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.

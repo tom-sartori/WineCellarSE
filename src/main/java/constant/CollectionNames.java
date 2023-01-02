@@ -6,6 +6,7 @@ public final class CollectionNames {
     }
 
     public final static String PARTNER = "partners";
+    public final static String REFERENCING = "referencings";
     public final static String GUIDE = "guides";
     public final static String CELLAR = "cellars";
     public final static String EVENT = "events";

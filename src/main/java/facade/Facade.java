@@ -18,8 +18,9 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.partner.Partner;
-import persistence.entity.rate.Rate;
+import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
+import persistence.entity.rate.Rate;
 
 import java.util.Date;
 import java.util.ArrayList;
@@ -554,6 +555,105 @@ public class Facade implements FacadeInterface {
     @Override
     public boolean deleteOneUser(ObjectId id) {
         return UserFacade.getInstance().deleteOneUser(id);
+    }
+
+    /**
+     * Insert a referencing.
+     *
+     * @param referencing The referencing to insert.
+     * @return The id of the inserted referencing.
+     */
+    public ObjectId insertOneReferencing(Referencing referencing) {
+        return ReferencingFacade.getInstance().insertOneReferencing(referencing);
+    }
+
+    /**
+     * Get all referencings.
+     *
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingList() {
+        return ReferencingFacade.getInstance().getReferencingList();
+    }
+
+    /**
+     * Get a referencing by its id.
+     *
+     * @param id The id of the referencing.
+     * @return The referencing or null if not found.
+     */
+    public Referencing getOneReferencing(ObjectId id) {
+        return ReferencingFacade.getInstance().getOneReferencing(id);
+    }
+
+    /**
+     * Get referencings by their importanceLevel.
+     *
+     * @param importanceLevel The level of importance of the searched referencings.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingByLevel(int importanceLevel) {
+        return ReferencingFacade.getInstance().getReferencingByLevel(importanceLevel);
+    }
+
+    /**
+     * Get referencings by their company id.
+     *
+     * @param company The id of the referenced company.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingByCompany(ObjectId company) {
+        return ReferencingFacade.getInstance().getReferencingByCompany(company);
+    }
+
+    /**
+     * Update a referencing.
+     *
+     * @param id The id of the referencing to update.
+     * @param referencing The new referencing.
+     * @return true if the referencing has been updated, false otherwise.
+     */
+    public boolean updateOneReferencing(ObjectId id, Referencing referencing) {
+        return ReferencingFacade.getInstance().updateOneReferencing(id, referencing);
+    }
+
+    /**
+     * Delete a referencing.
+     *
+     * @param id The id of the referencing to delete.
+     * @return true if the referencing has been deleted, false otherwise.
+     */
+    public boolean deleteOneReferencing(ObjectId id) {
+        return ReferencingFacade.getInstance().deleteOneReferencing(id);
+    }
+
+    /**
+     * Update the status of a referencing.
+     *
+     * @param id The id of the referencing to update.
+     * @param referencing The new referencing.
+     * @return true if the referencing has been updated, false otherwise.
+     */
+    public boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingFacade.getInstance().updateStatus(id, referencing);}
+
+    /**
+     * Get a random validated referencing.
+     *
+     * @return A Referencing.
+     */
+    public Referencing getRandomReferencing() {
+        return ReferencingFacade.getInstance().getRandomReferencing();
+    }
+
+    /**
+     * Calculate the price of a referencing.
+     *
+     * @param startDate The start date of the referencing.
+     * @param endDate The end date of the referencing.
+     * @return The price.
+     */
+    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingFacade.getInstance().calculatePrice(startDate,endDate,importanceLevel);
     }
 
     /**
