@@ -1,14 +1,15 @@
 package ui.app.page.partner.list;
 
 import javafx.geometry.Pos;
-import javafx.scene.text.*;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import persistence.entity.partner.Partner;
 import ui.app.State;

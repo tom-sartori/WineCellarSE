@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package ui.app.theme.leftmenupane;
-import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.helpers.services.LoggingService;
+
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class LeftMenuPane implements Initializable {
     CustomSceneHelper sceneHelper = new CustomSceneHelper();

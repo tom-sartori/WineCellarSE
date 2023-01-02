@@ -2,9 +2,9 @@ package persistence.dao.partner;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
+import org.bson.conversions.Bson;
 import persistence.dao.AbstractDao;
 import persistence.entity.partner.Partner;
-import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;

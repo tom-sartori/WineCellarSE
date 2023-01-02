@@ -1,29 +1,24 @@
 package persistence.dao;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoWriteException;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import exception.BadArgumentsException;
 import exception.NotFoundException;
 import org.bson.BsonDocument;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import persistence.connector.MongoConnector;
 import persistence.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.mongodb.client.model.Filters.eq;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 /**
  * DAO abstract class which implements the DAO interface with generic methods.
@@ -33,9 +28,8 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
  * @param <T> The entity class which extends the Entity interface.
  */
 public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
-
-	protected static final String uri = "mongodb+srv://michel:michel@cluster0.54bwiq3.mongodb.net/?retryWrites=true&w=majority";
 	protected static final String databaseName = "winecellar-db";
+	protected static final MongoConnector mongoConnector = MongoConnector.getInstance();
 
 	/**
 	 * @return The name of the collection in the database.
@@ -48,6 +42,13 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	protected abstract Class<T> getEntityClass();
 
 	/**
+	 * @return The Collection of the generic type used.
+	 */
+	protected MongoCollection<T> getCollection(){
+		return mongoConnector.getDatabaseByName(databaseName).getCollection(getCollectionName(), getEntityClass());
+	}
+
+	/**
 	 * Insert one entity of the parametrized type in the database.
 	 *
 	 * @param entity The entity to insert.
@@ -55,12 +56,28 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	@Override
 	public ObjectId insertOne(T entity) throws MongoWriteException {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			InsertOneResult insertOneResult = collection.insertOne(entity);
-			return Objects.requireNonNull(insertOneResult.getInsertedId()).asObjectId().getValue();
+		InsertOneResult insertOneResult = getCollection().insertOne(entity);
+		return Objects.requireNonNull(insertOneResult.getInsertedId()).asObjectId().getValue();
+	}
+
+	/**
+	 * Find all entities of the parametrized type in the database that match the filter given in parameter.
+	 *
+	 * @param filter The filter to apply.
+	 *               Example :
+	 *                  BsonDocument filter = new BsonDocument();
+	 * 					filter.append("username", new org.bson.BsonString(username));
+	 *
+	 * @return A list of entities.
+	 *
+	 * @throws NotFoundException If no entity is returned.
+	 */
+	public List<T> findAllWithFilter(BsonDocument filter) throws NotFoundException {
+		ArrayList<T> response = getCollection().find(filter).into(new ArrayList<>());
+		if (response.isEmpty()) {
+			throw new NotFoundException("No entity found with the given filter.");
 		}
+		return response;
 	}
 
 	/**
@@ -70,16 +87,7 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	@Override
 	public ArrayList<T> findAll() {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			return collection.find().into(new ArrayList<>());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
-		}
+		return getCollection().find().into(new ArrayList<>());
 	}
 
 	/**
@@ -90,18 +98,15 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 * @throws NotFoundException If no entity is found.
 	 */
 	protected T findOne(BsonDocument filter) throws NotFoundException {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			T entity = collection.find(filter).first();
+		T entity = getCollection().find(filter).first();
 
-			if (entity == null) {
-				throw new NotFoundException("No entity found with the filter: " + filter);
-			}
-			else {
-				return entity;
-			}
+		if (entity == null) {
+			throw new NotFoundException("No entity found with the filter: " + filter);
 		}
+		else {
+			return entity;
+		}
+
 	}
 
 	/**
@@ -118,22 +123,24 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	/**
 	 * Update one entity of the parametrized type in the database.
 	 *
+	 * @param updateField fields to update ex: Updates.set("name", "Jean").
+	 * @return true if the entity has been updated, false otherwise.
+	 */
+	protected boolean updateOne(ObjectId id, Bson updateField) {
+		UpdateResult updateResult = getCollection().updateOne(eq("_id", id), updateField);
+		return updateResult.getModifiedCount() == 1;
+	}
+
+
+	/**
+	 * Update one entity of the parametrized type in the database.
+	 *
 	 * @param newEntity The entity to update.
 	 * @return true if the entity has been updated, false otherwise.
 	 */
 	@Override
 	public boolean updateOne(ObjectId id, T newEntity) {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			UpdateResult updateResult = collection.updateOne(eq("_id", id), getSetOnUpdate(newEntity));
-			return updateResult.getModifiedCount() == 1;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
-		}
+		return updateOne(id, getSetOnUpdate(newEntity));
 	}
 
 	/**
@@ -144,32 +151,29 @@ public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
 	 */
 	@Override
 	public boolean deleteOne(ObjectId id) {
-		try (MongoClient mongoClient = MongoClients.create(getClientSettings())) {
-			MongoDatabase database = mongoClient.getDatabase(databaseName);
-			MongoCollection<T> collection = database.getCollection(getCollectionName(), getEntityClass());
-			DeleteResult deleteResult = collection.deleteOne(eq("_id", id));
-			return deleteResult.getDeletedCount() == 1;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			/// TODO: handle exception.
-			throw new RuntimeException(e);
-		}
+		DeleteResult deleteResult = getCollection().deleteOne(eq("_id", id));
+		return deleteResult.getDeletedCount() == 1;
 	}
 
 	/**
-	 * Get MongoDb settings in order to map data with the entity class.
+	 * Add or remove from a set in a given MongoCollection
 	 *
-	 * @return The settings.
+	 * @param collectionId the collection to insert or remove from.
+	 * @param o the object to insert or remove.
+	 * @param field the field to insert or remove from.
+	 * @param add true to add, false to remove.
+	 *
+	 * @return the object id of the updated collection if the update was successful, otherwise throws a BadArgumentsException.
 	 */
-	protected MongoClientSettings getClientSettings() {
-		ConnectionString connectionString = new ConnectionString(uri);
-		CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
-		CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
-		return MongoClientSettings.builder()
-				.applyConnectionString(connectionString)
-				.codecRegistry(codecRegistry)
-				.build();
+	protected ObjectId addOrRemoveFromSet(ObjectId collectionId, Object o, String field, boolean add) throws BadArgumentsException {
+		Bson update = add ? Updates.push(field, o) : Updates.pull(field, o);
+		UpdateResult id = getCollection().updateOne(eq("_id", collectionId), update);
+		if(id.getModifiedCount() == 0) {
+			throw new BadArgumentsException("Mauvais arguments dans la mise à jour d'une collection");
+		}
+		else {
+			return collectionId;
+		}
 	}
 
 	/**

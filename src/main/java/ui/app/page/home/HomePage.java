@@ -1,19 +1,19 @@
 package ui.app.page.home;
 
-import java.awt.AWTException;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
+import ui.app.businesslogic.MainBotRoutine;
+import ui.app.helpers.services.LoggingService;
+import ui.app.helpers.services.RobotService;
+import ui.app.supportingthreads.GlobalKeyListener;
+
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
-import ui.app.businesslogic.MainBotRoutine;
-import ui.app.supportingthreads.GlobalKeyListener;
-import ui.app.helpers.services.LoggingService;
-import ui.app.helpers.services.RobotService;
 
 public class HomePage implements Initializable {
 	LoggingService log = new LoggingService();

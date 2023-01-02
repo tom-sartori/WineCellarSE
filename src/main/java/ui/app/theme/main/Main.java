@@ -1,8 +1,5 @@
 package ui.app.theme.main;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -11,6 +8,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ui.Starter;
 import ui.app.helpers.services.CustomSceneHelper;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Main implements Initializable {
     private CustomSceneHelper sceneHelper;

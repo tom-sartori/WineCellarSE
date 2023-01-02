@@ -1,23 +1,18 @@
 package ui.app.helpers.services;
 
-import static ui.app.helpers.abstractsandenums.Coordinates.X;
-import static ui.app.helpers.abstractsandenums.Coordinates.Y;
+import ui.app.helpers.abstractsandenums.Coordinates;
+import ui.app.helpers.abstractsandenums.Duration;
 
-import java.awt.AWTException;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.Robot;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
-import ui.app.helpers.abstractsandenums.Coordinates;
-import ui.app.helpers.abstractsandenums.Duration;
+import static ui.app.helpers.abstractsandenums.Coordinates.X;
+import static ui.app.helpers.abstractsandenums.Coordinates.Y;
 
 public class RobotService extends Robot {
     public RobotService() throws AWTException {

@@ -1,14 +1,5 @@
 package ui.app.page.logs;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -17,6 +8,15 @@ import javafx.scene.input.MouseEvent;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.helpers.services.FileHelper;
 import ui.app.helpers.services.LoggingService;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LogsPage implements Initializable {
     CustomSceneHelper sceneHelper = new CustomSceneHelper();

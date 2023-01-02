@@ -23,11 +23,14 @@ public class Menu implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         itemHolder.getChildren().clear();
 
+        // Clear holder.
         ObservableList<MenuItem> menuItemList = FXCollections.observableArrayList();
         menuItemList.clear();
 
+        // Add menu items.
         Arrays.stream(MenuEnum.values())
-                .forEach(menuEnum -> menuItemList.add(new MenuItem(menuEnum.getNavName(), menuEnum.getPageName())));
+                .filter(MenuEnum::isParentMenu)
+                .forEach(menuParent -> menuItemList.add(new MenuItem(menuParent, menuParent.getSubMenus())) );
 
         int count = 0;
         for (MenuItem menuItem : menuItemList) {
