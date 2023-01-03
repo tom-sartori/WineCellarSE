@@ -54,7 +54,7 @@ public class AdvertisingCard extends Pane {
 		name = new Label();
 		supprimer = new Button("supprimer");
 
-		if (State.getInstance().getCurrentUser() == null) {
+		if (State.getInstance().getCurrentUser() != null) {
 			action2 = new Button("valider");
 			action2.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -182,9 +182,9 @@ public class AdvertisingCard extends Pane {
 		Date now = new Date();
 		String price;
 		if(now.before(advertising.getEndDate())){
-			price = String.valueOf(Facade.getInstance().calculatePrice(advertising.getEndDate(), endDate));
+			price = String.valueOf(Facade.getInstance().calculatePriceAdvertising(advertising.getEndDate(), endDate));
 		} else {
-			price = String.valueOf(Facade.getInstance().calculatePrice(now, endDate));
+			price = String.valueOf(Facade.getInstance().calculatePriceAdvertising(now, endDate));
 		}
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Prix total");

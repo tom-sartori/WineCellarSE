@@ -226,8 +226,8 @@ public class Facade implements FacadeInterface {
      * @param endDate The end date of the advertising.
      * @return The price.
      */
-    public double calculatePrice(Date startDate, Date endDate) {
-        return AdvertisingFacade.getInstance().calculatePrice(startDate,endDate);
+    public double calculatePriceAdvertising(Date startDate, Date endDate) {
+        return AdvertisingFacade.getInstance().calculatePriceAdvertising(startDate,endDate);
     }
 
      /**

@@ -151,7 +151,7 @@ public class AdvertisingController extends AbstractController<Advertising> {
      * @param endDate The end date of the advertising.
      * @return The price.
      */
-    public double calculatePrice(Date startDate, Date endDate) {
+    public double calculatePriceAdvertising(Date startDate, Date endDate) {
         return (endDate.getTime() - startDate.getTime())/(8640000);
     }
 }

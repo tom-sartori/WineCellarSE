@@ -7,6 +7,6 @@
         <URL value="@/ui/app/page/company/advertising/creation/AdvertisingCreation.css" />
     </stylesheets>
     <children>
-        <fx:include fx:id="form" source="../form/Form.fxml" />
+        <fx:include fx:id="form" source="../../form/Form.fxml" />
     </children>
 </AnchorPane>

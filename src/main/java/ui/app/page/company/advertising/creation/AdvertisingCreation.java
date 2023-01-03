@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import org.bson.types.ObjectId;
 import persistence.entity.advertising.Advertising;
 import ui.app.component.field.labelfield.LabelField;
-import ui.app.page.company.advertising.form.Form;
+import ui.app.page.company.form.Form;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -46,7 +46,7 @@ public class AdvertisingCreation implements Initializable, Observer {
     //TODO: Bouton nom submit
 
     public void createPriceAlert(Advertising ad, Date startDate, Date endDate){
-        String price = String.valueOf(Facade.getInstance().calculatePrice(startDate, endDate));
+        String price = String.valueOf(Facade.getInstance().calculatePriceAdvertising(startDate, endDate));
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Prix total");
         alert.setHeaderText("Le prix calculé de cette publicité est : ");

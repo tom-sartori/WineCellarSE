@@ -157,7 +157,7 @@ class AdvertisingFacade {
      * @param endDate The end date of the advertising.
      * @return The price.
      */
-    protected double calculatePrice(Date startDate, Date endDate) {
-        return AdvertisingController.getInstance().calculatePrice(startDate,endDate);
+    protected double calculatePriceAdvertising(Date startDate, Date endDate) {
+        return AdvertisingController.getInstance().calculatePriceAdvertising(startDate,endDate);
     }
 }

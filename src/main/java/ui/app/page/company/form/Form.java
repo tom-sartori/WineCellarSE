@@ -1,4 +1,4 @@
-package ui.app.page.company.advertising.form;
+package ui.app.page.company.form;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
