@@ -36,6 +36,8 @@ public class Login implements Initializable, Observer {
         formController.addField(new LabelField("Nom", true));
         formController.addField(new LabelFieldMasked("Mot de passe", true));
 
+        formController.setSubmitButtonText("Se connecter");
+
         formController.initialize(null, null);
     }
 
