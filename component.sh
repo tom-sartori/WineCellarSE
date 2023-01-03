@@ -46,15 +46,15 @@ cp $sampleFxmlPath $targetFxmlPath
 
 
 
-gsed -i "s/$sampleClass/$2/g" $targetClassPath
-gsed -i "s/$samplePackage/$targetPackage/g" $targetClassPath
+sed -i "s/$sampleClass/$2/g" $targetClassPath
+sed -i "s/$samplePackage/$targetPackage/g" $targetClassPath
 
-gsed -i "s/$sampleFirstLower/$targetFirstLower/g" $targetCssPath
+sed -i "s/$sampleFirstLower/$targetFirstLower/g" $targetCssPath
 
-gsed -i "s#$samplePath#$1#g" $targetFxmlPath
-gsed -i "s/$samplePackage/$targetPackage/g" $targetFxmlPath
-gsed -i "s/$sampleClass/$2/g" $targetFxmlPath
-gsed -i "s/$sampleFirstLower/$targetFirstLower/g" $targetFxmlPath
+sed -i "s#$samplePath#$1#g" $targetFxmlPath
+sed -i "s/$samplePackage/$targetPackage/g" $targetFxmlPath
+sed -i "s/$sampleClass/$2/g" $targetFxmlPath
+sed -i "s/$sampleFirstLower/$targetFirstLower/g" $targetFxmlPath
 
 echo "TODO : In the file ContentAreaPane.fxml, include the new fxml file. "
 echo "TODO : In the file LeftMenuPane.fxml, duplicate a button and modify values.  "

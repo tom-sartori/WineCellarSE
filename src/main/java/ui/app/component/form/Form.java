@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import ui.app.component.errorlabel.ErrorLabel;
 import ui.app.component.field.Field;
 
@@ -22,6 +23,17 @@ public class Form extends Observable implements Initializable {
     private GridPane fieldHolder;
 
     private ObservableList<Field> fieldList = FXCollections.observableArrayList();
+
+    private VBox vBox;
+
+    public Form() {
+        vBox = new VBox();
+        // Ajouter d'autres éléments au VBox ici
+    }
+
+    public VBox getVBox() {
+        return vBox;
+    }
 
     /**
      * Initializes the controller class.
