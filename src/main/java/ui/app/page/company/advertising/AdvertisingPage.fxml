@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<AnchorPane fx:id="advertisingPage" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.advertising.AdvertisingPage">
+    <stylesheets>
+        <URL value="@/ui/app/page/company/advertising/AdvertisingPage.css" />
+    </stylesheets>
+    <children>
+        <Button mnemonicParsing="false" text="Sample" />
+        <fx:include fx:id="advertisingRequestsList" source="requests/AdvertisingRequestsList.fxml" />
+        <fx:include fx:id="advertisingCreation" source="creation/AdvertisingCreation.fxml" />
+        <fx:include fx:id="advertisingDetails" source="details/AdvertisingDetails.fxml" />
+        <fx:include fx:id="advertisingList" source="list/AdvertisingList.fxml" />
+        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
+    </children>
+</AnchorPane>
