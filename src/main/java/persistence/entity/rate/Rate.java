@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Rate implements Entity<Rate> {
 
 	private ObjectId id;
-	private ObjectId subject;
+	private ObjectId ownerRef;
 	private int rate;
 	private String comment;
 	private boolean isModified;
@@ -26,8 +26,8 @@ public class Rate implements Entity<Rate> {
 		this.lastModified = lastModified;
 	}
 
-	public Rate(ObjectId subject, int rate, String comment, boolean isModified, Date lastModified) {
-		this.subject = subject;
+	public Rate(ObjectId ownerRef, int rate, String comment, boolean isModified, Date lastModified) {
+		this.ownerRef = ownerRef;
 		this.rate = rate;
 		this.comment = comment;
 		this.isModified = isModified;
@@ -58,12 +58,12 @@ public class Rate implements Entity<Rate> {
 		this.id = id;
 	}
 
-	public ObjectId getSubject() {
-		return subject;
+	public ObjectId getOwnerRef() {
+		return ownerRef;
 	}
 
-	public void setSubject(ObjectId subject) {
-		this.subject = subject;
+	public void setOwnerRef(ObjectId ownerRef) {
+		this.ownerRef = ownerRef;
 	}
 
 	public int getRate() {

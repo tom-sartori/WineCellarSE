@@ -1,9 +1,15 @@
 package facade;
 
+import logic.controller.advertising.AdvertisingController;
+import org.bson.types.ObjectId;
+
 import exception.BadArgumentsException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
 import org.bson.types.ObjectId;
+
+import persistence.entity.advertising.Advertising;
+import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -11,8 +17,11 @@ import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
+import persistence.entity.referencing.Referencing;
+import persistence.entity.rate.Rate;
 import persistence.entity.user.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +36,8 @@ public interface FacadeInterface {
 	 * @return The id of the inserted partner.
 	 */
 	ObjectId insertOnePartner(Partner partner);
+
+
 
 	/**
 	 * Get all partners.
@@ -43,6 +54,8 @@ public interface FacadeInterface {
 	 */
 	Partner getOnePartner(ObjectId id);
 
+
+
 	/**
 	 * Update a partner.
 	 *
@@ -51,6 +64,8 @@ public interface FacadeInterface {
 	 * @return The number of updated partners.
 	 */
 	boolean updateOnePartner(ObjectId id, Partner partner);
+
+
 
 	/**
 	 * Delete a partner.
@@ -61,6 +76,127 @@ public interface FacadeInterface {
 	boolean deleteOnePartner(ObjectId id);
 
 	/**
+	 * Insert a advertising.
+	 *
+	 * @param advertising The advertising to insert.
+	 * @return The id of the inserted advertising.
+	 */
+	ObjectId insertOneAdvertising(Advertising advertising);
+
+	/**
+	 * Get all advertisings.
+	 *
+	 * @return A list of advertisings.
+	 */
+	List<Advertising> getAdvertisingList();
+
+	/**
+	 * Get an advertising by its id.
+	 *
+	 * @param id The id of the advertising.
+	 * @return The advertising or null if not found.
+	 */
+	Advertising getOneAdvertising(ObjectId id);
+
+	/**
+	 * Update a advertising.
+	 *
+	 * @param id The id of the advertising to update.
+	 * @param advertising The new advertising.
+	 * @return true if the advertising has been updated, false otherwise.
+	 */
+	boolean updateOneAdvertising(ObjectId id, Advertising advertising);
+
+	/**
+	 * Delete a advertising.
+	 *
+	 * @param id The id of the advertising to delete.
+	 * @return true if the advertising has been deleted, false otherwise.
+	 */
+	boolean deleteOneAdvertising(ObjectId id);
+
+	/**
+	 * Renew an advertising.
+	 *
+	 * @param id The id of the advertising to renew.
+	 * @param endDate The new end date of the advertising.
+	 * @return true if the advertising has been renewed, false otherwise.
+	 */
+	boolean renewOneAdvertising(ObjectId id, Date endDate);
+
+	/**
+	 * Pay for an advertising.
+	 *
+	 * @param id The id of the advertising to pay for.
+	 * @return true if the advertising has been paid, false otherwise.
+	 */
+	boolean payOneAdvertising(ObjectId id);
+
+	/**
+	 * Add a view to an advertising.
+	 *
+	 * @param id The id of the advertising.
+	 * @return true if the view was added to the advertising, false otherwise.
+	 */
+	boolean addView(ObjectId id);
+
+	/**
+	 * Validate an advertising.
+	 *
+	 * @param id The id of the advertising to validate.
+	 * @return true if the advertising has been validated, false otherwise.
+	 */
+	boolean validateAdvertising(ObjectId id);
+
+	/**
+	 * Get advertising by their company id.
+	 *
+	 * @param company The id of the advertised company.
+	 * @return A list of advertisings.
+	 */
+	public List<Advertising> getAdvertisingByCompany(ObjectId company);
+
+  /**
+	 * Insert a guide.
+	 *
+	 * @param guide The guide to insert.
+	 * @return The id of the inserted guide.
+	 */
+	ObjectId insertOneGuide(Guide guide);
+
+	/**
+	 * Get all guides.
+	 *
+	 * @return A list of guides.
+	 */
+	List<Guide> getGuideList();
+
+	/**
+	 * Get a guide by its id.
+	 *
+	 * @param id The id of the guide.
+	 * @return The guide.
+	 */
+	Guide getOneGuide(ObjectId id);
+
+	/**
+	 * Update a guide.
+	 *
+	 * @param id      The id of the guide to update.
+	 * @param guide The guide to update.
+	 * @return The number of updated guides.
+	 */
+	boolean updateOneGuide(ObjectId id, Guide guide);
+
+	/**
+	 * Delete a guide.
+	 *
+	 * @param id The id of the guide to delete.
+	 * @return The number of deleted guides.
+	 */
+	boolean deleteOneGuide(ObjectId id);
+
+   /**
 	 * Insert a cellar.
 	 *
 	 * @param cellar The cellar to insert.
@@ -276,6 +412,86 @@ public interface FacadeInterface {
 	boolean deleteOneUser(ObjectId id);
 
 	/**
+	 * Insert a referencing.
+	 *
+	 * @param referencing The referencing to insert.
+	 * @return The id of the inserted referencing.
+	 */
+	ObjectId insertOneReferencing(Referencing referencing);
+
+	/**
+	 * Get all referencings.
+	 *
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingList();
+
+	/**
+	 * Get a referencing by its id.
+	 *
+	 * @param id The id of the referencing.
+	 * @return The referencing or null if not found.
+	 */
+	Referencing getOneReferencing(ObjectId id);
+
+	/**
+	 * Get referencings by their importanceLevel.
+	 *
+	 * @param importanceLevel The level of importance of the searched referencings.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByLevel(int importanceLevel);
+
+	/**
+	 * Get referencings by their company id.
+	 *
+	 * @param company The id of the referenced company.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByCompany(ObjectId company);
+	/**
+	 * Update a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateOneReferencing(ObjectId id, Referencing referencing);
+
+	/**
+	 * Delete a referencing.
+	 *
+	 * @param id The id of the referencing to delete.
+	 * @return true if the referencing has been deleted, false otherwise.
+	 */
+	boolean deleteOneReferencing(ObjectId id);
+
+	/**
+	 * Update the status of a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateStatus(ObjectId id, Referencing referencing);
+
+	/**
+	 * Get a random validated referencing.
+	 *
+	 * @return A Referencing.
+	 */
+	Referencing getRandomReferencing();
+
+	/**
+	 * Calculate the price of a referencing.
+	 *
+	 * @param startDate The start date of the referencing.
+	 * @param endDate The end date of the referencing.
+	 * @return The price.
+	 */
+	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
+  
+  /**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.
@@ -433,4 +649,53 @@ public interface FacadeInterface {
 	 * @throws BadArgumentsException if the user or the company doesn't exist.
 	 */
 	ObjectId promoteNewMasterManager(ObjectId companyId, ObjectId newMasterManagerId) throws BadArgumentsException;
+
+	/**
+	 * Insert a rate.
+	 *
+	 * @param rate The partner to insert.
+	 * @return The id of the inserted rate.
+	 */
+	ObjectId insertOneRate(Rate rate);
+
+	/**
+	 * Get a rate by its id.
+	 *
+	 * @param id The id of the rate.
+	 * @return The rate.
+	 */
+	Rate getOneRate(ObjectId id);
+
+	/**
+	 * Get all rates.
+	 *
+	 * @return A list of rates.
+	 */
+	List<Rate> getRateList();
+
+	/**
+	 * Get all the rates of a user.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return A list of all the rates of the user if there are any, an empty list otherwise.
+	 */
+	List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException;
+
+	/**
+	 * Update a rate.
+	 *
+	 * @param id      The id of the rate to update.
+	 * @param rate The rate to update.
+	 * @return The number of updated rates.
+	 */
+	boolean updateOneRate(ObjectId id, Rate rate);
+
+	/**
+	 * Delete a rate.
+	 *
+	 * @param id The id of the rate to delete.
+	 * @return The number of deleted rates.
+	 */
+	boolean deleteOneRate(ObjectId id);
 }

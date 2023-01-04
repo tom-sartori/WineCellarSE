@@ -1,10 +1,17 @@
 package facade;
 
+
+import logic.controller.advertising.AdvertisingController;
+import org.bson.types.ObjectId;
+
 import exception.BadArgumentsException;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
 import org.bson.types.ObjectId;
+
+import persistence.entity.advertising.Advertising;
+import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -12,8 +19,13 @@ import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
+import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
+import persistence.entity.rate.Rate;
 
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -93,6 +105,162 @@ public class Facade implements FacadeInterface {
     @Override
     public boolean deleteOnePartner(ObjectId id) {
         return PartnerFacade.getInstance().deleteOnePartner(id);
+    }
+
+    /**
+     * Insert a advertising.
+     *
+     * @param advertising The advertising to insert.
+     * @return The id of the inserted advertising.
+     */
+    public ObjectId insertOneAdvertising(Advertising advertising) {
+        return AdvertisingController.getInstance().insertOne(advertising);
+    }
+
+    /**
+     * Get all advertisings.
+     *
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getAdvertisingList() {
+        return AdvertisingFacade.getInstance().getAdvertisingList();
+    }
+
+    /**
+     * Get an advertising by its id.
+     *
+     * @param id The id of the advertising.
+     * @return The advertising or null if not found.
+     */
+    public Advertising getOneAdvertising(ObjectId id) {
+        return AdvertisingFacade.getInstance().getOneAdvertising(id);
+    }
+
+    /**
+     * Update a advertising.
+     *
+     * @param id The id of the advertising to update.
+     * @param advertising The new advertising.
+     * @return true if the advertising has been updated, false otherwise.
+     */
+    public boolean updateOneAdvertising(ObjectId id, Advertising advertising) {
+        return AdvertisingFacade.getInstance().updateOneAdvertising(id, advertising);
+    }
+
+    /**
+     * Delete a advertising.
+     *
+     * @param id The id of the advertising to delete.
+     * @return true if the advertising has been deleted, false otherwise.
+     */
+    public boolean deleteOneAdvertising(ObjectId id) {
+        return AdvertisingFacade.getInstance().deleteOneAdvertising(id);
+    }
+
+    /**
+     * Renew an advertising.
+     *
+     * @param id The id of the advertising to renew.
+     * @param endDate The new end date of the advertising.
+     * @return true if the advertising has been renewed, false otherwise.
+     */
+    public boolean renewOneAdvertising(ObjectId id, Date endDate) {
+        return AdvertisingFacade.getInstance().renewOneAdvertising(id, endDate);
+    }
+
+    /**
+     * Pay for an advertising.
+     *
+     * @param id The id of the advertising to pay for.
+     * @return true if the advertising has been paid, false otherwise.
+     */
+    public boolean payOneAdvertising(ObjectId id) {
+        return AdvertisingFacade.getInstance().payOneAdvertising(id);
+    }
+
+    /**
+     * Add a view to an advertising.
+     *
+     * @param id The id of the advertising.
+     * @return true if the view was added to the advertising, false otherwise.
+     */
+    public boolean addView(ObjectId id) {
+        return AdvertisingFacade.getInstance().addView(id);
+    }
+
+    /**
+     * Validate an advertising.
+     *
+     * @param id The id of the advertising to validate.
+     * @return true if the advertising has been validated, false otherwise.
+     */
+    public boolean validateAdvertising(ObjectId id) {
+        return AdvertisingFacade.getInstance().validateAdvertising(id);
+    }
+
+    /**
+     * Get advertising by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getAdvertisingByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
+    }
+
+     /**
+     * Insert a guide.
+     *
+     * @param guide The partner to insert.
+     * @return The id of the inserted guide.
+     */
+    @Override
+    public ObjectId insertOneGuide(Guide guide) {
+        return GuideFacade.getInstance().insertOneGuide(guide);
+    }
+
+    /**
+     * Get all guides.
+     *
+     * @return A list of guides.
+     */
+    @Override
+    public List<Guide> getGuideList() {
+        return GuideFacade.getInstance().getGuideList();
+    }
+
+    /**
+     * Get a guide by its id.
+     *
+     * @param id The id of the guide.
+     * @return The guide.
+     */
+    @Override
+    public Guide getOneGuide(ObjectId id) {
+        return GuideFacade.getInstance().getOneGuide(id);
+    }
+
+    /**
+     * Update a guide.
+     *
+     * @param id The id of the guide to update.
+     * @param guide The new guide.
+     * @return true if the guide has been updated, false otherwise.
+     */
+    @Override
+    public boolean updateOneGuide(ObjectId id, Guide guide) {
+        return GuideFacade.getInstance().updateOneGuide(id, guide);
+    }
+
+    /**
+     * Delete a guide.
+     *
+     * @param id The id of the guide to delete.
+     * @return true if the guide has been deleted, false otherwise.
+     */
+    @Override
+    public boolean deleteOneGuide(ObjectId id) {
+        return GuideFacade.getInstance().deleteOneGuide(id);
     }
 
     /**
@@ -391,6 +559,105 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Insert a referencing.
+     *
+     * @param referencing The referencing to insert.
+     * @return The id of the inserted referencing.
+     */
+    public ObjectId insertOneReferencing(Referencing referencing) {
+        return ReferencingFacade.getInstance().insertOneReferencing(referencing);
+    }
+
+    /**
+     * Get all referencings.
+     *
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingList() {
+        return ReferencingFacade.getInstance().getReferencingList();
+    }
+
+    /**
+     * Get a referencing by its id.
+     *
+     * @param id The id of the referencing.
+     * @return The referencing or null if not found.
+     */
+    public Referencing getOneReferencing(ObjectId id) {
+        return ReferencingFacade.getInstance().getOneReferencing(id);
+    }
+
+    /**
+     * Get referencings by their importanceLevel.
+     *
+     * @param importanceLevel The level of importance of the searched referencings.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingByLevel(int importanceLevel) {
+        return ReferencingFacade.getInstance().getReferencingByLevel(importanceLevel);
+    }
+
+    /**
+     * Get referencings by their company id.
+     *
+     * @param company The id of the referenced company.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingByCompany(ObjectId company) {
+        return ReferencingFacade.getInstance().getReferencingByCompany(company);
+    }
+
+    /**
+     * Update a referencing.
+     *
+     * @param id The id of the referencing to update.
+     * @param referencing The new referencing.
+     * @return true if the referencing has been updated, false otherwise.
+     */
+    public boolean updateOneReferencing(ObjectId id, Referencing referencing) {
+        return ReferencingFacade.getInstance().updateOneReferencing(id, referencing);
+    }
+
+    /**
+     * Delete a referencing.
+     *
+     * @param id The id of the referencing to delete.
+     * @return true if the referencing has been deleted, false otherwise.
+     */
+    public boolean deleteOneReferencing(ObjectId id) {
+        return ReferencingFacade.getInstance().deleteOneReferencing(id);
+    }
+
+    /**
+     * Update the status of a referencing.
+     *
+     * @param id The id of the referencing to update.
+     * @param referencing The new referencing.
+     * @return true if the referencing has been updated, false otherwise.
+     */
+    public boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingFacade.getInstance().updateStatus(id, referencing);}
+
+    /**
+     * Get a random validated referencing.
+     *
+     * @return A Referencing.
+     */
+    public Referencing getRandomReferencing() {
+        return ReferencingFacade.getInstance().getRandomReferencing();
+    }
+
+    /**
+     * Calculate the price of a referencing.
+     *
+     * @param startDate The start date of the referencing.
+     * @param endDate The end date of the referencing.
+     * @return The price.
+     */
+    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingFacade.getInstance().calculatePrice(startDate,endDate,importanceLevel);
+    }
+
+    /**
      * Insert a bottle to a cellar.
      *
      * @param wall The wall to add the bottle to.
@@ -579,6 +846,72 @@ public class Facade implements FacadeInterface {
      */
     public ObjectId promoteNewMasterManager(ObjectId companyId, ObjectId newMasterManagerId) throws BadArgumentsException {
         return CompanyFacade.getInstance().promoteNewMasterManager(companyId, newMasterManagerId);
+    }
+
+    /**
+     * Insert a rate.
+     *
+     * @param rate The rate to insert.
+     * @return The id of the inserted rate.
+     */
+    @Override
+    public ObjectId insertOneRate(Rate rate) {
+        return RateFacade.getInstance().insertOneRate(rate);
+    }
+
+    /**
+     * Get all rates.
+     *
+     * @return A list of rates.
+     */
+    @Override
+    public List<Rate> getRateList() {
+        return RateFacade.getInstance().getRateList();
+    }
+
+    /**
+     * Get a rate by its id.
+     *
+     * @param id The id of the rate.
+     * @return The rate.
+     */
+    @Override
+    public Rate getOneRate(ObjectId id) {
+        return RateFacade.getInstance().getOneRate(id);
+    }
+
+    /**
+     * Get all the rates of a user.
+     *
+     * @param userId The id of the user.
+     *
+     * @return A list of all the rates of the user if there are any, otherwise throws a NotFoundException.
+     */
+    public List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException {
+        return RateFacade.getInstance().getRateListFromUser(userId);
+    }
+
+    /**
+     * Update a rate.
+     *
+     * @param id The id of the rate to update.
+     * @param rate The new rate.
+     * @return true if the rate has been updated, false otherwise.
+     */
+    @Override
+    public boolean updateOneRate(ObjectId id, Rate rate) {
+        return RateFacade.getInstance().updateOneRate(id, rate);
+    }
+
+    /**
+     * Delete a rate.
+     *
+     * @param id The id of the rate to delete.
+     * @return true if the rate has been deleted, false otherwise.
+     */
+    @Override
+    public boolean deleteOneRate(ObjectId id) {
+        return RateFacade.getInstance().deleteOneRate(id);
     }
 
 }
