@@ -5,9 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import persistence.entity.guide.Guide;
 import ui.app.component.errorlabel.ErrorLabel;
 import ui.app.component.field.Field;
 
@@ -106,4 +108,6 @@ public class Form extends Observable implements Initializable {
                 .filter(field -> !field.isValid())
                 .count() == 0;
     }
+
+
 }
