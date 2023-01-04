@@ -10,8 +10,10 @@
         <fx:include source="form/CellarForm.fxml" />
         <fx:include source="cellarbyuser/CellarByUser.fxml" />
         <fx:include source="details/CellarDetails.fxml" />
-        <fx:include source="publiccellars/PublicCellars.fxml" />
+        <fx:include source="details/bottle/BottleDetails.fxml" />
         <fx:include source="updatecellar/UpdateCellarForm.fxml" />
         <fx:include source="createBottle/CreateBottleForm.fxml" />
+        <fx:include source="addwallform/AddWallForm.fxml" />
+        <fx:include source="publiccellars/PublicCellars.fxml" />
     </children>
 </AnchorPane>

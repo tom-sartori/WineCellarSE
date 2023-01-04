@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -24,18 +26,33 @@ public class UpdateCellarForm implements Initializable {
     @FXML
     private BorderPane updateCellarFormSection;
 
+    private Cellar currentCellar;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        refresh();
+        Button refresh = new Button("Refresh");
+        refresh.onActionProperty().set(event -> {
+            refresh();
+        });
+        updateCellarFormSection.setTop(refresh);
+        if (currentCellar != null) {
+            refresh();
+        }
     }
 
     public void refresh(){
+        currentCellar = State.getInstance().getSelectedCellar();
+
+        System.out.println("currentCellar = " + currentCellar);
+        // TODO and isOwner
         setupForm();
 
         setupManagersReaders();
+
+
     }
 
     public void setupForm(){
@@ -46,16 +63,24 @@ public class UpdateCellarForm implements Initializable {
 
         VBox form = new VBox();
 
-        Button refresh = new Button("Rafraichir");
+        Button refresh = new Button("Refresh");
         refresh.onActionProperty().set(event -> {
             refresh();
         });
+
         form.getChildren().add(refresh);
 
         form.getChildren().add(new Label("Nom de la cave"));
-        form.getChildren().add(new Label("Image de la cave ?"));
-        form.getChildren().add(new Label("Ajout de mur"));
+
+        TextField name = new TextField(currentCellar.getName());
+        form.getChildren().add(name);
+        // TODO mettre une image sur une cave ?!
+//        form.getChildren().add(new Label("Image de la cave ?"));
+//        TextField image = new TextField(currentCellar.);
         form.getChildren().add(new Label("Cave publique ?"));
+        CheckBox isPublic = new CheckBox();
+        isPublic.setSelected(currentCellar.isPublic());
+        form.getChildren().add(isPublic);
 
         HBox buttons = new HBox();
 
@@ -95,8 +120,6 @@ public class UpdateCellarForm implements Initializable {
 
             updateManagersReaders.getChildren().add(managersReaders);
         }
-
-
 
         updateManagersReaders.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }

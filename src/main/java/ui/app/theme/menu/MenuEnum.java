@@ -2,6 +2,7 @@ package ui.app.theme.menu;
 
 import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.cellarbyuser.CellarByUser;
+import ui.app.page.cellar.createBottle.CreateBottleForm;
 import ui.app.page.cellar.details.CellarDetails;
 import ui.app.page.cellar.form.CellarForm;
 import ui.app.page.cellar.publiccellars.PublicCellars;
@@ -24,7 +25,7 @@ public enum MenuEnum {
 	CELLAR_DETAILS("Détail d'une cave",CellarDetails .class, CELLAR),
 	PUBLIC_CELLARS("Caves publiques", PublicCellars.class, CELLAR),
 	UPDATE_CELLAR("Modifier une cave", UpdateCellarForm.class, CELLAR),
-	CREATE_BOTTLE("Créer une bouteille", UpdateCellarForm.class, CELLAR);
+	CREATE_BOTTLE("Créer une bouteille", CreateBottleForm.class, CELLAR);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

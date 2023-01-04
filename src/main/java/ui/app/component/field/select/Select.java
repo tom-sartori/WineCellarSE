@@ -80,4 +80,8 @@ public class Select extends Field implements Initializable {
     public void hideError() {
         errorLabel.setVisible(false);
     }
+
+    public ChoiceBox<String> getChoiceBox() {
+        return choiceBox;
+    }
 }
