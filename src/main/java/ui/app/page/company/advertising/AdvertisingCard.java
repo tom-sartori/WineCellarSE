@@ -189,7 +189,7 @@ public class AdvertisingCard extends Pane {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Prix total");
 		alert.setHeaderText("Le prix calculé de cette publicité est : ");
-		alert.setContentText(price + " $");
+		alert.setContentText(price + " €");
 
 		Optional<ButtonType> option = alert.showAndWait();
 

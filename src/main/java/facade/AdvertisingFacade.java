@@ -123,12 +123,12 @@ class AdvertisingFacade {
     }
 
     /**
-     * Get advertising by their company id.
+     * Get advertisings by their company id.
      *
      * @param company The id of the advertised company.
      * @return A list of advertisings.
      */
-    protected List<Advertising> getAdvertisingByCompany(ObjectId company) {
+    protected List<Advertising> getAdvertisingsByCompany(ObjectId company) {
         return AdvertisingController.getInstance().findAllByCompany(company);
     }
 
@@ -139,6 +139,16 @@ class AdvertisingFacade {
      */
     protected List<Advertising> getNotValidatedAdvertisings() {
         return AdvertisingController.getInstance().findAllNotValidated();
+    }
+
+    /**
+     * Get not validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    protected List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingController.getInstance().findNotValidatedByCompany(company);
     }
 
     /**

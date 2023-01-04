@@ -43,14 +43,13 @@ public class AdvertisingCreation implements Initializable, Observer {
     }
 
     //TODO: company ??
-    //TODO: Bouton nom submit
 
     public void createPriceAlert(Advertising ad, Date startDate, Date endDate){
         String price = String.valueOf(Facade.getInstance().calculatePriceAdvertising(startDate, endDate));
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Prix total");
         alert.setHeaderText("Le prix calculé de cette publicité est : ");
-        alert.setContentText(price + " $");
+        alert.setContentText(price + " €");
 
         Optional<ButtonType> option = alert.showAndWait();
 

@@ -216,7 +216,7 @@ class AdvertisingFacadeTest {
 		ObjectId idOfInsertedAdvertising2 = facade.insertOneAdvertising(advertising);
 		ObjectId idOfInsertedAdvertising3 = facade.insertOneAdvertising(advertising);
 
-		List<Advertising> advertisingList = facade.getAdvertisingByCompany(company);
+		List<Advertising> advertisingList = facade.getAdvertisingsByCompany(company);
 
 		assertEquals(advertisingList.size(), 1);
 		facade.deleteOneAdvertising(idOfInsertedAdvertising);
@@ -243,5 +243,28 @@ class AdvertisingFacadeTest {
 		assertEquals(notPaidList.size(), 2);
 		facade.deleteOneAdvertising(idOfInsertedAdvertising);
 		facade.deleteOneAdvertising(idOfInsertedAdvertising2);
+	}
+
+	/**
+	 *  Test if not validated advertisings can be found thanks to the company id.
+	 */
+	@Test
+	void test_findNotValidatedByCompany_OK() {
+		ObjectId company = new ObjectId("63a5ce5496a16445da19e238");
+		ObjectId company2 = new ObjectId("63a5ce5496a16445da19e232");
+		advertising.setCompany(company);
+		ObjectId idOfInsertedAdvertising = facade.insertOneAdvertising(advertising);
+		advertising.setCompany(company2);
+		ObjectId idOfInsertedAdvertising2 = facade.insertOneAdvertising(advertising);
+		ObjectId idOfInsertedAdvertising3 = facade.insertOneAdvertising(advertising);
+		Facade.getInstance().payOneAdvertising(idOfInsertedAdvertising2);
+		Facade.getInstance().validateAdvertising(idOfInsertedAdvertising2);
+
+		List<Advertising> advertisingList = facade.getNotValidatedAdvertisingsByCompany(company2);
+
+		assertEquals(advertisingList.size(), 1);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising2);
+		facade.deleteOneAdvertising(idOfInsertedAdvertising3);
 	}
 }

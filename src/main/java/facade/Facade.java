@@ -192,13 +192,13 @@ public class Facade implements FacadeInterface {
     }
 
     /**
-     * Get advertising by their company id.
+     * Get advertisings by their company id.
      *
      * @param company The id of the advertised company.
      * @return A list of advertisings.
      */
-    public List<Advertising> getAdvertisingByCompany(ObjectId company) {
-        return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
+    public List<Advertising> getAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getAdvertisingsByCompany(company);
     }
 
     /**
@@ -208,6 +208,16 @@ public class Facade implements FacadeInterface {
      */
     public List<Advertising> getNotValidatedAdvertisings() {
         return AdvertisingFacade.getInstance().getNotValidatedAdvertisings();
+    }
+
+    /**
+     * Get not validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getNotValidatedAdvertisingsByCompany(company);
     }
 
     /**

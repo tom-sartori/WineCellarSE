@@ -143,12 +143,12 @@ public interface FacadeInterface {
 	boolean validateAdvertising(ObjectId id);
 
 	/**
-	 * Get advertising by their company id.
+	 * Get advertisings by their company id.
 	 *
 	 * @param company The id of the advertised company.
 	 * @return A list of advertisings.
 	 */
-	public List<Advertising> getAdvertisingByCompany(ObjectId company);
+	public List<Advertising> getAdvertisingsByCompany(ObjectId company);
 
 	/**
 	 * Get advertisings not validated.
@@ -156,6 +156,14 @@ public interface FacadeInterface {
 	 * @return A list of advertisings.
 	 */
 	public List<Advertising> getNotValidatedAdvertisings();
+
+	/**
+	 * Get not validated advertisings by their company id.
+	 *
+	 * @param company The id of the advertised company.
+	 * @return A list of advertisings.
+	 */
+	public List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company);
 
 	/**
 	 * Get a random validated advertising.
