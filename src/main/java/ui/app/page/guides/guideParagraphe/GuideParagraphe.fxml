@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.app.page.guides.guideParagraphe.GuideParagraphe"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <ScrollPane layoutX="4.0" layoutY="47.0" prefHeight="575.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Pane>
+                <Label fx:id="titleParagraph" layoutX="185.0" layoutY="245.0" prefHeight="17.0" prefWidth="129.0" text="titre paragraphe 1">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="contenu" layoutX="185.0" layoutY="295.0" prefHeight="17.0" prefWidth="157.0" text="contenu paragraphe 1" />
+            </Pane>
+        </ScrollPane>
+
+        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
+    </children>
+</AnchorPane>

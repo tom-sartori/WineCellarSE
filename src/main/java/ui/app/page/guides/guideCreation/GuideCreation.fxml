@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="guideCreation" fx:id="guideCreation" prefHeight="625.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.guides.guideCreation.GuideCreation">
+    <stylesheets>
+        <URL value="@/ui/app/page/guides/guideCreation/GuideCreation.css" />
+    </stylesheets>
+
+    <children>
+        <fx:include fx:id="form" source="../../../component/form/Form.fxml" />
+      <Button fx:id="boutonAjoutParagraphe" layoutX="388.0" layoutY="438.0" mnemonicParsing="false" onAction="#ajoutParagraphe" text="ajouter un paragraphe" />
+        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
+      <ComboBox fx:id="categoryComboBox" layoutX="938.0" layoutY="260.0" prefWidth="150.0" />
+        <Label fx:id="selectedCategoryLabel" layoutX="888.0" layoutY="211.0" text="Catégories :" />
+      <Button layoutX="2.0" layoutY="39.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+
+    </children>
+
+</AnchorPane>
