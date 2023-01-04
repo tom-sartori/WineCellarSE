@@ -458,8 +458,8 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all the notifications of the user.
      */
-    public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
-        return NotificationDao.getInstance().getNotificationFromUser(userId);
+    public List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception {
+        return NotificationDao.getInstance().getNotificationListFromUser(userId);
     }
 
     /**

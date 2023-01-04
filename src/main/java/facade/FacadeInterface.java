@@ -347,5 +347,5 @@ public interface FacadeInterface {
 	 *
 	 * @return A list of all the notifications of the user.
 	 */
-	List<Notification> getNotificationFromUser(ObjectId userId) throws Exception;
+	List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception;
 }

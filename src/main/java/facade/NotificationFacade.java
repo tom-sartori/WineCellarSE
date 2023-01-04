@@ -57,8 +57,8 @@ class NotificationFacade {
      *
      * @return A list of all the notifications of the user.
      */
-    public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
-        return NotificationController.getInstance().getNotificationFromUser(userId);
+    public List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception {
+        return NotificationController.getInstance().getNotificationListFromUser(userId);
     }
 
     /**

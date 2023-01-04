@@ -26,6 +26,9 @@ public class NotificationFacadeTest {
         notification = new Notification(idSubject, "nouvelle demande d'ami", false, date);
     }
 
+    /**
+     * Test the insertion of a notification.
+     */
     @Test
     void test_create_OK() {
         ObjectId idShouldBeOverridden = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
@@ -41,7 +44,9 @@ public class NotificationFacadeTest {
         assertEquals(notification.isRead(), receivedNotification.isRead());
         assertEquals(notification.getDate(), receivedNotification.getDate());
     }
-
+    /**
+     * Test the getNotificationList() of a notification.
+     */
     @Test
     void test_findAll_OK() {
         int initialNumberOfEvents = facade.getNotificationList().size();
@@ -57,22 +62,22 @@ public class NotificationFacadeTest {
     }
 
     /**
-     * Test the getNotificationFromUser method.
+     * Test the getNotificationListFromUser method.
      */
     @Test
-    void getNotificationFromUser(){
+    void getNotificationListFromUser(){
         try {
             ObjectId userId = notification.getOwnerRef();
 
             ObjectId notificationId = facade.insertOneNotification(notification);
 
-            List<Notification> notificationFromUserBefore = facade.getNotificationFromUser(userId);
+            List<Notification> notificationFromUserBefore = facade.getNotificationListFromUser(userId);
 
             int sizeBefore = notificationFromUserBefore.size();
 
             ObjectId notificationId1 = facade.insertOneNotification(notification);
 
-            List<Notification> notificationFromUserAfter = facade.getNotificationFromUser(userId);
+            List<Notification> notificationFromUserAfter = facade.getNotificationListFromUser(userId);
 
             int sizeAfter = notificationFromUserAfter.size();
 
@@ -87,6 +92,9 @@ public class NotificationFacadeTest {
         }
     }
 
+    /**
+     * Test the getOneNotification of a notification.
+     */
     @Test
     void test_findOne_OK() {
         ObjectId idOfInsertedNotification = facade.insertOneNotification(notification);
@@ -99,6 +107,9 @@ public class NotificationFacadeTest {
         assertEquals(notification.isRead(), receivedNotification.isRead());
     }
 
+    /**
+     * Test the update of a notification.
+     */
     @Test
     void test_update_OK() {
         ObjectId idOfInsertedNotification = facade.insertOneNotification(notification);
@@ -121,6 +132,9 @@ public class NotificationFacadeTest {
         assertEquals(true, updatedNotification.isRead());
     }
 
+    /**
+     * Test the deleteOneNotification of a notification.
+     */
     @Test
     void test_delete_OK() {
         ObjectId notificationIdInserted = facade.insertOneNotification(notification);

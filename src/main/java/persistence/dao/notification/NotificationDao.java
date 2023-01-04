@@ -68,7 +68,7 @@ public class NotificationDao extends AbstractDao<Notification> {
 	 *
 	 * @return A list of all the notifications of the user.
 	 */
-	public List<Notification> getNotificationFromUser(ObjectId userId) throws Exception {
+	public List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception {
 		BsonDocument filter = new BsonDocument();
 		filter.append("ownerRef", new org.bson.BsonObjectId(userId));
 		return findAllWithFilter(filter);
