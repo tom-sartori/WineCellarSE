@@ -1,12 +1,11 @@
 package facade;
 
-import logic.controller.advertising.AdvertisingController;
+import exception.user.NoLoggedUser;
 import org.bson.types.ObjectId;
 
 import exception.BadArgumentsException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
-import org.bson.types.ObjectId;
 
 import persistence.entity.advertising.Advertising;
 import persistence.entity.guide.Guide;
@@ -405,11 +404,32 @@ public interface FacadeInterface {
 
 	User getOneUser(ObjectId id);
 
+	/**
+	 * Get the logged user.
+	 *
+	 * @return The logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	User getLoggedUser() throws NoLoggedUser;
+
 	User getOneUserByUsername(String username);
 
 	boolean updateOneUser(ObjectId id, User user);
 
-	boolean deleteOneUser(ObjectId id);
+	/**
+	 * Delete a user by its username.
+	 *
+	 * @param username The username of the user to delete.
+	 * @return true if the user has been deleted, false otherwise.
+	 */
+	boolean deleteOneUser(String username);
+
+	/**
+	 * Check if the user logged in is an admin.
+	 *
+	 * @return true if the user is an admin, false otherwise.
+	 */
+	boolean isLoggedUserAdmin();
 
 	/**
 	 * Insert a referencing.

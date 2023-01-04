@@ -158,7 +158,7 @@ class CompanyFacadeTest {
             // CLEAN UP
 
             facade.deleteOneCompany(objectId);
-            facade.deleteOneUser(userId);
+            facade.deleteOneUser(user.getUsername());
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }
@@ -189,7 +189,7 @@ class CompanyFacadeTest {
             // CLEAN UP
 
             facade.deleteOneCompany(objectId);
-            facade.deleteOneUser(userId);
+            facade.deleteOneUser(user.getUsername());
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }
@@ -228,7 +228,7 @@ class CompanyFacadeTest {
             // CLEAN UP
 
             facade.deleteOneCompany(objectId);
-            facade.deleteOneUser(userId);
+            facade.deleteOneUser(user.getUsername());
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }

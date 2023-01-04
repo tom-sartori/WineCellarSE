@@ -4,7 +4,10 @@ import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
+import persistence.entity.cellar.Cellar;
 import persistence.entity.user.User;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,9 +17,11 @@ class UserFacadeTest {
 
 	@Test
 	void registerTest() {
-		String username = "michel";
+		String username = "michel333";
 		String password = "michel";
-		ObjectId userId = facade.register(new User(username, password));
+		User user = new User(username, password);
+//		user.setAdmin(true);
+		ObjectId userId = facade.register(user);
 
 		assertNotNull(userId);
 		assertThrows(InvalidUsernameException.class, () -> facade.register(new User(username, password)));
@@ -61,5 +66,7 @@ class UserFacadeTest {
 
 	@Test
 	void deleteOneUser() {
+		String username = "michelll";
+		facade.deleteOneUser(username);
 	}
 }

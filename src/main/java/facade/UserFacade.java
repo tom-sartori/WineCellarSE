@@ -3,6 +3,7 @@ package facade;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
+import exception.user.NoLoggedUser;
 import logic.controller.user.UserController;
 import org.bson.types.ObjectId;
 import persistence.entity.user.User;
@@ -76,6 +77,16 @@ class UserFacade {
     }
 
     /**
+     * Get the logged user.
+     *
+     * @return The logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    protected User getLoggedUser() throws NoLoggedUser {
+        return UserController.getInstance().getLoggedUser();
+    }
+
+    /**
      * Get a user by its username.
      *
      * @param username The username of the user.
@@ -97,12 +108,21 @@ class UserFacade {
     }
 
     /**
-     * Delete a user.
+     * Delete a user by its username.
      *
-     * @param id The id of the user to delete.
+     * @param username The username of the user to delete.
      * @return true if the user has been deleted, false otherwise.
      */
-    protected boolean deleteOneUser(ObjectId id) {
-        return UserController.getInstance().deleteOne(id);
+    protected boolean deleteOneUser(String username) {
+        return UserController.getInstance().deleteOne(username);
+    }
+
+    /**
+     * Check if the user logged in is an admin.
+     *
+     * @return true if the user is an admin, false otherwise.
+     */
+    protected boolean isLoggedUserAdmin() {
+        return UserController.getInstance().isAdmin();
     }
 }

@@ -1,6 +1,7 @@
 package facade;
 
 
+import exception.user.NoLoggedUser;
 import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
 
@@ -8,7 +9,6 @@ import exception.BadArgumentsException;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
-import org.bson.types.ObjectId;
 
 import persistence.entity.advertising.Advertising;
 import persistence.entity.guide.Guide;
@@ -24,8 +24,6 @@ import persistence.entity.user.User;
 import persistence.entity.rate.Rate;
 
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -531,6 +529,17 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Get the logged user.
+     *
+     * @return The logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public User getLoggedUser() throws NoLoggedUser {
+        return UserFacade.getInstance().getLoggedUser();
+    }
+
+    /**
      * Get a user by its username.
      * @param username The username of the user to find.
      * @return The user.
@@ -553,9 +562,25 @@ public class Facade implements FacadeInterface {
         return UserFacade.getInstance().updateOneUser(id, user);
     }
 
+    /**
+     * Delete a user by its username.
+     *
+     * @param username The username of the user to delete.
+     * @return true if the user has been deleted, false otherwise.
+     */
     @Override
-    public boolean deleteOneUser(ObjectId id) {
-        return UserFacade.getInstance().deleteOneUser(id);
+    public boolean deleteOneUser(String username) {
+        return UserFacade.getInstance().deleteOneUser(username);
+    }
+
+    /**
+     * Check if the user logged in is an admin.
+     *
+     * @return true if the user is an admin, false otherwise.
+     */
+    @Override
+    public boolean isLoggedUserAdmin() {
+        return UserFacade.getInstance().isLoggedUserAdmin();
     }
 
     /**
