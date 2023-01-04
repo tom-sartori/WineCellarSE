@@ -17,6 +17,7 @@ import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
@@ -711,6 +712,140 @@ public class Facade implements FacadeInterface {
      */
     public ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         return BottleFacade.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
+    }
+
+    /**
+     * Insert a company.
+     *
+     * @param company The company to insert.
+     * @return The id of the inserted company.
+     */
+    public ObjectId insertOneCompany(Company company) {
+        return CompanyFacade.getInstance().insertOneCompany(company);
+    }
+
+    /**
+     * Get all companies.
+     *
+     * @return A list of companys.
+     */
+    public List<Company> getCompanyList() {
+        return CompanyFacade.getInstance().getCompanyList();
+    }
+
+    /**
+     * Get a company by its id.
+     *
+     * @param id The id of the company.
+     *
+     * @return The company or null if not found.
+     */
+    public Company getOneCompany(ObjectId id) {
+        return CompanyFacade.getInstance().getOneCompany(id);
+    }
+
+    /**
+     * Update a company.
+     *
+     * @param id The id of the company to update.
+     * @param company The new company.
+     *
+     * @return true if the company has been updated, false otherwise.
+     */
+    public boolean updateOneCompany(ObjectId id, Company company) {
+        return CompanyFacade.getInstance().updateOneCompany(id, company);
+    }
+
+    /**
+     * Delete a company.
+     *
+     * @param id The id of the company to delete.
+     *
+     * @return true if the company has been deleted, false otherwise.
+     */
+    public boolean deleteOneCompany(ObjectId id) {
+        return CompanyFacade.getInstance().deleteOneCompany(id);
+    }
+
+    /**
+     * Return the list of companies that are accessible.
+     *
+     * @return The list of accessible companies if any, throws a NotFoundException otherwise.
+     */
+    public List<Company> findAllAccessibleCompanies() throws NotFoundException {
+        return CompanyFacade.getInstance().findAllAccessibleCompanies();
+    }
+
+    /**
+     * Return the list of companies that are not accessible.
+     *
+     * @return The list of companies that are not accessible if there are any, a NotFoundException is thrown otherwise.
+     */
+    public List<Company> findAllUnaccessibleCompanies() throws NotFoundException {
+        return CompanyFacade.getInstance().findAllUnaccessibleCompanies();
+    }
+
+    /**
+     * Add a manager to a company.
+     *
+     * @param companyId The id of the company.
+     * @param managerId The id of the manager to add.
+     *
+     * @return The id of the updated company if the manager was added, throws a BadArgumentsException otherwise.
+     * @throws BadArgumentsException if the manager was not added.
+     */
+    public ObjectId addManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().addManager(companyId, managerId);
+    }
+
+    /**
+     * Removes a manager from a company.
+     *
+     * @param companyId The id of the company.
+     * @param managerId The id of the manager.
+     *
+     * @return The id of the company if the manager was removed successfully, else throws a BadArgumentsException.
+     * @throws BadArgumentsException If the company or the manager does not exist.
+     */
+    public ObjectId removeManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().removeManager(companyId, managerId);
+    }
+
+    /**
+     * Refuse a request to publish a new Company.
+     *
+     * @param companyId The id of the company to refuse.
+     *
+     * @return The id of the refused company if the operation was successful, else throw an exception.
+     * @throws BadArgumentsException If the company does not exist or if the company has already been accepted by an Admin.
+     */
+    public ObjectId refuseRequest(ObjectId companyId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().refuseRequest(companyId);
+    }
+
+    /**
+     *  Accept a request to create a Company.
+     *
+     * @param companyId The id of the company to accept.
+     *
+     * @return The id of the accepted company if the operation is successful, else throws an exception.
+     * @throws BadArgumentsException If the company does not exist or if the company is already accepted.
+     */
+    public ObjectId acceptRequest(ObjectId companyId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().acceptRequest(companyId);
+    }
+
+    /**
+     * Promote a user to masterManager.
+     *
+     * @param companyId The id of the company.
+     * @param newMasterManagerId The id of the new masterManager.
+     *
+     * @return The id of the updated company if the promotion was successful, throws a BadArgumentsException otherwise.
+     * @throws BadArgumentsException if the user or the company doesn't exist.
+     */
+    public ObjectId promoteNewMasterManager(ObjectId companyId, ObjectId newMasterManagerId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().promoteNewMasterManager(companyId, newMasterManagerId);
     }
 
     /**
