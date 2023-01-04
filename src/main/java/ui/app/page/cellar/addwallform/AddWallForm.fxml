@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<AnchorPane fx:id="addWallForm" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.addwallform.AddWallForm">
+    <stylesheets>
+        <URL value="@/ui/app/page/cellar/addwallform/AddWallForm.css" />
+    </stylesheets>
+    <children>
+        <ScrollPane layoutY="90.0" prefHeight="535.0" prefWidth="1280.0">
+            <content>
+                <AnchorPane fx:id="mainPaneCreateWall" minHeight="535.0" prefWidth="1260.0">
+                    <children>
+                        <fx:include fx:id="form" source="../../../component/form/Form.fxml" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+        <AnchorPane fx:id="titlePaneCreateWall" prefHeight="90.0" prefWidth="1280.0" />
+    </children>
+</AnchorPane>

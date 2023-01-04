@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane fx:id="bottleDetails" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.details.bottle.BottleDetails">
+    <stylesheets>
+        <URL value="@/ui/app/page/cellar/details/bottle/BottleDetails.css" />
+    </stylesheets>
+    <children>
+        <ScrollPane layoutY="90.0" prefHeight="535.0" prefWidth="1280.0">
+            <content>
+                <AnchorPane minHeight="535.0" prefWidth="1260.0">
+                    <children>
+                        <AnchorPane fx:id="logoBottlePane" minHeight="535.0" prefWidth="360.0" />
+                        <VBox fx:id="mainPaneBottleDetails" layoutX="360.0" minHeight="535.0" minWidth="900.0" >
+                            <children>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+        <AnchorPane fx:id="titlePaneBottleDetails" prefHeight="90.0" prefWidth="1280.0" />
+    </children>
+</AnchorPane>
