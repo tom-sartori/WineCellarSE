@@ -488,7 +488,7 @@ public interface FacadeInterface {
 	 * @param endDate The end date of the referencing.
 	 * @return The price.
 	 */
-	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
+	double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel);
   
   /**
 	 * Insert a bottle to a cellar.

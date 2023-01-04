@@ -6,17 +6,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 <?import java.net.URL?>
-<AnchorPane id="advertisingRequestsList" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.advertising.requests.AdvertisingRequestsList">
+<AnchorPane id="referencingList" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.referencing.list.ReferencingList">
     <stylesheets>
-        <URL value="@/ui/app/page/company/advertising/requests/AdvertisingRequestsList.css" />
+        <URL value="@/ui/app/page/company/referencing/list/ReferencingList.css" />
     </stylesheets>
 
     <children>
         <Rectangle fill="#0d47a1" height="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Vos demandes de publicités" />
+        <Label fx:id="price" alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Vos référencements" />
         <ScrollPane layoutX="4.0" layoutY="47.0" prefHeight="575.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <GridPane fx:id="cardHolder" alignment="TOP_CENTER" layoutX="12.0" layoutY="109.0" />
         </ScrollPane>
-        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
     </children>
+    <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
 </AnchorPane>

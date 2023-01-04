@@ -1,5 +1,8 @@
 package ui.app.theme.menu;
 
+import ui.app.page.company.referencing.ReferencingPage;
+import ui.app.page.company.referencing.creation.ReferencingCreation;
+import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
@@ -11,7 +14,10 @@ public enum MenuEnum {
 	USER("Utilisateur"),
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Login", Login.class, USER),
-	PARTNER("Partenaires", PartnerPage.class);
+	PARTNER("Partenaires", PartnerPage.class),
+	REFERENCING("Référencements", ReferencingPage.class),
+	REFERENCINGCREATION("Création", ReferencingCreation.class, REFERENCING),
+	REFERENCINGLIST("Tous les référencements", ReferencingList.class, REFERENCING);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

@@ -102,6 +102,6 @@ public class Referencing implements Entity<Referencing> {
 	@Override
 	public void handleOnCreate() {
 		this.id = null;
-		this.price = Facade.getInstance().calculatePrice(getStartDate(),getExpirationDate(),getImportanceLevel());
+		this.price = Facade.getInstance().calculatePriceReferencing(getStartDate(),getExpirationDate(),getImportanceLevel());
 	}
 }

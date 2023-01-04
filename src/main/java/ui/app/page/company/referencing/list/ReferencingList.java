@@ -1,4 +1,4 @@
-package ui.app.page.company.advertising.list;
+package ui.app.page.company.referencing.list;
 
 import facade.Facade;
 import javafx.collections.FXCollections;
@@ -7,18 +7,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import persistence.entity.advertising.Advertising;
-import ui.app.page.company.advertising.AdvertisingCard;
+import persistence.entity.referencing.Referencing;
+import ui.app.page.company.referencing.ReferencingCard;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AdvertisingList implements Initializable {
+public class ReferencingList implements Initializable {
 
     @FXML
     private GridPane cardHolder;
-    private ObservableList<AdvertisingCard> cardList = FXCollections.observableArrayList();
+    private ObservableList<ReferencingCard> cardList = FXCollections.observableArrayList();
 
     private final int nbColumn = 4;
 
@@ -27,14 +27,12 @@ public class AdvertisingList implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<Advertising> advertisingList = Facade.getInstance().getAdvertisingList();
+        List<Referencing> referencingList = Facade.getInstance().getReferencingList();
         cardList.clear();
 
         int maxWidth = 1280;
         int gapBetweenCard = 20;
-        double preferredHeight = 230.0;
-        double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
-        advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising, preferredHeight, preferredWidth, "advertisingList")));
+        referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
 
 
         cardHolder.setAlignment(Pos.CENTER);
@@ -51,7 +49,7 @@ public class AdvertisingList implements Initializable {
         int count = 0;
 
         cardHolder.getChildren().clear();
-        for (AdvertisingCard card : cardList) {
+        for (ReferencingCard card : cardList) {
             cardHolder.add(card, count % nbColumn, count / nbColumn);
             count++;
         }

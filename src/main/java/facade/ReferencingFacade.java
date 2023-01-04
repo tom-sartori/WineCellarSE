@@ -126,7 +126,7 @@ class ReferencingFacade {
      * @param endDate The end date of the referencing.
      * @return The price.
      */
-    protected double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
-        return ReferencingController.getInstance().calculatePrice(startDate,endDate,importanceLevel);
+    protected double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingController.getInstance().calculatePriceReferencing(startDate,endDate,importanceLevel);
     }
 }

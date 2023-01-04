@@ -652,8 +652,8 @@ public class Facade implements FacadeInterface {
      * @param endDate The end date of the referencing.
      * @return The price.
      */
-    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
-        return ReferencingFacade.getInstance().calculatePrice(startDate,endDate,importanceLevel);
+    public double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingFacade.getInstance().calculatePriceReferencing(startDate,endDate,importanceLevel);
     }
 
     /**

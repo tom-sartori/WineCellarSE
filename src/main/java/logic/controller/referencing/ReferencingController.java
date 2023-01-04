@@ -108,7 +108,7 @@ public class ReferencingController extends AbstractController<Referencing> {
      * @param endDate   The end date of the referencing.
      * @return The price.
      */
-    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+    public double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel) {
         return ((endDate.getTime() - startDate.getTime()) * importanceLevel) / (8640000);
     }
 
