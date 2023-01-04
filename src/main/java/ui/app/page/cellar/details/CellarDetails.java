@@ -315,6 +315,26 @@ public class CellarDetails implements Initializable {
                     refresh();
                 });
                 mainVBox.getChildren().add(addEmplacementButton);
+
+                Button deleteWallButton = new Button("Supprimer le mur");
+                deleteWallButton.setCursor(Cursor.HAND);
+                deleteWallButton.setOnAction(event -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initModality(Modality.APPLICATION_MODAL);
+                    alert.setContentText("Sample Alert");
+                    Optional<ButtonType> buttonType = alert.showAndWait();
+
+                    if (buttonType.get() == ButtonType.OK) {
+                        try {
+                            Facade.getInstance().removeWall(wall, State.getInstance().getSelectedCellar().getId());
+                        } catch (BadArgumentsException e) {
+                            throw new RuntimeException(e);
+                            // TODO handle exception
+                        }
+                        refresh();
+                    }
+                });
+                mainVBox.getChildren().add(deleteWallButton);
             }
 
             for (EmplacementBottle emplacementBottle: wall.getEmplacementBottleMap()) {
@@ -416,10 +436,7 @@ public class CellarDetails implements Initializable {
                 mainVBox.getChildren().add(tableActionsHbox);
             }
 
-
             // TODO Add avertisement entre chaque mur
-
-
 
         }
         // TODO add table to the center of the page
