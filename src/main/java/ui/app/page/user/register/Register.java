@@ -38,6 +38,8 @@ public class Register implements Initializable, Observer {
         formController.addField(new LabelFieldMasked("Mot de passe", true));
         formController.addField(new LabelFieldMasked("Confirmer le mot de passe", true));
 
+        formController.setSubmitButtonText("S'inscrire");
+
         formController.initialize(null, null);
     }
 

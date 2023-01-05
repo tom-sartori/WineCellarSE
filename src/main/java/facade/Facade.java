@@ -1,24 +1,31 @@
 package facade;
 
 
+import logic.controller.advertising.AdvertisingController;
+import org.bson.types.ObjectId;
+
 import exception.BadArgumentsException;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
-import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
+
 import persistence.entity.advertising.Advertising;
+import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
-import persistence.entity.guide.Guide;
+import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
-import persistence.entity.rate.Rate;
+import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
+import persistence.entity.rate.Rate;
 
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -192,52 +199,13 @@ public class Facade implements FacadeInterface {
     }
 
     /**
-     * Get advertisings by their company id.
+     * Get advertising by their company id.
      *
      * @param company The id of the advertised company.
      * @return A list of advertisings.
      */
-    public List<Advertising> getAdvertisingsByCompany(ObjectId company) {
-        return AdvertisingFacade.getInstance().getAdvertisingsByCompany(company);
-    }
-
-    /**
-     * Get advertisings not validated.
-     *
-     * @return A list of advertisings.
-     */
-    public List<Advertising> getNotValidatedAdvertisings() {
-        return AdvertisingFacade.getInstance().getNotValidatedAdvertisings();
-    }
-
-    /**
-     * Get not validated advertisings by their company id.
-     *
-     * @param company The id of the advertised company.
-     * @return A list of advertisings.
-     */
-    public List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company) {
-        return AdvertisingFacade.getInstance().getNotValidatedAdvertisingsByCompany(company);
-    }
-
-    /**
-     * Get a random validated advertising.
-     *
-     * @return An advertising.
-     */
-    public Advertising getRandomAdvertising() {
-        return AdvertisingFacade.getInstance().getRandomAdvertising();
-    }
-
-    /**
-     * Calculate the price of an advertising.
-     *
-     * @param startDate The start date of the advertising.
-     * @param endDate The end date of the advertising.
-     * @return The price.
-     */
-    public double calculatePriceAdvertising(Date startDate, Date endDate) {
-        return AdvertisingFacade.getInstance().calculatePriceAdvertising(startDate,endDate);
+    public List<Advertising> getAdvertisingByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
     }
 
      /**
@@ -591,6 +559,105 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Insert a referencing.
+     *
+     * @param referencing The referencing to insert.
+     * @return The id of the inserted referencing.
+     */
+    public ObjectId insertOneReferencing(Referencing referencing) {
+        return ReferencingFacade.getInstance().insertOneReferencing(referencing);
+    }
+
+    /**
+     * Get all referencings.
+     *
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingList() {
+        return ReferencingFacade.getInstance().getReferencingList();
+    }
+
+    /**
+     * Get a referencing by its id.
+     *
+     * @param id The id of the referencing.
+     * @return The referencing or null if not found.
+     */
+    public Referencing getOneReferencing(ObjectId id) {
+        return ReferencingFacade.getInstance().getOneReferencing(id);
+    }
+
+    /**
+     * Get referencings by their importanceLevel.
+     *
+     * @param importanceLevel The level of importance of the searched referencings.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingByLevel(int importanceLevel) {
+        return ReferencingFacade.getInstance().getReferencingByLevel(importanceLevel);
+    }
+
+    /**
+     * Get referencings by their company id.
+     *
+     * @param company The id of the referenced company.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingByCompany(ObjectId company) {
+        return ReferencingFacade.getInstance().getReferencingByCompany(company);
+    }
+
+    /**
+     * Update a referencing.
+     *
+     * @param id The id of the referencing to update.
+     * @param referencing The new referencing.
+     * @return true if the referencing has been updated, false otherwise.
+     */
+    public boolean updateOneReferencing(ObjectId id, Referencing referencing) {
+        return ReferencingFacade.getInstance().updateOneReferencing(id, referencing);
+    }
+
+    /**
+     * Delete a referencing.
+     *
+     * @param id The id of the referencing to delete.
+     * @return true if the referencing has been deleted, false otherwise.
+     */
+    public boolean deleteOneReferencing(ObjectId id) {
+        return ReferencingFacade.getInstance().deleteOneReferencing(id);
+    }
+
+    /**
+     * Update the status of a referencing.
+     *
+     * @param id The id of the referencing to update.
+     * @param referencing The new referencing.
+     * @return true if the referencing has been updated, false otherwise.
+     */
+    public boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingFacade.getInstance().updateStatus(id, referencing);}
+
+    /**
+     * Get a random validated referencing.
+     *
+     * @return A Referencing.
+     */
+    public Referencing getRandomReferencing() {
+        return ReferencingFacade.getInstance().getRandomReferencing();
+    }
+
+    /**
+     * Calculate the price of a referencing.
+     *
+     * @param startDate The start date of the referencing.
+     * @param endDate The end date of the referencing.
+     * @return The price.
+     */
+    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingFacade.getInstance().calculatePrice(startDate,endDate,importanceLevel);
+    }
+
+    /**
      * Insert a bottle to a cellar.
      *
      * @param wall The wall to add the bottle to.
@@ -645,6 +712,151 @@ public class Facade implements FacadeInterface {
      */
     public ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         return BottleFacade.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
+    }
+
+    /**
+     * Insert a company.
+     *
+     * @param company The company to insert.
+     * @return The id of the inserted company.
+     */
+    public ObjectId insertOneCompany(Company company) {
+        return CompanyFacade.getInstance().insertOneCompany(company);
+    }
+
+    /**
+     * Get all companies.
+     *
+     * @return A list of companys.
+     */
+    public List<Company> getCompanyList() {
+        return CompanyFacade.getInstance().getCompanyList();
+    }
+
+    /**
+     * Return the companies where the user is a manager or masterManager.
+     *
+     * @param userId The id of the user.
+     *
+     * @return The list of companies where the user is a manager or masterManager.
+     */
+    public List<Company> findAllCompaniesByUserId(ObjectId userId) {
+        return CompanyFacade.getInstance().findAllCompaniesByUserId(userId);
+    }
+
+    /**
+     * Get a company by its id.
+     *
+     * @param id The id of the company.
+     *
+     * @return The company or null if not found.
+     */
+    public Company getOneCompany(ObjectId id) {
+        return CompanyFacade.getInstance().getOneCompany(id);
+    }
+
+    /**
+     * Update a company.
+     *
+     * @param id The id of the company to update.
+     * @param company The new company.
+     *
+     * @return true if the company has been updated, false otherwise.
+     */
+    public boolean updateOneCompany(ObjectId id, Company company) {
+        return CompanyFacade.getInstance().updateOneCompany(id, company);
+    }
+
+    /**
+     * Delete a company.
+     *
+     * @param id The id of the company to delete.
+     *
+     * @return true if the company has been deleted, false otherwise.
+     */
+    public boolean deleteOneCompany(ObjectId id) {
+        return CompanyFacade.getInstance().deleteOneCompany(id);
+    }
+
+    /**
+     * Return the list of companies that are accessible.
+     *
+     * @return The list of accessible companies if any, throws a NotFoundException otherwise.
+     */
+    public List<Company> findAllAccessibleCompanies() throws NotFoundException {
+        return CompanyFacade.getInstance().findAllAccessibleCompanies();
+    }
+
+    /**
+     * Return the list of companies that are not accessible.
+     *
+     * @return The list of companies that are not accessible if there are any, a NotFoundException is thrown otherwise.
+     */
+    public List<Company> findAllUnaccessibleCompanies() throws NotFoundException {
+        return CompanyFacade.getInstance().findAllUnaccessibleCompanies();
+    }
+
+    /**
+     * Add a manager to a company.
+     *
+     * @param companyId The id of the company.
+     * @param managerId The id of the manager to add.
+     *
+     * @return The id of the updated company if the manager was added, throws a BadArgumentsException otherwise.
+     * @throws BadArgumentsException if the manager was not added.
+     */
+    public ObjectId addManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().addManager(companyId, managerId);
+    }
+
+    /**
+     * Removes a manager from a company.
+     *
+     * @param companyId The id of the company.
+     * @param managerId The id of the manager.
+     *
+     * @return The id of the company if the manager was removed successfully, else throws a BadArgumentsException.
+     * @throws BadArgumentsException If the company or the manager does not exist.
+     */
+    public ObjectId removeManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().removeManager(companyId, managerId);
+    }
+
+    /**
+     * Refuse a request to publish a new Company.
+     *
+     * @param companyId The id of the company to refuse.
+     *
+     * @return The id of the refused company if the operation was successful, else throw an exception.
+     * @throws BadArgumentsException If the company does not exist or if the company has already been accepted by an Admin.
+     */
+    public ObjectId refuseRequest(ObjectId companyId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().refuseRequest(companyId);
+    }
+
+    /**
+     *  Accept a request to create a Company.
+     *
+     * @param companyId The id of the company to accept.
+     *
+     * @return The id of the accepted company if the operation is successful, else throws an exception.
+     * @throws BadArgumentsException If the company does not exist or if the company is already accepted.
+     */
+    public ObjectId acceptRequest(ObjectId companyId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().acceptRequest(companyId);
+    }
+
+    /**
+     * Promote a user to masterManager.
+     *
+     * @param companyId The id of the company.
+     * @param newMasterManagerId The id of the new masterManager.
+     *
+     * @return The id of the updated company if the promotion was successful, throws a BadArgumentsException otherwise.
+     * @throws BadArgumentsException if the user or the company doesn't exist.
+     */
+    public ObjectId promoteNewMasterManager(ObjectId companyId, ObjectId newMasterManagerId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().promoteNewMasterManager(companyId, newMasterManagerId);
     }
 
     /**

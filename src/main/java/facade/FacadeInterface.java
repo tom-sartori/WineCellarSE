@@ -1,17 +1,23 @@
 package facade;
 
+import logic.controller.advertising.AdvertisingController;
+import org.bson.types.ObjectId;
+
 import exception.BadArgumentsException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
 import org.bson.types.ObjectId;
+
 import persistence.entity.advertising.Advertising;
+import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
-import persistence.entity.guide.Guide;
+import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
+import persistence.entity.referencing.Referencing;
 import persistence.entity.rate.Rate;
 import persistence.entity.user.User;
 
@@ -143,43 +149,12 @@ public interface FacadeInterface {
 	boolean validateAdvertising(ObjectId id);
 
 	/**
-	 * Get advertisings by their company id.
+	 * Get advertising by their company id.
 	 *
 	 * @param company The id of the advertised company.
 	 * @return A list of advertisings.
 	 */
-	public List<Advertising> getAdvertisingsByCompany(ObjectId company);
-
-	/**
-	 * Get advertisings not validated.
-	 *
-	 * @return A list of advertisings.
-	 */
-	public List<Advertising> getNotValidatedAdvertisings();
-
-	/**
-	 * Get not validated advertisings by their company id.
-	 *
-	 * @param company The id of the advertised company.
-	 * @return A list of advertisings.
-	 */
-	public List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company);
-
-	/**
-	 * Get a random validated advertising.
-	 *
-	 * @return An advertising.
-	 */
-	public Advertising getRandomAdvertising();
-
-	/**
-	 * Calculate the price of an advertising.
-	 *
-	 * @param startDate The start date of the advertising.
-	 * @param endDate The end date of the advertising.
-	 * @return The price.
-	 */
-	public double calculatePriceAdvertising(Date startDate, Date endDate);
+	public List<Advertising> getAdvertisingByCompany(ObjectId company);
 
   /**
 	 * Insert a guide.
@@ -437,6 +412,86 @@ public interface FacadeInterface {
 	boolean deleteOneUser(ObjectId id);
 
 	/**
+	 * Insert a referencing.
+	 *
+	 * @param referencing The referencing to insert.
+	 * @return The id of the inserted referencing.
+	 */
+	ObjectId insertOneReferencing(Referencing referencing);
+
+	/**
+	 * Get all referencings.
+	 *
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingList();
+
+	/**
+	 * Get a referencing by its id.
+	 *
+	 * @param id The id of the referencing.
+	 * @return The referencing or null if not found.
+	 */
+	Referencing getOneReferencing(ObjectId id);
+
+	/**
+	 * Get referencings by their importanceLevel.
+	 *
+	 * @param importanceLevel The level of importance of the searched referencings.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByLevel(int importanceLevel);
+
+	/**
+	 * Get referencings by their company id.
+	 *
+	 * @param company The id of the referenced company.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingByCompany(ObjectId company);
+	/**
+	 * Update a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateOneReferencing(ObjectId id, Referencing referencing);
+
+	/**
+	 * Delete a referencing.
+	 *
+	 * @param id The id of the referencing to delete.
+	 * @return true if the referencing has been deleted, false otherwise.
+	 */
+	boolean deleteOneReferencing(ObjectId id);
+
+	/**
+	 * Update the status of a referencing.
+	 *
+	 * @param id The id of the referencing to update.
+	 * @param referencing The new referencing.
+	 * @return true if the referencing has been updated, false otherwise.
+	 */
+	boolean updateStatus(ObjectId id, Referencing referencing);
+
+	/**
+	 * Get a random validated referencing.
+	 *
+	 * @return A Referencing.
+	 */
+	Referencing getRandomReferencing();
+
+	/**
+	 * Calculate the price of a referencing.
+	 *
+	 * @param startDate The start date of the referencing.
+	 * @param endDate The end date of the referencing.
+	 * @return The price.
+	 */
+	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
+  
+  /**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.
@@ -486,6 +541,125 @@ public interface FacadeInterface {
 	ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
 
 	/**
+	 * Insert a company.
+	 *
+	 * @param company The company to insert.
+	 * @return The id of the inserted company.
+	 */
+	ObjectId insertOneCompany(Company company);
+
+	/**
+	 * Get all companies.
+	 *
+	 * @return A list of companys.
+	 */
+	List<Company> getCompanyList();
+
+	/**
+	 * Return the companies where the user is a manager or masterManager.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return The list of companies where the user is a manager or masterManager.
+	 */
+	List<Company> findAllCompaniesByUserId(ObjectId userId);
+
+	/**
+	 * Get a company by its id.
+	 *
+	 * @param id The id of the company.
+	 *
+	 * @return The company or null if not found.
+	 */
+	Company getOneCompany(ObjectId id);
+
+	/**
+	 * Update a company.
+	 *
+	 * @param id The id of the company to update.
+	 * @param company The new company.
+	 *
+	 * @return true if the company has been updated, false otherwise.
+	 */
+	boolean updateOneCompany(ObjectId id, Company company);
+
+	/**
+	 * Delete a company.
+	 *
+	 * @param id The id of the company to delete.
+	 *
+	 * @return true if the company has been deleted, false otherwise.
+	 */
+	boolean deleteOneCompany(ObjectId id);
+
+	/**
+	 * Return the list of companies that are accessible.
+	 *
+	 * @return The list of accessible companies if any, throws a NotFoundException otherwise.
+	 */
+	List<Company> findAllAccessibleCompanies();
+
+	/**
+	 * Return the list of companies that are not accessible.
+	 *
+	 * @return The list of companies that are not accessible if there are any, a NotFoundException is thrown otherwise.
+	 */
+	List<Company> findAllUnaccessibleCompanies();
+
+	/**
+	 * Add a manager to a company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param managerId The id of the manager to add.
+	 *
+	 * @return The id of the updated company if the manager was added, throws a BadArgumentsException otherwise.
+	 * @throws BadArgumentsException if the manager was not added.
+	 */
+	ObjectId addManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException;
+
+	/**
+	 * Removes a manager from a company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param managerId The id of the manager.
+	 *
+	 * @return The id of the company if the manager was removed successfully, else throws a BadArgumentsException.
+	 * @throws BadArgumentsException If the company or the manager does not exist.
+	 */
+	ObjectId removeManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException;
+
+	/**
+	 * Refuse a request to publish a new Company.
+	 *
+	 * @param companyId The id of the company to refuse.
+	 *
+	 * @return The id of the refused company if the operation was successful, else throw an exception.
+	 * @throws BadArgumentsException If the company does not exist or if the company has already been accepted by an Admin.
+	 */
+	ObjectId refuseRequest(ObjectId companyId) throws BadArgumentsException;
+
+	/**
+	 *  Accept a request to create a Company.
+	 *
+	 * @param companyId The id of the company to accept.
+	 *
+	 * @return The id of the accepted company if the operation is successful, else throws an exception.
+	 * @throws BadArgumentsException If the company does not exist or if the company is already accepted.
+	 */
+	ObjectId acceptRequest(ObjectId companyId) throws BadArgumentsException;
+
+	/**
+	 * Promote a user to masterManager.
+	 *
+	 * @param companyId The id of the company.
+	 * @param newMasterManagerId The id of the new masterManager.
+	 *
+	 * @return The id of the updated company if the promotion was successful, throws a BadArgumentsException otherwise.
+	 * @throws BadArgumentsException if the user or the company doesn't exist.
+	 */
+	ObjectId promoteNewMasterManager(ObjectId companyId, ObjectId newMasterManagerId) throws BadArgumentsException;
+
+	/**
 	 * Insert a rate.
 	 *
 	 * @param rate The partner to insert.
@@ -533,5 +707,4 @@ public interface FacadeInterface {
 	 * @return The number of deleted rates.
 	 */
 	boolean deleteOneRate(ObjectId id);
-
 }
