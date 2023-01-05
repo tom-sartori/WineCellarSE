@@ -8,7 +8,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import org.bson.types.ObjectId;
 import persistence.entity.advertising.Advertising;
+import persistence.entity.company.Company;
+import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
+import ui.app.component.field.select.Select;
 import ui.app.page.company.form.Form;
 
 import java.net.URL;
@@ -23,26 +26,40 @@ public class AdvertisingCreation implements Initializable, Observer {
     @FXML
     private Form formController;
 
+    private String[] companyList;
+
+    private List<Company> companies;
+
+    private Company companySelected;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        formController.addObserver(this);
+        if(State.getInstance().getCurrentUser() != null) {
+            companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            companyList = new String[companies.size()];
+            int i = 0;
+            for (Company c : companies) {
+                companyList[i] = c.getName();
+                i++;
+            }
+            formController.addObserver(this);
 
-        formController.clearFieldList();
+            formController.clearFieldList();
 
-        formController.addField(new LabelField("Nom de la publicité", true));
-        formController.addField(new LabelField("Description", true));
-        formController.addField(new LabelField("Lien de l'entreprise", true));
-        formController.addField(new LabelField("Lien de l'image de la publicité", true));
-        formController.addField(new LabelField("Date de début", true));
-        formController.addField(new LabelField("Date de fin", true));
+            formController.addField(new LabelField("Nom de la publicité", true));
+            formController.addField(new LabelField("Description", true));
+            formController.addField(new LabelField("Lien de l'entreprise", true));
+            formController.addField(new LabelField("Lien de l'image de la publicité", true));
+            formController.addField(new LabelField("Date de début", true));
+            formController.addField(new LabelField("Date de fin", true));
+            formController.addField(new Select("Entreprise", true, companyList));
 
-        formController.initialize(null, null);
+            formController.initialize(null, null);
+        }
     }
-
-    //TODO: company ??
 
     public void createPriceAlert(Advertising ad, Date startDate, Date endDate){
         String price = String.valueOf(Facade.getInstance().calculatePriceAdvertising(startDate, endDate));
@@ -61,29 +78,37 @@ public class AdvertisingCreation implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Map<String, Object> labelFieldMap = (Map<String, Object>) arg;
+        if(State.getInstance().getCurrentUser() != null){
+            Map<String, Object> labelFieldMap = (Map<String, Object>) arg;
 
-        String startDateString= labelFieldMap.get("Date de début").toString();
-        String endDateString= labelFieldMap.get("Date de fin").toString();
-        try {
-            Date startDate=new SimpleDateFormat("dd/MM/yyyy").parse(startDateString);
-            Date endDate=new SimpleDateFormat("dd/MM/yyyy").parse(endDateString);
+            String startDateString= labelFieldMap.get("Date de début").toString();
+            String endDateString= labelFieldMap.get("Date de fin").toString();
+            try {
+                Date startDate=new SimpleDateFormat("dd/MM/yyyy").parse(startDateString);
+                Date endDate=new SimpleDateFormat("dd/MM/yyyy").parse(endDateString);
 
-            if (!startDate.before(endDate)) {
-                // Invalid startDate and endDate.
-                formController.showErrorLabel("Dates invalides");
-                return;
+                if (!startDate.before(endDate)) {
+                    // Invalid startDate and endDate.
+                    formController.showErrorLabel("Dates invalides");
+                    return;
+                }
+
+                for(Company c : companies) {
+                    if(c.getName().equals(labelFieldMap.get("Entreprise").toString())){
+                        companySelected = c;
+                    }
+                }
+
+                Advertising ad = new Advertising(labelFieldMap.get("Nom de la publicité").toString(), labelFieldMap.get("Description").toString(), labelFieldMap.get("Lien de l'entreprise").toString(), labelFieldMap.get("Lien de l'image de la publicité").toString(), startDate, endDate, companySelected.getId());
+
+                // The form is valid. Try to create the advertising.
+                createPriceAlert(ad, startDate,endDate);
+            } catch (Exception e) {
+                formController.showErrorLabel("Format de dates invalide. ");
             }
-
-            ObjectId company = new ObjectId("63a81022d84f20569350aecd");
-
-            Advertising ad = new Advertising(labelFieldMap.get("Nom de la publicité").toString(), labelFieldMap.get("Description").toString(), labelFieldMap.get("Lien de l'entreprise").toString(), labelFieldMap.get("Lien de l'image de la publicité").toString(), startDate, endDate, company);
-
-            // The form is valid. Try to create the advertising.
-            createPriceAlert(ad, startDate,endDate);
-        } catch (Exception e) {
-            formController.showErrorLabel("Format de dates invalide. ");
         }
-
+    }
+    public void onAction() {
+        this.initialize(null, null);
     }
 }

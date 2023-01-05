@@ -6,8 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
+import org.bson.types.ObjectId;
 import persistence.entity.advertising.Advertising;
+import persistence.entity.company.Company;
+import ui.app.State;
 import ui.app.page.company.advertising.AdvertisingCard;
 
 import java.net.URL;
@@ -18,6 +22,9 @@ public class AdvertisingRequestsList implements Initializable {
 
     @FXML
     private GridPane cardHolder;
+
+    @FXML
+    private ChoiceBox<String> select;
     private ObservableList<AdvertisingCard> cardList = FXCollections.observableArrayList();
 
     private final int nbColumn = 4;
@@ -27,8 +34,27 @@ public class AdvertisingRequestsList implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<Advertising> advertisingList = Facade.getInstance().getNotValidatedAdvertisings();
+        if(State.getInstance().getCurrentUser() != null){
+            List<Company> companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            if(select.getItems().size() == 0){
+                for (Company c : companies){
+                    select.getItems().add(c.getName());
+                }
+            }
+
+            select.setOnAction((event) -> {
+                String selectedItem = select.getValue();
+                for(Company c : companies){
+                    if(c.getName().equals(selectedItem)){
+                        list(c.getId());
+                    }
+                }
+            });
+        }
+    }
+    public void list(ObjectId company){
         cardList.clear();
+        List<Advertising> advertisingList = Facade.getInstance().getNotValidatedAdvertisingsByCompany(company);
 
         int maxWidth = 1280;
         int gapBetweenCard = 20;
@@ -44,7 +70,6 @@ public class AdvertisingRequestsList implements Initializable {
 
         onSearch();
     }
-
     @FXML
     public void onSearch() {
         int count = 0;
