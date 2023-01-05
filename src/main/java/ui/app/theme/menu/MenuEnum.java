@@ -2,6 +2,7 @@ package ui.app.theme.menu;
 
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
+import ui.app.page.user.profile.Profile;
 import ui.app.page.user.register.Register;
 
 import java.util.Arrays;
@@ -10,7 +11,8 @@ import java.util.List;
 public enum MenuEnum {
 	USER("Utilisateur"),
 	REGISTER("S'enregistrer", Register.class, USER),
-	LOGIN("Login", Login.class, USER),
+	LOGIN("Se connecter", Login.class, USER),
+	PROFILE("Mon profil", Profile.class, USER),
 	PARTNER("Partenaires", PartnerPage.class);
 
 	private final String navigationTitle;
