@@ -343,4 +343,47 @@ class CompanyFacadeTest {
         }
     }
 
+    /**
+     * Test the findCompaniesByUser method.
+     */
+    @Test
+    void Test_findCompaniesByUserId(){
+        try {
+            User user = new User("Lorenzo10", "Lorenzo5");
+
+            ObjectId userId = facade.register(user);
+
+            assert userId != null;
+
+            company.setMasterManager(userId);
+
+            ObjectId objectId = facade.insertOneCompany(company);
+
+            assertNotNull(objectId);
+
+            List<Company> before = facade.findAllCompaniesByUserId(userId);
+
+            company.setMasterManager(null);
+
+            ObjectId objectId1 = facade.insertOneCompany(company);
+
+            assertNotNull(objectId1);
+
+            ObjectId objectId2 = facade.addManager(objectId1, userId);
+
+            assertNotNull(objectId2);
+
+            List<Company> after = facade.findAllCompaniesByUserId(userId);
+
+            assertEquals(before.size() + 1, after.size());
+
+            // CLEAN UP
+
+            facade.deleteOneCompany(objectId);
+            facade.deleteOneUser(userId);
+        } catch (BadArgumentsException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

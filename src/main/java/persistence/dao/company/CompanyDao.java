@@ -3,8 +3,10 @@ package persistence.dao.company;
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import exception.BadArgumentsException;
+import exception.NotFoundException;
 import org.bson.BsonBoolean;
 import org.bson.BsonDocument;
+import org.bson.BsonObjectId;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import persistence.dao.AbstractDao;
@@ -59,6 +61,39 @@ public class CompanyDao extends AbstractDao<Company> {
 	 */
 	public List<Company> findAllUnaccessibleCompanies() {
 		return findAllCompaniesByAccessibility(false);
+	}
+
+	/**
+	 * Return the companies where the user is a manager or masterManager.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return The list of companies where the user is a manager or masterManager.
+	 */
+	public List<Company> findAllCompaniesByUserId(ObjectId userId) {
+		BsonDocument filter = new BsonDocument();
+
+		filter.append("masterManager", new BsonObjectId(userId));
+
+
+		List<Company> allWithFilter;
+		try {
+			allWithFilter = super.findAllWithFilter(filter);
+		} catch (NotFoundException e) {
+			allWithFilter = new ArrayList<>();
+		}
+
+		BsonDocument filter2 = new BsonDocument();
+
+		filter2.append("managerList", new BsonObjectId(userId));
+
+		try {
+			allWithFilter.addAll(super.findAllWithFilter(filter2));
+		} catch (NotFoundException e) {
+			// Do nothing
+		}
+
+		return allWithFilter;
 	}
 
 	// TODO SEND NOTIF
