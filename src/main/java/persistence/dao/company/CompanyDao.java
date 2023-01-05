@@ -1,21 +1,20 @@
 package persistence.dao.company;
 
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import exception.BadArgumentsException;
 import exception.NotFoundException;
-import org.bson.*;
+import org.bson.BsonBoolean;
+import org.bson.BsonDocument;
+import org.bson.BsonObjectId;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.connector.MongoConnector;
 import persistence.dao.AbstractDao;
 import persistence.entity.company.Company;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.in;
 import static com.mongodb.client.model.Updates.combine;
 
 public class CompanyDao extends AbstractDao<Company> {
