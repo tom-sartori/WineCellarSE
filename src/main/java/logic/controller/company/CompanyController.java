@@ -159,6 +159,16 @@ public class CompanyController extends AbstractController<Company> {
     }
 
     /**
+     * Return the companies where the user is a manager or masterManager.
+     *
+     * @param userId The id of the user.
+     *
+     * @return The list of companies where the user is a manager or masterManager.
+     */
+    public List<Company> findAllCompaniesByUserId(ObjectId userId) {
+        return getDao().findAllCompaniesByUserId(userId);
+    }
+    /**
      * Add a manager to a company.
      *
      * @param companyId The id of the company.

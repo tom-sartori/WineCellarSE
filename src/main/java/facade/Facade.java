@@ -734,6 +734,17 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Return the companies where the user is a manager or masterManager.
+     *
+     * @param userId The id of the user.
+     *
+     * @return The list of companies where the user is a manager or masterManager.
+     */
+    public List<Company> findAllCompaniesByUserId(ObjectId userId) {
+        return CompanyFacade.getInstance().findAllCompaniesByUserId(userId);
+    }
+
+    /**
      * Get a company by its id.
      *
      * @param id The id of the company.
