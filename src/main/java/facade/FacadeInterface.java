@@ -1,12 +1,10 @@
 package facade;
 
-import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
 
 import exception.BadArgumentsException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
-import org.bson.types.ObjectId;
 
 import persistence.entity.advertising.Advertising;
 import persistence.entity.guide.Guide;
@@ -448,7 +446,7 @@ public interface FacadeInterface {
 	 * @param company The id of the referenced company.
 	 * @return A list of referencings.
 	 */
-	List<Referencing> getReferencingByCompany(ObjectId company);
+	List<Referencing> getReferencingsByCompany(ObjectId company);
 	/**
 	 * Update a referencing.
 	 *
@@ -490,7 +488,16 @@ public interface FacadeInterface {
 	 * @return The price.
 	 */
 	double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel);
-  
+
+	/**
+	 * Get referencings by their company id and the status.
+	 *
+	 * @param company The id of the referenced company.
+	 * @param status The status of the referencing.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingsByCompanyByStatus(ObjectId company, String status);
+
   /**
 	 * Insert a bottle to a cellar.
 	 *

@@ -113,6 +113,20 @@ public class ReferencingController extends AbstractController<Referencing> {
     }
 
     /**
+     * Get referencings by their company id and the status.
+     *
+     * @param company The id of the referenced company.
+     * @param status The status of the referencing.
+     * @return A list of referencings.
+     */
+    public List<Referencing> findAllByCompanyByStatus(ObjectId company, String status) {
+        BsonDocument filter = new BsonDocument();
+        filter.append("company", new org.bson.BsonObjectId(company));
+        filter.append("status", new org.bson.BsonString(status));
+        return getDao().findAllWithFilter(filter);
+    }
+
+    /**
      * @return the DAO of the specific Controller (ReferencingDao).
      */
     @Override

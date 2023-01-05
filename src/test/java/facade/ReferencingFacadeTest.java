@@ -209,21 +209,24 @@ class ReferencingFacadeTest {
     }
 
     /**
-     * Test if a referencing can be found thanks to its company id.
+     * Test if a referencing can be found thanks to its company id and the combinaison of company id and status.
      */
     @Test
-    void test_findByCompany_OK() {
+    void test_findByCompanyAndStatus_OK() {
         ObjectId company = new ObjectId("63a5ce5496a16445da19e223");
         ObjectId company2 = new ObjectId("63a5ce5496a16445da19e224");
         referencing.setCompany(company);
+        referencing.setStatus("En cours");
         ObjectId idOfInsertedReferencing = facade.insertOneReferencing(referencing);
         referencing.setCompany(company2);
         ObjectId idOfInsertedReferencing2 = facade.insertOneReferencing(referencing);
+        referencing.setStatus("Passé");
         ObjectId idOfInsertedReferencing3 = facade.insertOneReferencing(referencing);
 
-        List<Referencing> referencingList = facade.getReferencingByCompany(company);
-
+        List<Referencing> referencingList = facade.getReferencingsByCompany(company);
+        List<Referencing> referencingListStatus = facade.getReferencingsByCompanyByStatus(company2, "En cours");
         assertEquals(referencingList.size(), 1);
+        assertEquals(referencingListStatus.size(), 1);
         facade.deleteOneReferencing(idOfInsertedReferencing);
         facade.deleteOneReferencing(idOfInsertedReferencing2);
         facade.deleteOneReferencing(idOfInsertedReferencing3);

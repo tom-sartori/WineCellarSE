@@ -76,7 +76,7 @@ class ReferencingFacade {
      * @param company The id of the referenced company.
      * @return A list of referencings.
      */
-    protected List<Referencing> getReferencingByCompany(ObjectId company) {
+    protected List<Referencing> getReferencingsByCompany(ObjectId company) {
         return ReferencingController.getInstance().findAllByCompany(company);
     }
 
@@ -128,5 +128,16 @@ class ReferencingFacade {
      */
     protected double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel) {
         return ReferencingController.getInstance().calculatePriceReferencing(startDate,endDate,importanceLevel);
+    }
+
+    /**
+     * Get referencings by their company id and the status.
+     *
+     * @param company The id of the referenced company.
+     * @param status The status of the referencing.
+     * @return A list of referencings.
+     */
+    protected List<Referencing> getReferencingsByCompanyByStatus(ObjectId company, String status) {
+        return ReferencingController.getInstance().findAllByCompanyByStatus(company, status);
     }
 }

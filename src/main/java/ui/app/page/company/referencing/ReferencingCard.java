@@ -30,7 +30,7 @@ public class ReferencingCard extends Pane {
 	@FXML
 	private Button supprimer;
 	@FXML
-	private Label status, paymentDate, level, startDate, endDate, price;
+	private Label status, paymentDate, level, startDate, endDate, price, nameCompany;
 
 	//TODO : AdminCard
 	public ReferencingCard(Referencing referencing) {
@@ -45,6 +45,7 @@ public class ReferencingCard extends Pane {
 
 		getChildren().add(referencingCard);
 		status = (Label) referencingCard.lookup("#status");
+		nameCompany = (Label) referencingCard.lookup("#nameCompany");
 		paymentDate = (Label) referencingCard.lookup("#paymentDate");
 		level = (Label) referencingCard.lookup("#level");
 		startDate = (Label) referencingCard.lookup("#startDate");
@@ -53,6 +54,7 @@ public class ReferencingCard extends Pane {
 		supprimer = (Button) referencingCard.lookup("#supprimer");
 
 		status.setText(referencing.getStatus());
+		nameCompany.setText(Facade.getInstance().getOneCompany(referencing.getCompany()).getName());
 		price.setText(String.valueOf(referencing.getPrice())+" €");
 		level.setText(String.valueOf(referencing.getImportanceLevel()));
 		SimpleDateFormat pattern = new SimpleDateFormat("dd/MM/yyyy");
