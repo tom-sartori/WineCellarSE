@@ -348,7 +348,7 @@ class CompanyFacadeTest {
      * Test the findCompaniesByUser method.
      */
     @Test
-    void Test_findCompaniesByUserId(){
+    void Test_findCompaniesByUserId() throws MustBeAnAdminException {
         try {
             User user = new User("Lorenzo10", "Lorenzo5");
 
@@ -381,7 +381,7 @@ class CompanyFacadeTest {
             // CLEAN UP
 
             facade.deleteOneCompany(objectId);
-            facade.deleteOneUser(userId);
+            facade.deleteOneUser(user.getUsername());
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }
