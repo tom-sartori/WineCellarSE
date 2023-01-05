@@ -1,8 +1,10 @@
 package facade;
 
 import logic.controller.event.EventController;
+import logic.controller.referencing.ReferencingController;
 import org.bson.types.ObjectId;
 import persistence.entity.event.Event;
+import persistence.entity.referencing.Referencing;
 
 import java.util.List;
 
@@ -77,5 +79,15 @@ class EventFacade {
      */
     protected boolean deleteOneEvent(ObjectId id) {
         return EventController.getInstance().deleteOne(id);
+    }
+
+    /**
+     * Get events by their company id.
+     *
+     * @param company The id of the company.
+     * @return A list of events.
+     */
+    protected List<Event> getEventsByCompany(ObjectId company) {
+        return EventController.getInstance().findAllByCompany(company);
     }
 }

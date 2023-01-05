@@ -2,6 +2,7 @@ package facade;
 
 
 import logic.controller.advertising.AdvertisingController;
+import logic.controller.event.EventController;
 import org.bson.types.ObjectId;
 
 import exception.BadArgumentsException;
@@ -11,6 +12,7 @@ import exception.NotFoundException;
 import org.bson.types.ObjectId;
 
 import persistence.entity.advertising.Advertising;
+import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
@@ -925,4 +927,63 @@ public class Facade implements FacadeInterface {
         return RateFacade.getInstance().deleteOneRate(id);
     }
 
+    /**
+     * Get all events.
+     *
+     * @return A list of events.
+     */
+    public List<Event> getEventList() {
+        return EventFacade.getInstance().getEventList();
+    }
+
+    /**
+     * Insert an event.
+     *
+     * @param event The event to insert.
+     * @return The id of the inserted event.
+     */
+    public ObjectId insertOneEvent(Event event) {
+        return EventFacade.getInstance().insertOneEvent(event);
+    }
+
+    /**
+     * Get an event by its id.
+     *
+     * @param id The id of the event.
+     * @return The event or null if not found.
+     */
+    public Event getOneEvent(ObjectId id) {
+        return EventFacade.getInstance().getOneEvent(id);
+    }
+
+    /**
+     * Update an event.
+     *
+     * @param id The id of the event to update.
+     * @param event The new event.
+     * @return true if the event has been updated, false otherwise.
+     */
+    public boolean updateOneEvent(ObjectId id, Event event) {
+        return EventFacade.getInstance().updateOneEvent(id, event);
+    }
+
+    /**
+     * Delete an event.
+     *
+     * @param id The id of the event to delete.
+     * @return true if the event has been deleted, false otherwise.
+     */
+    public boolean deleteOneEvent(ObjectId id) {
+        return EventFacade.getInstance().deleteOneEvent(id);
+    }
+
+    /**
+     * Get events by their company id.
+     *
+     * @param company The id of the company.
+     * @return A list of events.
+     */
+    public List<Event> getEventsByCompany(ObjectId company) {
+        return EventFacade.getInstance().getEventsByCompany(company);
+    }
 }

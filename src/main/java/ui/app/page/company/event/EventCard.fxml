@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane id="eventCard" prefHeight="139.0" prefWidth="532.0" style="-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.event.EventCard">
+   <children>
+      <Label fx:id="name" layoutX="10.0" layoutY="7.0" prefHeight="17.0" prefWidth="59.0" text="Nom" />
+      <Label fx:id="startDate" layoutX="10.0" layoutY="24.0" text="StartDate" />
+      <Label fx:id="endDate" layoutX="97.0" layoutY="24.0" text="EndDate" />
+      <Line endX="11.0" endY="3.814697265625E-6" layoutX="78.0" layoutY="33.0" startX="-1.4999923706054688" startY="3.814697265625E-6" />
+      <Line endX="11.0" endY="3.814697265625E-6" layoutX="82.0" layoutY="32.0" rotate="24.4" startX="5.5" startY="3.814697265625E-6" />
+      <Line endX="11.0" endY="3.814697265625E-6" layoutX="82.0" layoutY="34.0" rotate="-21.8" startX="5.5" startY="3.814697265625E-6" />
+      <Button fx:id="supprimer" layoutX="446.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Supprimer" />
+      <Label fx:id="address" layoutX="10.0" layoutY="43.0" prefHeight="17.0" prefWidth="335.0" text="Adresse" />
+      <TextArea fx:id="description" layoutX="10.0" layoutY="64.0" prefHeight="66.0" prefWidth="424.0" wrapText="true" />
+      <Label fx:id="nameCompany" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="336.0" layoutY="15.0" prefHeight="17.0" prefWidth="182.0" text="NomEntreprise" />
+   </children>
+</AnchorPane>

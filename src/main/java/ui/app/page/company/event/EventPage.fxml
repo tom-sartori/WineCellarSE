@@ -9,5 +9,8 @@
     </stylesheets>
     <children>
         <Button mnemonicParsing="false" text="Sample" />
+        <fx:include fx:id="eventCreation" source="creation/EventCreation.fxml" />
+        <fx:include fx:id="eventList" source="list/EventList.fxml" />
+        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
     </children>
 </AnchorPane>

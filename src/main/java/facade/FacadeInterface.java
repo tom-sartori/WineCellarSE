@@ -9,6 +9,7 @@ import exception.NotFoundException;
 import org.bson.types.ObjectId;
 
 import persistence.entity.advertising.Advertising;
+import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
@@ -707,4 +708,52 @@ public interface FacadeInterface {
 	 * @return The number of deleted rates.
 	 */
 	boolean deleteOneRate(ObjectId id);
+
+	/**
+	 * Get all events.
+	 *
+	 * @return A list of events.
+	 */
+	List<Event> getEventList();
+
+	/**
+	 * Insert an event.
+	 *
+	 * @param event The event to insert.
+	 * @return The id of the inserted event.
+	 */
+	ObjectId insertOneEvent(Event event);
+
+	/**
+	 * Get an event by its id.
+	 *
+	 * @param id The id of the event.
+	 * @return The event or null if not found.
+	 */
+	Event getOneEvent(ObjectId id);
+
+	/**
+	 * Update an event.
+	 *
+	 * @param id The id of the event to update.
+	 * @param event The new event.
+	 * @return true if the event has been updated, false otherwise.
+	 */
+	boolean updateOneEvent(ObjectId id, Event event);
+
+	/**
+	 * Delete an event.
+	 *
+	 * @param id The id of the event to delete.
+	 * @return true if the event has been deleted, false otherwise.
+	 */
+	boolean deleteOneEvent(ObjectId id);
+
+	/**
+	 * Get events by their company id.
+	 *
+	 * @param company The id of the company.
+	 * @return A list of events.
+	 */
+	List<Event> getEventsByCompany(ObjectId company);
 }

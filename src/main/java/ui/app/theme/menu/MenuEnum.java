@@ -1,5 +1,8 @@
 package ui.app.theme.menu;
 
+import ui.app.page.company.event.EventPage;
+import ui.app.page.company.event.creation.EventCreation;
+import ui.app.page.company.event.list.EventList;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
@@ -11,7 +14,10 @@ public enum MenuEnum {
 	USER("Utilisateur"),
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Login", Login.class, USER),
-	PARTNER("Partenaires", PartnerPage.class);
+	PARTNER("Partenaires", PartnerPage.class),
+	EVENT("Event", EventPage.class),
+	EVENTCREATION("Création d'un event", EventCreation.class, EVENT),
+	EVENTLIST("Liste des events", EventList.class, EVENT);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;
