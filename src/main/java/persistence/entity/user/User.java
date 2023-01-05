@@ -4,7 +4,6 @@ import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -20,8 +19,6 @@ public class User implements Entity<User> {
 	private String lastname;
 	@Nullable
 	private String email;
-	@Nullable
-	private Date birthday;
 
 	public User() { }
 
@@ -31,13 +28,12 @@ public class User implements Entity<User> {
 		this.admin = false;
 	}
 
-	public User(String username, String password, @Nullable String firstname, @Nullable String lastname, @Nullable String email, @Nullable Date birthday) {
+	public User(String username, String password, @Nullable String firstname, @Nullable String lastname, @Nullable String email) {
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
-		this.birthday = birthday;
 		this.admin = false;
 	}
 
@@ -110,26 +106,17 @@ public class User implements Entity<User> {
 		this.email = email;
 	}
 
-	@Nullable
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(@Nullable Date birthday) {
-		this.birthday = birthday;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return admin == user.admin && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(birthday, user.birthday);
+		return admin == user.admin && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, username, password, admin, firstname, lastname, email, birthday);
+		return Objects.hash(id, username, password, admin, firstname, lastname, email);
 	}
 
 	@Override
