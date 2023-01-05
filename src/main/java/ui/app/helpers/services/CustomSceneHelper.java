@@ -1,13 +1,18 @@
 package ui.app.helpers.services;
 
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import ui.Starter;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /*
  * This class helps get FXML components from the main scene and can call functions from different controllers to change then.
@@ -77,6 +82,13 @@ public  class CustomSceneHelper {
 
         Node node = getNodeById(nodeName);
         node.toFront();
+
+        // Get the controller of the node and run initialize() on it. This is used to refresh the page when it is brought to the front.
+        Object controller = node.getProperties().get("controller");
+        if (controller instanceof Initializable) {
+            ((Initializable) controller).initialize(null, null);
+        }
+
         while (! node.getParent().getId().equals("contentAreaPane")) {
             node = node.getParent();
             node.toFront();
