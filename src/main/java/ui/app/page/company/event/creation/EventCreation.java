@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import org.bson.types.ObjectId;
 import persistence.entity.company.Company;
 import persistence.entity.event.Event;
 import ui.app.State;

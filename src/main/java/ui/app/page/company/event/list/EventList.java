@@ -14,7 +14,6 @@ import persistence.entity.event.Event;
 import ui.app.State;
 import ui.app.page.company.event.EventCard;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -51,7 +50,6 @@ public class EventList implements Initializable {
                 }
             });
         } else {
-            select.hide();
             list(null);
         }
     }
