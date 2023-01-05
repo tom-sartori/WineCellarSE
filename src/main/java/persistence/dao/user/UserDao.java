@@ -2,6 +2,7 @@ package persistence.dao.user;
 
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
 import constant.CollectionNames;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
@@ -14,13 +15,15 @@ import persistence.entity.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 
 public class UserDao extends AbstractDao<User> {
 
 	private static UserDao instance;
 
-	private UserDao() { }
+	private UserDao() {
+	}
 
 	public static UserDao getInstance() {
 		if (instance == null) {
@@ -45,6 +48,27 @@ public class UserDao extends AbstractDao<User> {
 
 		updateList.add(Updates.set("username", entity.getUsername()));
 		updateList.add(Updates.set("password", entity.getPassword()));
+		updateList.add(Updates.set("admin", entity.isAdmin()));
+
+		if (entity.getFirstname() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("firstname", entity.getFirstname()));
+		}
+
+		if (entity.getLastname() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("lastname", entity.getLastname()));
+		}
+
+		if (entity.getEmail() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("email", entity.getEmail()));
+		}
+
+		if (entity.getBirthday() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("birthday", entity.getBirthday()));
+		}
 
 		return combine(updateList);
 	}
@@ -57,10 +81,9 @@ public class UserDao extends AbstractDao<User> {
 	 */
 	@Override
 	public ObjectId insertOne(User user) throws InvalidUsernameException {
-		try	{
+		try {
 			return super.insertOne(user);
-		}
-		catch (MongoWriteException e) {
+		} catch (MongoWriteException e) {
 			if (e.getCode() == 11000) {
 				throw new InvalidUsernameException();
 			}
@@ -82,9 +105,19 @@ public class UserDao extends AbstractDao<User> {
 
 		if (user == null) {
 			throw new NotFoundException();
-		}
-		else {
+		} else {
 			return user;
 		}
+	}
+
+	/**
+	 * Delete a user by its username.
+	 *
+	 * @param username The username of the user to delete.
+	 * @return The number of deleted users.
+	 */
+	public boolean deleteOne(String username) {
+		DeleteResult deleteResult = getCollection().deleteOne(eq("username", username));
+		return deleteResult.getDeletedCount() == 1;
 	}
 }
