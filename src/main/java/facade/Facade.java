@@ -1,6 +1,7 @@
 package facade;
 
 
+import exception.user.MustBeAnAdminException;
 import exception.user.NoLoggedUser;
 import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
@@ -567,9 +568,10 @@ public class Facade implements FacadeInterface {
      *
      * @param username The username of the user to delete.
      * @return true if the user has been deleted, false otherwise.
+     * @throws MustBeAnAdminException if the user is not an admin.
      */
     @Override
-    public boolean deleteOneUser(String username) {
+    public boolean deleteOneUser(String username) throws MustBeAnAdminException {
         return UserFacade.getInstance().deleteOneUser(username);
     }
 

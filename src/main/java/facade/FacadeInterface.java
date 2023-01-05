@@ -1,5 +1,6 @@
 package facade;
 
+import exception.user.MustBeAnAdminException;
 import exception.user.NoLoggedUser;
 import org.bson.types.ObjectId;
 
@@ -155,7 +156,7 @@ public interface FacadeInterface {
 	 */
 	public List<Advertising> getAdvertisingByCompany(ObjectId company);
 
-  /**
+	/**
 	 * Insert a guide.
 	 *
 	 * @param guide The guide to insert.
@@ -195,7 +196,7 @@ public interface FacadeInterface {
 	 */
 	boolean deleteOneGuide(ObjectId id);
 
-   /**
+	/**
 	 * Insert a cellar.
 	 *
 	 * @param cellar The cellar to insert.
@@ -421,8 +422,9 @@ public interface FacadeInterface {
 	 *
 	 * @param username The username of the user to delete.
 	 * @return true if the user has been deleted, false otherwise.
+	 * @throws MustBeAnAdminException if the user is not an admin.
 	 */
-	boolean deleteOneUser(String username);
+	boolean deleteOneUser(String username) throws MustBeAnAdminException;
 
 	/**
 	 * Check if the user logged in is an admin.
@@ -510,8 +512,8 @@ public interface FacadeInterface {
 	 * @return The price.
 	 */
 	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
-  
-  /**
+
+	/**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.

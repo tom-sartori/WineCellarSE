@@ -2,6 +2,7 @@ package facade;
 
 import exception.BadArgumentsException;
 import exception.NotFoundException;
+import exception.user.MustBeAnAdminException;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -137,7 +138,7 @@ class CompanyFacadeTest {
      * Test the getCompanyListByManager method.
      */
     @Test
-    void Test_promoteNewMasterManager(){
+    void Test_promoteNewMasterManager() throws MustBeAnAdminException {
         try {
             ObjectId objectId = facade.insertOneCompany(company);
 
@@ -168,7 +169,7 @@ class CompanyFacadeTest {
      * Test the insertNewManager method.
      */
     @Test
-    void Test_insertNewManager(){
+    void Test_insertNewManager() throws MustBeAnAdminException {
         try {
             ObjectId objectId = facade.insertOneCompany(company);
 
@@ -199,7 +200,7 @@ class CompanyFacadeTest {
      * Test the deleteManager method.
      */
     @Test
-    void Test_removeAManager(){
+    void Test_removeAManager() throws MustBeAnAdminException {
         try {
             ObjectId objectId = facade.insertOneCompany(company);
 

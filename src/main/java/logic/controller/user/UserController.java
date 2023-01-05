@@ -3,6 +3,7 @@ package logic.controller.user;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
+import exception.user.MustBeAnAdminException;
 import exception.user.NoLoggedUser;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
@@ -160,8 +161,14 @@ public class UserController extends AbstractController<User> {
      *
      * @param username The username of the user to delete.
      * @return true if the user has been deleted, false otherwise.
+     * @throws MustBeAnAdminException if the user is not an admin.
      */
-    public boolean deleteOne(String username) {
-        return getDao().deleteOne(username);
+    public boolean deleteOne(String username) throws MustBeAnAdminException {
+        if (isAdmin()) {
+            return getDao().deleteOne(username);
+        }
+        else {
+            throw new MustBeAnAdminException();
+        }
     }
 }

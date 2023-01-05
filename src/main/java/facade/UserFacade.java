@@ -3,6 +3,7 @@ package facade;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
+import exception.user.MustBeAnAdminException;
 import exception.user.NoLoggedUser;
 import logic.controller.user.UserController;
 import org.bson.types.ObjectId;
@@ -112,8 +113,9 @@ class UserFacade {
      *
      * @param username The username of the user to delete.
      * @return true if the user has been deleted, false otherwise.
+     * @throws MustBeAnAdminException if the user is not an admin.
      */
-    protected boolean deleteOneUser(String username) {
+    protected boolean deleteOneUser(String username) throws MustBeAnAdminException {
         return UserController.getInstance().deleteOne(username);
     }
 

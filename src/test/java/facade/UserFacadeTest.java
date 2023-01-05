@@ -2,6 +2,7 @@ package facade;
 
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
+import exception.user.MustBeAnAdminException;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import persistence.entity.cellar.Cellar;
@@ -67,6 +68,10 @@ class UserFacadeTest {
 	@Test
 	void deleteOneUser() {
 		String username = "michelll";
-		facade.deleteOneUser(username);
+		try {
+			facade.deleteOneUser(username);
+		} catch (MustBeAnAdminException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
