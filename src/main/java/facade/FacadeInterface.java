@@ -578,6 +578,15 @@ public interface FacadeInterface {
 	List<Company> getCompanyList();
 
 	/**
+	 * Return the companies where the user is a manager or masterManager.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return The list of companies where the user is a manager or masterManager.
+	 */
+	List<Company> findAllCompaniesByUserId(ObjectId userId);
+
+	/**
 	 * Get a company by its id.
 	 *
 	 * @param id The id of the company.
