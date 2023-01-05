@@ -13,7 +13,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
@@ -29,7 +28,10 @@ import ui.app.page.cellar.details.bottle.BottleDetails;
 import ui.app.page.cellar.updatecellar.UpdateCellarForm;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 // TODO SINGLETON TO BE ABLE TO USE REFRESH METHOD IN OTHER CLASSES ?
 // TODO refactor class to separate methods
@@ -341,6 +343,28 @@ public class CellarDetails implements Initializable {
 
                 mainVBox.getChildren().add(new Label("Emplacement n°" + (wall.getEmplacementBottleMap().indexOf(emplacementBottle)+1)));
 
+                if (isOwner()){
+                    Button deleteEmplacementButton = new Button("Supprimer l'emplacement");
+                    deleteEmplacementButton.setCursor(Cursor.HAND);
+                    deleteEmplacementButton.setOnAction(event -> {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.initModality(Modality.APPLICATION_MODAL);
+                        alert.setContentText("Sample Alert");
+                        Optional<ButtonType> buttonType = alert.showAndWait();
+
+                        if (buttonType.get() == ButtonType.OK) {
+                            try {
+                                Facade.getInstance().removeEmplacement(State.getInstance().getSelectedCellar(), wall, emplacementBottle);
+                            } catch (BadArgumentsException e) {
+                                throw new RuntimeException(e);
+                                // TODO handle exception
+                            }
+                            refresh();
+                        }
+                    });
+                    mainVBox.getChildren().add(deleteEmplacementButton);
+                }
+
                 HBox tableActionsHbox = new HBox();
 
                 tableActionsHbox.setPrefWidth(1260);
@@ -359,6 +383,7 @@ public class CellarDetails implements Initializable {
                     Button addBottleButton = new Button("Ajouter une bouteille");
                     addBottleButton.setCursor(Cursor.HAND);
                     addBottleButton.setOnAction(event -> {
+                        State.getInstance().setSelectedCellar(currentCellar);
                         State.getInstance().setSelectedEmplacementBottle(emplacementBottle);
                         State.getInstance().setSelectedWall(wall);
                         sceneHelper.bringNodeToFront(CreateBottleForm.class.getSimpleName());
