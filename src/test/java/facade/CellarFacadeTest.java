@@ -1,5 +1,6 @@
 package facade;
 
+import exception.BadArgumentsException;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -279,42 +280,46 @@ class CellarFacadeTest {
      */
     @Test
     void addWall() {
-        ObjectId cellarId = facade.insertOneCellar(cellar);
+        try {
+            ObjectId cellarId = facade.insertOneCellar(cellar);
 
-        Cellar cellarBefore = facade.getOneCellar(cellarId);
+            Cellar cellarBefore = facade.getOneCellar(cellarId);
 
-        int nbOfWallsBefore = cellarBefore.getWalls().size();
+            int nbOfWallsBefore = cellarBefore.getWalls().size();
 
-        List<EmplacementBottle> emplacementBottleMap = new ArrayList<>();
+            List<EmplacementBottle> emplacementBottleMap = new ArrayList<>();
 
-        List<BottleQuantity> bottles = new ArrayList<>();
+            List<BottleQuantity> bottles = new ArrayList<>();
 
-        ArrayList<String> grapeList = new ArrayList<>();
-        grapeList.add("ffffesseef");
-        grapeList.add("fefzgsgsesefzq");
+            ArrayList<String> grapeList = new ArrayList<>();
+            grapeList.add("ffffesseef");
+            grapeList.add("fefzgsgsesefzq");
 
-        bottles.add(new BottleQuantity(new Bottle("test",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",grapeList), 1));
+            bottles.add(new BottleQuantity(new Bottle("test",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",grapeList), 1));
 
-        List<Point> pointList = new ArrayList<>();
+            List<Point> pointList = new ArrayList<>();
 
-        pointList.add(new Point(3,4));
-        pointList.add(new Point(1,2));
-        pointList.add(new Point(4,2));
+            pointList.add(new Point(3,4));
+            pointList.add(new Point(1,2));
+            pointList.add(new Point(4,2));
 
-        emplacementBottleMap.add(new EmplacementBottle(pointList,bottles));
-        Wall wall = new Wall("googlgree.com", emplacementBottleMap,"Mur Nord");
+            emplacementBottleMap.add(new EmplacementBottle(pointList,bottles));
+            Wall wall = new Wall("googlgree.com", emplacementBottleMap,"Mur Nord");
 
-        facade.addWall(wall, cellarId);
+            facade.addWall(wall, cellarId);
 
-        Cellar cellarAfter = facade.getOneCellar(cellarId);
+            Cellar cellarAfter = facade.getOneCellar(cellarId);
 
-        int nbOfWallsAfter = cellarAfter.getWalls().size();
+            int nbOfWallsAfter = cellarAfter.getWalls().size();
 
-        assertEquals(nbOfWallsBefore + 1, nbOfWallsAfter);
+            assertEquals(nbOfWallsBefore + 1, nbOfWallsAfter);
 
-        // CLEAN UP
+            // CLEAN UP
 
-        facade.deleteOneCellar(cellarId);
+            facade.deleteOneCellar(cellarId);
+        } catch (BadArgumentsException e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -322,80 +327,27 @@ class CellarFacadeTest {
      */
     @Test
     void removeWall(){
-        ObjectId cellarId = facade.insertOneCellar(cellar);
+        try {
+            ObjectId cellarId = facade.insertOneCellar(cellar);
 
-        Cellar cellarBefore = facade.getOneCellar(cellarId);
+            Cellar cellarBefore = facade.getOneCellar(cellarId);
 
-        int nbOfWallsBefore = cellarBefore.getWalls().size();
+            int nbOfWallsBefore = cellarBefore.getWalls().size();
 
-        facade.removeWall(cellar.getWalls().get(0), cellarId);
+            facade.removeWall(cellar.getWalls().get(0), cellarId);
 
-        Cellar cellarAfter = facade.getOneCellar(cellarId);
+            Cellar cellarAfter = facade.getOneCellar(cellarId);
 
-        int nbOfWallsAfter = cellarAfter.getWalls().size();
+            int nbOfWallsAfter = cellarAfter.getWalls().size();
 
-        assertEquals(nbOfWallsBefore - 1, nbOfWallsAfter);
+            assertEquals(nbOfWallsBefore - 1, nbOfWallsAfter);
 
-        // CLEAN UP
+            // CLEAN UP
 
-        facade.deleteOneCellar(cellarId);
-    }
-
-    /**
-     * Test the insertion of a bottle.
-     */
-    @Test
-    void addBottle() {
-        ObjectId cellarId = facade.insertOneCellar(cellar);
-        cellar.setId(cellarId);
-
-        Cellar cellarBefore = facade.getOneCellar(cellarId);
-
-        int nbOfBottlesBefore = cellarBefore.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().size();
-
-        facade.addBottle(cellar.getWalls().get(0), cellar, new Bottle("Lorenzo",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",new ArrayList<>()), cellar.getWalls().get(0).getEmplacementBottleMap().get(0));
-
-        Cellar cellarAfter = facade.getOneCellar(cellarId);
-
-        int nbOfBottlesAfter = cellarAfter.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().size();
-
-        assertEquals(nbOfBottlesBefore + 1, nbOfBottlesAfter);
-
-        // CLEAN UP
-
-        facade.deleteOneCellar(cellarId);
-    }
-
-    /**
-     * Test the deletion of a bottle.
-     */
-    @Test
-    void removeBottle() {
-        ObjectId cellarId = facade.insertOneCellar(cellar);
-        cellar.setId(cellarId);
-        Bottle bottle = new Bottle("Lorenzo", 2020, "fafazf", "googreggle.com", 10.5, "michel", 14.2, 1, "L", "bf", new ArrayList<>());
-
-        // Add the bottles
-        facade.addBottle(cellar.getWalls().get(0), cellar, bottle, cellar.getWalls().get(0).getEmplacementBottleMap().get(0));
-        facade.addBottle(cellar.getWalls().get(0), cellar, new Bottle("Morgane",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",new ArrayList<>()), cellar.getWalls().get(0).getEmplacementBottleMap().get(0));
-        facade.addBottle(cellar.getWalls().get(0), cellar, new Bottle("Tom",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",new ArrayList<>()), cellar.getWalls().get(0).getEmplacementBottleMap().get(0));
-
-        // Get the cellar after the add to have an updated version of the cellar to pass as argument to the removal.
-        Cellar cellarBefore = facade.getOneCellar(cellarId);
-
-        int nbOfBottlesBefore = cellarBefore.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().size();
-
-        facade.removeBottle(cellarBefore.getWalls().get(0), cellarBefore, bottle, cellarBefore.getWalls().get(0).getEmplacementBottleMap().get(0));
-
-        Cellar cellarAfter = facade.getOneCellar(cellarId);
-
-        int nbOfBottlesAfter = cellarAfter.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().size();
-
-        assertEquals(nbOfBottlesBefore - 1, nbOfBottlesAfter);
-
-        // CLEAN UP
-
-        facade.deleteOneCellar(cellarId);
+            facade.deleteOneCellar(cellarId);
+        } catch (BadArgumentsException e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -403,31 +355,35 @@ class CellarFacadeTest {
      */
     @Test
     void addEmplacement() {
-        ObjectId cellarId = facade.insertOneCellar(cellar);
-        cellar.setId(cellarId);
+        try {
+            ObjectId cellarId = facade.insertOneCellar(cellar);
+            cellar.setId(cellarId);
 
-        List<Point> pointList = new ArrayList<>();
+            List<Point> pointList = new ArrayList<>();
 
-        pointList.add(new Point(2,2));
-        pointList.add(new Point(4,4));
-        pointList.add(new Point(5,4));
-        pointList.add(new Point(3,6));
+            pointList.add(new Point(2,2));
+            pointList.add(new Point(4,4));
+            pointList.add(new Point(5,4));
+            pointList.add(new Point(3,6));
 
-        Cellar cellarBefore = facade.getOneCellar(cellarId);
+            Cellar cellarBefore = facade.getOneCellar(cellarId);
 
-        int nbOfEmplacementsBefore = cellarBefore.getWalls().get(0).getEmplacementBottleMap().size();
+            int nbOfEmplacementsBefore = cellarBefore.getWalls().get(0).getEmplacementBottleMap().size();
 
-        facade.addEmplacement(cellar, cellar.getWalls().get(0), new EmplacementBottle(pointList, new ArrayList<>()));
+            facade.addEmplacement(cellar, cellar.getWalls().get(0), new EmplacementBottle(pointList, new ArrayList<>()));
 
-        Cellar cellarAfter = facade.getOneCellar(cellarId);
+            Cellar cellarAfter = facade.getOneCellar(cellarId);
 
-        int nbOfEmplacementsAfter = cellarAfter.getWalls().get(0).getEmplacementBottleMap().size();
+            int nbOfEmplacementsAfter = cellarAfter.getWalls().get(0).getEmplacementBottleMap().size();
 
-        assertEquals(nbOfEmplacementsBefore + 1, nbOfEmplacementsAfter);
+            assertEquals(nbOfEmplacementsBefore + 1, nbOfEmplacementsAfter);
 
-        // CLEAN UP
+            // CLEAN UP
 
-        facade.deleteOneCellar(cellarId);
+            facade.deleteOneCellar(cellarId);
+        } catch (BadArgumentsException e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -435,44 +391,48 @@ class CellarFacadeTest {
      */
     @Test
     void removeEmplacement() {
-        ObjectId cellarId = facade.insertOneCellar(cellar);
-        cellar.setId(cellarId);
+        try {
+            ObjectId cellarId = facade.insertOneCellar(cellar);
+            cellar.setId(cellarId);
 
-        List<Point> pointList = new ArrayList<>();
+            List<Point> pointList = new ArrayList<>();
 
-        pointList.add(new Point(2,2));
-        pointList.add(new Point(4,4));
-        pointList.add(new Point(5,4));
-        pointList.add(new Point(3, 6));
+            pointList.add(new Point(2,2));
+            pointList.add(new Point(4,4));
+            pointList.add(new Point(5,4));
+            pointList.add(new Point(3, 6));
 
-        EmplacementBottle emplacementBottle = new EmplacementBottle(pointList, new ArrayList<>());
+            EmplacementBottle emplacementBottle = new EmplacementBottle(pointList, new ArrayList<>());
+            facade.addEmplacement(cellar, cellar.getWalls().get(0), emplacementBottle);
 
-        facade.addEmplacement(cellar, cellar.getWalls().get(0), emplacementBottle);
-        facade.addEmplacement(cellar, cellar.getWalls().get(0), emplacementBottle);
+            facade.addEmplacement(cellar, cellar.getWalls().get(0), emplacementBottle);
 
-        List<Point> pointList2 = new ArrayList<>();
+            List<Point> pointList2 = new ArrayList<>();
 
-        pointList2.add(new Point(2,2));
-        pointList2.add(new Point(4,4));
-        pointList2.add(new Point(5,4));
+            pointList2.add(new Point(2,2));
+            pointList2.add(new Point(4,4));
+            pointList2.add(new Point(5,4));
 
-        facade.addEmplacement(cellar, cellar.getWalls().get(0), new EmplacementBottle(pointList2, new ArrayList<>()));
+            facade.addEmplacement(cellar, cellar.getWalls().get(0), new EmplacementBottle(pointList2, new ArrayList<>()));
 
-        Cellar cellarBefore = facade.getOneCellar(cellarId);
+            Cellar cellarBefore = facade.getOneCellar(cellarId);
 
-        int nbOfEmplacementsBefore = cellarBefore.getWalls().get(0).getEmplacementBottleMap().size();
+            int nbOfEmplacementsBefore = cellarBefore.getWalls().get(0).getEmplacementBottleMap().size();
 
-        facade.removeEmplacement(cellar, cellar.getWalls().get(0), emplacementBottle);
+            facade.removeEmplacement(cellar, cellar.getWalls().get(0), emplacementBottle);
 
-        Cellar cellarAfter = facade.getOneCellar(cellarId);
+            Cellar cellarAfter = facade.getOneCellar(cellarId);
 
-        int nbOfEmplacementsAfter = cellarAfter.getWalls().get(0).getEmplacementBottleMap().size();
+            int nbOfEmplacementsAfter = cellarAfter.getWalls().get(0).getEmplacementBottleMap().size();
 
-        assertEquals(nbOfEmplacementsBefore - 2, nbOfEmplacementsAfter);
+            assertEquals(nbOfEmplacementsBefore - 2, nbOfEmplacementsAfter);
 
-        // CLEAN UP
+            // CLEAN UP
 
-        facade.deleteOneCellar(cellarId);
+            facade.deleteOneCellar(cellarId);
+        } catch (BadArgumentsException e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -480,25 +440,29 @@ class CellarFacadeTest {
      */
     @Test
     void increaseBottleQuantity() {
-        ObjectId cellarId = facade.insertOneCellar(cellar);
-        cellar.setId(cellarId);
+        try {
+            ObjectId cellarId = facade.insertOneCellar(cellar);
+            cellar.setId(cellarId);
 
-        EmplacementBottle emplacementBottle = cellar.getWalls().get(0).getEmplacementBottleMap().get(0);
-        BottleQuantity bottleQuantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0);
+            EmplacementBottle emplacementBottle = cellar.getWalls().get(0).getEmplacementBottleMap().get(0);
+            BottleQuantity bottleQuantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0);
 
-        int quantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
+            int quantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
 
-        facade.increaseBottleQuantity(cellar, cellar.getWalls().get(0), emplacementBottle, bottleQuantity);
+            facade.increaseBottleQuantity(cellar, cellar.getWalls().get(0), emplacementBottle, bottleQuantity);
 
-        Cellar cellar1 = facade.getOneCellar(cellarId);
+            Cellar cellar1 = facade.getOneCellar(cellarId);
 
-        int quantity1 = cellar1.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
+            int quantity1 = cellar1.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
 
-        assertEquals(quantity + 1, quantity1);
+            assertEquals(quantity + 1, quantity1);
 
-        // CLEAN UP
+            // CLEAN UP
 
-        facade.deleteOneCellar(cellarId);
+            facade.deleteOneCellar(cellarId);
+        } catch (BadArgumentsException e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -506,31 +470,35 @@ class CellarFacadeTest {
      */
     @Test
     void decreaseBottleQuantity() {
-        ObjectId cellarId = facade.insertOneCellar(cellar);
-        cellar.setId(cellarId);
+        try {
+            ObjectId cellarId = facade.insertOneCellar(cellar);
+            cellar.setId(cellarId);
 
-        EmplacementBottle emplacementBottle = cellar.getWalls().get(0).getEmplacementBottleMap().get(0);
-        BottleQuantity bottleQuantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0);
+            EmplacementBottle emplacementBottle = cellar.getWalls().get(0).getEmplacementBottleMap().get(0);
+            BottleQuantity bottleQuantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0);
 
-        int quantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
+            int quantity = cellar.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
 
-        facade.decreaseBottleQuantity(cellar, cellar.getWalls().get(0), emplacementBottle, bottleQuantity);
+            facade.decreaseBottleQuantity(cellar, cellar.getWalls().get(0), emplacementBottle, bottleQuantity);
 
-        Cellar cellar1 = facade.getOneCellar(cellarId);
+            Cellar cellar1 = facade.getOneCellar(cellarId);
 
-        int quantity1 = cellar1.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
+            int quantity1 = cellar1.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().get(0).getQuantity();
 
-        assertEquals(quantity - 1, quantity1);
+            assertEquals(quantity - 1, quantity1);
 
-        facade.decreaseBottleQuantity(cellar, cellar.getWalls().get(0), emplacementBottle, bottleQuantity);
+            facade.decreaseBottleQuantity(cellar, cellar.getWalls().get(0), emplacementBottle, bottleQuantity);
 
-        // assert that the bottleQuantity has been deleted properly
-        Cellar cellar2 = facade.getOneCellar(cellarId);
-        assertEquals(0, cellar2.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().size());
+            // assert that the bottleQuantity has been deleted properly
+            Cellar cellar2 = facade.getOneCellar(cellarId);
+            assertEquals(0, cellar2.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().size());
 
-        // CLEAN UP
+            // CLEAN UP
 
-        facade.deleteOneCellar(cellarId);
+            facade.deleteOneCellar(cellarId);
+        } catch (BadArgumentsException e) {
+            fail(e.getMessage());
+        }
     }
 
     /**
@@ -563,7 +531,7 @@ class CellarFacadeTest {
             facade.deleteOneCellar(objectId4);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            fail(e.getMessage());
         }
     }
 

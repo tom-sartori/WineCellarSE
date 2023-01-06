@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Bottle implements Entity<Bottle> {
-
+    @Nullable
     private String bottleName;
     @Nullable
     private int vintage;
     private String appellation;
+    @Nullable
     private String bottleImage;
+    @Nullable
     private double price;
     private String producer;
     private double alcoholPercentage;

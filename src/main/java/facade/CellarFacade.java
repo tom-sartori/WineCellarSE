@@ -1,5 +1,7 @@
 package facade;
 
+import exception.BadArgumentsException;
+import exception.NotFoundException;
 import logic.controller.cellar.CellarController;
 import org.bson.types.ObjectId;
 import persistence.entity.bottle.Bottle;
@@ -84,9 +86,9 @@ public class CellarFacade {
      * @param user The user to add to readers.
      * @param cellar The cellar to add the user to.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addCellarReader(ObjectId user, ObjectId cellar){
+    public ObjectId addCellarReader(ObjectId user, ObjectId cellar) throws BadArgumentsException {
         return CellarController.getInstance().addCellarReader(user,cellar);
     }
 
@@ -96,9 +98,9 @@ public class CellarFacade {
      * @param user The user to remove from readers.
      * @param cellar The cellar to remove the user from.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeCellarReader(ObjectId user, ObjectId cellar){
+    public ObjectId removeCellarReader(ObjectId user, ObjectId cellar) throws BadArgumentsException{
         return CellarController.getInstance().removeCellarReader(user,cellar);
     }
 
@@ -108,9 +110,9 @@ public class CellarFacade {
      * @param user The user to add to managers.
      * @param cellar The cellar to add the user to.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addCellarManager(ObjectId user, ObjectId cellar){
+    public ObjectId addCellarManager(ObjectId user, ObjectId cellar) throws BadArgumentsException {
         return CellarController.getInstance().addCellarManager(user,cellar);
     }
 
@@ -120,9 +122,9 @@ public class CellarFacade {
      * @param user The user to remove from managers.
      * @param cellar The cellar to remove the user from.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeCellarManager(ObjectId user, ObjectId cellar){
+    public ObjectId removeCellarManager(ObjectId user, ObjectId cellar) throws BadArgumentsException{
         return CellarController.getInstance().removeCellarManager(user,cellar);
     }
 
@@ -132,9 +134,9 @@ public class CellarFacade {
      * @param cellar The cellar to add the wall to.
      * @param wall The wall to add.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addWall(Wall wall, ObjectId cellar){
+    public ObjectId addWall(Wall wall, ObjectId cellar) throws BadArgumentsException{
         return CellarController.getInstance().addWall(wall,cellar);
     }
 
@@ -144,38 +146,10 @@ public class CellarFacade {
      * @param cellar The cellar to remove the wall from.
      * @param wall The wall to remove.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeWall(Wall wall, ObjectId cellar){
+    public ObjectId removeWall(Wall wall, ObjectId cellar) throws BadArgumentsException {
         return CellarController.getInstance().removeWall(wall,cellar);
-    }
-
-    /**
-     * Add a bottle to a cellar.
-     *
-     * @param wall The wall to add the bottle to.
-     * @param cellar The cellar to add the bottle to.
-     * @param bottle The bottle to add.
-     * @param emplacementBottle The emplacement of the bottle.
-     *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
-     */
-    public ObjectId addBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle){
-        return CellarController.getInstance().addBottle(wall,cellar,bottle,emplacementBottle);
-    }
-
-    /**
-     * Remove a bottle from a cellar.
-     *
-     * @param wall The wall to remove the bottle from.
-     * @param cellar The cellar to remove the bottle from.
-     * @param bottle The bottle to remove.
-     * @param emplacementBottle The emplacement to remove the bottle from.
-     *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
-     */
-    public ObjectId removeBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle){
-        return CellarController.getInstance().removeBottle(wall,cellar,bottle,emplacementBottle);
     }
 
     /**
@@ -185,9 +159,9 @@ public class CellarFacade {
      * @param wall The wall to add the emplacement to.
      * @param emplacementBottle The emplacement to add.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle){
+    public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         return CellarController.getInstance().addEmplacement(cellar,wall,emplacementBottle);
     }
 
@@ -198,9 +172,9 @@ public class CellarFacade {
      * @param wall The wall to remove the emplacement from.
      * @param emplacementBottle The emplacement to remove.
      *
-     * @return The id of the updated cellar if the update was successful, null otherwise.
+     * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
-    public ObjectId removeEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle){
+    public ObjectId removeEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException{
         return CellarController.getInstance().removeEmplacement(cellar,wall,emplacementBottle);
     }
 
@@ -215,9 +189,9 @@ public class CellarFacade {
      *                          The emplacement must be in the wall and contain the bottle.
      * @param bottleQuantity The bottle to increase the quantity of.
      *               The bottle must be in the emplacement.
-     * @return The id of the updated cellar if the bottle was found and updated, null otherwise.
+     * @return The id of the updated cellar if the bottle was found and updated, otherwise throws a BadArgumentsException.
      */
-    public ObjectId increaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity){
+    public ObjectId increaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) throws BadArgumentsException {
         return CellarController.getInstance().increaseBottleQuantity(cellar,wall,emplacementBottle,bottleQuantity);
     }
 
@@ -233,18 +207,18 @@ public class CellarFacade {
      * @param bottleQuantity The bottle to increase the quantity of.
      *               The bottle must be in the emplacement.
      *
-     * @return The id of the updated cellar if the quantity is greater than 0 and the field has been updated, null otherwise.
+     * @return The id of the updated cellar if the quantity is greater than 0 and the field has been updated, otherwise throws a BadArgumentsException.
      */
-    public ObjectId decreaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity){
+    public ObjectId decreaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) throws BadArgumentsException{
         return CellarController.getInstance().decreaseBottleQuantity(cellar,wall,emplacementBottle,bottleQuantity);
     }
 
     /**
      * Get all public cellars.
      *
-     * @return A list of all public cellars.
+     * @return A list of all public cellars if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getPublicCellars() throws Exception {
+    public List<Cellar> getPublicCellars() throws NotFoundException {
         return CellarController.getInstance().getPublicCellars();
     }
 
@@ -253,9 +227,9 @@ public class CellarFacade {
      *
      * @param userId The id of the user.
      *
-     * @return A list of all the cellars of the user.
+     * @return A list of all the cellars of the user if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getCellarsFromUser(ObjectId userId) throws Exception {
+    public List<Cellar> getCellarsFromUser(ObjectId userId) throws NotFoundException {
         return CellarController.getInstance().getCellarsFromUser(userId);
     }
 
@@ -264,9 +238,9 @@ public class CellarFacade {
      *
      * @param userId The id of the user.
      *
-     * @return A list of all the cellars where the user is a reader.
+     * @return A list of all the cellars where the user is a reader if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getReadOnlyCellarsFromUser(ObjectId userId) throws Exception {
+    public List<Cellar> getReadOnlyCellarsFromUser(ObjectId userId) throws NotFoundException {
         return CellarController.getInstance().getReadOnlyCellarsFromUser(userId);
     }
 
@@ -275,9 +249,9 @@ public class CellarFacade {
      *
      * @param userId The id of the user.
      *
-     * @return A list of all the cellars where the user is a manager.
+     * @return A list of all the cellars where the user is a manager if there are any, otherwise throws a NotFoundException.
      */
-    public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws Exception {
+    public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws NotFoundException {
         return CellarController.getInstance().getCellarsWhereUserIsManager(userId);
     }
 }

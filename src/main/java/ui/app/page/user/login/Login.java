@@ -5,7 +5,6 @@ import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
@@ -36,6 +35,8 @@ public class Login implements Initializable, Observer {
         formController.addField(new LabelField("Nom", true));
         formController.addField(new LabelFieldMasked("Mot de passe", true));
 
+        formController.setSubmitButtonText("Se connecter");
+
         formController.initialize(null, null);
     }
 
@@ -45,10 +46,8 @@ public class Login implements Initializable, Observer {
 
         try {
             // Try to log in.
-            State.getInstance().setCurrentUser(
-                    Facade.getInstance()
-                            .login(labelFieldMap.get("Nom").toString(), labelFieldMap.get("Mot de passe").toString())
-            );
+            Facade.getInstance()
+                    .login(labelFieldMap.get("Nom").toString(), labelFieldMap.get("Mot de passe").toString());
         }
         catch (BadCredentialException e) {
             // Can not log in due to bad credentials.

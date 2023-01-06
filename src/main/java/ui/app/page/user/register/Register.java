@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import persistence.entity.user.User;
-import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
@@ -38,6 +37,8 @@ public class Register implements Initializable, Observer {
         formController.addField(new LabelFieldMasked("Mot de passe", true));
         formController.addField(new LabelFieldMasked("Confirmer le mot de passe", true));
 
+        formController.setSubmitButtonText("S'inscrire");
+
         formController.initialize(null, null);
     }
 
@@ -56,10 +57,8 @@ public class Register implements Initializable, Observer {
             Facade.getInstance()
                     .register(new User(labelFieldMap.get("Nom d'utilisateur").toString(), labelFieldMap.get("Mot de passe").toString()));
 
-            State.getInstance()
-                    .setCurrentUser(Facade.getInstance()
-                            .login(labelFieldMap.get("Nom d'utilisateur").toString(), labelFieldMap.get("Mot de passe").toString())
-                    );
+            Facade.getInstance()
+                    .login(labelFieldMap.get("Nom d'utilisateur").toString(), labelFieldMap.get("Mot de passe").toString());
         }
         catch (InvalidUsernameException e) {
             formController.showErrorLabel("Nom d'utilisateur invalide. ");
