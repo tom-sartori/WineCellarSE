@@ -613,9 +613,18 @@ public interface FacadeInterface {
 	 * @param endDate The end date of the referencing.
 	 * @return The price.
 	 */
-	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
+	double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel);
 
 	/**
+	 * Get referencings by their company id and the status.
+	 *
+	 * @param company The id of the referenced company.
+	 * @param status The status of the referencing.
+	 * @return A list of referencings.
+	 */
+	List<Referencing> getReferencingsByCompanyByStatus(ObjectId company, String status);
+
+  /**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.

@@ -108,8 +108,22 @@ public class ReferencingController extends AbstractController<Referencing> {
      * @param endDate   The end date of the referencing.
      * @return The price.
      */
-    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
+    public double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel) {
         return ((endDate.getTime() - startDate.getTime()) * importanceLevel) / (8640000);
+    }
+
+    /**
+     * Get referencings by their company id and the status.
+     *
+     * @param company The id of the referenced company.
+     * @param status The status of the referencing.
+     * @return A list of referencings.
+     */
+    public List<Referencing> findAllByCompanyByStatus(ObjectId company, String status) {
+        BsonDocument filter = new BsonDocument();
+        filter.append("company", new org.bson.BsonObjectId(company));
+        filter.append("status", new org.bson.BsonString(status));
+        return getDao().findAllWithFilter(filter);
     }
 
     /**

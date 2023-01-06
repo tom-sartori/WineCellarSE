@@ -765,8 +765,8 @@ public class Facade implements FacadeInterface {
      * @param company The id of the referenced company.
      * @return A list of referencings.
      */
-    public List<Referencing> getReferencingByCompany(ObjectId company) {
-        return ReferencingFacade.getInstance().getReferencingByCompany(company);
+    public List<Referencing> getReferencingsByCompany(ObjectId company) {
+        return ReferencingFacade.getInstance().getReferencingsByCompany(company);
     }
 
     /**
@@ -815,8 +815,19 @@ public class Facade implements FacadeInterface {
      * @param endDate The end date of the referencing.
      * @return The price.
      */
-    public double calculatePrice(Date startDate, Date endDate, int importanceLevel) {
-        return ReferencingFacade.getInstance().calculatePrice(startDate,endDate,importanceLevel);
+    public double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel) {
+        return ReferencingFacade.getInstance().calculatePriceReferencing(startDate,endDate,importanceLevel);
+    }
+
+    /**
+     * Get referencings by their company id and the status.
+     *
+     * @param company The id of the referenced company.
+     * @param status The status of the referencing.
+     * @return A list of referencings.
+     */
+    public List<Referencing> getReferencingsByCompanyByStatus(ObjectId company, String status) {
+        return ReferencingFacade.getInstance().getReferencingsByCompanyByStatus(company, status);
     }
 
     /**

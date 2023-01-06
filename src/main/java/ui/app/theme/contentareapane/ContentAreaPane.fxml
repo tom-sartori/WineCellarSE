@@ -8,6 +8,7 @@
     </stylesheets>
     <children>
         <fx:include source="../../page/sample/SamplePage.fxml" />
+        <fx:include source="../../page/company/referencing/ReferencingPage.fxml" />
         <fx:include source="../../page/partner/PartnerPage.fxml" />
         <fx:include source="../../page/company/CompanyPage.fxml" />
         <fx:include source="../../page/user/UserPage.fxml" />
