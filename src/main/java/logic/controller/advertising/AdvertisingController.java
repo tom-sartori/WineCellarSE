@@ -144,6 +144,19 @@ public class AdvertisingController extends AbstractController<Advertising> {
     }
 
     /**
+     * Get validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> findValidatedByCompany(ObjectId company) {
+        BsonDocument filter = new BsonDocument();
+        filter.append("active", new org.bson.BsonBoolean(true));
+        filter.append("company", new org.bson.BsonObjectId(company));
+        return getDao().findAllWithFilter(filter);
+    }
+
+    /**
      * Get a random validated advertising.
      *
      * @return An advertising.

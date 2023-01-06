@@ -152,6 +152,16 @@ class AdvertisingFacade {
     }
 
     /**
+     * Get validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    protected List<Advertising> getValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingController.getInstance().findValidatedByCompany(company);
+    }
+
+    /**
      * Get a random validated advertising.
      *
      * @return An advertising.

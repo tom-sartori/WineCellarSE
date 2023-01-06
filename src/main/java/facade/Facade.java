@@ -228,6 +228,16 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Get validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getValidatedAdvertisingsByCompany(company);
+    }
+
+    /**
      * Get a random validated advertising.
      *
      * @return An advertising.

@@ -24,10 +24,13 @@ public class AdvertisingList implements Initializable {
     private GridPane cardHolder;
 
     @FXML
-    private ChoiceBox<String> select;
+    private ChoiceBox<String> select, selectStatus;
     private ObservableList<AdvertisingCard> cardList = FXCollections.observableArrayList();
 
     private final int nbColumn = 4;
+
+    private ObjectId company;
+    private String status;
 
     /**
      * Initializes the controller class.
@@ -35,6 +38,8 @@ public class AdvertisingList implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if(State.getInstance().getCurrentUser() != null){
+            company = null;
+            status = "Toutes";
             List<Company> companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             if(select.getItems().size() == 0){
                 for (Company c : companies){
@@ -46,17 +51,38 @@ public class AdvertisingList implements Initializable {
                 String selectedItem = select.getValue();
                 for(Company c : companies){
                     if(c.getName().equals(selectedItem)){
-                        list(c.getId());
+                        company = c.getId();
+                        list(c.getId(),status);
                     }
+                }
+            });
+
+            if(selectStatus.getItems().size() == 0){
+                selectStatus.getItems().add("Validées");
+                selectStatus.getItems().add("Demandes");
+            }
+
+            selectStatus.setOnAction((event) -> {
+                String selectedItem = select.getValue();
+                if(company!=null){
+                    status = selectedItem;
+                    list(company,selectedItem);
                 }
             });
         }
     }
 
-    public void list(ObjectId company){
+    public void list(ObjectId company, String status){
         cardList.clear();
         List<Advertising> advertisingList;
-        advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
+        if(status.equals("Validées")){
+            advertisingList = Facade.getInstance().getValidatedAdvertisingsByCompany(company);
+        } else if(status.equals("Demandes")){
+            advertisingList = Facade.getInstance().getNotValidatedAdvertisingsByCompany(company);
+        } else {
+            advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
+        }
+
 
         int maxWidth = 1280;
         int gapBetweenCard = 20;

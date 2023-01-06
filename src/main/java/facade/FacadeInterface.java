@@ -172,6 +172,14 @@ public interface FacadeInterface {
 	List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company);
 
 	/**
+	 * Get validated advertisings by their company id.
+	 *
+	 * @param company The id of the advertised company.
+	 * @return A list of advertisings.
+	 */
+	List<Advertising> getValidatedAdvertisingsByCompany(ObjectId company);
+
+	/**
 	 * Get a random validated advertising.
 	 *
 	 * @return An advertising.
