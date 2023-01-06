@@ -266,6 +266,13 @@ public interface FacadeInterface {
 	 */
 	User login(String username, String password);
 
+	/**
+	 * Get all users.
+	 *
+	 * @return A list of users.
+	 */
+	List<User> getUserList();
+
 	User getOneUser(ObjectId id);
 
 	User getOneUserByUsername(String username);

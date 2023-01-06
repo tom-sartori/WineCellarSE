@@ -362,6 +362,15 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Get all users.
+     *
+     * @return A list of users.
+     */
+    public List<User> getUserList(){
+        return UserFacade.getInstance().getUserList();
+    }
+
+    /**
      * Get a user by its username.
      * @param username The username of the user to find.
      * @return The user.
