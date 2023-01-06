@@ -33,7 +33,7 @@ public class AdvertisingList implements Initializable {
     private String status;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class, the select fields for the company and the status.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,6 +73,11 @@ public class AdvertisingList implements Initializable {
         }
     }
 
+    /**
+     * Check the selected company and status value to retrieve the advertisings and put them in the list.
+     * @param company
+     * @param status
+     */
     public void list(ObjectId company, String status){
         cardList.clear();
         List<Advertising> advertisingList;
@@ -83,7 +88,6 @@ public class AdvertisingList implements Initializable {
         } else {
             advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
         }
-
 
         int maxWidth = 1280;
         int gapBetweenCard = 20;

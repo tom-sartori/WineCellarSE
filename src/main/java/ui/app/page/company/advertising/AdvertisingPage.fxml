@@ -9,7 +9,6 @@
     </stylesheets>
     <children>
         <Button mnemonicParsing="false" text="Sample" />
-        <fx:include fx:id="advertisingRequestsList" source="requests/AdvertisingRequestsList.fxml" />
         <fx:include fx:id="advertisingCreation" source="creation/AdvertisingCreation.fxml" />
         <fx:include fx:id="advertisingDetails" source="details/AdvertisingDetails.fxml" />
         <fx:include fx:id="advertisingList" source="list/AdvertisingList.fxml" />

@@ -56,6 +56,10 @@ public class AdvertisingCard extends Pane {
 
 		if (State.getInstance().getCurrentUser() != null) {
 			action2 = new Button("valider");
+
+			/**
+			 * Validate the advertising and create an alert.
+			 */
 			action2.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -70,8 +74,12 @@ public class AdvertisingCard extends Pane {
 			});
 		} else {
 			action2 = new Button("renouveler");
-			action2.setOnAction(new EventHandler<ActionEvent>() {
 
+			/**
+			 * Create the renewal alert to enter the new date.
+			 * Check the validity of the new date and renew the advertising.
+			 */
+			action2.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
 					Date previousDate = advertising.getEndDate();
@@ -106,7 +114,6 @@ public class AdvertisingCard extends Pane {
 		}
 
 		supprimer.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -160,6 +167,11 @@ public class AdvertisingCard extends Pane {
 		photo.setFitHeight(photoSize);
 		photo.setFitWidth(photoSize);
 
+		/**
+		 * Save the current advertising for the Details page.
+		 * Save the list from which was the advertising.
+		 * Show the Details page with the details of the advertising.
+		 */
 		setOnMouseClicked(e -> {
 			State.getInstance().setCurrentAdvertising(advertising);
 			State.getInstance().setPreviousPage(previousPage);
@@ -167,17 +179,16 @@ public class AdvertisingCard extends Pane {
 		});
 
 		getChildren().addAll(photo, name, supprimer, action2);
-
-
-		if (State.getInstance().getCurrentUser() != null) {
-			setAdminCard();
-		}
 	}
 
 	public AdvertisingCard(Advertising advertising, String previousPage) {
 		this(advertising, 230.0, 230.0, previousPage);
 	}
 
+	/**
+	 * Create the price alert by calculating the price of the advertising.
+	 * @param endDate
+	 */
 	public void createPriceAlert(Date endDate){
 		Date now = new Date();
 		String price;
@@ -197,36 +208,5 @@ public class AdvertisingCard extends Pane {
 			Facade.getInstance().renewOneAdvertising(advertising.getId(), endDate);
 			Facade.getInstance().payOneAdvertising(advertising.getId());
 		}
-	}
-
-	private void setAdminCard() {
-		int photoDeleteEditSize = 20;
-
-		photoDelete = new ImageView();
-		try {
-			photoDelete.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
-		}
-		catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-		photoDelete.setLayoutX(40);
-		photoDelete.setLayoutY(preferredHeight - photoDeleteEditSize - 40);
-		photoDelete.setFitHeight(photoDeleteEditSize);
-		photoDelete.setFitWidth(photoDeleteEditSize);
-
-
-		photoEdit = new ImageView();
-		try {
-			photoEdit.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/edit.png")).getPath())));
-		}
-		catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-		photoEdit.setLayoutX(40);
-		photoEdit.setLayoutY(photoDelete.getLayoutY() - photoDeleteEditSize - 10);
-		photoEdit.setFitHeight(photoDeleteEditSize);
-		photoEdit.setFitWidth(photoDeleteEditSize);
-
-		getChildren().addAll(photoDelete, photoEdit);
 	}
 }

@@ -33,7 +33,7 @@ public class AdvertisingCreation implements Initializable, Observer {
     private Company companySelected;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and create the fields for the form.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,6 +61,9 @@ public class AdvertisingCreation implements Initializable, Observer {
         }
     }
 
+    /**
+     * Create the price alert.
+     */
     public void createPriceAlert(Advertising ad, Date startDate, Date endDate){
         String price = String.valueOf(Facade.getInstance().calculatePriceAdvertising(startDate, endDate));
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -76,6 +79,9 @@ public class AdvertisingCreation implements Initializable, Observer {
         }
     }
 
+    /**
+     * Check the dates fields and the company selected and create the advertising.
+     */
     @Override
     public void update(Observable o, Object arg) {
         if(State.getInstance().getCurrentUser() != null){
