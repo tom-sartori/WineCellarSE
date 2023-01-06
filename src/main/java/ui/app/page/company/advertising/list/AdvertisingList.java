@@ -60,13 +60,14 @@ public class AdvertisingList implements Initializable {
             if(selectStatus.getItems().size() == 0){
                 selectStatus.getItems().add("Validées");
                 selectStatus.getItems().add("Demandes");
+                selectStatus.getItems().add("Toutes");
             }
 
             selectStatus.setOnAction((event) -> {
-                String selectedItem = select.getValue();
+                String selectedItem = selectStatus.getValue();
+                status = selectedItem;
                 if(company!=null){
-                    status = selectedItem;
-                    list(company,selectedItem);
+                    list(company,status);
                 }
             });
         }
