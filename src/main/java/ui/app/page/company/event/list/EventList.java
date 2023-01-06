@@ -59,7 +59,7 @@ public class EventList implements Initializable {
 
     /**
      * Get the events thanks to the company selected and put them in the list.
-     * @param company
+     * @param company the company selected.
      */
     public void list(ObjectId company){
         cardList.clear();
