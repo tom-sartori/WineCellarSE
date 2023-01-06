@@ -242,6 +242,7 @@ public class UpdateCellarForm implements Initializable {
         updateManagersReaders.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }
 
+    // TODO remove this method.
     public boolean isOwner(){
         // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
 
