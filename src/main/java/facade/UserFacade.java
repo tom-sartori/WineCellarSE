@@ -120,11 +120,20 @@ class UserFacade {
     }
 
     /**
+     * Chef if there is a user logged in.
+     *
+     * @return true if there is a user logged in, false otherwise.
+     */
+    public boolean isUserLogged() {
+        return UserController.getInstance().isLogged();
+    }
+
+    /**
      * Check if the user logged in is an admin.
      *
      * @return true if the user is an admin, false otherwise.
      */
-    protected boolean isLoggedUserAdmin() {
+    protected boolean isAdminLogged() {
         return UserController.getInstance().isAdmin();
     }
 

@@ -128,6 +128,15 @@ public class UserController extends AbstractController<User> {
     }
 
     /**
+     * Chef if there is a user logged in.
+     *
+     * @return true if there is a user logged in, false otherwise.
+     */
+    public boolean isLogged() {
+        return loggedUser != null;
+    }
+
+    /**
      * Return true if the user logged user is admin.
      *
      * @return True if the user is an admin. Otherwise, false.

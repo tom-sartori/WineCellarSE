@@ -6,7 +6,7 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.theme.menu.MenuEnum;
+import ui.app.theme.menu.role.MenuEnumInterface;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +23,7 @@ public class MenuItem extends Pane {
     private final CustomSceneHelper sceneHelper;
 
 
-    public MenuItem(MenuEnum menuEnum, List<MenuEnum> subMenuList) {
+    public MenuItem(MenuEnumInterface menuEnum, List<? extends MenuEnumInterface> subMenuList) {
         // The component has been imported from the constructor ok a .java class.
         super();
         try {

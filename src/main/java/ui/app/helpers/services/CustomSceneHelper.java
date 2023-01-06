@@ -84,10 +84,7 @@ public  class CustomSceneHelper {
         node.toFront();
 
         // Get the controller of the node and run initialize() on it. This is used to refresh the page when it is brought to the front.
-        Object controller = node.getProperties().get("controller");
-        if (controller instanceof Initializable) {
-            ((Initializable) controller).initialize(null, null);
-        }
+        initializeNodeController(node);
 
         while (! node.getParent().getId().equals("contentAreaPane")) {
             node = node.getParent();
@@ -97,6 +94,18 @@ public  class CustomSceneHelper {
 
     public void bringNodeToFront(String nodeName) {
         bringNodeToFront(nodeName, "");
+    }
+
+    public void initializeNodeController(Node node) {
+        // Get the controller of the node and run initialize() on it. This is used to refresh the page when it is brought to the front.
+        Object controller = node.getProperties().get("controller");
+        if (controller instanceof Initializable) {
+            ((Initializable) controller).initialize(null, null);
+        }
+    }
+
+    public void refreshMenu() {
+        initializeNodeController(scene.lookup("#menu"));
     }
 
     //Adds a white line at the bottom border of the tab to look like it is in front of the other tab.

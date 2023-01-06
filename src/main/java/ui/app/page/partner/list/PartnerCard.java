@@ -78,7 +78,7 @@ public class PartnerCard extends Pane {
 		getChildren().addAll(photo, name);
 
 
-		if (Facade.getInstance().isLoggedUserAdmin()) {
+		if (Facade.getInstance().isAdminLogged()) {
 			setAdminCard();
 		}
 	}

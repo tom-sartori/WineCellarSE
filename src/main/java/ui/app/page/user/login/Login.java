@@ -1,5 +1,6 @@
 package ui.app.page.user.login;
 
+import com.sun.javafx.scene.SceneHelper;
 import exception.BadCredentialException;
 import facade.Facade;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
+import ui.app.helpers.services.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.Map;
@@ -51,6 +53,10 @@ public class Login implements Initializable, Observer {
             // Try to log in.
             Facade.getInstance()
                     .login(labelFieldMap.get(labelUsername).toString(), labelFieldMap.get(labelPassword).toString());
+
+            CustomSceneHelper customSceneHelper = new CustomSceneHelper();
+            customSceneHelper.refreshMenu();
+            customSceneHelper.bringNodeToFront("profile");
         }
         catch (BadCredentialException e) {
             // Can not log in due to bad credentials.

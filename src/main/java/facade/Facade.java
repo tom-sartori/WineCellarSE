@@ -584,13 +584,23 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Chef if there is a user logged in.
+     *
+     * @return true if there is a user logged in, false otherwise.
+     */
+    @Override
+    public boolean isUserLogged() {
+        return UserFacade.getInstance().isUserLogged();
+    }
+
+    /**
      * Check if the user logged in is an admin.
      *
      * @return true if the user is an admin, false otherwise.
      */
     @Override
-    public boolean isLoggedUserAdmin() {
-        return UserFacade.getInstance().isLoggedUserAdmin();
+    public boolean isAdminLogged() {
+        return UserFacade.getInstance().isAdminLogged();
     }
 
     /**
