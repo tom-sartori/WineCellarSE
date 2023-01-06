@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-// TODO SINGLETON TO BE ABLE TO USE REFRESH METHOD IN OTHER CLASSES ?
 // TODO refactor class to separate methods
 public class CellarDetails implements Initializable {
 
@@ -92,6 +91,7 @@ public class CellarDetails implements Initializable {
      *
      * @return true if the current user is the owner of the cellar, a manager or an admin, false otherwise.
      */
+    //TODO move this function to UserController and add a cellar in parameter
     public boolean isOwner(){
         // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
 
