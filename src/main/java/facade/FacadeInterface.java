@@ -432,7 +432,7 @@ public interface FacadeInterface {
 	boolean deleteOneUser(String username) throws MustBeAnAdminException;
 
 	/**
-	 * Chef if there is a user logged in.
+	 * Chec if there is a user logged in.
 	 *
 	 * @return true if there is a user logged in, false otherwise.
 	 */
