@@ -210,7 +210,7 @@ public class Facade implements FacadeInterface {
         return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
     }
 
-     /**
+    /**
      * Insert a guide.
      *
      * @param guide The partner to insert.
@@ -523,6 +523,14 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Logout the logged user.
+     */
+    @Override
+    public void logout() {
+        UserFacade.getInstance().logout();
+    }
+
+    /**
      * Get one user by its id.
      * @param id The id of the user.
      * @return The user.
@@ -579,13 +587,23 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Check if there is a user logged in.
+     *
+     * @return true if there is a user logged in, false otherwise.
+     */
+    @Override
+    public boolean isUserLogged() {
+        return UserFacade.getInstance().isUserLogged();
+    }
+
+    /**
      * Check if the user logged in is an admin.
      *
      * @return true if the user is an admin, false otherwise.
      */
     @Override
-    public boolean isLoggedUserAdmin() {
-        return UserFacade.getInstance().isLoggedUserAdmin();
+    public boolean isAdminLogged() {
+        return UserFacade.getInstance().isAdminLogged();
     }
 
     /**

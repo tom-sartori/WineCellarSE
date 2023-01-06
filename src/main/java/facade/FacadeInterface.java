@@ -404,6 +404,11 @@ public interface FacadeInterface {
 	 */
 	User login(String username, String password);
 
+	/**
+	 * Logout the logged user.
+	 */
+	void logout();
+
 	User getOneUser(ObjectId id);
 
 	/**
@@ -479,11 +484,18 @@ public interface FacadeInterface {
 	boolean deleteOneUser(String username) throws MustBeAnAdminException;
 
 	/**
-	 * Check if the user logged in is an admin.
+	 * Check if there is a user logged in.
+	 *
+	 * @return true if there is a user logged in, false otherwise.
+	 */
+	boolean isUserLogged();
+
+	/**
+	 * Check if there is an admin logged in.
 	 *
 	 * @return true if the user is an admin, false otherwise.
 	 */
-	boolean isLoggedUserAdmin();
+	boolean isAdminLogged();
 
 	/**
 	 * Insert a referencing.

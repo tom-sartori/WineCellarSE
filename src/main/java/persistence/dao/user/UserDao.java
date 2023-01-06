@@ -65,11 +65,6 @@ public class UserDao extends AbstractDao<User> {
 			updateList.add(Updates.set("email", entity.getEmail()));
 		}
 
-		if (entity.getBirthday() != null) {
-			// Nullable attribute.
-			updateList.add(Updates.set("birthday", entity.getBirthday()));
-		}
-
 		return combine(updateList);
 	}
 

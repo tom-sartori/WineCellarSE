@@ -24,6 +24,14 @@ public class Register implements Initializable, Observer {
     @FXML
     private Form formController;
 
+    private static final String labelUsername = "Nom d'utilisateur";
+    private static final String labelPassword = "Mot de passe";
+    private static final String labelConfirmPassword = "Confirmer le mot de passe";
+    private static final String labelFirstname = "Prénom";
+    private static final String labelLastname = "Nom";
+    private static final String labelEmail = "Email";
+
+
     /**
      * Initializes the controller class.
      */
@@ -33,9 +41,12 @@ public class Register implements Initializable, Observer {
 
         formController.clearFieldList();
 
-        formController.addField(new LabelField("Nom d'utilisateur", true));
-        formController.addField(new LabelFieldMasked("Mot de passe", true));
-        formController.addField(new LabelFieldMasked("Confirmer le mot de passe", true));
+        formController.addField(new LabelField(labelUsername, true));
+        formController.addField(new LabelField(labelEmail, true));
+        formController.addField(new LabelField(labelFirstname, false));
+        formController.addField(new LabelField(labelLastname, false));
+        formController.addField(new LabelFieldMasked(labelPassword, true));
+        formController.addField(new LabelFieldMasked(labelConfirmPassword, true));
 
         formController.setSubmitButtonText("S'inscrire");
 
@@ -46,7 +57,7 @@ public class Register implements Initializable, Observer {
     public void update(Observable o, Object arg) {
         Map<String, Object> labelFieldMap = (Map<String, Object>) arg;
 
-        if (! labelFieldMap.get("Mot de passe").equals(labelFieldMap.get("Confirmer le mot de passe"))) {
+        if (! labelFieldMap.get(labelPassword).equals(labelFieldMap.get(labelConfirmPassword))) {
             // Passwords do not match.
             formController.showErrorLabel("Les mots de passe ne correspondent pas. ");
             return;
@@ -55,10 +66,18 @@ public class Register implements Initializable, Observer {
         try {
             // The form is valid. Try to register and log in.
             Facade.getInstance()
-                    .register(new User(labelFieldMap.get("Nom d'utilisateur").toString(), labelFieldMap.get("Mot de passe").toString()));
+                    .register(
+                            new User(
+                                    labelFieldMap.get(labelUsername).toString(),
+                                    labelFieldMap.get(labelPassword).toString(),
+                                    labelFieldMap.get(labelFirstname).toString(),
+                                    labelFieldMap.get(labelLastname).toString(),
+                                    labelFieldMap.get(labelEmail).toString()
+                            )
+                    );
 
             Facade.getInstance()
-                    .login(labelFieldMap.get("Nom d'utilisateur").toString(), labelFieldMap.get("Mot de passe").toString());
+                    .login(labelFieldMap.get(labelUsername).toString(), labelFieldMap.get(labelPassword).toString());
         }
         catch (InvalidUsernameException e) {
             formController.showErrorLabel("Nom d'utilisateur invalide. ");

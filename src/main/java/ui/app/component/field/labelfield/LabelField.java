@@ -58,6 +58,13 @@ public class LabelField extends Field implements Initializable {
         this.isRequired = isRequired;
     }
 
+    public LabelField(String labelText, String textFieldValue, boolean isRequired) {
+        // The component has been imported from the constructor ok a .java class.
+        this(labelText, isRequired);
+        this.textField.setText(textFieldValue);
+    }
+
+
     @Override
     public String getLabel() {
         return label.getText();

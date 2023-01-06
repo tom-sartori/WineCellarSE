@@ -102,4 +102,8 @@ public class Form extends Observable implements Initializable {
     public void setSubmitButtonText(String text) {
         submitButton.setText(text);
     }
+
+    public void setSubmitButtonVisibility(boolean visible) {
+        submitButton.setVisible(visible);
+    }
 }
