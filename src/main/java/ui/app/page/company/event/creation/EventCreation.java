@@ -72,11 +72,17 @@ public class EventCreation implements Initializable, Observer {
             String startDateString= labelFieldMap.get("Date de début").toString();
             String endDateString= labelFieldMap.get("Date de fin").toString();
             try {
+                /**
+                 * Transform the date typed by the user into a usable date.
+                 */
                 SimpleDateFormat pattern = new SimpleDateFormat("dd/MM/yyyy");
                 Date startDate = pattern.parse(startDateString);
                 Date endDate = pattern.parse(endDateString);
                 Date now = new Date();
 
+                /**
+                 * The event should not finish before it starts.
+                 */
                 if (!startDate.before(endDate)) {
                     // Invalid startDate and endDate.
                     formController.showErrorLabel("Dates invalides");

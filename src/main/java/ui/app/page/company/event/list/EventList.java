@@ -41,6 +41,9 @@ public class EventList implements Initializable {
                 }
             }
 
+            /**
+             * Retrieve the company selected and create a list of referencing.
+             */
             select.setOnAction((event) -> {
                 String selectedItem = select.getValue();
                 for(Company c : companies){
