@@ -1,4 +1,4 @@
-package ui.app.page.cellar.updatecellar;
+package ui.app.page.cellar.forms.update;
 
 import exception.BadArgumentsException;
 import facade.Facade;
@@ -14,7 +14,7 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.cellar.publiccellars.PublicCellars;
+import ui.app.page.cellar.lists.publiccellars.PublicCellars;
 
 import java.net.URL;
 import java.util.ArrayList;

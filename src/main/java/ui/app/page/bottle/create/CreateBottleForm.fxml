@@ -4,9 +4,9 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="createBottleForm" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.createBottle.CreateBottleForm">
+<AnchorPane fx:id="createBottleForm" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.bottle.create.CreateBottleForm">
     <stylesheets>
-        <URL value="@/ui/app/page/cellar/createBottle/CreateBottleForm.css" />
+        <URL value="@/ui/app/page/bottle/create/CreateBottleForm.css" />
     </stylesheets>
     <children>
         <ScrollPane layoutY="90.0" prefHeight="535.0" prefWidth="1280.0">

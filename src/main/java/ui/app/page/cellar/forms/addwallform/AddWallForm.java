@@ -1,4 +1,4 @@
-package ui.app.page.cellar.addwallform;
+package ui.app.page.cellar.forms.addwallform;
 
 import exception.BadArgumentsException;
 import facade.Facade;

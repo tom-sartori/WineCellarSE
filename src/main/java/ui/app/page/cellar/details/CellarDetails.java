@@ -23,11 +23,11 @@ import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.select.Select;
 import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.cellar.addwallform.AddWallForm;
-import ui.app.page.cellar.cellarbyuser.CellarByUser;
-import ui.app.page.cellar.createBottle.CreateBottleForm;
-import ui.app.page.cellar.details.bottle.BottleDetails;
-import ui.app.page.cellar.updatecellar.UpdateCellarForm;
+import ui.app.page.bottle.create.CreateBottleForm;
+import ui.app.page.bottle.details.BottleDetails;
+import ui.app.page.cellar.forms.addwallform.AddWallForm;
+import ui.app.page.cellar.forms.update.UpdateCellarForm;
+import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
 
 import java.net.URL;
 import java.util.ArrayList;

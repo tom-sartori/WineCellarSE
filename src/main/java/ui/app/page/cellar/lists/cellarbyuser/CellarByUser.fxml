@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="cellarByUser" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.cellarbyuser.CellarByUser">
+<AnchorPane fx:id="cellarByUser" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.lists.cellarbyuser.CellarByUser">
     <stylesheets>
-        <URL value="@/ui/app/page/cellar/cellarbyuser/CellarByUser.css" />
+        <URL value="@/ui/app/page/cellar/lists/cellarbyuser/CellarByUser.css" />
     </stylesheets>
     <children>
         <Button layoutX="1138.0" layoutY="15.0" mnemonicParsing="false" text="Ajouter une cave" />

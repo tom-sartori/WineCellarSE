@@ -1,4 +1,4 @@
-package ui.app.page.cellar.card;
+package ui.app.component.card;
 
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;

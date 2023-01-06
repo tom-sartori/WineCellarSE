@@ -1,4 +1,4 @@
-package ui.app.page.cellar.form;
+package ui.app.page.cellar.forms.create;
 
 import exception.BadCredentialException;
 import facade.Facade;
@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import persistence.entity.cellar.Cellar;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
-import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
 import ui.app.helpers.services.CustomSceneHelper;
 

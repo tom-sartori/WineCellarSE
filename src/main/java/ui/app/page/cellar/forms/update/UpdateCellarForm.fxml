@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane fx:id="updateCellarForm" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.updatecellar.UpdateCellarForm">
+<AnchorPane fx:id="updateCellarForm" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.forms.update.UpdateCellarForm">
     <stylesheets>
-        <URL value="@/ui/app/page/cellar/updatecellar/UpdateCellarForm.css" />
+        <URL value="@/ui/app/page/cellar/forms/update/UpdateCellarForm.css" />
     </stylesheets>
     <children>
         <ScrollPane layoutX="958.0" prefHeight="625.0" prefWidth="321.0" style="-fx-background-color: white;">

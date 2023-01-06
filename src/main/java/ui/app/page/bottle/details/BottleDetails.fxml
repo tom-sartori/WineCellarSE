@@ -5,9 +5,9 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane fx:id="bottleDetails" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.details.bottle.BottleDetails">
+<AnchorPane fx:id="bottleDetails" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.bottle.details.BottleDetails">
     <stylesheets>
-        <URL value="@/ui/app/page/cellar/details/bottle/BottleDetails.css" />
+        <URL value="@/ui/app/page/bottle/details/BottleDetails.css" />
     </stylesheets>
     <children>
         <ScrollPane layoutY="90.0" prefHeight="535.0" prefWidth="1280.0">

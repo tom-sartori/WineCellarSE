@@ -1,4 +1,4 @@
-package ui.app.page.cellar.cellarbyuser;
+package ui.app.page.cellar.lists.cellarbyuser;
 
 import facade.Facade;
 import javafx.fxml.FXML;
@@ -10,9 +10,8 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.cellar.card.CardComponent;
+import ui.app.component.card.CardComponent;
 import ui.app.page.cellar.details.CellarDetails;
-import ui.app.page.partner.PartnerPage;
 
 import java.net.URL;
 import java.util.List;

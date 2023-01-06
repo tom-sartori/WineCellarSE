@@ -1,12 +1,12 @@
 package ui.app.theme.menu;
 
 import ui.app.page.cellar.CellarPage;
-import ui.app.page.cellar.cellarbyuser.CellarByUser;
-import ui.app.page.cellar.createBottle.CreateBottleForm;
+import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
+import ui.app.page.bottle.create.CreateBottleForm;
 import ui.app.page.cellar.details.CellarDetails;
-import ui.app.page.cellar.form.CellarForm;
-import ui.app.page.cellar.publiccellars.PublicCellars;
-import ui.app.page.cellar.updatecellar.UpdateCellarForm;
+import ui.app.page.cellar.forms.create.CellarForm;
+import ui.app.page.cellar.lists.publiccellars.PublicCellars;
+import ui.app.page.cellar.forms.update.UpdateCellarForm;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;

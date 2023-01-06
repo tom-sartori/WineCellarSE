@@ -1,4 +1,4 @@
-package ui.app.page.cellar.details.bottle;
+package ui.app.page.bottle.details;
 
 import exception.BadArgumentsException;
 import facade.Facade;
