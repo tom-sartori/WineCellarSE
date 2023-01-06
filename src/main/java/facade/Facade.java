@@ -1,6 +1,7 @@
 package facade;
 
 
+import logic.controller.event.EventController;
 import exception.BadArgumentsException;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
@@ -10,6 +11,8 @@ import exception.user.NoLoggedUser;
 import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
 import persistence.entity.advertising.Advertising;
+import persistence.entity.event.Event;
+import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -197,13 +200,62 @@ public class Facade implements FacadeInterface {
     }
 
     /**
-     * Get advertising by their company id.
+     * Get advertisings by their company id.
      *
      * @param company The id of the advertised company.
      * @return A list of advertisings.
      */
-    public List<Advertising> getAdvertisingByCompany(ObjectId company) {
-        return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
+    public List<Advertising> getAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getAdvertisingsByCompany(company);
+    }
+
+    /**
+     * Get advertisings not validated.
+     *
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getNotValidatedAdvertisings() {
+        return AdvertisingFacade.getInstance().getNotValidatedAdvertisings();
+    }
+
+    /**
+     * Get not validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getNotValidatedAdvertisingsByCompany(company);
+    }
+
+    /**
+     * Get validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getValidatedAdvertisingsByCompany(company);
+    }
+
+    /**
+     * Get a random validated advertising.
+     *
+     * @return An advertising.
+     */
+    public Advertising getRandomAdvertising() {
+        return AdvertisingFacade.getInstance().getRandomAdvertising();
+    }
+
+    /**
+     * Calculate the price of an advertising.
+     *
+     * @param startDate The start date of the advertising.
+     * @param endDate The end date of the advertising.
+     * @return The price.
+     */
+    public double calculatePriceAdvertising(Date startDate, Date endDate) {
+        return AdvertisingFacade.getInstance().calculatePriceAdvertising(startDate,endDate);
     }
 
     /**
@@ -667,7 +719,7 @@ public class Facade implements FacadeInterface {
     public boolean deleteOneNotification(ObjectId id) {
         return NotificationFacade.getInstance().deleteOneNotification(id);
     }
-    
+
     /**
      * Insert a referencing.
      *
@@ -1046,4 +1098,63 @@ public class Facade implements FacadeInterface {
         return RateFacade.getInstance().deleteOneRate(id);
     }
 
+    /**
+     * Get all events.
+     *
+     * @return A list of events.
+     */
+    public List<Event> getEventList() {
+        return EventFacade.getInstance().getEventList();
+    }
+
+    /**
+     * Insert an event.
+     *
+     * @param event The event to insert.
+     * @return The id of the inserted event.
+     */
+    public ObjectId insertOneEvent(Event event) {
+        return EventFacade.getInstance().insertOneEvent(event);
+    }
+
+    /**
+     * Get an event by its id.
+     *
+     * @param id The id of the event.
+     * @return The event or null if not found.
+     */
+    public Event getOneEvent(ObjectId id) {
+        return EventFacade.getInstance().getOneEvent(id);
+    }
+
+    /**
+     * Update an event.
+     *
+     * @param id The id of the event to update.
+     * @param event The new event.
+     * @return true if the event has been updated, false otherwise.
+     */
+    public boolean updateOneEvent(ObjectId id, Event event) {
+        return EventFacade.getInstance().updateOneEvent(id, event);
+    }
+
+    /**
+     * Delete an event.
+     *
+     * @param id The id of the event to delete.
+     * @return true if the event has been deleted, false otherwise.
+     */
+    public boolean deleteOneEvent(ObjectId id) {
+        return EventFacade.getInstance().deleteOneEvent(id);
+    }
+
+    /**
+     * Get events by their company id.
+     *
+     * @param company The id of the company.
+     * @return A list of events.
+     */
+    public List<Event> getEventsByCompany(ObjectId company) {
+        return EventFacade.getInstance().getEventsByCompany(company);
+    }
 }

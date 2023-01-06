@@ -5,6 +5,8 @@ import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import persistence.entity.user.User;
+import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
@@ -50,8 +52,9 @@ public class Login implements Initializable, Observer {
 
         try {
             // Try to log in.
-            Facade.getInstance()
+            User user = Facade.getInstance()
                     .login(labelFieldMap.get(labelUsername).toString(), labelFieldMap.get(labelPassword).toString());
+            State.getInstance().setCurrentUser(user);   /// FIXME : should be removed.
 
             CustomSceneHelper customSceneHelper = new CustomSceneHelper();
             customSceneHelper.refreshMenu();

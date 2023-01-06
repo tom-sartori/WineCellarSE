@@ -78,4 +78,14 @@ class EventFacade {
     protected boolean deleteOneEvent(ObjectId id) {
         return EventController.getInstance().deleteOne(id);
     }
+
+    /**
+     * Get events by their company id.
+     *
+     * @param company The id of the company.
+     * @return A list of events.
+     */
+    protected List<Event> getEventsByCompany(ObjectId company) {
+        return EventController.getInstance().findAllByCompany(company);
+    }
 }

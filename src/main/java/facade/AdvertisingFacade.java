@@ -123,12 +123,61 @@ class AdvertisingFacade {
     }
 
     /**
-     * Get advertising by their company id.
+     * Get advertisings by their company id.
      *
      * @param company The id of the advertised company.
      * @return A list of advertisings.
      */
-    protected List<Advertising> getAdvertisingByCompany(ObjectId company) {
+    protected List<Advertising> getAdvertisingsByCompany(ObjectId company) {
         return AdvertisingController.getInstance().findAllByCompany(company);
+    }
+
+    /**
+     * Get advertisings not validated.
+     *
+     * @return A list of advertisings.
+     */
+    protected List<Advertising> getNotValidatedAdvertisings() {
+        return AdvertisingController.getInstance().findAllNotValidated();
+    }
+
+    /**
+     * Get not validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    protected List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingController.getInstance().findNotValidatedByCompany(company);
+    }
+
+    /**
+     * Get validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    protected List<Advertising> getValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingController.getInstance().findValidatedByCompany(company);
+    }
+
+    /**
+     * Get a random validated advertising.
+     *
+     * @return An advertising.
+     */
+    protected Advertising getRandomAdvertising() {
+        return AdvertisingController.getInstance().findRandom();
+    }
+
+    /**
+     * Calculate the price of an advertising.
+     *
+     * @param startDate The start date of the advertising.
+     * @param endDate The end date of the advertising.
+     * @return The price.
+     */
+    protected double calculatePriceAdvertising(Date startDate, Date endDate) {
+        return AdvertisingController.getInstance().calculatePriceAdvertising(startDate,endDate);
     }
 }
