@@ -1,11 +1,13 @@
 package ui.app.page.cellar.details;
 
 import exception.BadArgumentsException;
+import exception.BadCredentialException;
 import facade.Facade;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -181,7 +183,15 @@ public class CellarDetails implements Initializable {
         Button createCellarButton = new Button("Créer");
         createCellarButton.setCursor(Cursor.HAND);
         createCellarButton.setOnAction(event -> {
-            // TODO CREATE NEW CELLAR with the name input in the previous field
+            Cellar cellar = new Cellar(labelField.getValue(),false, new ArrayList<>(), new ArrayList<>(),State.getInstance().getCurrentUser().getId(),new ArrayList<>());
+            try {
+                Facade.getInstance().insertOneCellar(cellar);
+                State.getInstance().setSelectedCellar(cellar);
+                refresh();
+            } catch (BadCredentialException e) {
+                // TODO HANDLE EXCEPTION
+            }
+
         });
 
         hbox.getChildren().add(createCellarButton);
@@ -375,7 +385,9 @@ public class CellarDetails implements Initializable {
                 VBox actionsVbox = new VBox();
                 actionsVbox.setPrefWidth(60);
 
-                actionsVbox.getChildren().add(new Label("Actions"));
+                Label actions = new Label("Actions");
+                actions.setPadding(new Insets(5, 0, 5, 5));
+                actionsVbox.getChildren().add(actions);
 
                 tableActionsHbox.getChildren().addAll(table, actionsVbox);
 
@@ -476,6 +488,8 @@ public class CellarDetails implements Initializable {
         table.prefHeightProperty().bind(Bindings.size(table.getItems()).multiply(table.getFixedCellSize()).add(30));
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        table.setSortPolicy(param -> false);
 
         for (String header: headers) {
             TableColumn<List<String>, String> column = new TableColumn<>(header);

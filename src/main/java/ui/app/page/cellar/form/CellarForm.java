@@ -9,6 +9,7 @@ import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
+import ui.app.helpers.services.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.*;
@@ -41,6 +42,9 @@ public class CellarForm implements Initializable, Observer {
         Cellar cellar = new Cellar(labelFieldMap.get("Nom de la cave").toString(),false, new ArrayList<>(), new ArrayList<>(),State.getInstance().getCurrentUser().getId(),new ArrayList<>());
         try {
             Facade.getInstance().insertOneCellar(cellar);
+            State.getInstance().setSelectedCellar(cellar);
+            CustomSceneHelper sceneHelper = new CustomSceneHelper();
+            sceneHelper.bringNodeToFront("cellarDetails");
         } catch (BadCredentialException e) {
             formController.showErrorLabel("Vous n'êtes pas connecté");
         }
