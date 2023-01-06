@@ -84,4 +84,9 @@ public class LabelField extends Field implements Initializable {
     public void hideError() {
         errorLabel.setVisible(false);
     }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        textField.setEditable(!readOnly);
+    }
 }
