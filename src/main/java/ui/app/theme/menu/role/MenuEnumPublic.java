@@ -1,5 +1,8 @@
 package ui.app.theme.menu.role;
 
+import ui.app.page.company.event.EventPage;
+import ui.app.page.company.event.creation.EventCreation;
+import ui.app.page.company.event.list.EventList;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
