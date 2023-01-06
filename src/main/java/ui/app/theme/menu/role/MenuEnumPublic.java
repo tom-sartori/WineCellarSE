@@ -1,5 +1,7 @@
-package ui.app.theme.menu.role;
+package ui.app.theme.menu;
 
+import ui.app.page.company.advertising.creation.AdvertisingCreation;
+import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.company.event.EventPage;
 import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
@@ -14,7 +16,11 @@ public enum MenuEnumPublic implements MenuEnumInterface {
 	USER("Utilisateur"),
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Se connecter", Login.class, USER),
-	PARTNER("Partenaires", PartnerPage.class);
+	PARTNER("Partenaires", PartnerPage.class),
+	COMPANY("Entreprise", CompanyPage.class),
+	ADVERTISING("Publicités"),
+	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, ADVERTISING),
+	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, ADVERTISING);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

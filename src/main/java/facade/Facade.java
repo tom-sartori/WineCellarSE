@@ -200,13 +200,62 @@ public class Facade implements FacadeInterface {
     }
 
     /**
-     * Get advertising by their company id.
+     * Get advertisings by their company id.
      *
      * @param company The id of the advertised company.
      * @return A list of advertisings.
      */
-    public List<Advertising> getAdvertisingByCompany(ObjectId company) {
-        return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
+    public List<Advertising> getAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getAdvertisingsByCompany(company);
+    }
+
+    /**
+     * Get advertisings not validated.
+     *
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getNotValidatedAdvertisings() {
+        return AdvertisingFacade.getInstance().getNotValidatedAdvertisings();
+    }
+
+    /**
+     * Get not validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getNotValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getNotValidatedAdvertisingsByCompany(company);
+    }
+
+    /**
+     * Get validated advertisings by their company id.
+     *
+     * @param company The id of the advertised company.
+     * @return A list of advertisings.
+     */
+    public List<Advertising> getValidatedAdvertisingsByCompany(ObjectId company) {
+        return AdvertisingFacade.getInstance().getValidatedAdvertisingsByCompany(company);
+    }
+
+    /**
+     * Get a random validated advertising.
+     *
+     * @return An advertising.
+     */
+    public Advertising getRandomAdvertising() {
+        return AdvertisingFacade.getInstance().getRandomAdvertising();
+    }
+
+    /**
+     * Calculate the price of an advertising.
+     *
+     * @param startDate The start date of the advertising.
+     * @param endDate The end date of the advertising.
+     * @return The price.
+     */
+    public double calculatePriceAdvertising(Date startDate, Date endDate) {
+        return AdvertisingFacade.getInstance().calculatePriceAdvertising(startDate,endDate);
     }
 
     /**

@@ -14,5 +14,6 @@
         <fx:include source="../../page/partner/PartnerPage.fxml" />
         <fx:include source="../../page/home/HomePage.fxml" />
         <fx:include source="../../page/user/UserPage.fxml" />
+        <fx:include source="../../page/company/CompanyPage.fxml" />
     </children>
 </AnchorPane>
