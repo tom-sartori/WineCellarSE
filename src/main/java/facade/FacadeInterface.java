@@ -15,6 +15,7 @@ import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.notification.Notification;
 import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
@@ -417,6 +418,57 @@ public interface FacadeInterface {
 
 	boolean updateOneUser(ObjectId id, User user);
 
+	boolean deleteOneUser(ObjectId id);
+
+	/**
+	 * Insert a notification.
+	 *
+	 * @param notification The notification to insert.
+	 * @return The id of the inserted notification.
+	 */
+	ObjectId insertOneNotification(Notification notification);
+
+	/**
+	 * Get all notifications.
+	 *
+	 * @return A list of notifications.
+	 */
+	List<Notification> getNotificationList();
+
+	/**
+	 * Get a notification by its id.
+	 *
+	 * @param id The id of the notification.
+	 * @return The notification.
+	 */
+	Notification getOneNotification(ObjectId id);
+
+	/**
+	 * Update a notification.
+	 *
+	 * @param id      The id of the notification to update.
+	 * @param notification The notification to update.
+	 * @return The number of updated notification.
+	 */
+	boolean updateOneNotification(ObjectId id, Notification notification);
+
+	/**
+	 * Delete a notification.
+	 *
+	 * @param id The id of the notification to delete.
+	 * @return The number of deleted notification.
+	 */
+	boolean deleteOneNotification(ObjectId id);
+
+	/**
+	 * Get all the notifications of a user.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return A list of all the notifications of the user.
+	 */
+	List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception;
+
 	/**
 	 * Delete a user by its username.
 	 *
@@ -729,4 +781,5 @@ public interface FacadeInterface {
 	 * @return The number of deleted rates.
 	 */
 	boolean deleteOneRate(ObjectId id);
+
 }

@@ -11,6 +11,8 @@ import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
 
+import org.bson.types.ObjectId;
+
 import persistence.entity.advertising.Advertising;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
@@ -18,6 +20,7 @@ import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.notification.Notification;
 import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
@@ -585,6 +588,72 @@ public class Facade implements FacadeInterface {
         return UserFacade.getInstance().isLoggedUserAdmin();
     }
 
+    /**
+     * Insert a notification.
+     *
+     * @param notification The notification to insert.
+     * @return The id of the inserted notification.
+     */
+    @Override
+    public ObjectId insertOneNotification(Notification notification) {
+        return NotificationFacade.getInstance().insertOneNotification(notification);
+    }
+
+    /**
+     * Get all notifications.
+     *
+     * @return A list of notifications.
+     */
+    @Override
+    public List<Notification> getNotificationList() {
+        return NotificationFacade.getInstance().getNotificationList();
+    }
+
+    /**
+     * Get a notification by its id.
+     *
+     * @param id The id of the notification.
+     * @return The notification.
+     */
+    @Override
+    public Notification getOneNotification(ObjectId id) {
+        return NotificationFacade.getInstance().getOneNotification(id);
+    }
+
+    /**
+     * Get all the notifications of a user.
+     *
+     * @param userId The id of the user.
+     *
+     * @return A list of all the notifications of the user.
+     */
+    public List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception {
+        return NotificationFacade.getInstance().getNotificationListFromUser(userId);
+    }
+
+    /**
+     * Update a notification.
+     *
+     * @param id The id of the notification to update.
+     * @param notification The new notification.
+     * @return true if the notification has been updated, false otherwise.
+     */
+    @Override
+    public boolean updateOneNotification(ObjectId id, Notification notification) {
+        return NotificationFacade.getInstance().updateOneNotification(id, notification);
+    }
+
+    /**
+     * Delete a notification.
+     *
+     * @param id The id of the notification to delete.
+     * @return true if the notification has been deleted, false otherwise.
+     */
+    @Override
+    public boolean deleteOneNotification(ObjectId id) {
+        return NotificationFacade.getInstance().deleteOneNotification(id);
+    }
+    
     /**
      * Insert a referencing.
      *
