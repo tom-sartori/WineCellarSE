@@ -1,20 +1,22 @@
 package facade;
 
-import logic.controller.advertising.AdvertisingController;
+import exception.user.MustBeAnAdminException;
+import exception.user.NoLoggedUser;
 import org.bson.types.ObjectId;
 
 import exception.BadArgumentsException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
-import org.bson.types.ObjectId;
 
 import persistence.entity.advertising.Advertising;
+import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.notification.Notification;
 import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
@@ -195,7 +197,7 @@ public interface FacadeInterface {
 	 */
 	double calculatePriceAdvertising(Date startDate, Date endDate);
 
-  /**
+	/**
 	 * Insert a guide.
 	 *
 	 * @param guide The guide to insert.
@@ -235,7 +237,7 @@ public interface FacadeInterface {
 	 */
 	boolean deleteOneGuide(ObjectId id);
 
-   /**
+	/**
 	 * Insert a cellar.
 	 *
 	 * @param cellar The cellar to insert.
@@ -442,13 +444,96 @@ public interface FacadeInterface {
 	 */
 	User login(String username, String password);
 
+	/**
+	 * Logout the logged user.
+	 */
+	void logout();
+
 	User getOneUser(ObjectId id);
+
+	/**
+	 * Get the logged user.
+	 *
+	 * @return The logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	User getLoggedUser() throws NoLoggedUser;
 
 	User getOneUserByUsername(String username);
 
 	boolean updateOneUser(ObjectId id, User user);
 
-	boolean deleteOneUser(ObjectId id);
+	/**
+	 * Insert a notification.
+	 *
+	 * @param notification The notification to insert.
+	 * @return The id of the inserted notification.
+	 */
+	ObjectId insertOneNotification(Notification notification);
+
+	/**
+	 * Get all notifications.
+	 *
+	 * @return A list of notifications.
+	 */
+	List<Notification> getNotificationList();
+
+	/**
+	 * Get a notification by its id.
+	 *
+	 * @param id The id of the notification.
+	 * @return The notification.
+	 */
+	Notification getOneNotification(ObjectId id);
+
+	/**
+	 * Update a notification.
+	 *
+	 * @param id      The id of the notification to update.
+	 * @param notification The notification to update.
+	 * @return The number of updated notification.
+	 */
+	boolean updateOneNotification(ObjectId id, Notification notification);
+
+	/**
+	 * Delete a notification.
+	 *
+	 * @param id The id of the notification to delete.
+	 * @return The number of deleted notification.
+	 */
+	boolean deleteOneNotification(ObjectId id);
+
+	/**
+	 * Get all the notifications of a user.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return A list of all the notifications of the user.
+	 */
+	List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception;
+
+	/**
+	 * Delete a user by its username.
+	 *
+	 * @param username The username of the user to delete.
+	 * @return true if the user has been deleted, false otherwise.
+	 * @throws MustBeAnAdminException if the user is not an admin.
+	 */
+	boolean deleteOneUser(String username) throws MustBeAnAdminException;
+
+	/**
+	 * Check if there is a user logged in.
+	 *
+	 * @return true if there is a user logged in, false otherwise.
+	 */
+	boolean isUserLogged();
+
+	/**
+	 * Check if there is an admin logged in.
+	 *
+	 * @return true if the user is an admin, false otherwise.
+	 */
+	boolean isAdminLogged();
 
 	/**
 	 * Insert a referencing.
@@ -529,8 +614,8 @@ public interface FacadeInterface {
 	 * @return The price.
 	 */
 	double calculatePrice(Date startDate, Date endDate, int importanceLevel);
-  
-  /**
+
+	/**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.
@@ -746,4 +831,53 @@ public interface FacadeInterface {
 	 * @return The number of deleted rates.
 	 */
 	boolean deleteOneRate(ObjectId id);
+
+
+	/**
+	 * Get all events.
+	 *
+	 * @return A list of events.
+	 */
+	List<Event> getEventList();
+
+	/**
+	 * Insert an event.
+	 *
+	 * @param event The event to insert.
+	 * @return The id of the inserted event.
+	 */
+	ObjectId insertOneEvent(Event event);
+
+	/**
+	 * Get an event by its id.
+	 *
+	 * @param id The id of the event.
+	 * @return The event or null if not found.
+	 */
+	Event getOneEvent(ObjectId id);
+
+	/**
+	 * Update an event.
+	 *
+	 * @param id The id of the event to update.
+	 * @param event The new event.
+	 * @return true if the event has been updated, false otherwise.
+	 */
+	boolean updateOneEvent(ObjectId id, Event event);
+
+	/**
+	 * Delete an event.
+	 *
+	 * @param id The id of the event to delete.
+	 * @return true if the event has been deleted, false otherwise.
+	 */
+	boolean deleteOneEvent(ObjectId id);
+
+	/**
+	 * Get events by their company id.
+	 *
+	 * @param company The id of the company.
+	 * @return A list of events.
+	 */
+	List<Event> getEventsByCompany(ObjectId company);
 }

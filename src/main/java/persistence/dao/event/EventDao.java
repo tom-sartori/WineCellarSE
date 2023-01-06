@@ -51,6 +51,8 @@ public class EventDao extends AbstractDao<Event> {
 	protected Bson getSetOnUpdate(Event entity) {
 		return Updates.combine(
 				Updates.set("name", entity.getName()),
+				Updates.set("address", entity.getAddress()),
+				Updates.set("company", entity.getCompany()),
 				Updates.set("description", entity.getDescription()),
 				Updates.set("startDate", entity.getStartDate()),
 				Updates.set("endDate", entity.getEndDate())
