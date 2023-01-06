@@ -17,4 +17,8 @@
             </children>
         </Pane>
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

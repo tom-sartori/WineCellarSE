@@ -2,6 +2,7 @@ package ui.app.theme.menu.role;
 
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.login.Login;
+import ui.app.page.user.logout.Logout;
 import ui.app.page.user.profile.Profile;
 import ui.app.page.user.register.Register;
 
@@ -12,6 +13,7 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	USER("Utilisateur"),
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Se connecter", Login.class, USER),
+	LOGOUT("Déconnexion", Logout.class, USER),
 	PROFILE("Mon profil", Profile.class, USER),
 	PARTNER("Partenaires", PartnerPage.class);
 

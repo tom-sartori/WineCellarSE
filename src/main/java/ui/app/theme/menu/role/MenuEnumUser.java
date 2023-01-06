@@ -1,6 +1,7 @@
 package ui.app.theme.menu.role;
 
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.user.logout.Logout;
 import ui.app.page.user.profile.Profile;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 public enum MenuEnumUser implements MenuEnumInterface {
 	USER("Utilisateur"),
 	PROFILE("Mon profil", Profile.class, USER),
+	LOGOUT("Déconnexion", Logout.class, USER),
 	PARTNER("Partenaires", PartnerPage.class);
 
 	private final String navigationTitle;

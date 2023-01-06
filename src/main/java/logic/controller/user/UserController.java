@@ -185,6 +185,9 @@ public class UserController extends AbstractController<User> {
      * Logout the logged user.
      */
     public void logout() {
+        if (loggedUser != null) {
+            System.out.println("The logged user " + loggedUser.getUsername() + " has been logged out.");
+        }
         loggedUser = null;
     }
 }
