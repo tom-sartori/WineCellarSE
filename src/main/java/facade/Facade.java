@@ -1,16 +1,15 @@
 package facade;
 
 
-import logic.controller.advertising.AdvertisingController;
 import logic.controller.event.EventController;
-import org.bson.types.ObjectId;
-
 import exception.BadArgumentsException;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
+import exception.user.MustBeAnAdminException;
+import exception.user.NoLoggedUser;
+import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
-
 import persistence.entity.advertising.Advertising;
 import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
@@ -20,14 +19,14 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.company.Company;
+import persistence.entity.guide.Guide;
+import persistence.entity.notification.Notification;
 import persistence.entity.partner.Partner;
+import persistence.entity.rate.Rate;
 import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
-import persistence.entity.rate.Rate;
 
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -210,7 +209,7 @@ public class Facade implements FacadeInterface {
         return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
     }
 
-     /**
+    /**
      * Insert a guide.
      *
      * @param guide The partner to insert.
@@ -523,6 +522,14 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Logout the logged user.
+     */
+    @Override
+    public void logout() {
+        UserFacade.getInstance().logout();
+    }
+
+    /**
      * Get one user by its id.
      * @param id The id of the user.
      * @return The user.
@@ -530,6 +537,17 @@ public class Facade implements FacadeInterface {
     @Override
     public User getOneUser(ObjectId id) {
         return UserFacade.getInstance().getOneUser(id);
+    }
+
+    /**
+     * Get the logged user.
+     *
+     * @return The logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public User getLoggedUser() throws NoLoggedUser {
+        return UserFacade.getInstance().getLoggedUser();
     }
 
     /**
@@ -555,9 +573,102 @@ public class Facade implements FacadeInterface {
         return UserFacade.getInstance().updateOneUser(id, user);
     }
 
+    /**
+     * Delete a user by its username.
+     *
+     * @param username The username of the user to delete.
+     * @return true if the user has been deleted, false otherwise.
+     * @throws MustBeAnAdminException if the user is not an admin.
+     */
     @Override
-    public boolean deleteOneUser(ObjectId id) {
-        return UserFacade.getInstance().deleteOneUser(id);
+    public boolean deleteOneUser(String username) throws MustBeAnAdminException {
+        return UserFacade.getInstance().deleteOneUser(username);
+    }
+
+    /**
+     * Check if there is a user logged in.
+     *
+     * @return true if there is a user logged in, false otherwise.
+     */
+    @Override
+    public boolean isUserLogged() {
+        return UserFacade.getInstance().isUserLogged();
+    }
+
+    /**
+     * Check if the user logged in is an admin.
+     *
+     * @return true if the user is an admin, false otherwise.
+     */
+    @Override
+    public boolean isAdminLogged() {
+        return UserFacade.getInstance().isAdminLogged();
+    }
+
+    /**
+     * Insert a notification.
+     *
+     * @param notification The notification to insert.
+     * @return The id of the inserted notification.
+     */
+    @Override
+    public ObjectId insertOneNotification(Notification notification) {
+        return NotificationFacade.getInstance().insertOneNotification(notification);
+    }
+
+    /**
+     * Get all notifications.
+     *
+     * @return A list of notifications.
+     */
+    @Override
+    public List<Notification> getNotificationList() {
+        return NotificationFacade.getInstance().getNotificationList();
+    }
+
+    /**
+     * Get a notification by its id.
+     *
+     * @param id The id of the notification.
+     * @return The notification.
+     */
+    @Override
+    public Notification getOneNotification(ObjectId id) {
+        return NotificationFacade.getInstance().getOneNotification(id);
+    }
+
+    /**
+     * Get all the notifications of a user.
+     *
+     * @param userId The id of the user.
+     *
+     * @return A list of all the notifications of the user.
+     */
+    public List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception {
+        return NotificationFacade.getInstance().getNotificationListFromUser(userId);
+    }
+
+    /**
+     * Update a notification.
+     *
+     * @param id The id of the notification to update.
+     * @param notification The new notification.
+     * @return true if the notification has been updated, false otherwise.
+     */
+    @Override
+    public boolean updateOneNotification(ObjectId id, Notification notification) {
+        return NotificationFacade.getInstance().updateOneNotification(id, notification);
+    }
+
+    /**
+     * Delete a notification.
+     *
+     * @param id The id of the notification to delete.
+     * @return true if the notification has been deleted, false otherwise.
+     */
+    @Override
+    public boolean deleteOneNotification(ObjectId id) {
+        return NotificationFacade.getInstance().deleteOneNotification(id);
     }
 
     /**
