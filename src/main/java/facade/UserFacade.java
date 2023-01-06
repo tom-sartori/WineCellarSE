@@ -120,7 +120,7 @@ class UserFacade {
     }
 
     /**
-     * Chec if there is a user logged in.
+     * Check if there is a user logged in.
      *
      * @return true if there is a user logged in, false otherwise.
      */
