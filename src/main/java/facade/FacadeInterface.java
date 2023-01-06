@@ -403,6 +403,11 @@ public interface FacadeInterface {
 	 */
 	User login(String username, String password);
 
+	/**
+	 * Logout the logged user.
+	 */
+	void logout();
+
 	User getOneUser(ObjectId id);
 
 	/**

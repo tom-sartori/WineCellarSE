@@ -207,7 +207,7 @@ public class Facade implements FacadeInterface {
         return AdvertisingFacade.getInstance().getAdvertisingByCompany(company);
     }
 
-     /**
+    /**
      * Insert a guide.
      *
      * @param guide The partner to insert.
@@ -517,6 +517,14 @@ public class Facade implements FacadeInterface {
     @Override
     public User login(String username, String password) throws BadCredentialException {
         return UserFacade.getInstance().login(username, password);
+    }
+
+    /**
+     * Logout the logged user.
+     */
+    @Override
+    public void logout() {
+        UserFacade.getInstance().logout();
     }
 
     /**

@@ -127,4 +127,11 @@ class UserFacade {
     protected boolean isLoggedUserAdmin() {
         return UserController.getInstance().isAdmin();
     }
+
+    /**
+     * Logout the logged user.
+     */
+    public void logout() {
+        UserController.getInstance().logout();
+    }
 }

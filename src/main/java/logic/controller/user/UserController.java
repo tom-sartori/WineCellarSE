@@ -171,4 +171,11 @@ public class UserController extends AbstractController<User> {
             throw new MustBeAnAdminException();
         }
     }
+
+    /**
+     * Logout the logged user.
+     */
+    public void logout() {
+        loggedUser = null;
+    }
 }
