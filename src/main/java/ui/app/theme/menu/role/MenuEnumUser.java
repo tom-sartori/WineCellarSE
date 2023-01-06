@@ -1,34 +1,28 @@
-package ui.app.theme.menu;
+package ui.app.theme.menu.role;
 
-import ui.app.page.company.referencing.ReferencingPage;
-import ui.app.page.company.referencing.creation.ReferencingCreation;
-import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.partner.PartnerPage;
-import ui.app.page.user.login.Login;
-import ui.app.page.user.register.Register;
+import ui.app.page.user.logout.Logout;
+import ui.app.page.user.profile.Profile;
 
 import java.util.Arrays;
 import java.util.List;
 
-public enum MenuEnum {
+public enum MenuEnumUser implements MenuEnumInterface {
 	USER("Utilisateur"),
-	REGISTER("S'enregistrer", Register.class, USER),
-	LOGIN("Login", Login.class, USER),
-	PARTNER("Partenaires", PartnerPage.class),
-	REFERENCING("Référencements", ReferencingPage.class),
-	REFERENCINGCREATION("Création", ReferencingCreation.class, REFERENCING),
-	REFERENCINGLIST("Tous les référencements", ReferencingList.class, REFERENCING);
+	PROFILE("Mon profil", Profile.class, USER),
+	LOGOUT("Déconnexion", Logout.class, USER),
+	PARTNER("Partenaires", PartnerPage.class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;
-	private final MenuEnum parent;
+	private final MenuEnumUser parent;
 
 	/**
 	 * Construct a parent menu which has no default navigation page. If you click on the menu, nothing will happen.
 	 *
 	 * @param navigationTitle The title of the menu shown in the menu bar.
 	 */
-	MenuEnum(String navigationTitle) {
+	MenuEnumUser(String navigationTitle) {
 		this.navigationTitle = navigationTitle;
 		this.controllerClass = null;
 		this.parent = null;
@@ -40,7 +34,7 @@ public enum MenuEnum {
 	 * @param navigationTitle The title of the menu shown in the menu bar.
 	 * @param controllerClass The controller class of the default navigation page.
 	 */
-	MenuEnum(String navigationTitle, Class<?> controllerClass) {
+	MenuEnumUser(String navigationTitle, Class<?> controllerClass) {
 		this.navigationTitle = navigationTitle;
 		this.controllerClass = controllerClass;
 		this.parent = null;
@@ -53,7 +47,7 @@ public enum MenuEnum {
 	 * @param controllerClass The controller class of the default navigation page.
 	 * @param parent The parent menu.
 	 */
-	MenuEnum(String navigationTitle, Class<?> controllerClass, MenuEnum parent) {
+	MenuEnumUser(String navigationTitle, Class<?> controllerClass, MenuEnumUser parent) {
 		this.navigationTitle = navigationTitle;
 		this.controllerClass = controllerClass;
 		this.parent = parent;
@@ -67,12 +61,12 @@ public enum MenuEnum {
 		return controllerClass;
 	}
 
-	public MenuEnum getParent() {
+	public MenuEnumUser getParent() {
 		return parent;
 	}
 
-	public List<MenuEnum> getSubMenus() {
-		return Arrays.stream(MenuEnum.values())
+	public List<MenuEnumUser> getSubMenus() {
+		return Arrays.stream(MenuEnumUser.values())
 				.filter(menu -> menu.getParent() == this)
 				.toList();
 	}

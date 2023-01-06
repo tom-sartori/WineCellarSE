@@ -1,5 +1,7 @@
 package facade;
 
+import exception.user.MustBeAnAdminException;
+import exception.user.NoLoggedUser;
 import org.bson.types.ObjectId;
 
 import exception.BadArgumentsException;
@@ -13,6 +15,7 @@ import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.notification.Notification;
 import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
@@ -154,7 +157,7 @@ public interface FacadeInterface {
 	 */
 	public List<Advertising> getAdvertisingByCompany(ObjectId company);
 
-  /**
+	/**
 	 * Insert a guide.
 	 *
 	 * @param guide The guide to insert.
@@ -194,7 +197,7 @@ public interface FacadeInterface {
 	 */
 	boolean deleteOneGuide(ObjectId id);
 
-   /**
+	/**
 	 * Insert a cellar.
 	 *
 	 * @param cellar The cellar to insert.
@@ -401,13 +404,96 @@ public interface FacadeInterface {
 	 */
 	User login(String username, String password);
 
+	/**
+	 * Logout the logged user.
+	 */
+	void logout();
+
 	User getOneUser(ObjectId id);
+
+	/**
+	 * Get the logged user.
+	 *
+	 * @return The logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	User getLoggedUser() throws NoLoggedUser;
 
 	User getOneUserByUsername(String username);
 
 	boolean updateOneUser(ObjectId id, User user);
 
-	boolean deleteOneUser(ObjectId id);
+	/**
+	 * Insert a notification.
+	 *
+	 * @param notification The notification to insert.
+	 * @return The id of the inserted notification.
+	 */
+	ObjectId insertOneNotification(Notification notification);
+
+	/**
+	 * Get all notifications.
+	 *
+	 * @return A list of notifications.
+	 */
+	List<Notification> getNotificationList();
+
+	/**
+	 * Get a notification by its id.
+	 *
+	 * @param id The id of the notification.
+	 * @return The notification.
+	 */
+	Notification getOneNotification(ObjectId id);
+
+	/**
+	 * Update a notification.
+	 *
+	 * @param id      The id of the notification to update.
+	 * @param notification The notification to update.
+	 * @return The number of updated notification.
+	 */
+	boolean updateOneNotification(ObjectId id, Notification notification);
+
+	/**
+	 * Delete a notification.
+	 *
+	 * @param id The id of the notification to delete.
+	 * @return The number of deleted notification.
+	 */
+	boolean deleteOneNotification(ObjectId id);
+
+	/**
+	 * Get all the notifications of a user.
+	 *
+	 * @param userId The id of the user.
+	 *
+	 * @return A list of all the notifications of the user.
+	 */
+	List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception;
+
+	/**
+	 * Delete a user by its username.
+	 *
+	 * @param username The username of the user to delete.
+	 * @return true if the user has been deleted, false otherwise.
+	 * @throws MustBeAnAdminException if the user is not an admin.
+	 */
+	boolean deleteOneUser(String username) throws MustBeAnAdminException;
+
+	/**
+	 * Check if there is a user logged in.
+	 *
+	 * @return true if there is a user logged in, false otherwise.
+	 */
+	boolean isUserLogged();
+
+	/**
+	 * Check if there is an admin logged in.
+	 *
+	 * @return true if the user is an admin, false otherwise.
+	 */
+	boolean isAdminLogged();
 
 	/**
 	 * Insert a referencing.
@@ -446,7 +532,7 @@ public interface FacadeInterface {
 	 * @param company The id of the referenced company.
 	 * @return A list of referencings.
 	 */
-	List<Referencing> getReferencingsByCompany(ObjectId company);
+	List<Referencing> getReferencingByCompany(ObjectId company);
 	/**
 	 * Update a referencing.
 	 *
@@ -714,4 +800,5 @@ public interface FacadeInterface {
 	 * @return The number of deleted rates.
 	 */
 	boolean deleteOneRate(ObjectId id);
+
 }

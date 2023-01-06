@@ -21,11 +21,10 @@ public class PartnerPage implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        partnerListController.initialize(null, null);
     }
 
     public void onAction() {
-        System.out.println("PartnerPage.onAction()");
         partnerListController.initialize(null, null);
     }
 }
