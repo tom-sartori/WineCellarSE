@@ -33,7 +33,7 @@ public class ReferencingCreation implements Initializable, Observer {
     private Company companySelected;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and create the fields for the form.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,8 +59,13 @@ public class ReferencingCreation implements Initializable, Observer {
         }
     }
 
-    //TODO: Besoin d'updateStatus ?? modif $ en € dans advertising
-
+    /**
+     * Create the price alert for the advertising.
+     * @param ref the referencing.
+     * @param startDate the startDate of the advertising.
+     * @param endDate the endDate of the advertising.
+     * @param importanceLevel the importanceLevel of the advertising.
+     */
     public void createPriceAlert(Referencing ref, Date startDate, Date endDate, int importanceLevel){
         String price = String.valueOf(Facade.getInstance().calculatePriceReferencing(startDate, endDate, importanceLevel));
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -76,6 +81,12 @@ public class ReferencingCreation implements Initializable, Observer {
         }
     }
 
+    /**
+     * Check the dates, importanceLevel and company selected fields and create the referencing.
+     * @param o     the observable object.
+     * @param arg   an argument passed to the {@code notifyObservers}
+     *                 method.
+     */
     @Override
     public void update(Observable o, Object arg) {
         if(State.getInstance().getCurrentUser() != null){
@@ -89,12 +100,18 @@ public class ReferencingCreation implements Initializable, Observer {
                 Date endDate = pattern.parse(endDateString);
                 Date now = new Date();
 
+                /**
+                 * The referencing should not have a startDate that is before the endDate and should not be already finished.
+                 */
                 if (!startDate.before(endDate) || endDate.before(now)) {
                     // Invalid startDate and endDate.
                     formController.showErrorLabel("Dates invalides");
                     return;
                 }
 
+                /**
+                 * The referencing should not start before now.
+                 */
                 if(startDate.before(now)){
                     startDate = now;
                 }
@@ -105,12 +122,14 @@ public class ReferencingCreation implements Initializable, Observer {
                     }
                 }
 
+                /**
+                 * The importanceLevel shoul be between 1 and 5.
+                 */
                 int importanceLevel = Integer.parseInt(labelFieldMap.get("Niveau d'importance /5").toString());
                 if(importanceLevel>5 || importanceLevel<=0) {
                     formController.showErrorLabel("Niveau d'importance invalide");
                     return;
                 }
-
 
                 Referencing ref = new Referencing(now, startDate, endDate, importanceLevel, companySelected.getId());
 

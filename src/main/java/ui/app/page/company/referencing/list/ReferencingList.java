@@ -33,7 +33,7 @@ public class ReferencingList implements Initializable {
     //TODO : faire disparaitre les card si status vide/entreprise vide
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and the select fields.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -54,6 +54,9 @@ public class ReferencingList implements Initializable {
                 selectStatus.getItems().add("Tous");
             }
 
+            /**
+             * Retrieve the list with the changed status if a company is selected.
+             */
             selectStatus.setOnAction((event) -> {
                 String selectedItem = selectStatus.getValue();
                 status = selectedItem;
@@ -62,6 +65,9 @@ public class ReferencingList implements Initializable {
                 }
             });
 
+            /**
+             * Retrieve the list with the changed company and the status.
+             */
             select.setOnAction((event) -> {
                 String selectedItem = select.getValue();
                 for(Company c : companies){
@@ -74,6 +80,11 @@ public class ReferencingList implements Initializable {
         }
     }
 
+    /**
+     * Retrieve the advertisings given the company and status selected and put them in a list.
+     * @param company the company selected.
+     * @param status the status selected.
+     */
     public void list(ObjectId company, String status){
         cardList.clear();
         List<Referencing> referencingList;
