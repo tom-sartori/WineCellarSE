@@ -1,6 +1,5 @@
 package ui.app.page.user.login;
 
-import com.sun.javafx.scene.SceneHelper;
 import exception.BadCredentialException;
 import facade.Facade;
 import javafx.fxml.FXML;

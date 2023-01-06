@@ -423,8 +423,6 @@ public interface FacadeInterface {
 
 	boolean updateOneUser(ObjectId id, User user);
 
-	boolean deleteOneUser(ObjectId id);
-
 	/**
 	 * Insert a notification.
 	 *
