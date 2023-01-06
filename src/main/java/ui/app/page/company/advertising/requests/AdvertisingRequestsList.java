@@ -1,4 +1,4 @@
-package ui.app.page.company.event.list;
+package ui.app.page.company.advertising.requests;
 
 import facade.Facade;
 import javafx.collections.FXCollections;
@@ -9,27 +9,28 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import org.bson.types.ObjectId;
+import persistence.entity.advertising.Advertising;
 import persistence.entity.company.Company;
-import persistence.entity.event.Event;
 import ui.app.State;
-import ui.app.page.company.event.EventCard;
+import ui.app.page.company.advertising.AdvertisingCard;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EventList implements Initializable {
+public class AdvertisingRequestsList implements Initializable {
 
     @FXML
     private GridPane cardHolder;
 
     @FXML
     private ChoiceBox<String> select;
-    private ObservableList<EventCard> cardList = FXCollections.observableArrayList();
-    private final int nbColumn = 2;
+    private ObservableList<AdvertisingCard> cardList = FXCollections.observableArrayList();
+
+    private final int nbColumn = 4;
 
     /**
-     * Initializes the controller class and the select field.
+     * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,41 +50,32 @@ public class EventList implements Initializable {
                     }
                 }
             });
-        } else {
-            list(null);
         }
     }
-
-    /**
-     * Get the events thanks to the company selected and put them in the list.
-     * @param company
-     */
     public void list(ObjectId company){
         cardList.clear();
-        List<Event> eventList;
+        List<Advertising> advertisingList = Facade.getInstance().getNotValidatedAdvertisingsByCompany(company);
 
-        if(company != null){
-            eventList = Facade.getInstance().getEventsByCompany(company);
-        } else {
-            eventList = Facade.getInstance().getEventList();
-        }
+        int maxWidth = 1280;
+        int gapBetweenCard = 20;
+        double preferredHeight = 230.0;
+        double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
+        advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising, preferredHeight, preferredWidth, "advertisingRequestsList")));
 
-        eventList.forEach(event -> cardList.add(new EventCard(event)));
 
         cardHolder.setAlignment(Pos.CENTER);
-        cardHolder.setVgap(30.00);
-        cardHolder.setHgap(30.00);
-        cardHolder.setStyle("-fx-padding:80px;-fx-alignment: center;");
+        cardHolder.setVgap(20.00);
+        cardHolder.setHgap(20.00);
+        cardHolder.setStyle("-fx-padding:10px;");
 
         onSearch();
     }
-
     @FXML
     public void onSearch() {
         int count = 0;
 
         cardHolder.getChildren().clear();
-        for (EventCard card : cardList) {
+        for (AdvertisingCard card : cardList) {
             cardHolder.add(card, count % nbColumn, count / nbColumn);
             count++;
         }

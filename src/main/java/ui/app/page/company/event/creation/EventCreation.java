@@ -31,7 +31,7 @@ public class EventCreation implements Initializable, Observer {
     private Company companySelected;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and create the fields for the form.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,6 +61,9 @@ public class EventCreation implements Initializable, Observer {
         }
     }
 
+    /**
+     * Check the validity of the dates and the company selected to create the event.
+     */
     @Override
     public void update(Observable o, Object arg) {
         if(State.getInstance().getCurrentUser() != null){

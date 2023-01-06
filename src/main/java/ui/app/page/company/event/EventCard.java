@@ -32,7 +32,7 @@ public class EventCard extends Pane {
 	@FXML
 	private Label name, address, startDate, endDate, nameCompany;
 
-	//TODO : AdminCard
+	//TODO : Bouton supprimer pour managers et admin
 	public EventCard(Event event) {
 		this.event = event;
 
@@ -53,7 +53,6 @@ public class EventCard extends Pane {
 		endDate = (Label) eventCard.lookup("#endDate");
 		supprimer = (Button) eventCard.lookup("#supprimer");
 
-		Facade.getInstance().getOneCompany(event.getCompany());
 		nameCompany.setText(Facade.getInstance().getOneCompany(event.getCompany()).getName());
 
 		name.setText(event.getName());
