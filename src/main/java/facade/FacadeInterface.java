@@ -450,6 +450,13 @@ public interface FacadeInterface {
 	void logout();
 
 	/**
+	 * Get all users.
+	 *
+	 * @return A list of users.
+	 */
+	List<User> getUserList();
+
+	/**
 	 * Get one user by its id.
 	 * @param id The id of the user.
 	 * @return The user.
@@ -562,6 +569,15 @@ public interface FacadeInterface {
 	boolean isAdminLogged();
 
 	/**
+	 * Return true if the user logged is manager of the cellar in parameter.
+	 *
+	 * @param cellarId The id of the cellar to check.
+	 *
+	 * @return True if the user is a manager of the cellar. Otherwise, false.
+	 */
+	boolean isManagerOfCellar(ObjectId cellarId);
+
+	/**
 	 * Insert a referencing.
 	 *
 	 * @param referencing The referencing to insert.
@@ -650,7 +666,7 @@ public interface FacadeInterface {
 	 */
 	List<Referencing> getReferencingsByCompanyByStatus(ObjectId company, String status);
 
-  /**
+  	/**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.
