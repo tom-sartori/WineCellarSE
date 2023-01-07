@@ -75,7 +75,12 @@ public class CellarDetails implements Initializable {
         // Mise à jour du cellar courant.
 
         if (isOwner){
-            cellarsFromUser = Facade.getInstance().getCellarsFromUser(State.getInstance().getCurrentUser().getId());
+            try{
+                cellarsFromUser = Facade.getInstance().getCellarsFromUser(State.getInstance().getCurrentUser().getId());
+            }
+            catch (Exception e){
+                cellarsFromUser = new ArrayList<>();
+            }
         }
         scrollableBorderPane.getChildren().clear();
 
