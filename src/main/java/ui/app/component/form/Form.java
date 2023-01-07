@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -24,7 +25,12 @@ public class Form extends Observable implements Initializable {
     @FXML
     private GridPane fieldHolder;
 
+    @FXML
+    private Button submitButton;
+
     private ObservableList<Field> fieldList = FXCollections.observableArrayList();
+
+    private boolean isReadonly;
 
     private VBox vBox;
 
@@ -53,6 +59,13 @@ public class Form extends Observable implements Initializable {
         for (Field field : fieldList) {
             fieldHolder.add(field, count % 2, count / 2);
             count++;
+        }
+
+        if (isReadonly) {
+            fieldHolder.getChildren().forEach(node -> {
+                Field field = (Field) node;
+                field.setReadOnly(isReadonly);
+            });
         }
 
         errorLabelController.hide();
@@ -109,5 +122,20 @@ public class Form extends Observable implements Initializable {
                 .count() == 0;
     }
 
+    public void setSubmitButtonText(String text) {
+        submitButton.setText(text);
+    }
+
+    public void setSubmitButtonVisibility(boolean visible) {
+        submitButton.setVisible(visible);
+    }
+
+    public void setReadonly(boolean readonly) {
+        this.isReadonly = readonly;
+        fieldHolder.getChildren().forEach(node -> {
+            Field field = (Field) node;
+            field.setReadOnly(readonly);
+        });
+    }
 
 }

@@ -27,5 +27,5 @@ public abstract class Field extends Pane {
 
 	protected abstract void hideError();
 
-
+	public abstract void setReadOnly(boolean readOnly);
 }

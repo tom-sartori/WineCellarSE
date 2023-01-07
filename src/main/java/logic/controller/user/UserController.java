@@ -3,11 +3,16 @@ package logic.controller.user;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
+import exception.user.MustBeAnAdminException;
+import exception.user.NoLoggedUser;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
+import persistence.dao.cellar.CellarDAO;
 import persistence.dao.user.UserDao;
+import persistence.entity.cellar.Cellar;
 import persistence.entity.user.User;
+import ui.app.State;
 
 /**
  * UserController class extending Controller class parametrized with User class.
@@ -18,6 +23,11 @@ public class UserController extends AbstractController<User> {
      * Instance of UserController to ensure Singleton design pattern.
      */
     private static UserController instance;
+
+    /**
+     * References a user if connected. Null otherwise.
+     */
+    private User loggedUser;
 
     /**
      * Private constructor for UserController to ensure Singleton design pattern.
@@ -40,6 +50,11 @@ public class UserController extends AbstractController<User> {
     @Override
     protected UserDao getDao() {
         return UserDao.getInstance();
+    }
+
+    private void setLoggedUser(User user) {
+        System.out.println("The logged user is now " + user.getUsername());
+        this.loggedUser = user;
     }
 
     /**
@@ -73,6 +88,7 @@ public class UserController extends AbstractController<User> {
 
         if (checkPassword(password, user.getPassword())) {
             // The password is correct.
+            setLoggedUser(user);
             return user;
         }
         else {
@@ -81,17 +97,126 @@ public class UserController extends AbstractController<User> {
         }
     }
 
+    /**
+     * Hash a password.
+     * @param password The password to hash.
+     * @return The hashed password.
+     */
     private String getHashedPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt(15));
     }
 
+    /**
+     * Check if the password is correct.
+     *
+     * @param password The password to check.
+     * @param hashedPassword The hashed password to check.
+     * @return True if the password is correct, false otherwise.
+     */
     private boolean checkPassword(String password, String hashedPassword) {
         return BCrypt.checkpw(password, hashedPassword);
     }
 
+    /**
+     * Find one user by its username.
+     *
+     * @param username The username of the user to find.
+     * @return The user if found. Otherwise, throw a NotFoundException.
+     * @throws NotFoundException if the user is not found.
+     */
     public User findOneByUsername(String username) throws NotFoundException {
         User user = getDao().findOneByUsername(username);
         user.handleOnFind();
         return user;
+    }
+
+    /**
+     * Check if there is a user logged in.
+     *
+     * @return true if there is a user logged in, false otherwise.
+     */
+    public boolean isLogged() {
+        return loggedUser != null;
+    }
+
+    /**
+     * Return true if the user logged user is admin.
+     *
+     * @return True if the user is an admin. Otherwise, false.
+     */
+    public boolean isAdmin() {
+        if (loggedUser == null) {
+            return false;
+        }
+        else {
+            return loggedUser.isAdmin();
+        }
+    }
+
+    /**
+     * Return true if the user logged is manager of the cellar in parameter.
+     *
+     * @param cellarId The id of the cellar to check.
+     *
+     * @return True if the user is a manager of the cellar. Otherwise, false.
+     */
+    public boolean isManagerOfCellar(ObjectId cellarId) {
+        // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
+        if (loggedUser == null) {
+            return false;
+        }
+        else {
+
+            boolean isOwner;
+            boolean isManager;
+
+            Cellar cellar = CellarDAO.getInstance().findOne(cellarId);
+
+            isOwner = loggedUser.getId().equals(cellar.getOwnerRef());
+            isManager = cellar.getManagers().contains(loggedUser.getId());
+
+            return isOwner || isManager || isAdmin();
+        }
+    }
+
+    /**
+     * Return the logged user. Throw a NoLoggedUser exception if no user is logged.
+     *
+     * @return The logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public User getLoggedUser() throws NoLoggedUser {
+        if (loggedUser == null) {
+            throw new NoLoggedUser();
+        }
+        else {
+            return loggedUser;
+        }
+    }
+
+    /**
+     * Delete a user by its username.
+     *
+     * @param username The username of the user to delete.
+     * @return true if the user has been deleted, false otherwise.
+     * @throws MustBeAnAdminException if the user is not an admin.
+     */
+    public boolean deleteOne(String username) throws MustBeAnAdminException {
+        if (isAdmin()) {
+            return getDao().deleteOne(username);
+        }
+        else {
+            throw new MustBeAnAdminException();
+        }
+    }
+
+    /**
+     * Logout the logged user.
+     */
+    public void logout() {
+        if (loggedUser != null) {
+            System.out.println("The logged user " + loggedUser.getUsername() + " has been logged out.");
+        }
+        loggedUser = null;
     }
 }

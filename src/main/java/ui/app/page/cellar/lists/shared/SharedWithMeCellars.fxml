@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<AnchorPane fx:id="sharedWithMeCellars" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.lists.shared.SharedWithMeCellars">
+    <stylesheets>
+        <URL value="@/ui/app/page/cellar/lists/shared/SharedWithMeCellars.css" />
+    </stylesheets>
+    <children>
+        <ScrollPane layoutY="90.0" prefHeight="535.0" prefWidth="1280.0">
+            <VBox fx:id="vBox" />
+        </ScrollPane>
+    </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
+</AnchorPane>

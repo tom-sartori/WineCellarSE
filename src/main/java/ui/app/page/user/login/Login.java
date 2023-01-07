@@ -5,10 +5,12 @@ import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
+import ui.app.helpers.services.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.Map;
@@ -24,6 +26,9 @@ public class Login implements Initializable, Observer {
     @FXML
     private Form formController;
 
+    private static final String labelUsername = "Nom d'utilisateur";
+    private static final String labelPassword = "Mot de passe";
+
     /**
      * Initializes the controller class.
      */
@@ -33,8 +38,10 @@ public class Login implements Initializable, Observer {
 
         formController.clearFieldList();
 
-        formController.addField(new LabelField("Nom", true));
-        formController.addField(new LabelFieldMasked("Mot de passe", true));
+        formController.addField(new LabelField(labelUsername, true));
+        formController.addField(new LabelFieldMasked(labelPassword, true));
+
+        formController.setSubmitButtonText("Se connecter");
 
         formController.initialize(null, null);
     }
@@ -45,10 +52,13 @@ public class Login implements Initializable, Observer {
 
         try {
             // Try to log in.
-            State.getInstance().setCurrentUser(
-                    Facade.getInstance()
-                            .login(labelFieldMap.get("Nom").toString(), labelFieldMap.get("Mot de passe").toString())
-            );
+            User user = Facade.getInstance()
+                    .login(labelFieldMap.get(labelUsername).toString(), labelFieldMap.get(labelPassword).toString());
+            State.getInstance().setCurrentUser(user);   /// FIXME : should be removed.
+
+            CustomSceneHelper customSceneHelper = new CustomSceneHelper();
+            customSceneHelper.refreshMenu();
+            customSceneHelper.bringNodeToFront("profile");
         }
         catch (BadCredentialException e) {
             // Can not log in due to bad credentials.
