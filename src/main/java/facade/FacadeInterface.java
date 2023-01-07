@@ -405,6 +405,15 @@ public interface FacadeInterface {
 	List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException;
 
 	/**
+	 * Get all the rates of a subject.
+	 *
+	 * @param subjectId The id of the subject.
+	 *
+	 * @return A list of all the rates of the subject if there are any, an empty list otherwise.
+	 */
+	List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException;
+
+	/**
 	 * Update a rate.
 	 *
 	 * @param id      The id of the rate to update.

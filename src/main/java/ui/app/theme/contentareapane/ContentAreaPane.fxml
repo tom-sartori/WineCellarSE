@@ -13,6 +13,7 @@
         <fx:include source="../../page/partner/PartnerPage.fxml" />
         <fx:include source="../../page/home/HomePage.fxml" />
         <fx:include source="../../page/guides/Guides.fxml" />
+        <fx:include source="../../page/rates/RatePage.fxml" />
         <fx:include source="../../page/user/UserPage.fxml" />
 
     </children>

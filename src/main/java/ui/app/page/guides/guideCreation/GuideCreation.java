@@ -101,16 +101,26 @@ public class GuideCreation implements Initializable, Observer {
                 }
             }
 
+            if(selectedCategory != null){
+                // The form is valid.
+                Facade.getInstance()
+                        .insertOneGuide(new Guide(labelFieldMap.get("Titre du guide").toString(), labelFieldMap.get("description").toString(), sectionMap, selectedCategory, new Date()));
 
-            // The form is valid.
-            Facade.getInstance()
-                    .insertOneGuide(new Guide(labelFieldMap.get("Titre du guide").toString(), labelFieldMap.get("description").toString(), sectionMap, selectedCategory, new Date()));
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText("Nouveau guide ajouté !");
-            Optional<ButtonType> option = alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Confirmation");
+                alert.setHeaderText(null);
+                alert.setContentText("Nouveau guide ajouté !");
+                Optional<ButtonType> option = alert.showAndWait();
+
+            }else {
+                // Afficher l'alerte
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez sélectionner une catégorie pour votre guide !");
+                alert.showAndWait();
+            }
 
         }
         catch (Exception e) {

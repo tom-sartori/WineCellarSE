@@ -14,38 +14,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RateFacadeTest {
 
     private final FacadeInterface facade = Facade.getInstance();
-    private Rate rate;
     private Rate rateSubject;
     private Rate rateSubject2;
 
     @BeforeEach
     void init() {
         ObjectId ownerRef = new ObjectId("6398c428ba6578737cbd9184");
+        ObjectId subjectRef = new ObjectId("63a5c45048f0c9194a9295ef");
         Calendar cal = Calendar.getInstance();
         cal.set(2022, Calendar.DECEMBER,13);
         Date date = cal.getTime();
-        rate = new Rate(5, "il est très bon", false, date);
-        rateSubject = new Rate(ownerRef,3, "bof", false, date );
-        rateSubject2 = new Rate(ownerRef,4, "pas mal du tout", false, date );
+        rateSubject = new Rate(ownerRef, subjectRef, 3, "bof", false, date );
+        rateSubject2 = new Rate(ownerRef, subjectRef, 4, "pas mal du tout", false, date );
     }
 
-    @Test
-    void test_create_OK() {
-        ObjectId idShouldBeOverridden = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
-        rate.setId(idShouldBeOverridden);
-
-        ObjectId idReceivedAfterCreation = facade.insertOneRate(rate);
-
-        assertNotNull(idReceivedAfterCreation);
-        assertNotEquals(idShouldBeOverridden, idReceivedAfterCreation);	// The user should not be able to set the id.
-
-        Rate receivedRate = facade.getOneRate(idReceivedAfterCreation);
-
-        assertEquals(rate.getRate(), receivedRate.getRate());
-        assertEquals(rate.getLastModified(), receivedRate.getLastModified());
-
-
-    }
     @Test
     void test_create_OK2() {
         ObjectId idShouldBeOverridden = new ObjectId("aaaaaaaaaaaaaaaaaaaaaaaa");
@@ -59,6 +41,8 @@ public class RateFacadeTest {
 
         Rate receivedRate = facade.getOneRate(idReceivedAfterCreation);
 
+        assertEquals(rateSubject.getOwnerRef(), receivedRate.getOwnerRef());
+        assertEquals(rateSubject.getSubjectRef(), receivedRate.getSubjectRef());
         assertEquals(rateSubject.getRate(), receivedRate.getRate());
         assertEquals(rateSubject.getLastModified(), receivedRate.getLastModified());
     }
@@ -67,9 +51,9 @@ public class RateFacadeTest {
     void test_findAll_OK() {
         int initialNumberOfEvents = facade.getRateList().size();
 
-        ObjectId idOfInsertedRate = facade.insertOneRate(rate);
-        facade.insertOneRate(rate);
-        facade.insertOneRate(rate);
+        ObjectId idOfInsertedRate = facade.insertOneRate(rateSubject);
+        facade.insertOneRate(rateSubject);
+        facade.insertOneRate(rateSubject);
 
         List<Rate> receivedRateList = facade.getRateList();
 
@@ -108,20 +92,51 @@ public class RateFacadeTest {
         }
     }
 
+    /**
+     * Test the getRateListFromSubject method.
+     */
+    @Test
+    void getRateListFromSubject(){
+        try {
+            ObjectId subjectId = rateSubject.getSubjectRef();
+
+            ObjectId rateId = facade.insertOneRate(rateSubject);
+
+            List<Rate> ratesFromUserBefore = facade.getRateListFromSubject(subjectId);
+
+            int sizeBefore = ratesFromUserBefore.size();
+
+            ObjectId rateId1 = facade.insertOneRate(rateSubject);
+
+            List<Rate> ratesFromUserAfter = facade.getRateListFromSubject(subjectId);
+
+            int sizeAfter = ratesFromUserAfter.size();
+
+            assertEquals(sizeBefore + 1, sizeAfter);
+
+            // CLEAN UP
+
+            facade.deleteOneRate(rateId);
+            facade.deleteOneRate(rateId1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Test
     void test_findOne_OK() {
-        ObjectId idOfInsertedRate = facade.insertOneRate(rate);
+        ObjectId idOfInsertedRate = facade.insertOneRate(rateSubject);
 
         Rate receivedRate = facade.getOneRate(idOfInsertedRate);
 
-        assertEquals(rate.getRate(), receivedRate.getRate());
-        assertEquals(rate.getLastModified(), receivedRate.getLastModified());
+        assertEquals(rateSubject.getRate(), receivedRate.getRate());
+        assertEquals(rateSubject.getLastModified(), receivedRate.getLastModified());
     }
 
     @Test
     void test_update_OK() {
-        ObjectId idOfInsertedRate = facade.insertOneRate(rate);
+        ObjectId idOfInsertedRate = facade.insertOneRate(rateSubject);
 
         Rate receivedRate = facade.getOneRate(idOfInsertedRate);
         receivedRate.setRate(4);
@@ -145,8 +160,8 @@ public class RateFacadeTest {
 
     @Test
     void test_delete_OK() {
-        ObjectId rateIdInserted = facade.insertOneRate(rate);
-        rate.setId(rateIdInserted);
+        ObjectId rateIdInserted = facade.insertOneRate(rateSubject);
+        rateSubject.setId(rateIdInserted);
         List<Rate> rateList = facade.getRateList();
         int initialNumberOfRates = rateList.size();
         assertTrue(rateList.contains(facade.getOneRate(rateIdInserted)));

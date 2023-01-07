@@ -552,6 +552,17 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Get all the rates of a subject (company or bottle).
+     *
+     * @param subjectId The id of the subject.
+     *
+     * @return A list of all the rates of the subject if there are any, otherwise throws a NotFoundException.
+     */
+    public List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException {
+        return RateFacade.getInstance().getRateListFromSubject(subjectId);
+    }
+
+    /**
      * Update a rate.
      *
      * @param id The id of the rate to update.

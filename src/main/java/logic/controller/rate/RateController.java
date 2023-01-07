@@ -57,4 +57,17 @@ public class RateController extends AbstractController<Rate> {
     public List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException {
         return RateDao.getInstance().getRateListFromUser(userId);
     }
+
+    /**
+     * Get all the rates of a subject.
+     *
+     * @param subjectId The id of the subject.
+     *
+     * @return A list of all the rates of the subject if there are any, otherwise throws a NotFoundException.
+     */
+    public List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException {
+        return RateDao.getInstance().getRateListFromSubject(subjectId);
+    }
+
+
 }

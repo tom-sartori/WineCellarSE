@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
@@ -46,16 +48,28 @@ public class GuideCard extends Pane {
         boutonSuppression = new Button("x");
         boutonModification = new Button("Modifier");
 
+        boutonSuppression.setLayoutX(10.0);
+        boutonSuppression.setLayoutY(10.0);
+
         setPrefHeight(preferredHeight);
         setPrefWidth(preferredWidth);
-        setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center; -fx-border-color: black; -fx-border-width: 1px");
+        setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center; -fx-border-width: 1px");
+
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setHeight(3);
+        dropShadow.setWidth(3);
+        dropShadow.setBlurType(BlurType.TWO_PASS_BOX);
+        setEffect(dropShadow);
+
         title.setAlignment(Pos.CENTER);
         title.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         title.setLayoutX(0);
         title.setLayoutY(40);
         title.setPrefHeight(26.0);
         title.setPrefWidth(preferredWidth);
+
         title.setText(guide.getTitle());
+
         title.setFont(new Font(17.0));
 
         description.setContentDisplay(javafx.scene.control.ContentDisplay.LEFT);
@@ -63,7 +77,9 @@ public class GuideCard extends Pane {
         description.setLayoutY(80);
         description.setPrefHeight(26.0);
         description.setPrefWidth(preferredWidth);
+
         description.setText(guide.getDescription());
+
         description.setFont(new Font(17.0));
 
         setOnMouseClicked(e -> {
@@ -99,4 +115,7 @@ public class GuideCard extends Pane {
         });
     }
 
+    public Guide getGuide() {
+        return guide;
+    }
 }

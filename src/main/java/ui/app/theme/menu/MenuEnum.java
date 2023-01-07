@@ -2,6 +2,7 @@ package ui.app.theme.menu;
 
 import ui.app.page.guides.Guides;
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
 
@@ -13,7 +14,8 @@ public enum MenuEnum {
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Login", Login.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
-	GUIDE("Guides", Guides.class);
+	GUIDE("Guides", Guides.class),
+	RATE("Rates", RatePage.class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;
