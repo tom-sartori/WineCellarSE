@@ -3,6 +3,7 @@ package ui.app.theme.menu.role;
 import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
+import ui.app.page.cellar.lists.shared.SharedWithMeCellars;
 import ui.app.page.company.CompanyPage;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
@@ -24,6 +25,7 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, ADVERTISING),
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),
+	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR);
 
 	private final String navigationTitle;
