@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.bson.types.ObjectId;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.user.User;
 import ui.app.State;
@@ -22,8 +23,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-//TODO clean code
-// TODO ajouter éventuellement un bouton pour changer l'image de la cave.
 public class UpdateCellarForm implements Initializable {
 
     @FXML
@@ -34,28 +33,34 @@ public class UpdateCellarForm implements Initializable {
 
     private Cellar currentCellar;
 
+    private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // TODO remove on master
         Button refresh = new Button("Refresh");
         refresh.onActionProperty().set(event -> {
             refresh();
         });
         updateCellarFormSection.setTop(refresh);
+
+        // TODO replace with state cellar on master.
         if (currentCellar != null) {
             refresh();
         }
     }
 
+    /**
+     * Refresh the page.
+     */
     public void refresh(){
         updateCellarFormSection.setCenter(null);
         updateManagersReaders.getChildren().clear();
 
         currentCellar = State.getInstance().getSelectedCellar();
-
-        System.out.println("currentCellar = " + currentCellar);
 
         if (isOwner() && currentCellar != null) {
             setupForm();
@@ -63,6 +68,9 @@ public class UpdateCellarForm implements Initializable {
         }
     }
 
+    /**
+     * Set up the form to update the cellar.
+     */
     public void setupForm(){
         Label modifierUneCave = new Label("Modifier une cave");
         modifierUneCave.setPadding(new Insets(10, 10, 10, 10));
@@ -71,20 +79,22 @@ public class UpdateCellarForm implements Initializable {
 
         VBox form = new VBox();
 
+        // TODO REMOVE ON MASTER.
         Button refresh = new Button("Refresh");
         refresh.onActionProperty().set(event -> {
             refresh();
         });
-
         form.getChildren().add(refresh);
 
         form.getChildren().add(new Label("Nom de la cave"));
 
         TextField name = new TextField(currentCellar.getName());
         form.getChildren().add(name);
+
         // TODO mettre une image sur une cave ?!
 //        form.getChildren().add(new Label("Image de la cave ?"));
 //        TextField image = new TextField(currentCellar.);
+
         form.getChildren().add(new Label("Cave publique ?"));
         CheckBox isPublic = new CheckBox();
         isPublic.setSelected(currentCellar.isPublic());
@@ -92,32 +102,15 @@ public class UpdateCellarForm implements Initializable {
 
         HBox buttons = new HBox();
 
-        Button validateButton = new Button("Valider");
-        validateButton.setCursor(javafx.scene.Cursor.HAND);
+        Button validateButton = createButton("Valider");
         validateButton.onActionProperty().set(event -> {
-            currentCellar.setName(name.getText());
-            currentCellar.setPublic(isPublic.isSelected());
-            Facade.getInstance().updateOneCellar(currentCellar.getId(), currentCellar);
-            refresh();
+            validateAction(name.getText(), isPublic.isSelected());
         });
-
         buttons.getChildren().add(validateButton);
 
-        Button deleteButton = new Button("Supprimer la cave");
-        deleteButton.setCursor(javafx.scene.Cursor.HAND);
+        Button deleteButton = createButton("Supprimer");
         deleteButton.onActionProperty().set(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Suppression de la cave");
-            alert.setHeaderText("Suppression de la cave");
-            alert.setContentText("Êtes-vous sûr de vouloir supprimer la cave ?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
-                Facade.getInstance().deleteOneCellar(currentCellar.getId());
-                State.getInstance().setSelectedCellar(null);
-                CustomSceneHelper sceneHelper = new CustomSceneHelper();
-                sceneHelper.bringNodeToFront(PublicCellars.class.getSimpleName());
-            }
+            deleteCellarAction();
         });
 
         buttons.getChildren().add(deleteButton);
@@ -127,122 +120,215 @@ public class UpdateCellarForm implements Initializable {
         updateCellarFormSection.setCenter(form);
     }
 
+    /**
+     * Set up the display of managers and readers of the cellar in the right section of the screen.
+     */
     public void setupManagersReaders(){
         VBox managersReaders = new VBox();
-
         managersReaders.setSpacing(10);
         managersReaders.setPadding(new Insets(10, 10, 10, 10));
 
-        VBox titleBox = new VBox();
-
-        titleBox.setAlignment(Pos.CENTER);
+        HBox titleBox = createTitleBox("Gestion des managers et lecteurs", 20);
         titleBox.setPrefWidth(280.0);
 
-        Label gestionnairesEtLecteurs = new Label("Gestionnaires et lecteurs");
-        gestionnairesEtLecteurs.setFont(Font.font(24));
-
-        titleBox.getChildren().add(gestionnairesEtLecteurs);
         managersReaders.getChildren().add(titleBox);
 
-        if (State.getInstance().getSelectedCellar() != null) {
-            Cellar currentCellar = State.getInstance().getSelectedCellar();
+        VBox managers = createBoxForManagersOrReaders();
+        HBox managersBoxTitle = createTitleBox("Gestionnaires", 18);
 
-            VBox managers = new VBox();
-            managers.setAlignment(Pos.CENTER);
-            managers.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-            managers.setPadding(new Insets(10, 10, 10, 10));
-            managers.setSpacing(10);
+        Button addManager = createButton("+");
+        addManager.onActionProperty().set(event -> {
+            addReaderOrManagerAction("manager");
+        });
+        managersBoxTitle.getChildren().add(addManager);
+        managers.getChildren().add(managersBoxTitle);
 
-            HBox managersBoxTitle = new HBox();
-            managersBoxTitle.setSpacing(10);
-            managersBoxTitle.setAlignment(Pos.CENTER);
+        User masterManager = Facade.getInstance().getOneUser(currentCellar.getOwnerRef());
+        managers.getChildren().add(new Label(masterManager.getUsername()));
 
-            Label managerBoxTitleLabel = new Label("Gestionnaires");
-            managerBoxTitleLabel.setFont(Font.font(20));
-
-            managersBoxTitle.getChildren().add(managerBoxTitleLabel);
-
-            Button addManager = new Button("+");
-            addManager.setCursor(javafx.scene.Cursor.HAND);
-            addManager.onActionProperty().set(event -> {
-                List<User> userList = Facade.getInstance().getUserList();
-                ArrayList<String> userNames = new ArrayList<>();
-                for (User user : userList) {
-                    userNames.add(user.getUsername());
-                }
-                ChoiceDialog<String> dialog = new ChoiceDialog<>("", userNames);
-                Optional<String> o = dialog.showAndWait();
-
-                // TODO get the user from username with new method in facade.
-                // TODO add the user as manager of the cellar.
-            });
-
-            managersBoxTitle.getChildren().add(addManager);
-
-            managers.getChildren().add(managersBoxTitle);
-
-
-            User masterManager = Facade.getInstance().getOneUser(currentCellar.getOwnerRef());
-
-            managers.getChildren().add(new Label(masterManager.getUsername()));
-
-            for (int i = 0; i < currentCellar.getManagers().size(); i++) {
-                HBox manager = new HBox();
-                manager.setAlignment(Pos.CENTER);
-                manager.setSpacing(10);
-
-                User oneUser = Facade.getInstance().getOneUser(currentCellar.getManagers().get(i));
-
-                manager.getChildren().add(new Label(oneUser.getUsername()));
-
-                Button deleteManager = new Button("-");
-                deleteManager.setCursor(javafx.scene.Cursor.HAND);
-                deleteManager.onActionProperty().set(event -> {
-                    try {
-                        Facade.getInstance().removeCellarManager(currentCellar.getId(), oneUser.getId());
-                        refresh();
-                    } catch (BadArgumentsException e) {
-                        throw new RuntimeException(e);
-                        //TODO handle exception
-                    }
-                    refresh();
-                });
-
-                manager.getChildren().add(deleteManager);
-
-                managers.getChildren().add(manager);
-            }
-
-            managersReaders.getChildren().add(managers);
-
-            VBox readers = new VBox();
-
-            readers.setAlignment(Pos.CENTER);
-            readers.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-            readers.setPadding(new Insets(10, 10, 10, 10));
-            readers.setSpacing(10);
-
-
-            Label readerBoxTitle = new Label("Lecteurs");
-            readerBoxTitle.setFont(Font.font(20));
-
-            readers.getChildren().add(readerBoxTitle);
-
-            for (int i = 0; i < currentCellar.getReaders().size(); i++) {
-                User oneUser = Facade.getInstance().getOneUser(currentCellar.getReaders().get(i));
-                readers.getChildren().add(new Label(oneUser.getUsername()));
-            }
-
-            managersReaders.getChildren().add(readers);
-
+        for (int i = 0; i < currentCellar.getManagers().size(); i++) {
+            HBox manager = createManagerOrReader(currentCellar.getManagers().get(i), "manager");
+            managers.getChildren().add(manager);
         }
+        managersReaders.getChildren().add(managers);
+
+        VBox readers = createBoxForManagersOrReaders();
+
+        HBox readersBoxTitle = createTitleBox("Lecteurs", 18);
+
+        Button addReader = createButton("+");
+        addReader.onActionProperty().set(event -> {
+            addReaderOrManagerAction("reader");
+        });
+        readers.getChildren().add(readersBoxTitle);
+
+        for (int i = 0; i < currentCellar.getReaders().size(); i++) {
+            HBox reader = createManagerOrReader(currentCellar.getReaders().get(i), "reader");
+            readers.getChildren().add(reader);
+        }
+        managersReaders.getChildren().add(readers);
 
         updateManagersReaders.getChildren().add(managersReaders);
-
         updateManagersReaders.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }
 
-    // TODO remove this method.
+    public VBox createBoxForManagersOrReaders(){
+        VBox vBox = new VBox();
+
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.setSpacing(10);
+
+        return vBox;
+    }
+
+    /**
+     * Create a title box for managers or readers.
+     *
+     * @param title the title of the label
+     * @param fontSize the font size of the title
+     *
+     * @return the title box with the title and the font size set in a HBox.
+     */
+    public HBox createTitleBox(String title, int fontSize){
+        HBox hBox = new HBox();
+
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
+
+        Label titleLabel = new Label(title);
+        titleLabel.setFont(Font.font(fontSize));
+
+        hBox.getChildren().add(titleLabel);
+
+        return hBox;
+    }
+
+    /**
+     * Create a manager or reader.
+     *
+     * @param userId the id of the user.
+     * @param managerOrReader the type of the user.
+     *
+     * @return A Hbox with the information of the user and a button to remove him.
+     */
+    public HBox createManagerOrReader(ObjectId userId, String managerOrReader){
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
+
+        User oneUser = Facade.getInstance().getOneUser(userId);
+
+        hBox.getChildren().add(new Label(oneUser.getUsername()));
+
+        Button deleteManager = createButton("-");
+        deleteManager.onActionProperty().set(event -> {
+            deleteManagerOrReaderAction(oneUser, managerOrReader);
+        });
+
+        hBox.getChildren().add(deleteManager);
+
+        return hBox;
+    }
+
+    /**
+     * Create a button with the text.
+     *
+     * @param text the text of the button.
+     *
+     * @return the button with the text .
+     */
+    public Button createButton(String text){
+        Button button = new Button(text);
+        button.setCursor(javafx.scene.Cursor.HAND);
+        return button;
+    }
+
+    /**
+     * Adds a manager to the cellar.
+     */
+    public void addReaderOrManagerAction(String managerOrReader){
+        List<User> userList = Facade.getInstance().getUserList();
+        ArrayList<String> userNames = new ArrayList<>();
+        for (User user : userList) {
+            userNames.add(user.getUsername());
+        }
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("", userNames);
+        Optional<String> o = dialog.showAndWait();
+
+        // TODO get the user from username with new method in facade.
+        // TODO add the user as manager or reader of the cellar.
+
+        refresh();
+    }
+
+    public void deleteManagerOrReaderAction(User user, String managerOrReader){
+        Alert alert = createAlert("Suppression d'un " + managerOrReader, "Suppression d'un " + managerOrReader,"Êtes-vous sûr de vouloir supprimer le " + managerOrReader +  "?", Alert.AlertType.CONFIRMATION);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            try {
+                if (managerOrReader.equals("manager")){
+                    Facade.getInstance().removeCellarManager(currentCellar.getId(), user.getId());
+                } else {
+                    Facade.getInstance().removeCellarReader(currentCellar.getId(), user.getId());
+                }
+                refresh();
+            } catch (BadArgumentsException e) {
+                Alert error = createAlert("Erreur", "Erreur", e.getMessage(), Alert.AlertType.ERROR);
+                error.showAndWait();
+            }
+        }
+    }
+
+    /**
+     * Updates the cellar according to parameters.
+     *
+     * @param name the new name of the cellar.
+     * @param isPublic the new isPublic status of the cellar.
+     */
+    public void validateAction(String name, boolean isPublic){
+        currentCellar.setName(name);
+        currentCellar.setPublic(isPublic);
+        Facade.getInstance().updateOneCellar(currentCellar.getId(), currentCellar);
+        refresh();
+    }
+
+    /**
+     * delete the current cellar after confirmation of the user.
+     */
+    public void deleteCellarAction(){
+        Alert alert = createAlert("Suppression d'une cave", "Suppression d'une cave","Êtes-vous sûr de vouloir supprimer la cave?", Alert.AlertType.CONFIRMATION);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK){
+            Facade.getInstance().deleteOneCellar(currentCellar.getId());
+            State.getInstance().setSelectedCellar(null);
+
+            sceneHelper.bringNodeToFront(PublicCellars.class.getSimpleName());
+        }
+    }
+
+    /**
+     * Create an alert.
+     *
+     * @param title the title of the alert
+     * @param header the header of the alert
+     * @param content the content of the alert
+     * @param type the type of the alert
+     *
+     * @return the alert created.
+     */
+    public Alert createAlert(String title, String header, String content, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        return alert;
+    }
+
+    // TODO remove this method on master.
     public boolean isOwner(){
         // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
 
