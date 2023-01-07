@@ -80,4 +80,9 @@ public class Select extends Field implements Initializable {
     public void hideError() {
         errorLabel.setVisible(false);
     }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        choiceBox.setDisable(readOnly);
+    }
 }

@@ -449,6 +449,11 @@ public interface FacadeInterface {
 	 */
 	void logout();
 
+	/**
+	 * Get one user by its id.
+	 * @param id The id of the user.
+	 * @return The user.
+	 */
 	User getOneUser(ObjectId id);
 
 	/**
@@ -459,8 +464,21 @@ public interface FacadeInterface {
 	 */
 	User getLoggedUser() throws NoLoggedUser;
 
+	/**
+	 * Get a user by its username.
+	 * @param username The username of the user to find.
+	 * @return The user.
+	 * @throws NotFoundException if the user is not found.
+	 */
 	User getOneUserByUsername(String username);
 
+	/**
+	 * Update a user.
+	 *
+	 * @param id The id of the user to update.
+	 * @param user The new user.
+	 * @return true if the user has been updated, false otherwise.
+	 */
 	boolean updateOneUser(ObjectId id, User user);
 
 	/**
@@ -511,6 +529,14 @@ public interface FacadeInterface {
 	 * @return A list of all the notifications of the user.
 	 */
 	List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception;
+
+	/**
+	 * Delete a user by its id.
+	 *
+	 * @param id The id of the user to delete.
+	 * @return true if the user has been deleted, false otherwise.
+	 */
+	boolean deleteOneUser(ObjectId id);
 
 	/**
 	 * Delete a user by its username.

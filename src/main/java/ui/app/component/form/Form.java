@@ -27,6 +27,8 @@ public class Form extends Observable implements Initializable {
 
     private ObservableList<Field> fieldList = FXCollections.observableArrayList();
 
+    private boolean isReadonly;
+
     /**
      * Initializes the controller class.
      */
@@ -43,6 +45,13 @@ public class Form extends Observable implements Initializable {
         for (Field field : fieldList) {
             fieldHolder.add(field, count % 2, count / 2);
             count++;
+        }
+
+        if (isReadonly) {
+            fieldHolder.getChildren().forEach(node -> {
+                Field field = (Field) node;
+                field.setReadOnly(isReadonly);
+            });
         }
 
         errorLabelController.hide();
@@ -105,5 +114,13 @@ public class Form extends Observable implements Initializable {
 
     public void setSubmitButtonVisibility(boolean visible) {
         submitButton.setVisible(visible);
+    }
+
+    public void setReadonly(boolean readonly) {
+        this.isReadonly = readonly;
+        fieldHolder.getChildren().forEach(node -> {
+            Field field = (Field) node;
+            field.setReadOnly(readonly);
+        });
     }
 }

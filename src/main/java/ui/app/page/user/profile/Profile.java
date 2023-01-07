@@ -31,6 +31,7 @@ public class Profile implements Initializable, Observer {
         formController.addObserver(this);
 
         formController.setSubmitButtonVisibility(false);
+        formController.setReadonly(true);
         formController.clearFieldList();
 
         try {
