@@ -680,6 +680,18 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Return true if the user logged is manager of the cellar in parameter.
+     *
+     * @param cellarId The id of the cellar to check.
+     *
+     * @return True if the user is a manager of the cellar. Otherwise, false.
+     */
+    @Override
+    public boolean isManagerOfCellar(ObjectId cellarId) {
+        return UserFacade.getInstance().isManagerOfCellar(cellarId);
+    }
+
+    /**
      * Insert a notification.
      *
      * @param notification The notification to insert.

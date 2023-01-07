@@ -569,6 +569,15 @@ public interface FacadeInterface {
 	boolean isAdminLogged();
 
 	/**
+	 * Return true if the user logged is manager of the cellar in parameter.
+	 *
+	 * @param cellarId The id of the cellar to check.
+	 *
+	 * @return True if the user is a manager of the cellar. Otherwise, false.
+	 */
+	boolean isManagerOfCellar(ObjectId cellarId);
+
+	/**
 	 * Insert a referencing.
 	 *
 	 * @param referencing The referencing to insert.
