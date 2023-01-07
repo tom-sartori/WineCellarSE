@@ -21,5 +21,8 @@
             <GridPane fx:id="cardHolder" alignment="TOP_CENTER" layoutX="12.0" layoutY="109.0" />
         </ScrollPane>
     </children>
-    <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>
