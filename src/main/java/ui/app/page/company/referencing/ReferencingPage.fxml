@@ -11,6 +11,9 @@
         <Button mnemonicParsing="false" text="Sample" />
         <fx:include fx:id="referencingCreation" source="creation/ReferencingCreation.fxml" />
         <fx:include fx:id="referencingList" source="list/ReferencingList.fxml" />
-        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

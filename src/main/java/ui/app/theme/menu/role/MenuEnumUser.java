@@ -29,10 +29,9 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	LOGOUT("Déconnexion", Logout.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
-
 	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, COMPANY),
 	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, COMPANY),
-	REFERENCINGLIST("Tous vos référencements", ReferencingList.class, COMPANY),
+	REFERNCINGLIST("Tous vos référencents", ReferencingList.class, COMPANY),
 	REFERENCINGCREATION("Créer un référencement", ReferencingCreation.class, COMPANY),
 	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
 	EVENTCREATION("Créer un évènement", EventCreation.class, COMPANY),

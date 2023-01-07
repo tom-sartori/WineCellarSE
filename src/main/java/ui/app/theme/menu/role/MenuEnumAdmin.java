@@ -4,7 +4,6 @@ import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
 import ui.app.page.cellar.lists.shared.SharedWithMeCellars;
-import ui.app.page.guides.Guides;
 import ui.app.page.company.CompanyPage;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
