@@ -9,8 +9,10 @@ import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 import persistence.dao.cellar.CellarDAO;
+import persistence.dao.company.CompanyDao;
 import persistence.dao.user.UserDao;
 import persistence.entity.cellar.Cellar;
+import persistence.entity.company.Company;
 import persistence.entity.user.User;
 import ui.app.State;
 
@@ -174,6 +176,32 @@ public class UserController extends AbstractController<User> {
 
             isOwner = loggedUser.getId().equals(cellar.getOwnerRef());
             isManager = cellar.getManagers().contains(loggedUser.getId());
+
+            return isOwner || isManager || isAdmin();
+        }
+    }
+
+    /**
+     * Return true if the user logged is manager of the company in parameter.
+     *
+     * @param companyId The id of the company to check.
+     *
+     * @return True if the user is a manager of the company. Otherwise, false.
+     */
+    public boolean isManagerOfCompany(ObjectId companyId) {
+        // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
+        if (loggedUser == null) {
+            return false;
+        }
+        else {
+
+            boolean isOwner;
+            boolean isManager;
+
+            Company company = CompanyDao.getInstance().findOne(companyId);
+
+            isOwner = loggedUser.getId().equals(company.getMasterManager());
+            isManager = company.getManagerList().contains(loggedUser.getId());
 
             return isOwner || isManager || isAdmin();
         }

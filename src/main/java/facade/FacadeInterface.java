@@ -578,6 +578,15 @@ public interface FacadeInterface {
 	boolean isManagerOfCellar(ObjectId cellarId);
 
 	/**
+	 * Return true if the user logged is manager of the company in parameter.
+	 *
+	 * @param companyId The id of the company to check.
+	 *
+	 * @return True if the user is a manager of the company. Otherwise, false.
+	 */
+	public boolean isManagerOfCompany(ObjectId companyId);
+
+	/**
 	 * Insert a referencing.
 	 *
 	 * @param referencing The referencing to insert.

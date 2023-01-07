@@ -159,6 +159,17 @@ class UserFacade {
     }
 
     /**
+     * Return true if the user logged is manager of the company in parameter.
+     *
+     * @param companyId The id of the company to check.
+     *
+     * @return True if the user is a manager of the company. Otherwise, false.
+     */
+    public boolean isManagerOfCompany(ObjectId companyId) {
+        return UserController.getInstance().isManagerOfCompany(companyId);
+    }
+
+    /**
      * Logout the logged user.
      */
     public void logout() {
