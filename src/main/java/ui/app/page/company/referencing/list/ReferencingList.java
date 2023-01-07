@@ -1,5 +1,6 @@
 package ui.app.page.company.referencing.list;
 
+import exception.NotFoundException;
 import facade.Facade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -102,21 +103,25 @@ public class ReferencingList implements Initializable {
      * @param status the status selected.
      */
     public void list(ObjectId company, String status){
-        cardList.clear();
-        List<Referencing> referencingList;
-        if(status.equals("Tous")){
-            referencingList = Facade.getInstance().getReferencingsByCompany(company);
-            referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
+        try {
+            cardList.clear();
+            List<Referencing> referencingList;
+            if(status.equals("Tous")){
+                referencingList = Facade.getInstance().getReferencingsByCompany(company);
+                referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
 
-        } else {
-            referencingList = Facade.getInstance().getReferencingsByCompanyByStatus(company, status);
-            referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
+            } else {
+                referencingList = Facade.getInstance().getReferencingsByCompanyByStatus(company, status);
+                referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
+            }
+
+            cardHolder.setAlignment(Pos.CENTER);
+            cardHolder.setVgap(20.00);
+            cardHolder.setHgap(20.00);
+            cardHolder.setStyle("-fx-padding:10px;");
+        } catch (NotFoundException e){
+
         }
-
-        cardHolder.setAlignment(Pos.CENTER);
-        cardHolder.setVgap(20.00);
-        cardHolder.setHgap(20.00);
-        cardHolder.setStyle("-fx-padding:10px;");
 
         onSearch();
     }

@@ -1,5 +1,6 @@
 package ui.app.page.company.event.list;
 
+import exception.NotFoundException;
 import facade.Facade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -82,21 +83,25 @@ public class EventList implements Initializable {
      * @param company the company selected.
      */
     public void list(ObjectId company){
-        cardList.clear();
-        List<Event> eventList;
-//TODO : si non connecté, récupérer la current company de state et getEventsByCompany(company)
-        if(company != null){
-            eventList = Facade.getInstance().getEventsByCompany(company);
-        } else {
-            eventList = Facade.getInstance().getEventList();
+        try {
+            cardList.clear();
+            List<Event> eventList;
+            //TODO : si non connecté, récupérer la current company de state et getEventsByCompany(company)
+            if(company != null){
+                eventList = Facade.getInstance().getEventsByCompany(company);
+            } else {
+                eventList = Facade.getInstance().getEventList();
+            }
+
+            eventList.forEach(event -> cardList.add(new EventCard(event)));
+
+            cardHolder.setAlignment(Pos.CENTER);
+            cardHolder.setVgap(30.00);
+            cardHolder.setHgap(30.00);
+            cardHolder.setStyle("-fx-padding:80px;-fx-alignment: center;");
+        } catch (NotFoundException e){
+
         }
-
-        eventList.forEach(event -> cardList.add(new EventCard(event)));
-
-        cardHolder.setAlignment(Pos.CENTER);
-        cardHolder.setVgap(30.00);
-        cardHolder.setHgap(30.00);
-        cardHolder.setStyle("-fx-padding:80px;-fx-alignment: center;");
 
         onSearch();
     }

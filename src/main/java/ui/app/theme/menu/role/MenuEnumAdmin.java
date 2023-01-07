@@ -39,8 +39,6 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
-	COMPANY("Entreprise",CompanyPage .class),
-	GUIDE("Guides", Guides.class),
 	RATE("Notes",RatePage .class);
 
 	private final String navigationTitle;

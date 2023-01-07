@@ -28,10 +28,8 @@ public enum MenuEnumPublic implements MenuEnumInterface {
 	COMPANY("Entreprise", CompanyPage.class),
 	CELLAR("Caves", CellarPage.class),
 	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
-	EVENT("Evènements", EventList.class);
 	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
-	CELLAR("Caves", CellarPage.class),
-	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
+
 	GUIDE("Guides",Guides .class),
 	RATE("Notes",RatePage .class);
 
