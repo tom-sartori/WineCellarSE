@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -34,12 +35,14 @@ public class GuideCard extends Pane {
     private final double preferredHeight, preferredWidth;
     private Guide guide;
     private CustomSceneHelper sceneHelper = new CustomSceneHelper();
+    private GuideList guideList;
 
 
 
 
-    public GuideCard(Guide guide, double preferredHeight, double preferredWidth) {
+    public GuideCard(Guide guide, GuideList guideList, double preferredHeight, double preferredWidth) {
         this.guide = guide;
+        this.guideList = guideList;
         this.preferredHeight = preferredHeight;
         this.preferredWidth = preferredWidth;
 
@@ -95,16 +98,9 @@ public class GuideCard extends Pane {
         boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation");
-                alert.setHeaderText(null);
-                alert.setContentText("Voulez-vous vraiment supprimer"+guide.getTitle()+"?");
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if(option.get() != ButtonType.CANCEL){
-                    Facade.getInstance().deleteOneGuide(guide.getId());
-                }
+                supprimerGuide();
             }
+
         });
 
         boutonModification.setOnAction(new EventHandler<ActionEvent>() {
@@ -117,5 +113,22 @@ public class GuideCard extends Pane {
 
     public Guide getGuide() {
         return guide;
+    }
+
+    public void setGuideList(GuideList guideList) {
+        this.guideList = guideList;
+    }
+
+    public void supprimerGuide(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez-vous vraiment supprimer"+guide.getTitle()+"?");
+        Optional<ButtonType> option = alert.showAndWait();
+
+        if(option.get() != ButtonType.CANCEL){
+            Facade.getInstance().deleteOneGuide(guide.getId());
+        }
+        guideList.initialize(null, null);
     }
 }

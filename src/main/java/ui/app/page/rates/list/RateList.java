@@ -27,7 +27,7 @@ public class RateList implements Initializable {
         List<Rate> rateList = Facade.getInstance().getRateList();
         cardList.clear();
 
-        rateList.forEach(rate -> cardList.add(new RateCard(rate)));
+        rateList.forEach(rate -> cardList.add(new RateCard(rate, this)));
 
         cardHolder.setAlignment(Pos.CENTER);
         cardHolder.setVgap(30.00);

@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -50,7 +51,7 @@ public class GuideList implements Initializable {
         int gapBetweenCard = 20;
         double preferredHeight = 150.0;
         double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
-        guideList.forEach(guide -> cardList.add(new GuideCard(guide, preferredHeight, preferredWidth)));
+        guideList.forEach(guide -> cardList.add(new GuideCard(guide, this, preferredHeight, preferredWidth)));
         cardHolder.setAlignment(Pos.CENTER);
         cardHolder.setVgap(20.00);
         cardHolder.setHgap(20.00);

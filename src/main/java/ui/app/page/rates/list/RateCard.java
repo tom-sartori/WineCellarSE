@@ -22,6 +22,7 @@ import java.util.Optional;
 
 public class RateCard extends Pane {
     private Rate rate;
+    private RateList rateList;
 
     @FXML
     private AnchorPane rateCard;
@@ -38,8 +39,9 @@ public class RateCard extends Pane {
 
 
 
-    public RateCard(Rate rate){
+    public RateCard(Rate rate, RateList rateList){
         this.rate = rate;
+        this.rateList = rateList;
         this.commentaireFlow = new TextFlow();
         username = new Label();
         note = new Label();
@@ -94,18 +96,33 @@ public class RateCard extends Pane {
         boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation");
-                alert.setHeaderText(null);
-                alert.setContentText("Voulez-vous vraiment supprimer cet avis ?");
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if(option.get() != ButtonType.CANCEL){
-                    Facade.getInstance().deleteOneRate(rate.getId());
-                }
+                supprimerRate();
             }
         });
 
 
     }
+
+    public RateList getRateList() {
+        return rateList;
+    }
+
+    public void setRateList(RateList rateList) {
+        this.rateList = rateList;
+    }
+
+    public void supprimerRate(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez-vous vraiment supprimer cet avis ?");
+        Optional<ButtonType> option = alert.showAndWait();
+
+        if(option.get() != ButtonType.CANCEL){
+            Facade.getInstance().deleteOneRate(rate.getId());
+        }
+        rateList.initialize(null, null );
+    }
+
+
 }
