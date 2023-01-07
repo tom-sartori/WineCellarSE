@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="ratePageController" id="ratePage"
+            prefHeight="625.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.rates.RatePage">
+    <children>
+        <fx:include fx:id="form" source="../../component/form/Form.fxml" />
+        <fx:include fx:id="cardList" source="./list/RateList.fxml" />
+    </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
+</AnchorPane>
+
+

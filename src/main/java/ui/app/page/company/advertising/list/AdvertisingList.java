@@ -27,7 +27,7 @@ public class AdvertisingList implements Initializable {
     private ChoiceBox<String> select, selectStatus;
     private ObservableList<AdvertisingCard> cardList = FXCollections.observableArrayList();
 
-    private final int nbColumn = 4;
+    private final int nbColumn = 2;
 
     private ObjectId company;
     private String status;
@@ -37,15 +37,25 @@ public class AdvertisingList implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(State.getInstance().getCurrentUser() != null){
-            company = null;
-            status = "Toutes";
-            List<Company> companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+        if(Facade.getInstance().isUserLogged()){
+
+            List<Company> companies;
+            if(Facade.getInstance().isAdminLogged()){
+                companies = Facade.getInstance().getCompanyList();
+            } else {
+                companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            }
+
             if(select.getItems().size() == 0){
                 for (Company c : companies){
                     select.getItems().add(c.getName());
                 }
             }
+            company = companies.get(0).getId();
+            status = "Toutes";
+
+            //pre-select the first company
+            select.getSelectionModel().selectFirst();
 
             select.setOnAction((event) -> {
                 String selectedItem = select.getValue();
@@ -58,10 +68,13 @@ public class AdvertisingList implements Initializable {
             });
 
             if(selectStatus.getItems().size() == 0){
+                selectStatus.getItems().add("Toutes");
                 selectStatus.getItems().add("Validées");
                 selectStatus.getItems().add("Demandes");
-                selectStatus.getItems().add("Toutes");
             }
+
+            //pre-select the "Toutes" choice
+            selectStatus.getSelectionModel().selectFirst();
 
             selectStatus.setOnAction((event) -> {
                 String selectedItem = selectStatus.getValue();
@@ -70,17 +83,20 @@ public class AdvertisingList implements Initializable {
                     list(company,status);
                 }
             });
+            list(company,status);
         }
     }
 
     /**
      * Check the selected company and status value to retrieve the advertisings and put them in the list.
-     * @param company
-     * @param status
+     * @param company the selected company or the first one if there are no company selected.
+     * @param status the selected status or "Toutes".
      */
     public void list(ObjectId company, String status){
         cardList.clear();
         List<Advertising> advertisingList;
+
+
         if(status.equals("Validées")){
             advertisingList = Facade.getInstance().getValidatedAdvertisingsByCompany(company);
         } else if(status.equals("Demandes")){
@@ -89,16 +105,17 @@ public class AdvertisingList implements Initializable {
             advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
         }
 
+
         int maxWidth = 1280;
         int gapBetweenCard = 20;
         double preferredHeight = 230.0;
         double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
-        advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising, preferredHeight, preferredWidth, "advertisingList")));
+        advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising)));
 
         cardHolder.setAlignment(Pos.CENTER);
         cardHolder.setVgap(20.00);
-        cardHolder.setHgap(20.00);
-        cardHolder.setStyle("-fx-padding:10px;");
+        cardHolder.setHgap(30.00);
+        cardHolder.setStyle("-fx-padding:95px;");
 
         onSearch();
     }
