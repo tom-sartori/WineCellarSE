@@ -60,7 +60,7 @@ public class AdvertisingRequestsList implements Initializable {
         int gapBetweenCard = 20;
         double preferredHeight = 230.0;
         double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
-        advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising, preferredHeight, preferredWidth, "advertisingRequestsList")));
+        advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising)));
 
 
         cardHolder.setAlignment(Pos.CENTER);

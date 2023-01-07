@@ -65,6 +65,17 @@ class RateFacade {
     }
 
     /**
+     * Get all the rates of a subject.
+     *
+     * @param subjectId The id of the subject.
+     *
+     * @return A list of all the rates of the subject if there are any, otherwise throws a NotFoundException.
+     */
+    public List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException {
+        return RateController.getInstance().getRateListFromSubject(subjectId);
+    }
+
+    /**
      * Get a rate by its id.
      *
      * @param id The id of the rate.
