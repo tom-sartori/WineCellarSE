@@ -35,33 +35,9 @@ public class PublicCellars implements Initializable {
         List<Cellar> cellarList = Facade.getInstance().getPublicCellars();
 
         for (Cellar cellar : cellarList) {
-            createCellarCard(cellar);
-        }
-    }
-
-    // TODO HANDLE WHEN OWNER NOT FOUND
-    public void createCellarCard(Cellar cellar){
-        try{
-            CardComponent card = new CardComponent();
-            card.setText(cellar.getName());
-            card.addNode(new Label("Public: " + cellar.isPublic()));
-
-            User oneUser = Facade.getInstance().getOneUser(cellar.getOwnerRef());
-
-            card.addNode(new Label("Propriétaire: " + oneUser.getUsername()));
-
-            Button button = new Button("Voir");
-            button.onActionProperty().set(event -> {
-                State.getInstance().setSelectedCellar(cellar);
-                CustomSceneHelper sceneHelper = new CustomSceneHelper();
-                sceneHelper.bringNodeToFront(CellarDetails.class.getSimpleName());
-            });
-
-            card.addBottomNode(button);
-
+            CardComponent card = CardComponent.createCellarCard(cellar);
             cardHolder.getChildren().add(card);
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
+
 }

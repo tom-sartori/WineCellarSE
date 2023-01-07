@@ -1,13 +1,20 @@
 package ui.app.component.card;
 
+import facade.Facade;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import persistence.entity.cellar.Cellar;
+import persistence.entity.user.User;
+import ui.app.State;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.cellar.details.CellarDetails;
 
 import java.io.IOException;
 
@@ -57,8 +64,35 @@ public class CardComponent extends BorderPane {
         bottomFlowPane.getChildren().add(node);
     }
 
-//    @FXML
-//    protected void doSomething() {
-//        System.out.println("The button was clicked!");
-//    }
+    /**
+     * Creates a card for a cellar
+     *
+     * @param cellar the cellar to create a card for.
+     *
+     * @return the card for the cellar.
+     */
+    public static CardComponent createCellarCard(Cellar cellar){
+        CardComponent card = new CardComponent();
+            // TODO HANDLE WHEN USER NOT FOUND
+        try{
+            card.setText(cellar.getName());
+            card.addNode(new Label("Public: " + cellar.isPublic()));
+
+            User oneUser = Facade.getInstance().getOneUser(cellar.getOwnerRef());
+
+            card.addNode(new Label("Propriétaire: " + oneUser.getUsername()));
+
+            Button button = new Button("Voir");
+            button.onActionProperty().set(event -> {
+                State.getInstance().setSelectedCellar(cellar);
+                CustomSceneHelper sceneHelper = new CustomSceneHelper();
+                sceneHelper.bringNodeToFront(CellarDetails.class.getSimpleName());
+            });
+
+            card.addBottomNode(button);
+        }catch (Exception e){
+            //TODO alert error
+        }
+        return card;
+    }
 }
