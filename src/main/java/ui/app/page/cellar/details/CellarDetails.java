@@ -59,17 +59,15 @@ public class CellarDetails implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mainVBox = new VBox();
+        System.out.println("refreshing");
         refresh();
     }
 
     public void refresh(){
-
-            mainVBox.getChildren().clear();
+        mainVBox.getChildren().clear();
 
         if (State.getInstance().getSelectedCellar() != null) {
-            currentCellar = State.getInstance().getSelectedCellar();
-
-            currentCellar = Facade.getInstance().getOneCellar(currentCellar.getId());
+            currentCellar = Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId());
         }
 
         // Mise à jour du cellar courant.

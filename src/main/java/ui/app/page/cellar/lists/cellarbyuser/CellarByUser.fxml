@@ -21,4 +21,8 @@
         </Label>
         <FlowPane fx:id="cardHolder" layoutX="1.0" layoutY="62.0" prefHeight="562.0" prefWidth="1278.0" style="-fx-padding: 10 10 10 10" />
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

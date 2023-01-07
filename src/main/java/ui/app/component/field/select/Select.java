@@ -81,6 +81,11 @@ public class Select extends Field implements Initializable {
         errorLabel.setVisible(false);
     }
 
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        choiceBox.setDisable(readOnly);
+    }
+
     public ChoiceBox<String> getChoiceBox() {
         return choiceBox;
     }

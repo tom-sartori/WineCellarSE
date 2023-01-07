@@ -3,6 +3,8 @@ package facade;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
 import exception.NotFoundException;
+import exception.user.MustBeAnAdminException;
+import exception.user.NoLoggedUser;
 import logic.controller.user.UserController;
 import org.bson.types.ObjectId;
 import persistence.entity.user.User;
@@ -76,6 +78,16 @@ class UserFacade {
     }
 
     /**
+     * Get the logged user.
+     *
+     * @return The logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    protected User getLoggedUser() throws NoLoggedUser {
+        return UserController.getInstance().getLoggedUser();
+    }
+
+    /**
      * Get a user by its username.
      *
      * @param username The username of the user.
@@ -97,12 +109,48 @@ class UserFacade {
     }
 
     /**
-     * Delete a user.
+     * Delete a user by its id.
      *
      * @param id The id of the user to delete.
      * @return true if the user has been deleted, false otherwise.
      */
     protected boolean deleteOneUser(ObjectId id) {
         return UserController.getInstance().deleteOne(id);
+    }
+
+    /**
+     * Delete a user by its username.
+     *
+     * @param username The username of the user to delete.
+     * @return true if the user has been deleted, false otherwise.
+     * @throws MustBeAnAdminException if the user is not an admin.
+     */
+    protected boolean deleteOneUser(String username) throws MustBeAnAdminException {
+        return UserController.getInstance().deleteOne(username);
+    }
+
+    /**
+     * Check if there is a user logged in.
+     *
+     * @return true if there is a user logged in, false otherwise.
+     */
+    public boolean isUserLogged() {
+        return UserController.getInstance().isLogged();
+    }
+
+    /**
+     * Check if the user logged in is an admin.
+     *
+     * @return true if the user is an admin, false otherwise.
+     */
+    protected boolean isAdminLogged() {
+        return UserController.getInstance().isAdmin();
+    }
+
+    /**
+     * Logout the logged user.
+     */
+    public void logout() {
+        UserController.getInstance().logout();
     }
 }

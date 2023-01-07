@@ -58,6 +58,13 @@ public class LabelField extends Field implements Initializable {
         this.isRequired = isRequired;
     }
 
+    public LabelField(String labelText, String textFieldValue, boolean isRequired) {
+        // The component has been imported from the constructor ok a .java class.
+        this(labelText, isRequired);
+        this.textField.setText(textFieldValue);
+    }
+
+
     @Override
     public String getLabel() {
         return label.getText();
@@ -76,5 +83,10 @@ public class LabelField extends Field implements Initializable {
     @Override
     public void hideError() {
         errorLabel.setVisible(false);
+    }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        textField.setEditable(!readOnly);
     }
 }

@@ -10,17 +10,23 @@ public class Event implements Entity<Event> {
 
 	private ObjectId id;
 	private String name;
+
+	private String address;
 	private String description;
 	private Date startDate;
 	private Date endDate;
 
+	private ObjectId company;
+
 	public Event() { }
 
-	public Event(String name, String description, Date startDate, Date endDate) {
+	public Event(String name, String address, String description, Date startDate, Date endDate, ObjectId company) {
 		this.name = name;
+		this.address = address;
 		this.description = description;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.company = company;
 	}
 
 	/**
@@ -56,17 +62,33 @@ public class Event implements Entity<Event> {
 
 	public void setEndDate(Date endDate) { this.endDate = endDate; }
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public ObjectId getCompany() {
+		return company;
+	}
+
+	public void setCompany(ObjectId company) {
+		this.company = company;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Event event = (Event) o;
-		return Objects.equals(id, event.id) && Objects.equals(name, event.name) && Objects.equals(description, event.description) && Objects.equals(startDate, event.startDate) && Objects.equals(endDate, event.endDate);
+		return Objects.equals(id, event.id) && Objects.equals(name, event.name) && Objects.equals(address, event.address) && Objects.equals(description, event.description) && Objects.equals(startDate, event.startDate) && Objects.equals(endDate, event.endDate) && Objects.equals(company, event.company);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, description, startDate, endDate);
+		return Objects.hash(id, name, address, description, startDate, endDate, company);
 	}
 
 	@Override

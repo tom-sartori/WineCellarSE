@@ -1,5 +1,6 @@
 package ui.app.page.partner.list;
 
+import facade.Facade;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -12,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import persistence.entity.partner.Partner;
-import ui.app.State;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -78,7 +78,7 @@ public class PartnerCard extends Pane {
 		getChildren().addAll(photo, name);
 
 
-		if (State.getInstance().getCurrentUser() != null) {
+		if (Facade.getInstance().isAdminLogged()) {
 			setAdminCard();
 		}
 	}

@@ -41,15 +41,7 @@ public class UpdateCellarForm implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO remove on master
-        Button refresh = new Button("Refresh");
-        refresh.onActionProperty().set(event -> {
-            refresh();
-        });
-        updateCellarFormSection.setTop(refresh);
-
-        // TODO replace with state cellar on master.
-        if (currentCellar != null) {
+        if (State.getInstance().getSelectedCellar() != null) {
             refresh();
         }
     }
@@ -79,13 +71,6 @@ public class UpdateCellarForm implements Initializable {
         updateCellarFormSection.setTop(modifierUneCave);
 
         VBox form = new VBox();
-
-        // TODO REMOVE ON MASTER.
-        Button refresh = new Button("Refresh");
-        refresh.onActionProperty().set(event -> {
-            refresh();
-        });
-        form.getChildren().add(refresh);
 
         form.getChildren().add(new Label("Nom de la cave"));
 
@@ -245,8 +230,19 @@ public class UpdateCellarForm implements Initializable {
         ChoiceDialog<String> dialog = new ChoiceDialog<>("", userNames);
         Optional<String> o = dialog.showAndWait();
 
-        // TODO get the user from username with new method in facade.
-        // TODO add the user as manager or reader of the cellar.
+        if (o.isPresent()) {
+            String username = o.get();
+            User user = Facade.getInstance().getOneUserByUsername(username);
+            try {
+                if (managerOrReader.equals("manager")) {
+                    Facade.getInstance().addCellarManager(currentCellar.getId(), user.getId());
+                } else {
+                    Facade.getInstance().addCellarReader(currentCellar.getId(), user.getId());
+                }
+            } catch (Exception e) {
+                NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout du manager ou du lecteur.", e.getMessage(), Alert.AlertType.ERROR).showAndWait();
+            }
+        }
 
         refresh();
     }

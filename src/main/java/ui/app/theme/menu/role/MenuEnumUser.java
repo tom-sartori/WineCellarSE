@@ -1,42 +1,41 @@
-package ui.app.theme.menu;
+package ui.app.theme.menu.role;
 
 import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
-import ui.app.page.bottle.create.CreateBottleForm;
-import ui.app.page.cellar.details.CellarDetails;
-import ui.app.page.cellar.forms.create.CellarForm;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
-import ui.app.page.cellar.forms.update.UpdateCellarForm;
+import ui.app.page.company.CompanyPage;
+import ui.app.page.company.advertising.creation.AdvertisingCreation;
+import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.partner.PartnerPage;
-import ui.app.page.user.login.Login;
-import ui.app.page.user.register.Register;
+import ui.app.page.user.logout.Logout;
+import ui.app.page.user.profile.Profile;
 
 import java.util.Arrays;
 import java.util.List;
 
-public enum MenuEnum {
+public enum MenuEnumUser implements MenuEnumInterface {
 	USER("Utilisateur"),
-	REGISTER("S'enregistrer", Register.class, USER),
-	LOGIN("Login", Login.class, USER),
+	PROFILE("Mon profil", Profile.class, USER),
+	LOGOUT("Déconnexion", Logout.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
-	CELLAR("Caves", CellarPage.class),
-	CELLAR_FORM("Ajouter une cave", CellarForm.class, CELLAR),
-	USER_CELLAR("Mes Caves", CellarByUser.class, CELLAR),
-	CELLAR_DETAILS("Détail d'une cave",CellarDetails .class, CELLAR),
-	PUBLIC_CELLARS("Caves publiques", PublicCellars.class, CELLAR),
-	UPDATE_CELLAR("Modifier une cave", UpdateCellarForm.class, CELLAR),
-	CREATE_BOTTLE("Créer une bouteille", CreateBottleForm.class, CELLAR);
+	COMPANY("Entreprise", CompanyPage.class),
+	ADVERTISING("Publicités"),
+	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, ADVERTISING),
+	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, ADVERTISING),
+	CELLAR("Caves",CellarPage .class),
+	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),
+	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;
-	private final MenuEnum parent;
+	private final MenuEnumUser parent;
 
 	/**
 	 * Construct a parent menu which has no default navigation page. If you click on the menu, nothing will happen.
 	 *
 	 * @param navigationTitle The title of the menu shown in the menu bar.
 	 */
-	MenuEnum(String navigationTitle) {
+	MenuEnumUser(String navigationTitle) {
 		this.navigationTitle = navigationTitle;
 		this.controllerClass = null;
 		this.parent = null;
@@ -48,7 +47,7 @@ public enum MenuEnum {
 	 * @param navigationTitle The title of the menu shown in the menu bar.
 	 * @param controllerClass The controller class of the default navigation page.
 	 */
-	MenuEnum(String navigationTitle, Class<?> controllerClass) {
+	MenuEnumUser(String navigationTitle, Class<?> controllerClass) {
 		this.navigationTitle = navigationTitle;
 		this.controllerClass = controllerClass;
 		this.parent = null;
@@ -61,7 +60,7 @@ public enum MenuEnum {
 	 * @param controllerClass The controller class of the default navigation page.
 	 * @param parent The parent menu.
 	 */
-	MenuEnum(String navigationTitle, Class<?> controllerClass, MenuEnum parent) {
+	MenuEnumUser(String navigationTitle, Class<?> controllerClass, MenuEnumUser parent) {
 		this.navigationTitle = navigationTitle;
 		this.controllerClass = controllerClass;
 		this.parent = parent;
@@ -75,12 +74,12 @@ public enum MenuEnum {
 		return controllerClass;
 	}
 
-	public MenuEnum getParent() {
+	public MenuEnumUser getParent() {
 		return parent;
 	}
 
-	public List<MenuEnum> getSubMenus() {
-		return Arrays.stream(MenuEnum.values())
+	public List<MenuEnumUser> getSubMenus() {
+		return Arrays.stream(MenuEnumUser.values())
 				.filter(menu -> menu.getParent() == this)
 				.toList();
 	}
