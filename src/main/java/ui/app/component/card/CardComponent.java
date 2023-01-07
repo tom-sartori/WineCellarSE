@@ -73,7 +73,6 @@ public class CardComponent extends BorderPane {
      */
     public static CardComponent createCellarCard(Cellar cellar){
         CardComponent card = new CardComponent();
-            // TODO HANDLE WHEN USER NOT FOUND
         try{
             card.setText(cellar.getName());
             card.addNode(new Label("Public: " + cellar.isPublic()));
