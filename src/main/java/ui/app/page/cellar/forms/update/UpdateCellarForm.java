@@ -53,6 +53,9 @@ public class UpdateCellarForm implements Initializable {
         updateCellarFormSection.setCenter(null);
         updateManagersReaders.getChildren().clear();
 
+        // updating current cellar
+        State.getInstance().setSelectedCellar(Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId()));
+
         currentCellar = State.getInstance().getSelectedCellar();
 
         if (isOwner() && currentCellar != null) {
@@ -110,6 +113,7 @@ public class UpdateCellarForm implements Initializable {
      * Set up the display of managers and readers of the cellar in the right section of the screen.
      */
     public void setupManagersReaders(){
+        updateManagersReaders.getChildren().clear();
         VBox managersReaders = new VBox();
         managersReaders.setSpacing(10);
         managersReaders.setPadding(new Insets(10, 10, 10, 10));
@@ -146,6 +150,7 @@ public class UpdateCellarForm implements Initializable {
         addReader.onActionProperty().set(event -> {
             addReaderOrManagerAction("reader");
         });
+        readersBoxTitle.getChildren().add(addReader);
         readers.getChildren().add(readersBoxTitle);
 
         for (int i = 0; i < currentCellar.getReaders().size(); i++) {
@@ -224,27 +229,36 @@ public class UpdateCellarForm implements Initializable {
     public void addReaderOrManagerAction(String managerOrReader){
         List<User> userList = Facade.getInstance().getUserList();
         ArrayList<String> userNames = new ArrayList<>();
+        List<ObjectId> managerOrReaderList = new ArrayList<>();
+        if (managerOrReader.equals("manager")){
+            managerOrReaderList = currentCellar.getManagers();
+        } else {
+            managerOrReaderList = currentCellar.getReaders();
+        }
         for (User user : userList) {
-            userNames.add(user.getUsername());
+            if (!managerOrReaderList.contains(user.getId())){
+                userNames.add(user.getUsername());
+            }
         }
         ChoiceDialog<String> dialog = new ChoiceDialog<>("", userNames);
         Optional<String> o = dialog.showAndWait();
 
         if (o.isPresent()) {
             String username = o.get();
+
             User user = Facade.getInstance().getOneUserByUsername(username);
+
             try {
                 if (managerOrReader.equals("manager")) {
-                    Facade.getInstance().addCellarManager(currentCellar.getId(), user.getId());
+                    Facade.getInstance().addCellarManager(user.getId(), State.getInstance().getSelectedCellar().getId());
                 } else {
-                    Facade.getInstance().addCellarReader(currentCellar.getId(), user.getId());
+                    Facade.getInstance().addCellarReader(user.getId(), State.getInstance().getSelectedCellar().getId());
                 }
+                refresh();
             } catch (Exception e) {
                 NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout du manager ou du lecteur.", e.getMessage(), Alert.AlertType.ERROR).showAndWait();
             }
         }
-
-        refresh();
     }
 
     public void deleteManagerOrReaderAction(User user, String managerOrReader){
@@ -254,9 +268,9 @@ public class UpdateCellarForm implements Initializable {
         if (result.get() == ButtonType.OK){
             try {
                 if (managerOrReader.equals("manager")){
-                    Facade.getInstance().removeCellarManager(currentCellar.getId(), user.getId());
+                    Facade.getInstance().removeCellarManager(user.getId(), State.getInstance().getSelectedCellar().getId());
                 } else {
-                    Facade.getInstance().removeCellarReader(currentCellar.getId(), user.getId());
+                    Facade.getInstance().removeCellarReader(user.getId(), State.getInstance().getSelectedCellar().getId());
                 }
                 refresh();
             } catch (BadArgumentsException e) {
