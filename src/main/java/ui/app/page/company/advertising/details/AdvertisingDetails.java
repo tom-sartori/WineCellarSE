@@ -39,7 +39,7 @@ public class AdvertisingDetails implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Advertising advertising = State.getInstance().getCurrentAdvertising();
 
-        retour.setOnAction(event -> this.sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName()));
+        retour.setOnAction(event -> this.sceneHelper.bringNodeToFront(State.getInstance().getPreviousPage()));
         if(advertising != null) {
             this.advertising = advertising;
 

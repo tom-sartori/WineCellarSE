@@ -46,20 +46,20 @@ public class AdvertisingList implements Initializable {
             } else {
                 companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             }
+            company = companies.get(0).getId();
+            status = "Toutes";
 
             if(select.getItems().size() == 0){
                 for (Company c : companies){
                     select.getItems().add(c.getName());
                 }
             }
-            company = companies.get(0).getId();
-            status = "Toutes";
-
-            //pre-select the first company
-            select.getSelectionModel().selectFirst();
 
             select.setOnAction((event) -> {
                 String selectedItem = select.getValue();
+                if(selectedItem.equals("Toutes")){
+                    list(null, status);
+                }
                 for(Company c : companies){
                     if(c.getName().equals(selectedItem)){
                         company = c.getId();
@@ -68,22 +68,40 @@ public class AdvertisingList implements Initializable {
                 }
             });
 
-            if(selectStatus.getItems().size() == 0){
-                selectStatus.getItems().add("Toutes");
-                selectStatus.getItems().add("Validées");
-                selectStatus.getItems().add("Demandes");
+            //pre-select the "Toutes" choice
+            select.getSelectionModel().selectFirst();
+
+            /**
+             * If the user is not admin, they can see all status.
+             * Admins can see only unvalidated advertisings.
+             */
+            if(!Facade.getInstance().isAdminLogged()){
+                selectStatus.setVisible(true);
+
+                if(selectStatus.getItems().size() == 0){
+                    selectStatus.getItems().add("Toutes");
+                    selectStatus.getItems().add("Validées");
+                    selectStatus.getItems().add("Demandes");
+                }
+
+                //pre-select the "Toutes" choice
+                selectStatus.getSelectionModel().selectFirst();
+
+                selectStatus.setOnAction((event) -> {
+                    String selectedItem = selectStatus.getValue();
+                    status = selectedItem;
+                    if(company!=null){
+                        list(company,status);
+                    }
+                });
+
+            } else {
+                if(!select.getItems().contains("Toutes")){
+                    select.getItems().add("Toutes");
+                }
+                selectStatus.setVisible(false);
             }
 
-            //pre-select the "Toutes" choice
-            selectStatus.getSelectionModel().selectFirst();
-
-            selectStatus.setOnAction((event) -> {
-                String selectedItem = selectStatus.getValue();
-                status = selectedItem;
-                if(company!=null){
-                    list(company,status);
-                }
-            });
             list(company,status);
         }
     }
@@ -98,21 +116,23 @@ public class AdvertisingList implements Initializable {
             cardList.clear();
             List<Advertising> advertisingList;
 
-
-            if(status.equals("Validées")){
-                advertisingList = Facade.getInstance().getValidatedAdvertisingsByCompany(company);
-            } else if(status.equals("Demandes")){
-                advertisingList = Facade.getInstance().getNotValidatedAdvertisingsByCompany(company);
+            if(company != null){
+                if(status.equals("Validées")){
+                    advertisingList = Facade.getInstance().getValidatedAdvertisingsByCompany(company);
+                } else if(status.equals("Demandes")){
+                    advertisingList = Facade.getInstance().getNotValidatedAdvertisingsByCompany(company);
+                } else {
+                    advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
+                }
             } else {
-                advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
+                advertisingList = Facade.getInstance().getNotValidatedAdvertisings();
             }
-
 
             int maxWidth = 1280;
             int gapBetweenCard = 20;
             double preferredHeight = 230.0;
             double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
-            advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising)));
+            advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising, "advertisingList")));
 
             cardHolder.setAlignment(Pos.CENTER);
             cardHolder.setVgap(20.00);
