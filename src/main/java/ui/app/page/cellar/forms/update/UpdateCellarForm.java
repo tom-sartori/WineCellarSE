@@ -1,5 +1,6 @@
 package ui.app.page.cellar.forms.update;
 
+import constant.NodeCreations;
 import exception.BadArgumentsException;
 import facade.Facade;
 import javafx.fxml.FXML;
@@ -102,13 +103,13 @@ public class UpdateCellarForm implements Initializable {
 
         HBox buttons = new HBox();
 
-        Button validateButton = createButton("Valider");
+        Button validateButton = NodeCreations.createButton("Valider");
         validateButton.onActionProperty().set(event -> {
             validateAction(name.getText(), isPublic.isSelected());
         });
         buttons.getChildren().add(validateButton);
 
-        Button deleteButton = createButton("Supprimer");
+        Button deleteButton = NodeCreations.createButton("Supprimer");
         deleteButton.onActionProperty().set(event -> {
             deleteCellarAction();
         });
@@ -136,7 +137,7 @@ public class UpdateCellarForm implements Initializable {
         VBox managers = createBoxForManagersOrReaders();
         HBox managersBoxTitle = createTitleBox("Gestionnaires", 18);
 
-        Button addManager = createButton("+");
+        Button addManager = NodeCreations.createButton("+");
         addManager.onActionProperty().set(event -> {
             addReaderOrManagerAction("manager");
         });
@@ -156,7 +157,7 @@ public class UpdateCellarForm implements Initializable {
 
         HBox readersBoxTitle = createTitleBox("Lecteurs", 18);
 
-        Button addReader = createButton("+");
+        Button addReader = NodeCreations.createButton("+");
         addReader.onActionProperty().set(event -> {
             addReaderOrManagerAction("reader");
         });
@@ -222,7 +223,7 @@ public class UpdateCellarForm implements Initializable {
 
         hBox.getChildren().add(new Label(oneUser.getUsername()));
 
-        Button deleteManager = createButton("-");
+        Button deleteManager = NodeCreations.createButton("-");
         deleteManager.onActionProperty().set(event -> {
             deleteManagerOrReaderAction(oneUser, managerOrReader);
         });
@@ -230,19 +231,6 @@ public class UpdateCellarForm implements Initializable {
         hBox.getChildren().add(deleteManager);
 
         return hBox;
-    }
-
-    /**
-     * Create a button with the text.
-     *
-     * @param text the text of the button.
-     *
-     * @return the button with the text .
-     */
-    public Button createButton(String text){
-        Button button = new Button(text);
-        button.setCursor(javafx.scene.Cursor.HAND);
-        return button;
     }
 
     /**
@@ -264,7 +252,7 @@ public class UpdateCellarForm implements Initializable {
     }
 
     public void deleteManagerOrReaderAction(User user, String managerOrReader){
-        Alert alert = createAlert("Suppression d'un " + managerOrReader, "Suppression d'un " + managerOrReader,"Êtes-vous sûr de vouloir supprimer le " + managerOrReader +  "?", Alert.AlertType.CONFIRMATION);
+        Alert alert = NodeCreations.createAlert("Suppression d'un " + managerOrReader, "Suppression d'un " + managerOrReader,"Êtes-vous sûr de vouloir supprimer le " + managerOrReader +  "?", Alert.AlertType.CONFIRMATION);
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
@@ -276,7 +264,7 @@ public class UpdateCellarForm implements Initializable {
                 }
                 refresh();
             } catch (BadArgumentsException e) {
-                Alert error = createAlert("Erreur", "Erreur", e.getMessage(), Alert.AlertType.ERROR);
+                Alert error = NodeCreations.createAlert("Erreur", "Erreur", e.getMessage(), Alert.AlertType.ERROR);
                 error.showAndWait();
             }
         }
@@ -299,7 +287,7 @@ public class UpdateCellarForm implements Initializable {
      * delete the current cellar after confirmation of the user.
      */
     public void deleteCellarAction(){
-        Alert alert = createAlert("Suppression d'une cave", "Suppression d'une cave","Êtes-vous sûr de vouloir supprimer la cave?", Alert.AlertType.CONFIRMATION);
+        Alert alert = NodeCreations.createAlert("Suppression d'une cave", "Suppression d'une cave","Êtes-vous sûr de vouloir supprimer la cave?", Alert.AlertType.CONFIRMATION);
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK){
@@ -308,24 +296,6 @@ public class UpdateCellarForm implements Initializable {
 
             sceneHelper.bringNodeToFront(PublicCellars.class.getSimpleName());
         }
-    }
-
-    /**
-     * Create an alert.
-     *
-     * @param title the title of the alert
-     * @param header the header of the alert
-     * @param content the content of the alert
-     * @param type the type of the alert
-     *
-     * @return the alert created.
-     */
-    public Alert createAlert(String title, String header, String content, Alert.AlertType type){
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        return alert;
     }
 
     // TODO remove this method on master.
