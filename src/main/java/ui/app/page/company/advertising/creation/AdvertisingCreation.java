@@ -12,7 +12,7 @@ import persistence.entity.company.Company;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.select.Select;
-import ui.app.page.company.form.Form;
+import ui.app.component.form.Form;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -56,7 +56,7 @@ public class AdvertisingCreation implements Initializable, Observer {
             formController.addField(new LabelField("Date de début", true));
             formController.addField(new LabelField("Date de fin", true));
             formController.addField(new Select("Entreprise", true, companyList));
-
+            formController.setSubmitButtonText("Payer");
             formController.initialize(null, null);
         }
     }
