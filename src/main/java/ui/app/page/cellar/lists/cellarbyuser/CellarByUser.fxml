@@ -13,7 +13,6 @@
     </stylesheets>
     <children>
         <Button layoutX="1138.0" layoutY="15.0" mnemonicParsing="false" text="Ajouter une cave" />
-        <Button layoutX="50" layoutY="15.0" mnemonicParsing="false" text="refresh" onAction="#refreshPage"/>
         <Label layoutX="564.0" layoutY="23.0" text="Mes caves">
             <font>
                 <Font size="35.0" />

@@ -172,10 +172,6 @@ public class BottleDetails implements Initializable {
         HBox hBoxTitle = new HBox();
 
         hBoxTitle.getChildren().add(new Label("Bottle Details"));
-        Button button = new Button("Refresh");
-        button.setOnAction(e -> refresh());
-
-        hBoxTitle.getChildren().add(button);
 
         Button button2 = new Button("Retour");
         button2.setOnAction(e -> {

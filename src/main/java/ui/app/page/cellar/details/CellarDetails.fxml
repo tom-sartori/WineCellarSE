@@ -13,7 +13,6 @@
         <URL value="@/ui/app/page/cellar/details/CellarDetails.css" />
     </stylesheets>
     <children>
-        <Button layoutX="50" layoutY="15.0" mnemonicParsing="false" onAction="#refresh" text="refresh" />
         <ScrollPane layoutY="98.0" prefHeight="530.0" prefWidth="1280.0" style="-fx-background-color: #fff;">
             <content>
                 <BorderPane fx:id="scrollableBorderPane" minHeight="530.0" prefWidth="1260.0" style="-fx-background-color: #fff;" />

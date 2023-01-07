@@ -59,7 +59,6 @@ public class CellarDetails implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mainVBox = new VBox();
-        System.out.println("refreshing");
         refresh();
     }
 
