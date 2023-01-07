@@ -72,7 +72,6 @@ public class CreateBottleForm implements Initializable, Observer {
         String category = labelFieldMap.get("Catégorie").toString();
         String grapes = labelFieldMap.get("Raisins").toString();
 
-        // TODO a voir si on fait comme ça plus tard mais jpense faut améliorer
         ArrayList<String> grapeList = new ArrayList<>(Arrays.asList(grapes.split(",")));
 
         Bottle bottle = new Bottle(name,vintage,appellation,bottleImage, price, producer, alcoholPercentage, bottleSize, bottleSizeUnit, category, grapeList);

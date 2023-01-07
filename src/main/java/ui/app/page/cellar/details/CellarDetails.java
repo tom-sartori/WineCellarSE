@@ -1,10 +1,9 @@
 package ui.app.page.cellar.details;
 
+import constant.NodeCreations;
 import exception.BadArgumentsException;
 import exception.BadCredentialException;
 import facade.Facade;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -52,7 +51,6 @@ public class CellarDetails implements Initializable {
 
     private boolean seeAllBottles = false;
 
-    // TODO Singleton ?!
     private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
 
     /**
@@ -71,7 +69,6 @@ public class CellarDetails implements Initializable {
         if (State.getInstance().getSelectedCellar() != null) {
             currentCellar = State.getInstance().getSelectedCellar();
 
-            // TODO est ce qu'on get a chaque fois le cellar ou on update celui dans le state ? (si on update celui dans le state, il faut le faire dans les autres classes)
             currentCellar = Facade.getInstance().getOneCellar(currentCellar.getId());
         }
 
@@ -111,10 +108,7 @@ public class CellarDetails implements Initializable {
         return isOwner || isManager;
     }
 
-    // TODO CLEAN CODE
-    // TODO HANDLE TRI TABLEAU
     public void createDetailPage(){
-        // TODO clear previous content
         scrollableBorderPane.setCenter(null);
 
         mainVBox.getChildren().clear();
@@ -125,7 +119,6 @@ public class CellarDetails implements Initializable {
 
         // Récupérer le label et changer le texte
 
-        // TODO CENTRER
         if (currentCellar != null) {
             cellarName.setText("Page de la cave: " +  currentCellar.getName());
         }
@@ -138,7 +131,6 @@ public class CellarDetails implements Initializable {
         hbox.setSpacing(40.0);
 
         if(isOwner){
-            // TODO faire qu'il marche
             String[] options = new String[cellarsFromUser.size()+1];
             int i = 0;
             while (i < cellarsFromUser.size()){
@@ -189,7 +181,7 @@ public class CellarDetails implements Initializable {
                 State.getInstance().setSelectedCellar(cellar);
                 refresh();
             } catch (BadCredentialException e) {
-                // TODO HANDLE EXCEPTION
+                NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", e.getMessage(), Alert.AlertType.ERROR);
             }
 
         });
@@ -245,14 +237,12 @@ public class CellarDetails implements Initializable {
         if (seeAllBottles && isOwner) {
             System.out.println("bouteilles");
             List<BottleQuantity> bottleListFromUser = new ArrayList<>();
-            // TODO EXTRACT BOTTLEQUANTITY FROM CELLAR
             for (Cellar cellar : cellarsFromUser) {
                 cellar.getWalls().forEach(wall -> {
                     wall.getEmplacementBottleMap().forEach((emplacement) -> {
                         bottleListFromUser.addAll(emplacement.getBottleList());
                     });
                 });
-//                bottleListFromUser.addAll(Facade.getInstance().getBottlesFromCellar(cellar.getId()));
             }
 
             ArrayList<String> tableHeaders = new ArrayList<>();
@@ -260,10 +250,8 @@ public class CellarDetails implements Initializable {
             tableHeaders.add("Catégorie");
             tableHeaders.add("Producteur");
             tableHeaders.add("Quantité");
-//            tableHeaders.add("Cave");
-            // TODO ADD CAVE AND ACTIONS
 
-            TableView<List<String>> table = createTable(tableHeaders);
+            TableView<List<String>> table = NodeCreations.createTable(tableHeaders);
 
             for (BottleQuantity bottle : bottleListFromUser) {
                 List<String> row = new ArrayList<>();
@@ -321,15 +309,13 @@ public class CellarDetails implements Initializable {
                     try {
                         Facade.getInstance().addEmplacement(State.getInstance().getSelectedCellar(), wall, new EmplacementBottle(new ArrayList<>(), new ArrayList<>()));
                     } catch (BadArgumentsException e) {
-                        throw new RuntimeException(e);
-                        // TODO handle exception
+                        NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout de l'emplacement", e.getMessage(), Alert.AlertType.ERROR);
                     }
                     refresh();
                 });
                 mainVBox.getChildren().add(addEmplacementButton);
 
-                Button deleteWallButton = new Button("Supprimer le mur");
-                deleteWallButton.setCursor(Cursor.HAND);
+                Button deleteWallButton = NodeCreations.createButton("Supprimer le mur");
                 deleteWallButton.setOnAction(event -> {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.initModality(Modality.APPLICATION_MODAL);
@@ -340,8 +326,7 @@ public class CellarDetails implements Initializable {
                         try {
                             Facade.getInstance().removeWall(wall, State.getInstance().getSelectedCellar().getId());
                         } catch (BadArgumentsException e) {
-                            throw new RuntimeException(e);
-                            // TODO handle exception
+                            NodeCreations.createAlert("Erreur", "Erreur lors de la suppression du mur", e.getMessage(),Alert.AlertType.ERROR);
                         }
                         refresh();
                     }
@@ -366,8 +351,7 @@ public class CellarDetails implements Initializable {
                             try {
                                 Facade.getInstance().removeEmplacement(State.getInstance().getSelectedCellar(), wall, emplacementBottle);
                             } catch (BadArgumentsException e) {
-                                throw new RuntimeException(e);
-                                // TODO handle exception
+                                NodeCreations.createAlert("Erreur", "Erreur lors de la suppression de l'emplacement", e.getMessage(),Alert.AlertType.ERROR);
                             }
                             refresh();
                         }
@@ -379,7 +363,7 @@ public class CellarDetails implements Initializable {
 
                 tableActionsHbox.setPrefWidth(1260);
 
-                TableView<List<String>> table = createTable(tableHeaders);
+                TableView<List<String>> table = NodeCreations.createTable(tableHeaders);
                 table.setPrefWidth(1200);
 
                 VBox actionsVbox = new VBox();
@@ -392,8 +376,7 @@ public class CellarDetails implements Initializable {
                 tableActionsHbox.getChildren().addAll(table, actionsVbox);
 
                 if (isOwner){
-                    Button addBottleButton = new Button("Ajouter une bouteille");
-                    addBottleButton.setCursor(Cursor.HAND);
+                    Button addBottleButton = NodeCreations.createButton("Ajouter une bouteille");
                     addBottleButton.setOnAction(event -> {
                         State.getInstance().setSelectedCellar(currentCellar);
                         State.getInstance().setSelectedEmplacementBottle(emplacementBottle);
@@ -415,9 +398,8 @@ public class CellarDetails implements Initializable {
 
                     HBox actionsHbox = new HBox();
 
-                    // TODO check to put icon in button
-                    Button detailButton = new Button("D");
-                    detailButton.setCursor(Cursor.HAND);
+                    // TODO check to put icon instead of button
+                    Button detailButton = NodeCreations.createButton("D");
                     detailButton.setOnAction(event -> {
                         State.getInstance().setSelectedCellar(currentCellar);
                         State.getInstance().setSelectedWall(wall);
@@ -427,9 +409,7 @@ public class CellarDetails implements Initializable {
                     });
                     actionsHbox.getChildren().add(detailButton);
 
-                    // TODO handle delete in front
                     if(isOwner){
-
                         Button deleteButton2 = new Button("Supprimer");
                         deleteButton2.setCursor(Cursor.HAND);
 
@@ -439,8 +419,7 @@ public class CellarDetails implements Initializable {
                             try {
                                 Facade.getInstance().increaseBottleQuantity(currentCellar,wall,emplacementBottle,bottleQuantity);
                             } catch (BadArgumentsException e) {
-                                //TODO afficher une erreur
-                                throw new RuntimeException(e);
+                                NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout de bouteille", e.getMessage(),Alert.AlertType.ERROR);
                             }
                             refresh();
                         });
@@ -458,46 +437,19 @@ public class CellarDetails implements Initializable {
                                 Facade.getInstance().decreaseBottleQuantity(currentCellar,wall,emplacementBottle,bottleQuantity);
                                 refresh();
                             } catch (BadArgumentsException e) {
-                                //TODO afficher une erreur
-                                throw new RuntimeException(e);
+                                NodeCreations.createAlert("Erreur", "Erreur lors de la suppression de bouteille", e.getMessage(),Alert.AlertType.ERROR);
                             }
                         });
 
                         actionsHbox.getChildren().addAll(addButton, removeButton);
                     }
-
                     actionsVbox.getChildren().add(actionsHbox);
-
-//                    vbox.getChildren().add(new Label("Bouteille: " + bottleQuantity.getBottle().getBottleName() + " - Quantité: " + bottleQuantity.getQuantity()));
                 }
                 mainVBox.getChildren().add(tableActionsHbox);
             }
 
             // TODO Add avertisement entre chaque mur
-
         }
-        // TODO add table to the center of the page
     }
 
-    private TableView<List<String>> createTable(ArrayList<String> headers){
-
-        // TODO REFACTOR NAME
-        TableView<List<String>> table = new TableView<>();
-
-        table.setFixedCellSize(25);
-        table.prefHeightProperty().bind(Bindings.size(table.getItems()).multiply(table.getFixedCellSize()).add(30));
-
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        table.setSortPolicy(param -> false);
-
-        for (String header: headers) {
-            TableColumn<List<String>, String> column = new TableColumn<>(header);
-            column.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().get(headers.indexOf(header))));
-            table.getColumns().add(column);
-        }
-
-        return table;
-
-    }
 }

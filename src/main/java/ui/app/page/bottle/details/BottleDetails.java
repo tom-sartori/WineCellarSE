@@ -13,17 +13,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import persistence.entity.bottle.Bottle;
 import ui.app.State;
-import ui.app.component.field.labelfield.LabelField;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
-// TODO clean code
 public class BottleDetails implements Initializable {
 
     @FXML
@@ -106,6 +103,7 @@ public class BottleDetails implements Initializable {
      *
      * @return true if the current user is the owner of the cellar, a manager or an admin, false otherwise.
      */
+    // TODO REMOVE ON MASTER.
     public boolean isOwner(){
         // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
 
