@@ -21,6 +21,7 @@ import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
 import persistence.entity.rate.Rate;
+import persistence.entity.user.Friend;
 import persistence.entity.user.User;
 
 import java.util.Date;
@@ -448,6 +449,42 @@ public interface FacadeInterface {
 	 * Logout the logged user.
 	 */
 	void logout();
+
+	/**
+	 * Add a friend to the logged user.
+	 *
+	 * @param username of the friend to add.
+	 * @return the friend requested.
+	 * @throws NotFoundException if the friend is not found.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	User addFriend(String username) throws NotFoundException, NoLoggedUser;
+
+	/**
+	 * Accept a friend request.
+	 *
+	 * @param username of the friend to accept.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	void acceptFriend(String username) throws NoLoggedUser;
+
+	/**
+	 * Remove a friend from the logged user.
+	 *
+	 * @param username of the friend to remove.
+	 * @return true if the friend has been removed, false otherwise.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	boolean removeFriend(String username) throws NoLoggedUser;
+
+	/**
+	 * Return the list of friends of the logged user.
+	 *
+	 * @param onlyAcceptedFriend True if you want only the accepted friends. False if you want all the friends.
+	 * @return The list of friends of the logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser;
 
 	/**
 	 * Get one user by its id.

@@ -9,7 +9,12 @@ import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 import persistence.dao.user.UserDao;
+import persistence.entity.user.Friend;
 import persistence.entity.user.User;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * UserController class extending Controller class parametrized with User class.
@@ -189,5 +194,95 @@ public class UserController extends AbstractController<User> {
             System.out.println("The logged user " + loggedUser.getUsername() + " has been logged out.");
         }
         loggedUser = null;
+    }
+
+    /**
+     * Add a friend to the logged user.
+     *
+     * @param username of the friend to add.
+     * @return the friend requested.
+     * @throws NotFoundException if the friend is not found.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public User addFriend(String username) throws NotFoundException, NoLoggedUser {
+        // Add request to the requested user.
+        User requestedUser = getDao().findOneByUsername(username);
+        if (requestedUser.getFriendRequests() == null || requestedUser.getFriendRequests().stream().noneMatch(friend -> friend.getUsername().equals(loggedUser.getUsername())) ) {
+            // The requested user has NOT already received the request from the logged user.
+            requestedUser.addFriendRequest(new Friend(loggedUser));
+            getDao().updateOne(requestedUser.getId(), requestedUser);
+        }
+
+        // Add friend to the logged user. The friend is not confirmed yet.
+        if (getLoggedUser().getFriends() == null || getLoggedUser().getFriends().stream().noneMatch(x -> x.getUsername().equals(username))) {
+            // If the friend isn't already added.
+            getLoggedUser().addFriend(new Friend(requestedUser));
+            getDao().updateOne(getLoggedUser().getId(), getLoggedUser());
+        }
+        return requestedUser;
+    }
+
+    /**
+     * Accept a friend request.
+     *
+     * @param username of the friend to accept.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public void acceptFriend(String username) throws NoLoggedUser {
+        // Change the status of the friend request to accepted, for the logged user.
+        getLoggedUser()
+                .getFriends().stream()
+                .filter(friend -> friend.getUsername().equals(username))
+                .findFirst().ifPresent(friend -> friend.setAccepted(true));
+
+        // For the requested friend, remove the request and add the logged user to his friend list.
+        User requestedUser = getDao().findOneByUsername(username);
+        String loggedUsername = getLoggedUser().getUsername();
+
+        requestedUser.getFriendRequests().removeIf(friend -> friend.getUsername().equals(loggedUsername));
+
+        requestedUser.getFriends().removeIf(friend -> friend.getUsername().equals(loggedUsername));
+        requestedUser.addFriend(new Friend(getLoggedUser(), true));
+
+
+        // Send to the db.
+        getDao().updateOne(getLoggedUser().getId(), getLoggedUser());
+        getDao().updateOne(requestedUser.getId(), requestedUser);
+    }
+
+    /**
+     * Remove a friend from the logged user.
+     *
+     * @param username of the friend to remove.
+     * @return true if the friend has been removed, false otherwise.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public boolean removeFriend(String username) throws NoLoggedUser {
+        // Remove for the logged user.
+        getLoggedUser().getFriends().removeIf(x -> x.getUsername().equals(username));
+
+        // Remove for the friend.
+        User friend = getDao().findOneByUsername(username);
+        String loggedUsername = getLoggedUser().getUsername();
+        friend.getFriends().removeIf(x -> x.getUsername().equals(loggedUsername));
+
+        return getDao().updateOne(getLoggedUser().getId(), getLoggedUser()) &&
+                getDao().updateOne(friend.getId(), friend);
+    }
+
+    /**
+     * Return the list of friends of the logged user.
+     *
+     * @param onlyAcceptedFriend True if you want only the accepted friends. False if you want all the friends.
+     * @return The list of friends of the logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser {
+        if (onlyAcceptedFriend) {
+            return getLoggedUser().getFriends().stream().filter(Friend::isAccepted).collect(Collectors.toList());
+        }
+        else {
+            return getLoggedUser().getFriends();
+        }
     }
 }
