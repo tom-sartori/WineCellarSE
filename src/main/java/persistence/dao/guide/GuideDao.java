@@ -46,6 +46,7 @@ public class GuideDao extends AbstractDao<Guide> {
     protected Bson getSetOnUpdate(Guide entity) {
         return Updates.combine(
                 Updates.set("title", entity.getTitle()),
+                Updates.set("description", entity.getDescription()),
                 Updates.set("sectionList", entity.getSectionList())
         );
     }

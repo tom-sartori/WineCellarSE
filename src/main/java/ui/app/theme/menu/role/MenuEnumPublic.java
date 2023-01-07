@@ -11,7 +11,9 @@ import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.company.event.EventPage;
 import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
+import ui.app.page.guides.Guides;
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
 
@@ -26,7 +28,9 @@ public enum MenuEnumPublic implements MenuEnumInterface {
 	COMPANY("Entreprise", CompanyPage.class),
 	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
 	CELLAR("Caves", CellarPage.class),
-	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR);
+	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
+	GUIDE("Guides",Guides .class),
+	RATE("Notes",RatePage .class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;
