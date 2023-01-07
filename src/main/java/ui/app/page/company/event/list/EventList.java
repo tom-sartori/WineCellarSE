@@ -33,26 +33,46 @@ public class EventList implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(State.getInstance().getCurrentUser() != null){
-            List<Company> companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+        if(Facade.getInstance().isUserLogged()){
+            select.setVisible(true);
+
+            /**
+             * The companies where the user is manager or all the companies existing if the user is admin.
+             */
+            List<Company> companies;
+            if(Facade.getInstance().isAdminLogged()){
+                companies = Facade.getInstance().getCompanyList();
+            } else {
+                companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            }
+
             if(select.getItems().size() == 0){
+                select.getItems().add("Toutes");
                 for (Company c : companies){
                     select.getItems().add(c.getName());
                 }
             }
+            //pre-select the "Toutes" choice
+            select.getSelectionModel().selectFirst();
 
             /**
-             * Retrieve the company selected and create a list of referencing.
+             * If "Toutes" is selected, create a list with all the referencings else
+             * retrieve the company selected and create a list of referencing.
              */
             select.setOnAction((event) -> {
                 String selectedItem = select.getValue();
-                for(Company c : companies){
-                    if(c.getName().equals(selectedItem)){
-                        list(c.getId());
+                if(selectedItem.equals("Toutes")){
+                    list(null);
+                } else {
+                    for(Company c : companies){
+                        if(c.getName().equals(selectedItem)){
+                            list(c.getId());
+                        }
                     }
                 }
             });
         } else {
+            select.setVisible(false);
             list(null);
         }
     }

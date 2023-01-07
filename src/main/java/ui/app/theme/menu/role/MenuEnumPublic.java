@@ -24,11 +24,9 @@ public enum MenuEnumPublic implements MenuEnumInterface {
 	LOGIN("Se connecter", Login.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
-	ADVERTISING("Publicités"),
-	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, ADVERTISING),
-	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, ADVERTISING),
 	CELLAR("Caves", CellarPage.class),
-	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR);
+	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
+	EVENT("Evènements", EventList.class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

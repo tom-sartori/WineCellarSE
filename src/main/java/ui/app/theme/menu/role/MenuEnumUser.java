@@ -7,6 +7,11 @@ import ui.app.page.cellar.lists.shared.SharedWithMeCellars;
 import ui.app.page.company.CompanyPage;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
+import ui.app.page.company.event.creation.EventCreation;
+import ui.app.page.company.event.list.EventList;
+import ui.app.page.company.referencing.ReferencingCard;
+import ui.app.page.company.referencing.creation.ReferencingCreation;
+import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.logout.Logout;
 import ui.app.page.user.profile.Profile;
@@ -20,9 +25,13 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	LOGOUT("Déconnexion", Logout.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
-	ADVERTISING("Publicités"),
-	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, ADVERTISING),
-	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, ADVERTISING),
+
+	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, COMPANY),
+	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, COMPANY),
+	REFERENCINGLIST("Tous vos référencements", ReferencingList.class, COMPANY),
+	REFERENCINGCREATION("Créer un référencement", ReferencingCreation.class, COMPANY),
+	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
+	EVENTCREATION("Créer un évènement", EventCreation.class, COMPANY),
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
