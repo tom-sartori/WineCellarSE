@@ -572,7 +572,7 @@ public interface FacadeInterface {
 	 * @param company The id of the referenced company.
 	 * @return A list of referencings.
 	 */
-	List<Referencing> getReferencingByCompany(ObjectId company);
+	List<Referencing> getReferencingsByCompany(ObjectId company);
 	/**
 	 * Update a referencing.
 	 *

@@ -693,6 +693,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all the notifications of the user.
      */
+    @Override
     public List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception {
         return NotificationFacade.getInstance().getNotificationListFromUser(userId);
     }
@@ -726,6 +727,7 @@ public class Facade implements FacadeInterface {
      * @param referencing The referencing to insert.
      * @return The id of the inserted referencing.
      */
+    @Override
     public ObjectId insertOneReferencing(Referencing referencing) {
         return ReferencingFacade.getInstance().insertOneReferencing(referencing);
     }
@@ -735,6 +737,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of referencings.
      */
+    @Override
     public List<Referencing> getReferencingList() {
         return ReferencingFacade.getInstance().getReferencingList();
     }
@@ -745,6 +748,7 @@ public class Facade implements FacadeInterface {
      * @param id The id of the referencing.
      * @return The referencing or null if not found.
      */
+    @Override
     public Referencing getOneReferencing(ObjectId id) {
         return ReferencingFacade.getInstance().getOneReferencing(id);
     }
@@ -755,6 +759,7 @@ public class Facade implements FacadeInterface {
      * @param importanceLevel The level of importance of the searched referencings.
      * @return A list of referencings.
      */
+    @Override
     public List<Referencing> getReferencingByLevel(int importanceLevel) {
         return ReferencingFacade.getInstance().getReferencingByLevel(importanceLevel);
     }
@@ -765,6 +770,7 @@ public class Facade implements FacadeInterface {
      * @param company The id of the referenced company.
      * @return A list of referencings.
      */
+    @Override
     public List<Referencing> getReferencingsByCompany(ObjectId company) {
         return ReferencingFacade.getInstance().getReferencingsByCompany(company);
     }
@@ -776,6 +782,7 @@ public class Facade implements FacadeInterface {
      * @param referencing The new referencing.
      * @return true if the referencing has been updated, false otherwise.
      */
+    @Override
     public boolean updateOneReferencing(ObjectId id, Referencing referencing) {
         return ReferencingFacade.getInstance().updateOneReferencing(id, referencing);
     }
@@ -786,6 +793,7 @@ public class Facade implements FacadeInterface {
      * @param id The id of the referencing to delete.
      * @return true if the referencing has been deleted, false otherwise.
      */
+    @Override
     public boolean deleteOneReferencing(ObjectId id) {
         return ReferencingFacade.getInstance().deleteOneReferencing(id);
     }
@@ -797,6 +805,7 @@ public class Facade implements FacadeInterface {
      * @param referencing The new referencing.
      * @return true if the referencing has been updated, false otherwise.
      */
+    @Override
     public boolean updateStatus(ObjectId id, Referencing referencing){ return ReferencingFacade.getInstance().updateStatus(id, referencing);}
 
     /**
@@ -804,6 +813,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A Referencing.
      */
+    @Override
     public Referencing getRandomReferencing() {
         return ReferencingFacade.getInstance().getRandomReferencing();
     }
@@ -815,6 +825,7 @@ public class Facade implements FacadeInterface {
      * @param endDate The end date of the referencing.
      * @return The price.
      */
+    @Override
     public double calculatePriceReferencing(Date startDate, Date endDate, int importanceLevel) {
         return ReferencingFacade.getInstance().calculatePriceReferencing(startDate,endDate,importanceLevel);
     }
@@ -826,6 +837,7 @@ public class Facade implements FacadeInterface {
      * @param status The status of the referencing.
      * @return A list of referencings.
      */
+    @Override
     public List<Referencing> getReferencingsByCompanyByStatus(ObjectId company, String status) {
         return ReferencingFacade.getInstance().getReferencingsByCompanyByStatus(company, status);
     }
