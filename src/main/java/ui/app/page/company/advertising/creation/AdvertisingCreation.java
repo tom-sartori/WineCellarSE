@@ -12,7 +12,7 @@ import persistence.entity.company.Company;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.select.Select;
-import ui.app.page.company.form.Form;
+import ui.app.component.form.Form;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;

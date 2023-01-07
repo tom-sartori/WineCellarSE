@@ -91,10 +91,6 @@ public class ReferencingCard extends Pane {
 		setEffect(dropShadow);
 
 		getChildren().addAll(supprimer);
-
-
-		if (State.getInstance().getCurrentUser() != null) {
-		}
 	}
 	public ReferencingCard() {}
 

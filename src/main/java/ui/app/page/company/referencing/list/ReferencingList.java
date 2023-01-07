@@ -37,22 +37,36 @@ public class ReferencingList implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(State.getInstance().getCurrentUser() != null){
-            status = "Tous";
-            company = null;
+        if(Facade.getInstance().isUserLogged()){
 
-            List<Company> companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            List<Company> companies;
+            if(Facade.getInstance().isAdminLogged()){
+                companies = Facade.getInstance().getCompanyList();
+            } else {
+                companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            }
+
             if(select.getItems().size() == 0){
                 for (Company c : companies){
                     select.getItems().add(c.getName());
                 }
             }
+
+            //pre-select the first company
+            select.getSelectionModel().selectFirst();
+
+            company = companies.get(0).getId();
+            status = "Tous";
+
             if(selectStatus.getItems().size() == 0){
+                selectStatus.getItems().add("Tous");
                 selectStatus.getItems().add("A venir");
                 selectStatus.getItems().add("En cours");
                 selectStatus.getItems().add("Passé");
-                selectStatus.getItems().add("Tous");
             }
+
+            //pre-select the "Tous" choice
+            selectStatus.getSelectionModel().selectFirst();
 
             /**
              * Retrieve the list with the changed status if a company is selected.
@@ -77,6 +91,8 @@ public class ReferencingList implements Initializable {
                     }
                 }
             });
+
+            list(company,status);
         }
     }
 
