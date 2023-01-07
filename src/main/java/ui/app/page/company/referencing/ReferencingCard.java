@@ -32,7 +32,6 @@ public class ReferencingCard extends Pane {
 	@FXML
 	private Label status, paymentDate, level, startDate, endDate, price, nameCompany;
 
-	//TODO : AdminCard
 	public ReferencingCard(Referencing referencing) {
 		this.referencing = referencing;
 
