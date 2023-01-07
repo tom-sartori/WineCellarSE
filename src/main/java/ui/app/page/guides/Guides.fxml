@@ -13,7 +13,9 @@
     <children>
         <fx:include fx:id="guideDetails" source="./guideDetails/GuideDetails.fxml" />
         <fx:include fx:id="guideList" source="list/GuideList.fxml" />
-
-        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

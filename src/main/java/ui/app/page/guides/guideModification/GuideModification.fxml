@@ -10,5 +10,8 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.app.page.guides.guideModification.GuideModification"
             prefHeight="400.0" prefWidth="600.0">
-
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

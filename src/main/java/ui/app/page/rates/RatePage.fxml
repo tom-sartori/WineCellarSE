@@ -7,6 +7,10 @@
         <fx:include fx:id="form" source="../../component/form/Form.fxml" />
         <fx:include fx:id="cardList" source="./list/RateList.fxml" />
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>
 
 

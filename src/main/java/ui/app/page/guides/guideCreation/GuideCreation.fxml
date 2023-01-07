@@ -13,12 +13,13 @@
 
     <children>
         <fx:include fx:id="form" source="../../../component/form/Form.fxml" />
-      <Button fx:id="boutonAjoutParagraphe" layoutX="388.0" layoutY="438.0" mnemonicParsing="false" onAction="#ajoutParagraphe" text="ajouter un paragraphe" />
-        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
-      <ComboBox fx:id="categoryComboBox" layoutX="938.0" layoutY="260.0" prefWidth="150.0" />
+        <Button fx:id="boutonAjoutParagraphe" layoutX="388.0" layoutY="438.0" mnemonicParsing="false" onAction="#ajoutParagraphe" text="ajouter un paragraphe" />
+        <ComboBox fx:id="categoryComboBox" layoutX="938.0" layoutY="260.0" prefWidth="150.0" />
         <Label fx:id="selectedCategoryLabel" layoutX="888.0" layoutY="211.0" text="Catégories :" />
-      <Button layoutX="2.0" layoutY="39.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
-
+        <Button layoutX="2.0" layoutY="39.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
     </children>
-
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>
