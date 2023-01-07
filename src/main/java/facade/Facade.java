@@ -27,6 +27,7 @@ import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
 
 import java.util.Date;
+
 import java.util.List;
 
 /**
@@ -1126,6 +1127,17 @@ public class Facade implements FacadeInterface {
      */
     public List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException {
         return RateFacade.getInstance().getRateListFromUser(userId);
+    }
+
+    /**
+     * Get all the rates of a subject (company or bottle).
+     *
+     * @param subjectId The id of the subject.
+     *
+     * @return A list of all the rates of the subject if there are any, otherwise throws a NotFoundException.
+     */
+    public List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException {
+        return RateFacade.getInstance().getRateListFromSubject(subjectId);
     }
 
     /**

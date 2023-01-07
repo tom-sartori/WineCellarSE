@@ -12,6 +12,7 @@ public class Rate implements Entity<Rate> {
 
 	private ObjectId id;
 	private ObjectId ownerRef;
+	private ObjectId subjectRef;
 	private int rate;
 	private String comment;
 	private boolean isModified;
@@ -19,15 +20,9 @@ public class Rate implements Entity<Rate> {
 
 	public Rate(){}
 
-	public Rate(int rate, String comment, boolean isModified, Date lastModified) {
-		this.rate = rate;
-		this.comment = comment;
-		this.isModified = isModified;
-		this.lastModified = lastModified;
-	}
-
-	public Rate(ObjectId ownerRef, int rate, String comment, boolean isModified, Date lastModified) {
+	public Rate(ObjectId ownerRef, ObjectId subjectRef, int rate, String comment, boolean isModified, Date lastModified) {
 		this.ownerRef = ownerRef;
+		this.subjectRef = subjectRef;
 		this.rate = rate;
 		this.comment = comment;
 		this.isModified = isModified;
@@ -64,6 +59,14 @@ public class Rate implements Entity<Rate> {
 
 	public void setOwnerRef(ObjectId ownerRef) {
 		this.ownerRef = ownerRef;
+	}
+
+	public ObjectId getSubjectRef() {
+		return subjectRef;
+	}
+
+	public void setSubjectRef(ObjectId subjectRef) {
+		this.subjectRef = subjectRef;
 	}
 
 	public int getRate() {

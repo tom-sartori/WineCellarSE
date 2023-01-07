@@ -12,14 +12,16 @@ public class Guide implements Entity<Guide>{
 
     private ObjectId id;
     private String title;
-    private LinkedHashMap<String, List<String>> sectionList;
+    private String description;
+    private LinkedHashMap<String, String> sectionList;
     private GuideCategory category;
     private Date creationDate;
 
     public Guide(){}
 
-    public Guide(String title, LinkedHashMap<String, List<String>> sectionList, GuideCategory category, Date creationDate) {
+    public Guide(String title, String description, LinkedHashMap<String, String> sectionList, GuideCategory category, Date creationDate) {
         this.title = title;
+        this.description = description;
         this.sectionList = sectionList;
         this.category = category;
         this.creationDate = creationDate;
@@ -49,11 +51,19 @@ public class Guide implements Entity<Guide>{
         this.title = title;
     }
 
-    public LinkedHashMap<String, List<String>> getSectionList() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LinkedHashMap<String, String> getSectionList() {
         return sectionList;
     }
 
-    public void setSectionList(LinkedHashMap<String, List<String>> sectionList) {
+    public void setSectionList(LinkedHashMap<String,String> sectionList) {
         this.sectionList = sectionList;
     }
 

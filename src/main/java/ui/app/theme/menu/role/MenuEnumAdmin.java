@@ -4,7 +4,9 @@ import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
 import ui.app.page.cellar.lists.shared.SharedWithMeCellars;
+import ui.app.page.guides.Guides;
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.logout.Logout;
 import ui.app.page.user.profile.Profile;
@@ -23,7 +25,9 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
-	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR);
+	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
+	GUIDE("Guides", Guides.class),
+	RATE("Notes",RatePage .class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;
