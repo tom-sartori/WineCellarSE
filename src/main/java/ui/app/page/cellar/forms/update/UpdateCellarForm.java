@@ -58,7 +58,7 @@ public class UpdateCellarForm implements Initializable {
 
         currentCellar = State.getInstance().getSelectedCellar();
 
-        if (isOwner() && currentCellar != null) {
+        if (Facade.getInstance().isManagerOfCellar(State.getInstance().getSelectedCellar().getId()) && currentCellar != null) {
             setupForm();
             setupManagersReaders();
         }
@@ -308,23 +308,4 @@ public class UpdateCellarForm implements Initializable {
         }
     }
 
-    // TODO remove this method on master.
-    public boolean isOwner(){
-        // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
-
-        boolean isOwner;
-        boolean isManager;
-
-        // TODO check if user is admin
-        if (State.getInstance().getCurrentUser() == null) {
-            isOwner = false;
-            isManager = false;
-        } else {
-            isOwner = State.getInstance().getCurrentUser().getId().equals(currentCellar.getOwnerRef());
-            isManager = currentCellar.getManagers().contains(State.getInstance().getCurrentUser().getId());
-//            boolean isAdmin = State.getInstance().getCurrentUser();
-        }
-
-        return isOwner || isManager;
-    }
 }

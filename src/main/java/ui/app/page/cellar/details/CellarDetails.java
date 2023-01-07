@@ -53,6 +53,8 @@ public class CellarDetails implements Initializable {
 
     private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
 
+    private boolean isOwner;
+
     /**
      * Initializes the controller class.
      */
@@ -67,11 +69,12 @@ public class CellarDetails implements Initializable {
 
         if (State.getInstance().getSelectedCellar() != null) {
             currentCellar = Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId());
+            isOwner = State.getInstance().getSelectedCellar() != null && Facade.getInstance().isManagerOfCellar(State.getInstance().getSelectedCellar().getId());
         }
 
         // Mise à jour du cellar courant.
 
-        if (isOwner()){
+        if (isOwner){
             cellarsFromUser = Facade.getInstance().getCellarsFromUser(State.getInstance().getCurrentUser().getId());
         }
         scrollableBorderPane.getChildren().clear();
@@ -80,39 +83,10 @@ public class CellarDetails implements Initializable {
 
     }
 
-    /**
-     * Tells if the current user is the owner of the cellar.
-     *
-     * @return true if the current user is the owner of the cellar, a manager or an admin, false otherwise.
-     */
-    //TODO move this function to UserController and add a cellar in parameter
-    public boolean isOwner(){
-        // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
-
-        boolean isOwner;
-        boolean isManager;
-
-        // TODO check if user is admin
-        if (State.getInstance().getCurrentUser() == null) {
-            isOwner = false;
-            isManager = false;
-        } else {
-            isOwner = State.getInstance().getCurrentUser().getId().equals(currentCellar.getOwnerRef());
-            isManager = currentCellar.getManagers().contains(State.getInstance().getCurrentUser().getId());
-//            boolean isAdmin = State.getInstance().getCurrentUser();
-        }
-
-        return isOwner || isManager;
-    }
-
     public void createDetailPage(){
         scrollableBorderPane.setCenter(null);
 
         mainVBox.getChildren().clear();
-
-        // On stocke dans un booléen si le cellar est vu par son propriétaire ou non
-
-        boolean isOwner = isOwner();
 
         // Récupérer le label et changer le texte
 
@@ -276,8 +250,6 @@ public class CellarDetails implements Initializable {
     // TODO CLEAN CODE
     public void createAndAddCurrentTable(){
 
-        boolean isOwner = isOwner();
-
         // Creating table header
 
         ArrayList<String> tableHeaders = new ArrayList<>();
@@ -335,7 +307,7 @@ public class CellarDetails implements Initializable {
 
                 mainVBox.getChildren().add(new Label("Emplacement n°" + (wall.getEmplacementBottleMap().indexOf(emplacementBottle)+1)));
 
-                if (isOwner()){
+                if (isOwner) {
                     Button deleteEmplacementButton = new Button("Supprimer l'emplacement");
                     deleteEmplacementButton.setCursor(Cursor.HAND);
                     deleteEmplacementButton.setOnAction(event -> {

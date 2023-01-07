@@ -98,31 +98,6 @@ public class BottleDetails implements Initializable {
         return editButton;
     }
 
-    /**
-     * Tells if the current user is the owner of the cellar.
-     *
-     * @return true if the current user is the owner of the cellar, a manager or an admin, false otherwise.
-     */
-    // TODO REMOVE ON MASTER.
-    public boolean isOwner(){
-        // Si aucun utilisateur n'est connecté, on considère que l'utilisateur n'est pas le propriétaire.
-
-        boolean isOwner;
-        boolean isManager;
-
-        // TODO check if user is admin
-        if (State.getInstance().getCurrentUser() == null) {
-            isOwner = false;
-            isManager = false;
-        } else {
-            isOwner = State.getInstance().getCurrentUser().getId().equals(State.getInstance().getSelectedCellar().getOwnerRef());
-            isManager = State.getInstance().getSelectedCellar().getManagers().contains(State.getInstance().getCurrentUser().getId());
-//            boolean isAdmin = State.getInstance().getCurrentUser();
-        }
-
-        return isOwner || isManager;
-    }
-
     public VBox createLabelField(String label, String value) {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER_LEFT);
@@ -229,7 +204,7 @@ public class BottleDetails implements Initializable {
 
             mainPaneBottleDetails.getChildren().addAll(firstRow, secondRow, thirdRow, fourthRow, fifthRow, sixthRow);
 
-            if (isOwner()) {
+            if (Facade.getInstance().isManagerOfCellar(State.getInstance().getSelectedCellar().getId())) {
                 Button editButton = createEditButton();
 
                 mainPaneBottleDetails.getChildren().add(editButton);
