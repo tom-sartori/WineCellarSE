@@ -47,21 +47,21 @@ public class EventList implements Initializable {
             }
 
             if(select.getItems().size() == 0){
-                select.getItems().add("Toutes");
+                select.getItems().add("Tous");
                 for (Company c : companies){
                     select.getItems().add(c.getName());
                 }
             }
-            //pre-select the "Toutes" choice
+            //pre-select the "Tous" choice
             select.getSelectionModel().selectFirst();
 
             /**
-             * If "Toutes" is selected, create a list with all the referencings else
-             * retrieve the company selected and create a list of referencing.
+             * If "Toutes" is selected, create a list with all the events else
+             * retrieve the company selected and create a list of events.
              */
             select.setOnAction((event) -> {
                 String selectedItem = select.getValue();
-                if(selectedItem.equals("Toutes")){
+                if(selectedItem.equals("Tous")){
                     list(null);
                 } else {
                     for(Company c : companies){
@@ -84,7 +84,7 @@ public class EventList implements Initializable {
     public void list(ObjectId company){
         cardList.clear();
         List<Event> eventList;
-
+//TODO : si non connecté, récupérer la current company de state et getEventsByCompany(company)
         if(company != null){
             eventList = Facade.getInstance().getEventsByCompany(company);
         } else {
