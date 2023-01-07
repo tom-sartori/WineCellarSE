@@ -1,16 +1,19 @@
 package ui.app.component.card;
 
+import constant.NodeCreations;
 import facade.Facade;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import persistence.entity.cellar.Cellar;
+import persistence.entity.company.Company;
 import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
@@ -90,7 +93,37 @@ public class CardComponent extends BorderPane {
 
             card.addBottomNode(button);
         }catch (Exception e){
+            NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une cave", e.getMessage(), Alert.AlertType.ERROR);
             //TODO alert error
+        }
+        return card;
+    }
+
+    /**
+     * Creates a card for a company
+     *
+     * @param company the company to create a card for.
+     *
+     * @return the card for the company.
+     */
+    public static CardComponent createCompanyCard(Company company){
+        CardComponent card = new CardComponent();
+        try{
+            card.setText(company.getName());
+            card.addNode(new Label("Type de l'entreprise: " + company.getType()));
+
+            Label label1 = new Label("Adresse: " + company.getAddress());
+            label1.setWrapText(true);
+            card.addNode(label1);
+
+            Button button = new Button("Voir");
+            button.onActionProperty().set(event -> {
+                // TODO
+            });
+
+            card.addBottomNode(button);
+        }catch (Exception e){
+            NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une entreprise", e.getMessage(), Alert.AlertType.ERROR);
         }
         return card;
     }
