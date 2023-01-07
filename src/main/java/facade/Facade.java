@@ -692,6 +692,18 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Return true if the user logged is manager of the company in parameter.
+     *
+     * @param companyId The id of the company to check.
+     *
+     * @return True if the user is a manager of the company. Otherwise, false.
+     */
+    @Override
+    public boolean isManagerOfCompany(ObjectId companyId) {
+        return UserFacade.getInstance().isManagerOfCompany(companyId);
+    }
+
+    /**
      * Insert a notification.
      *
      * @param notification The notification to insert.
