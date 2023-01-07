@@ -1,5 +1,6 @@
 package ui.app.page.company.advertising.list;
 
+import exception.NotFoundException;
 import facade.Facade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -93,29 +94,34 @@ public class AdvertisingList implements Initializable {
      * @param status the selected status or "Toutes".
      */
     public void list(ObjectId company, String status){
-        cardList.clear();
-        List<Advertising> advertisingList;
+        try {
+            cardList.clear();
+            List<Advertising> advertisingList;
 
 
-        if(status.equals("Validées")){
-            advertisingList = Facade.getInstance().getValidatedAdvertisingsByCompany(company);
-        } else if(status.equals("Demandes")){
-            advertisingList = Facade.getInstance().getNotValidatedAdvertisingsByCompany(company);
-        } else {
-            advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
+            if(status.equals("Validées")){
+                advertisingList = Facade.getInstance().getValidatedAdvertisingsByCompany(company);
+            } else if(status.equals("Demandes")){
+                advertisingList = Facade.getInstance().getNotValidatedAdvertisingsByCompany(company);
+            } else {
+                advertisingList = Facade.getInstance().getAdvertisingsByCompany(company);
+            }
+
+
+            int maxWidth = 1280;
+            int gapBetweenCard = 20;
+            double preferredHeight = 230.0;
+            double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
+            advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising)));
+
+            cardHolder.setAlignment(Pos.CENTER);
+            cardHolder.setVgap(20.00);
+            cardHolder.setHgap(30.00);
+            cardHolder.setStyle("-fx-padding:95px;");
+
+        } catch (NotFoundException e){
+
         }
-
-
-        int maxWidth = 1280;
-        int gapBetweenCard = 20;
-        double preferredHeight = 230.0;
-        double preferredWidth = (maxWidth - (nbColumn + 1) * gapBetweenCard) / nbColumn;
-        advertisingList.forEach(advertising -> cardList.add(new AdvertisingCard(advertising)));
-
-        cardHolder.setAlignment(Pos.CENTER);
-        cardHolder.setVgap(20.00);
-        cardHolder.setHgap(30.00);
-        cardHolder.setStyle("-fx-padding:95px;");
 
         onSearch();
     }
