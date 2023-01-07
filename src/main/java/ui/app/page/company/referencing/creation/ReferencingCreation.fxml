@@ -9,7 +9,6 @@
     </stylesheets>
     <children>
         <fx:include fx:id="form" source="../../../../component/form/Form.fxml" />
-        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
     </children>
     <properties>
         <!-- store controller at key "controller" in properties map -->
