@@ -1,6 +1,10 @@
 package ui.app;
 
 import persistence.entity.advertising.Advertising;
+import persistence.entity.bottle.Bottle;
+import persistence.entity.cellar.Cellar;
+import persistence.entity.cellar.EmplacementBottle;
+import persistence.entity.cellar.Wall;
 import persistence.entity.user.User;
 
 import java.sql.SQLOutput;
@@ -12,6 +16,14 @@ public class State {
 	private String previousPage;
 
 	private Advertising currentAdvertising;
+
+	private Cellar selectedCellar;
+
+	private Wall selectedWall;
+
+	private EmplacementBottle selectedEmplacementBottle;
+
+	private Bottle selectedBottle;
 
 	private State() { }
 
@@ -46,5 +58,37 @@ public class State {
 
 	public void setPreviousPage(String previousPage) {
 		this.previousPage = previousPage;
+	}
+
+	public Cellar getSelectedCellar() {
+		return selectedCellar;
+	}
+
+	public void setSelectedCellar(Cellar selectedCellar) {
+		this.selectedCellar = selectedCellar;
+	}
+
+	public Wall getSelectedWall() {
+		return selectedWall;
+	}
+
+	public void setSelectedWall(Wall selectedWall) {
+		this.selectedWall = selectedWall;
+	}
+
+	public EmplacementBottle getSelectedEmplacementBottle() {
+		return selectedEmplacementBottle;
+	}
+
+	public void setSelectedEmplacementBottle(EmplacementBottle selectedEmplacementBottle) {
+		this.selectedEmplacementBottle = selectedEmplacementBottle;
+	}
+
+	public Bottle getSelectedBottle() {
+		return selectedBottle;
+	}
+
+	public void setSelectedBottle(Bottle selectedBottle) {
+		this.selectedBottle = selectedBottle;
 	}
 }

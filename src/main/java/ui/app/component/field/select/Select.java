@@ -85,4 +85,8 @@ public class Select extends Field implements Initializable {
     public void setReadOnly(boolean readOnly) {
         choiceBox.setDisable(readOnly);
     }
+
+    public ChoiceBox<String> getChoiceBox() {
+        return choiceBox;
+    }
 }
