@@ -10,12 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import persistence.entity.cellar.Cellar;
 import persistence.entity.company.Company;
 import ui.app.State;
 import ui.app.component.card.CardComponent;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
 import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.form.update.CompanyUpdate;
 import ui.app.page.company.list.CompanyList;
 
 import java.net.URL;
@@ -77,7 +79,8 @@ public class CompanyDetails implements Initializable {
 
             HBox thirdRow = new HBox();
 
-            thirdRow.getChildren().add(CardComponent.createCellarCard(company.getCellar()));
+            Cellar oneCellar = Facade.getInstance().getOneCellar(company.getCellar());
+            thirdRow.getChildren().add(CardComponent.createCellarCard(oneCellar));
 
             // TODO add rates on third row
 
@@ -99,7 +102,13 @@ public class CompanyDetails implements Initializable {
                 });
 
                 fourthRow.getChildren().add(deleteButton);
-                fourthRow.getChildren().add(NodeCreations.createButton("Modifier"));
+
+                Button modifier = NodeCreations.createButton("Modifier");
+                modifier.setOnAction(event -> {
+                    State.getInstance().setSelectedCompany(company);
+                    sceneHelper.bringNodeToFront(CompanyUpdate.class.getSimpleName());
+                });
+                fourthRow.getChildren().add(modifier);
 
                 vBox.getChildren().add(fourthRow);
             }

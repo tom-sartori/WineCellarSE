@@ -5,6 +5,7 @@ import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
 import ui.app.page.cellar.lists.shared.SharedWithMeCellars;
 import ui.app.page.company.CompanyPage;
+import ui.app.page.company.admin.CompanyAdmin;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.company.event.creation.EventCreation;
@@ -31,6 +32,7 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
 	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY),
+	COMPANYADMINLIST("Toutes les demandes d'entreprises ", CompanyAdmin.class, COMPANY),
 	ADVERTISINGREQUESTSLIST("Toutes les demandes de publicité", AdvertisingList.class, COMPANY),
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),

@@ -73,7 +73,11 @@ public class CompanyCreate implements Initializable, Observer {
         try {
             ObjectId userId = Facade.getInstance().getLoggedUser().getId();
 
-            Company company = new Company(name,type,address, false, userId,new ArrayList<>(), new Cellar(), description, phoneNumber, websiteLink, null);
+            Cellar cellar = new Cellar(name, true, new ArrayList<>(), new ArrayList<>(), Facade.getInstance().getLoggedUser().getId(), new ArrayList<>());
+
+            ObjectId cellarId = Facade.getInstance().insertOneCellar(cellar);
+
+            Company company = new Company(name,type,address, false, userId,new ArrayList<>(), cellarId, description, phoneNumber, websiteLink, null);
 
             Facade.getInstance().insertOneCompany(company);
 

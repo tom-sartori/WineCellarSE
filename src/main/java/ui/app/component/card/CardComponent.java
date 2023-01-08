@@ -130,4 +130,37 @@ public class CardComponent extends BorderPane {
         }
         return card;
     }
+
+    public static CardComponent createCompanyRequestCard(Company company){
+        CardComponent companyCard = createCompanyCard(company);
+
+        Button acceptButton = NodeCreations.createButton("Accepter");
+        acceptButton.onActionProperty().set(event -> {
+            try {
+                Facade.getInstance().acceptRequest(company.getId());
+                Alert successAlert = NodeCreations.createAlert("Succès", "Demande acceptée", "La demande a été acceptée avec succès", Alert.AlertType.INFORMATION);
+                successAlert.showAndWait();
+            } catch (Exception e) {
+                Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de l'acceptation de la demande", e.getMessage(), Alert.AlertType.ERROR);
+                erreur.showAndWait();
+            }
+        });
+
+        Button refuseButton = NodeCreations.createButton("Refuser");
+        refuseButton.onActionProperty().set(event -> {
+            try {
+                Facade.getInstance().refuseRequest(company.getId());
+                Alert success = NodeCreations.createAlert("Succès", "Demande refusée", "La demande a été refusée avec succès", Alert.AlertType.INFORMATION);
+                success.showAndWait();
+            } catch (Exception e) {
+                Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors du refus de la demande", e.getMessage(), Alert.AlertType.ERROR);
+                erreur.showAndWait();
+            }
+        });
+
+        companyCard.topFlowPane.getChildren().add(acceptButton);
+        companyCard.topFlowPane.getChildren().add(refuseButton);
+
+        return companyCard;
+    }
 }

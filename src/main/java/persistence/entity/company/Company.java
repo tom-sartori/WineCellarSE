@@ -17,7 +17,7 @@ public class Company implements Entity<Company> {
 	private boolean isAccessible;
 	private ObjectId masterManager;
 	private List<ObjectId> managerList;
-	private Cellar cellar;
+	private ObjectId cellar;
 	@Nullable
 	private String phoneNumber;
 	@Nullable
@@ -29,7 +29,7 @@ public class Company implements Entity<Company> {
 
 	public Company() { }
 
-	public Company(String name, String type, String address, boolean isAccessible, ObjectId masterManager, List<ObjectId> managerList, Cellar cellar, @Nullable String phoneNumber, @Nullable String description, @Nullable String websiteLink, @Nullable String logoLink) {
+	public Company(String name, String type, String address, boolean isAccessible, ObjectId masterManager, List<ObjectId> managerList, ObjectId cellar, @Nullable String phoneNumber, @Nullable String description, @Nullable String websiteLink, @Nullable String logoLink) {
 		this.name = name;
 		this.type = type;
 		this.address = address;
@@ -105,11 +105,11 @@ public class Company implements Entity<Company> {
 		this.managerList = managerList;
 	}
 
-	public Cellar getCellar() {
+	public ObjectId getCellar() {
 		return cellar;
 	}
 
-	public void setCellar(Cellar cellar) {
+	public void setCellar(ObjectId cellar) {
 		this.cellar = cellar;
 	}
 

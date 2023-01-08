@@ -52,6 +52,8 @@ public class CompanyList implements Initializable {
 
         try{
             Facade.getInstance().findAllAccessibleCompanies().forEach(company -> {
+                // TODO trier par ça
+//                System.out.println(Facade.getInstance().getReferencingsByCompanyByStatus(company.getId(),"En cours").toString());
                 listFlowPane.getChildren().add(CardComponent.createCompanyCard(company));
             });
         }catch (NotFoundException e){
