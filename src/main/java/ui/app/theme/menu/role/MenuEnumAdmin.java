@@ -30,7 +30,6 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	PROFILE("Mon profil", Profile.class, USER),
 	FRIEND("Mes amis", FriendList.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
-	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
 	ADVERTISINGREQUESTSLIST("Toutes les demandes de publicité", AdvertisingList.class, COMPANY),
 	CELLAR("Caves",CellarPage .class),
