@@ -115,6 +115,9 @@ public class User implements Entity<User> {
 	}
 
 	public List<Friend> getFriends() {
+		if (friends == null) {
+			friends = new ArrayList<>();
+		}
 		return friends;
 	}
 
@@ -137,6 +140,9 @@ public class User implements Entity<User> {
 	}
 
 	public List<Friend> getFriendRequests() {
+		if (friendRequests == null) {
+			friendRequests = new ArrayList<>();
+		}
 		return friendRequests;
 	}
 

@@ -4,6 +4,7 @@ import ui.app.page.company.CompanyPage;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.user.friend.FriendList;
 import ui.app.page.user.logout.Logout;
 import ui.app.page.user.profile.Profile;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public enum MenuEnumUser implements MenuEnumInterface {
 	USER("Utilisateur"),
 	PROFILE("Mon profil", Profile.class, USER),
+	FRIEND("Mes amis", FriendList.class, USER),
 	LOGOUT("Déconnexion", Logout.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),

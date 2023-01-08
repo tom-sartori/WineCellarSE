@@ -626,6 +626,27 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Return the list of friend requests of the logged user.
+     *
+     * @return The list of friend requests for the logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+	@Override
+	public List<Friend> getFriendRequestList() throws NoLoggedUser {
+		return UserFacade.getInstance().getFriendRequestList();
+	}
+
+    /**
+     * Refresh the logged user with the db.
+     *
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public void refreshLoggedUser() throws NoLoggedUser {
+        UserFacade.getInstance().refreshLoggedUser();
+    }
+
+	/**
      * Get one user by its id.
      * @param id The id of the user.
      * @return The user.

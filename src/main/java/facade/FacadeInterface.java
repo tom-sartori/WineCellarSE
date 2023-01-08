@@ -487,6 +487,21 @@ public interface FacadeInterface {
 	List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser;
 
 	/**
+	 * Return the list of friend requests of the logged user.
+	 *
+	 * @return The list of friend requests for the logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Friend> getFriendRequestList() throws NoLoggedUser;
+
+	/**
+	 * Refresh the logged user with the db.
+	 *
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	void refreshLoggedUser() throws NoLoggedUser;
+
+	/**
 	 * Get one user by its id.
 	 * @param id The id of the user.
 	 * @return The user.

@@ -13,7 +13,6 @@ import persistence.entity.user.Friend;
 import persistence.entity.user.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -229,25 +228,30 @@ public class UserController extends AbstractController<User> {
      * @throws NoLoggedUser if there is no user logged.
      */
     public void acceptFriend(String username) throws NoLoggedUser {
-        // Change the status of the friend request to accepted, for the logged user.
-        getLoggedUser()
-                .getFriends().stream()
-                .filter(friend -> friend.getUsername().equals(username))
-                .findFirst().ifPresent(friend -> friend.setAccepted(true));
+        refreshLoggedUser();
+        // Get the friend.
+        User newFriend = getDao().findOneByUsername(username);
 
-        // For the requested friend, remove the request and add the logged user to his friend list.
-        User requestedUser = getDao().findOneByUsername(username);
-        String loggedUsername = getLoggedUser().getUsername();
 
-        requestedUser.getFriendRequests().removeIf(friend -> friend.getUsername().equals(loggedUsername));
+        // For the logged user, delete the corresponding friend in friend and request lists if exists.
+        getLoggedUser().getFriends().removeIf(friend -> friend.getUsername().equals(username));
+        getLoggedUser().getFriendRequests().removeIf(friend -> friend.getUsername().equals(username));
 
-        requestedUser.getFriends().removeIf(friend -> friend.getUsername().equals(loggedUsername));
-        requestedUser.addFriend(new Friend(getLoggedUser(), true));
+        // For the new friend, delete the friend corresponding to the logged user in friend and request lists if exists.
+        newFriend.getFriends().removeIf(friend -> friend.getUsername().equals(loggedUser.getUsername()));
+        newFriend.getFriendRequests().removeIf(friend -> friend.getUsername().equals(loggedUser.getUsername()));
+
+
+        // For the logged user, add the friend in the friend list.
+        getLoggedUser().addFriend(new Friend(newFriend, true));
+
+        // For the new friend, add the logged user in the friend list.
+        newFriend.addFriend(new Friend(getLoggedUser(), true));
 
 
         // Send to the db.
         getDao().updateOne(getLoggedUser().getId(), getLoggedUser());
-        getDao().updateOne(requestedUser.getId(), requestedUser);
+        getDao().updateOne(newFriend.getId(), newFriend);
     }
 
     /**
@@ -260,11 +264,13 @@ public class UserController extends AbstractController<User> {
     public boolean removeFriend(String username) throws NoLoggedUser {
         // Remove for the logged user.
         getLoggedUser().getFriends().removeIf(x -> x.getUsername().equals(username));
+        getLoggedUser().getFriendRequests().removeIf(x -> x.getUsername().equals(username));
 
         // Remove for the friend.
         User friend = getDao().findOneByUsername(username);
         String loggedUsername = getLoggedUser().getUsername();
         friend.getFriends().removeIf(x -> x.getUsername().equals(loggedUsername));
+        friend.getFriendRequests().removeIf(x -> x.getUsername().equals(loggedUsername));
 
         return getDao().updateOne(getLoggedUser().getId(), getLoggedUser()) &&
                 getDao().updateOne(friend.getId(), friend);
@@ -278,11 +284,32 @@ public class UserController extends AbstractController<User> {
      * @throws NoLoggedUser if there is no user logged.
      */
     public List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser {
+        refreshLoggedUser();
         if (onlyAcceptedFriend) {
             return getLoggedUser().getFriends().stream().filter(Friend::isAccepted).collect(Collectors.toList());
         }
         else {
             return getLoggedUser().getFriends();
         }
+    }
+
+    /**
+     * Return the list of friend requests of the logged user.
+     *
+     * @return The list of friend requests for the logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public List<Friend> getFriendRequestList() throws NoLoggedUser {
+        refreshLoggedUser();
+        return getLoggedUser().getFriendRequests();
+    }
+
+    /**
+     * Refresh the logged user with the db.
+     *
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public void refreshLoggedUser() throws NoLoggedUser {
+        setLoggedUser(getDao().findOneByUsername(getLoggedUser().getUsername()));
     }
 }

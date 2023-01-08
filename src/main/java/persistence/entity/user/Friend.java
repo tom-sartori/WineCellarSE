@@ -1,10 +1,11 @@
 package persistence.entity.user;
 
 import org.bson.types.ObjectId;
+import persistence.entity.Entity;
 
 import java.util.Objects;
 
-public class Friend {
+public class Friend implements Entity<Friend> {
 
 	private ObjectId id;
 	private String username;
@@ -59,5 +60,17 @@ public class Friend {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, username, accepted);
+	}
+
+	@Override
+	public int compareTo(Friend o) {
+		// Not accepted first then alphabetical order of username.
+		if (this.accepted && !o.accepted) {
+			return 1;
+		} else if (!this.accepted && o.accepted) {
+			return -1;
+		} else {
+			return this.username.compareTo(o.username);
+		}
 	}
 }

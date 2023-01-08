@@ -198,4 +198,23 @@ class UserFacade {
     protected List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser {
         return UserController.getInstance().getFriendList(onlyAcceptedFriend);
     }
+
+    /**
+     * Return the list of friend requests of the logged user.
+     *
+     * @return The list of friend requests for the logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public List<Friend> getFriendRequestList() throws NoLoggedUser {
+        return UserController.getInstance().getFriendRequestList();
+    }
+
+    /**
+     * Refresh the logged user with the db.
+     *
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    public void refreshLoggedUser() throws NoLoggedUser {
+        UserController.getInstance().refreshLoggedUser();
+    }
 }
