@@ -1,21 +1,19 @@
 package ui.app.page.company.list;
 
 import constant.NodeCreations;
+import exception.NotFoundException;
 import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import persistence.entity.company.Company;
 import ui.app.component.card.CardComponent;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.company.form.create.CompanyCreate;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class CompanyList implements Initializable {
@@ -52,8 +50,12 @@ public class CompanyList implements Initializable {
         listFlowPane.setHgap(10);
         listFlowPane.setVgap(10);
 
-        Facade.getInstance().getCompanyList().forEach(company -> {
-            listFlowPane.getChildren().add(CardComponent.createCompanyCard(company));
-        });
+        try{
+            Facade.getInstance().findAllAccessibleCompanies().forEach(company -> {
+                listFlowPane.getChildren().add(CardComponent.createCompanyCard(company));
+            });
+        }catch (NotFoundException e){
+            // do nothing
+        }
     }
 }

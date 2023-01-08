@@ -4,6 +4,8 @@ import constant.NodeCreations;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -13,6 +15,8 @@ import ui.app.State;
 import ui.app.component.card.CardComponent;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.list.CompanyList;
 
 import java.net.URL;
 import java.util.Observable;
@@ -26,6 +30,8 @@ public class CompanyDetails implements Initializable {
 
     @FXML
     private AnchorPane mainPaneCreateBottle;
+
+    private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
 
     /**
      * Initializes the controller class.
@@ -80,7 +86,19 @@ public class CompanyDetails implements Initializable {
             HBox fourthRow = new HBox();
 
             if (Facade.getInstance().isManagerOfCompany(company.getId())){
-                fourthRow.getChildren().add(NodeCreations.createButton("Supprimer"));
+                Button deleteButton = NodeCreations.createButton("Supprimer");
+
+                deleteButton.setOnAction(event -> {
+                    Alert alert = NodeCreations.createAlert("Suppression d'une entreprise", "Confirmation de suppression","Êtes-vous sûr de vouloir supprimer cette entreprise ?", Alert.AlertType.CONFIRMATION);
+                    alert.showAndWait();
+                    if (alert.getResult().getText().equals("OK")){
+                        Facade.getInstance().deleteOneCompany(company.getId());
+                        State.getInstance().setSelectedCompany(null);
+                        sceneHelper.bringNodeToFront(CompanyList.class.getSimpleName());
+                    }
+                });
+
+                fourthRow.getChildren().add(deleteButton);
                 fourthRow.getChildren().add(NodeCreations.createButton("Modifier"));
 
                 vBox.getChildren().add(fourthRow);

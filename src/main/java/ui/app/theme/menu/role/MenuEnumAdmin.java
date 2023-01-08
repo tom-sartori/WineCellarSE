@@ -9,6 +9,7 @@ import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
+import ui.app.page.company.list.CompanyList;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.partner.PartnerPage;
@@ -29,6 +30,7 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	PROFILE("Mon profil", Profile.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
+	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY),
 	ADVERTISINGREQUESTSLIST("Toutes les demandes de publicité", AdvertisingList.class, COMPANY),
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),

@@ -13,6 +13,8 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.company.Company;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.list.CompanyList;
 
 import java.net.URL;
 import java.util.*;
@@ -27,6 +29,8 @@ public class CompanyCreate implements Initializable, Observer {
 
     @FXML
     private Form formController;
+
+    private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
     /**
      * Initializes the controller class.
      */
@@ -72,9 +76,13 @@ public class CompanyCreate implements Initializable, Observer {
             Company company = new Company(name,type,address, false, userId,new ArrayList<>(), new Cellar(), description, phoneNumber, websiteLink, null);
 
             Facade.getInstance().insertOneCompany(company);
+
+            Alert alert = NodeCreations.createAlert("Confirmation de votre demande", "Demande de création envoyée", "Votre demande de création d'entreprise a bien été envoyée. Elle sera traitée dans les plus brefs délais.", Alert.AlertType.INFORMATION);
+            alert.show();
+            sceneHelper.bringNodeToFront(CompanyList.class.getSimpleName());
         } catch (NoLoggedUser e) {
-            // TODO voir pourquoi l'erreur n'arrive pas quand aucun utilisateur n'est connecté
-            NodeCreations.createAlert("Erreur", "Vous devez être connecté pour créer une entreprise", e.getMessage(), Alert.AlertType.ERROR);
+            Alert erreur = NodeCreations.createAlert("Erreur", "Vous devez être connecté pour créer une entreprise", e.getMessage(), Alert.AlertType.ERROR);
+            erreur.show();
         }
 
 
