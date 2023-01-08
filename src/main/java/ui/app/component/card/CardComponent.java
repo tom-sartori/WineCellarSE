@@ -18,6 +18,7 @@ import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
+import ui.app.page.company.details.CompanyDetails;
 
 import java.io.IOException;
 
@@ -118,7 +119,9 @@ public class CardComponent extends BorderPane {
 
             Button button = new Button("Voir");
             button.onActionProperty().set(event -> {
-                // TODO
+                State.getInstance().setSelectedCompany(company);
+                CustomSceneHelper sceneHelper = new CustomSceneHelper();
+                sceneHelper.bringNodeToFront(CompanyDetails.class.getSimpleName());
             });
 
             card.addBottomNode(button);
