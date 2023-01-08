@@ -26,6 +26,7 @@ import persistence.entity.user.Friend;
 import persistence.entity.user.User;
 
 import java.util.Date;
+
 import java.util.List;
 
 /**
@@ -515,6 +516,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all public cellars if there are any, otherwise throws a NotFoundException.
      */
+    @Override
     public List<Cellar> getPublicCellars() throws NotFoundException {
         return CellarFacade.getInstance().getPublicCellars();
     }
@@ -526,6 +528,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all the cellars of the user if there are any, otherwise throws a NotFoundException.
      */
+    @Override
     public List<Cellar> getCellarsFromUser(ObjectId userId) throws NotFoundException {
         return CellarFacade.getInstance().getCellarsFromUser(userId);
     }
@@ -537,6 +540,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all the cellars where the user is a reader if there are any, otherwise throws a NotFoundException.
      */
+    @Override
     public List<Cellar> getReadOnlyCellarsFromUser(ObjectId userId) throws NotFoundException {
         return CellarFacade.getInstance().getReadOnlyCellarsFromUser(userId);
     }
@@ -548,6 +552,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all the cellars where the user is a manager if there are any, otherwise throws a NotFoundException.
      */
+    @Override
     public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws NotFoundException {
         return CellarFacade.getInstance().getCellarsWhereUserIsManager(userId);
     }
@@ -657,6 +662,16 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Get all users.
+     *
+     * @return A list of users.
+     */
+    @Override
+    public List<User> getUserList(){
+        return UserFacade.getInstance().getUserList();
+    }
+
+    /**
      * Get the logged user.
      *
      * @return The logged user.
@@ -731,6 +746,30 @@ public class Facade implements FacadeInterface {
     @Override
     public boolean isAdminLogged() {
         return UserFacade.getInstance().isAdminLogged();
+    }
+
+    /**
+     * Return true if the user logged is manager of the cellar in parameter.
+     *
+     * @param cellarId The id of the cellar to check.
+     *
+     * @return True if the user is a manager of the cellar. Otherwise, false.
+     */
+    @Override
+    public boolean isManagerOfCellar(ObjectId cellarId) {
+        return UserFacade.getInstance().isManagerOfCellar(cellarId);
+    }
+
+    /**
+     * Return true if the user logged is manager of the company in parameter.
+     *
+     * @param companyId The id of the company to check.
+     *
+     * @return True if the user is a manager of the company. Otherwise, false.
+     */
+    @Override
+    public boolean isManagerOfCompany(ObjectId companyId) {
+        return UserFacade.getInstance().isManagerOfCompany(companyId);
     }
 
     /**
@@ -931,8 +970,19 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
+    @Override
     public ObjectId insertBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         return BottleFacade.getInstance().insertBottle(wall, cellar, bottle, emplacementBottle);
+    }
+
+    /**
+     * Find a bottle by id.
+     *
+     * @param id The id of the bottle.
+     * @return The bottle if found, otherwise throws a NotFoundException.
+     */
+    public Bottle findOne(ObjectId id) throws NotFoundException {
+        return BottleFacade.getInstance().findOne(id);
     }
 
     /**
@@ -943,6 +993,7 @@ public class Facade implements FacadeInterface {
      *
      * @return A list of all bottles from the cellar if there is at least one, otherwise throws NotFoundException.
      */
+    @Override
     public List<Bottle> getBottlesFromCellar(ObjectId cellarId) throws NotFoundException {
         return BottleFacade.getInstance().getBottlesFromCellar(cellarId);
     }
@@ -960,6 +1011,7 @@ public class Facade implements FacadeInterface {
      *
      * @throws BadArgumentsException If the update was not successful.
      */
+    @Override
     public ObjectId updateBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle, Bottle updatedBottle) throws BadArgumentsException {
         return BottleFacade.getInstance().updateBottle(wall, cellar, bottle, emplacementBottle, updatedBottle);
     }
@@ -974,6 +1026,7 @@ public class Facade implements FacadeInterface {
      *
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
+    @Override
     public ObjectId deleteBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         return BottleFacade.getInstance().deleteBottle(wall, cellar, bottle, emplacementBottle);
     }
@@ -1164,6 +1217,17 @@ public class Facade implements FacadeInterface {
      */
     public List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException {
         return RateFacade.getInstance().getRateListFromUser(userId);
+    }
+
+    /**
+     * Get all the rates of a subject (company or bottle).
+     *
+     * @param subjectId The id of the subject.
+     *
+     * @return A list of all the rates of the subject if there are any, otherwise throws a NotFoundException.
+     */
+    public List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException {
+        return RateFacade.getInstance().getRateListFromSubject(subjectId);
     }
 
     /**

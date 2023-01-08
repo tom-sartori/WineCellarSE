@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import persistence.entity.advertising.Advertising;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.advertising.list.AdvertisingList;
 
 import java.io.IOException;
 import java.net.URL;

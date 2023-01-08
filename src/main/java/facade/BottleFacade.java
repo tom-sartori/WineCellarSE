@@ -50,6 +50,16 @@ class BottleFacade {
     }
 
     /**
+     * Find a bottle by id.
+     *
+     * @param id The id of the bottle.
+     * @return The bottle if found, otherwise throws a NotFoundException.
+     */
+    public Bottle findOne(ObjectId id) {
+        return BottleController.getInstance().findOne(id);
+    }
+
+    /**
      * Get all bottles from a cellar.
      *
      * @param cellarId The id of the cellar to get the bottles from.

@@ -149,6 +149,28 @@ class UserFacade {
     }
 
     /**
+     * Return true if the user logged is manager of the cellar in parameter.
+     *
+     * @param cellarId The id of the cellar to check.
+     *
+     * @return True if the user is a manager of the cellar. Otherwise, false.
+     */
+    public boolean isManagerOfCellar(ObjectId cellarId) {
+        return UserController.getInstance().isManagerOfCellar(cellarId);
+    }
+
+    /**
+     * Return true if the user logged is manager of the company in parameter.
+     *
+     * @param companyId The id of the company to check.
+     *
+     * @return True if the user is a manager of the company. Otherwise, false.
+     */
+    public boolean isManagerOfCompany(ObjectId companyId) {
+        return UserController.getInstance().isManagerOfCompany(companyId);
+    }
+
+    /**
      * Logout the logged user.
      */
     protected void logout() {

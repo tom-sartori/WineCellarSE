@@ -1,0 +1,10 @@
+.h1 {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+.filtre{
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}

@@ -502,6 +502,13 @@ public interface FacadeInterface {
 	void refreshLoggedUser() throws NoLoggedUser;
 
 	/**
+	 * Get all users.
+	 *
+	 * @return A list of users.
+	 */
+	List<User> getUserList();
+
+	/**
 	 * Get one user by its id.
 	 * @param id The id of the user.
 	 * @return The user.
@@ -614,6 +621,24 @@ public interface FacadeInterface {
 	boolean isAdminLogged();
 
 	/**
+	 * Return true if the user logged is manager of the cellar in parameter.
+	 *
+	 * @param cellarId The id of the cellar to check.
+	 *
+	 * @return True if the user is a manager of the cellar. Otherwise, false.
+	 */
+	boolean isManagerOfCellar(ObjectId cellarId);
+
+	/**
+	 * Return true if the user logged is manager of the company in parameter.
+	 *
+	 * @param companyId The id of the company to check.
+	 *
+	 * @return True if the user is a manager of the company. Otherwise, false.
+	 */
+	public boolean isManagerOfCompany(ObjectId companyId);
+
+	/**
 	 * Insert a referencing.
 	 *
 	 * @param referencing The referencing to insert.
@@ -702,7 +727,7 @@ public interface FacadeInterface {
 	 */
 	List<Referencing> getReferencingsByCompanyByStatus(ObjectId company, String status);
 
-  /**
+  	/**
 	 * Insert a bottle to a cellar.
 	 *
 	 * @param wall The wall to add the bottle to.
@@ -713,6 +738,15 @@ public interface FacadeInterface {
 	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
 	 */
 	ObjectId insertBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
+
+
+	/**
+	 * Find a bottle by id.
+	 *
+	 * @param id The id of the bottle.
+	 * @return The bottle if found, otherwise throws a NotFoundException.
+	 */
+	Bottle findOne(ObjectId id) throws NotFoundException;
 
 	/**
 	 * Get all bottles from a cellar.
@@ -901,6 +935,15 @@ public interface FacadeInterface {
 	 * @return A list of all the rates of the user if there are any, an empty list otherwise.
 	 */
 	List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException;
+
+	/**
+	 * Get all the rates of a subject.
+	 *
+	 * @param subjectId The id of the subject.
+	 *
+	 * @return A list of all the rates of the subject if there are any, an empty list otherwise.
+	 */
+	List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException;
 
 	/**
 	 * Update a rate.

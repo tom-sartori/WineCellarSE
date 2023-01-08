@@ -12,6 +12,9 @@
         <fx:include fx:id="advertisingCreation" source="creation/AdvertisingCreation.fxml" />
         <fx:include fx:id="advertisingDetails" source="details/AdvertisingDetails.fxml" />
         <fx:include fx:id="advertisingList" source="list/AdvertisingList.fxml" />
-        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

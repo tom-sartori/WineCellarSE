@@ -8,7 +8,10 @@
         <URL value="@/ui/app/page/company/event/creation/EventCreation.css" />
     </stylesheets>
     <children>
-        <fx:include fx:id="form" source="../../form/Form.fxml" />
-        <Button mnemonicParsing="false" onAction="#onAction" text="Refresh" />
+        <fx:include fx:id="form" source="../../../../component/form/Form.fxml" />
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

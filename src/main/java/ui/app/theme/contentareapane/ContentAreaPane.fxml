@@ -9,7 +9,11 @@
     <children>
         <fx:include source="../../page/sample/SamplePage.fxml" />
         <fx:include source="../../page/partner/PartnerPage.fxml" />
+        <fx:include source="../../page/home/HomePage.fxml" />
+        <fx:include source="../../page/guides/Guides.fxml" />
+        <fx:include source="../../page/rates/RatePage.fxml" />
         <fx:include source="../../page/company/CompanyPage.fxml" />
         <fx:include source="../../page/user/UserPage.fxml" />
+        <fx:include source="../../page/cellar/CellarPage.fxml" />
     </children>
 </AnchorPane>

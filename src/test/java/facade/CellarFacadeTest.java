@@ -29,10 +29,13 @@ class CellarFacadeTest {
         List<BottleQuantity> bottles = new ArrayList<>();
 
         ArrayList<String> grapeList = new ArrayList<>();
-        grapeList.add("fef");
-        grapeList.add("fefzfzq");
+        grapeList.add("raisin blanc");
+        grapeList.add("raisin noir");
 
         bottles.add(new BottleQuantity(new Bottle("test",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",grapeList), 1));
+        bottles.add(new BottleQuantity(new Bottle("test",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",grapeList), 1));
+        bottles.add(new BottleQuantity(new Bottle("test",2020,"fafazf","googreggle.com", 10.5, "michel", 14.2,1,"L","bf",grapeList), 1));
+        bottles.add(new BottleQuantity(new Bottle("Chateau le bosq", 2015, "Bordeaux", "https://www.chateau-le-bosq.com/", 13.5, "Chateau le bosq", 14.2, 1, "L", "Rouge", grapeList), 1));
 
         List<Point> pointList = new ArrayList<>();
 
@@ -43,6 +46,8 @@ class CellarFacadeTest {
         emplacementBottleMap.add(new EmplacementBottle(pointList,bottles));
 
         walls.add(new Wall("googlgree.com", emplacementBottleMap,"Mur Nord"));
+        walls.add(new Wall("googlgree.com", emplacementBottleMap,"Mur Est"));
+        walls.add(new Wall("googlgree.com", emplacementBottleMap,"Mur Ouest"));
 
         ArrayList<ObjectId> readers = new ArrayList<>();
         ArrayList<ObjectId> managers = new ArrayList<>();
@@ -507,10 +512,12 @@ class CellarFacadeTest {
     @Test
     void getPublicCellars() {
         try {
+            ObjectId objectId = facade.insertOneCellar(cellar);
+
             List<Cellar> cellarListBefore = facade.getPublicCellars();
 
             cellar.setPublic(false);
-            ObjectId objectId = facade.insertOneCellar(cellar);
+
             ObjectId objectId1 = facade.insertOneCellar(cellar);
             ObjectId objectId2 = facade.insertOneCellar(cellar);
 

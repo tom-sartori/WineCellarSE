@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<AnchorPane fx:id="cellarPage" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.cellar.CellarPage">
+    <stylesheets>
+        <URL value="@/ui/app/page/cellar/CellarPage.css" />
+    </stylesheets>
+    <children>
+        <fx:include source="forms/create/CellarForm.fxml" />
+        <fx:include source="lists/cellarbyuser/CellarByUser.fxml" />
+        <fx:include source="details/CellarDetails.fxml" />
+        <fx:include source="../bottle/details/BottleDetails.fxml" />
+        <fx:include source="forms/update/UpdateCellarForm.fxml" />
+        <fx:include source="../bottle/create/CreateBottleForm.fxml" />
+        <fx:include source="forms/addwallform/AddWallForm.fxml" />
+        <fx:include source="lists/shared/SharedWithMeCellars.fxml" />
+        <fx:include source="lists/publiccellars/PublicCellars.fxml" />
+    </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
+</AnchorPane>
