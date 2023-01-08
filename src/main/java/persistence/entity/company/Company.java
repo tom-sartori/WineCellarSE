@@ -19,7 +19,7 @@ public class Company implements Entity<Company> {
 	private ObjectId masterManager;
 	private List<ObjectId> managerList;
 	private ObjectId cellar;
-	private ArrayList<User> followers;
+	private ArrayList<User> followerList;
 	@Nullable
 	private String phoneNumber;
 	@Nullable
@@ -43,7 +43,7 @@ public class Company implements Entity<Company> {
 		this.description = description;
 		this.websiteLink = websiteLink;
 		this.logoLink = logoLink;
-		this.followers = new ArrayList<>();
+		this.followerList = new ArrayList<>();
 	}
 
 	@Override
@@ -108,12 +108,12 @@ public class Company implements Entity<Company> {
 		this.managerList = managerList;
 	}
 
-	public ArrayList<User> getFollowers() {
-		return followers;
+	public ArrayList<User> getFollowerList() {
+		return followerList;
 	}
 
-	public void setFollowers(ArrayList<User> followers) {
-		this.followers = followers;
+	public void setFollowerList(ArrayList<User> followerList) {
+		this.followerList = followerList;
 	}
 
 	public ObjectId getCellar() {
@@ -165,12 +165,12 @@ public class Company implements Entity<Company> {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Company company = (Company) o;
-		return isAccessible == company.isAccessible && Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(type, company.type) && Objects.equals(address, company.address) && Objects.equals(masterManager, company.masterManager) && Objects.equals(managerList, company.managerList) && Objects.equals(cellar, company.cellar) && Objects.equals(followers, company.followers) && Objects.equals(phoneNumber, company.phoneNumber) && Objects.equals(description, company.description) && Objects.equals(websiteLink, company.websiteLink) && Objects.equals(logoLink, company.logoLink);
+		return isAccessible == company.isAccessible && Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(type, company.type) && Objects.equals(address, company.address) && Objects.equals(masterManager, company.masterManager) && Objects.equals(managerList, company.managerList) && Objects.equals(cellar, company.cellar) && Objects.equals(followerList, company.followerList) && Objects.equals(phoneNumber, company.phoneNumber) && Objects.equals(description, company.description) && Objects.equals(websiteLink, company.websiteLink) && Objects.equals(logoLink, company.logoLink);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, type, address, isAccessible, masterManager, managerList, cellar, followers, phoneNumber, description, websiteLink, logoLink);
+		return Objects.hash(id, name, type, address, isAccessible, masterManager, managerList, cellar, followerList, phoneNumber, description, websiteLink, logoLink);
 	}
 
 	@Override
