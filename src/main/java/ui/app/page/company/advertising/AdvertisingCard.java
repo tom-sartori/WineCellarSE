@@ -44,10 +44,11 @@ public class AdvertisingCard extends Pane {
 	private AnchorPane advertisingCard;
 	private CustomSceneHelper sceneHelper;
 
-	//TODO : mettre la company et fix bug select switch bugatti à ferrari
+	private String previousPage;
 
-	public AdvertisingCard(Advertising advertising) {
+	public AdvertisingCard(Advertising advertising, String previousPage) {
 		this.advertising = advertising;
+		this.previousPage = previousPage;
 		sceneHelper = new CustomSceneHelper();
 
 		try {
@@ -168,6 +169,7 @@ public class AdvertisingCard extends Pane {
 		 */
 		setOnMouseClicked(e -> {
 			State.getInstance().setCurrentAdvertising(advertising);
+			State.getInstance().setPreviousPage(previousPage);
 			this.sceneHelper.bringNodeToFront(AdvertisingDetails.class.getSimpleName());
 		});
 

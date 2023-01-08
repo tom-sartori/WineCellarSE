@@ -31,8 +31,6 @@ public class ReferencingList implements Initializable {
     private String status;
     private final int nbColumn = 4;
 
-    //TODO : faire disparaitre les card si status vide/entreprise vide
-
     /**
      * Initializes the controller class and the select fields.
      */
