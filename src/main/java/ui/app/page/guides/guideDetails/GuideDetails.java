@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
@@ -14,6 +15,8 @@ import javafx.scene.text.*;
 import persistence.entity.guide.Guide;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.cellar.details.CellarDetails;
+import ui.app.page.guides.list.GuideList;
 
 import java.lang.reflect.Array;
 import java.net.URL;
@@ -35,6 +38,9 @@ public class GuideDetails extends Pane implements Initializable {
 
     @FXML
     private VBox paneLabel;
+
+    @FXML
+    private AnchorPane anchorButtonRetour;
 
 
     private final State state = State.getInstance();
@@ -108,9 +114,13 @@ public class GuideDetails extends Pane implements Initializable {
                 paneLabel.getChildren().add(titreTextFlow);
                 paneLabel.getChildren().add(contenuTextFlow);
             }
-
-
         }
+        Button buttonRetour = new Button("Retour");
+        buttonRetour.setOnAction(e -> {
+            sceneHelper.bringNodeToFront(GuideList.class.getSimpleName());
+        });
+
+        anchorButtonRetour.getChildren().add(buttonRetour);
 
     }
 

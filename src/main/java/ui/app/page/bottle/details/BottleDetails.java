@@ -3,8 +3,10 @@ package ui.app.page.bottle.details;
 import exception.BadArgumentsException;
 import facade.Facade;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,6 +18,7 @@ import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +41,9 @@ public class BottleDetails implements Initializable {
 
     private final CustomSceneHelper customSceneHelper = new CustomSceneHelper();
 
+    @FXML
+    private AnchorPane rateList;
+
     /**
      * Initializes the controller class.
      */
@@ -53,6 +59,7 @@ public class BottleDetails implements Initializable {
          */
 
         textFields = new ArrayList<>();
+
 
         refresh();
     }
@@ -211,6 +218,12 @@ public class BottleDetails implements Initializable {
             }
 
             logoBottlePane.getChildren().add(new Label("Logo"));
+
+            Node rateListNode = (AnchorPane) mainPaneBottleDetails.getParent().lookup("#rateList");
+            HBox rateListRow = new HBox();
+            rateListRow.getChildren().add((AnchorPane) rateList);
+            rateListRow.setAlignment(Pos.CENTER);
+            mainPaneBottleDetails.getChildren().add(rateListRow);
 
         }
     }

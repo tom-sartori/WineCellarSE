@@ -11,13 +11,15 @@
 <AnchorPane id="guideDetails" prefHeight="625.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.guides.guideDetails.GuideDetails">
    <children>
       <ScrollPane prefHeight="575.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <VBox fx:id="paneLabel">
-            <Label fx:id="titleGuide" layoutY="177.0" prefHeight="36.0" prefWidth="1183.0" text="Titre du guide">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Label>
-         </VBox>
+         <AnchorPane fx:id="anchorButtonRetour">
+            <VBox fx:id="paneLabel">
+               <Label fx:id="titleGuide" layoutY="177.0" prefHeight="36.0" prefWidth="1183.0" text="Titre du guide">
+                  <font>
+                     <Font name="System Bold" size="25.0" />
+                  </font>
+               </Label>
+            </VBox>
+         </AnchorPane>
 
       </ScrollPane>
 

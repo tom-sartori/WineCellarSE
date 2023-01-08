@@ -17,6 +17,7 @@
                         <AnchorPane fx:id="logoBottlePane" minHeight="535.0" prefWidth="360.0" />
                         <VBox fx:id="mainPaneBottleDetails" layoutX="360.0" minHeight="535.0" minWidth="900.0" >
                             <children>
+                                <fx:include fx:id="rateList" source="../../rates/list/RateList.fxml" />
                             </children>
                         </VBox>
                     </children>
