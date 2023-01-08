@@ -1,6 +1,8 @@
 package ui.app.page.company.details;
 
 import constant.NodeCreations;
+import exception.BadArgumentsException;
+import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,6 +55,8 @@ public class CompanyDetails implements Initializable {
         titlePaneCreateBottle.getChildren().add(new Label("Détails d'une entreprise"));
 
         if (State.getInstance().getSelectedCompany() != null) {
+            State.getInstance().setSelectedCompany(Facade.getInstance().getOneCompany(State.getInstance().getSelectedCompany().getId()));
+
             Company company = State.getInstance().getSelectedCompany();
 
             VBox vBox = new VBox();
@@ -82,7 +86,41 @@ public class CompanyDetails implements Initializable {
 
             vBox.getChildren().add(firstRow);
 
-            vBox.getChildren().add(new Label("Description : " + company.getDescription()));
+            HBox secondRow = new HBox();
+
+            secondRow.getChildren().add(new Label("Description : " + company.getDescription()));
+
+            try{
+                if (company.getFollowerList().contains(Facade.getInstance().getLoggedUser().getId())){
+                    Button unfollowButton = NodeCreations.createButton("Se désabonner");
+                    unfollowButton.setOnAction(event -> {
+                        try {
+                            Facade.getInstance().unfollowCompany(company.getId(), Facade.getInstance().getLoggedUser().getId());
+                            initialize(null,null);
+                        } catch (BadArgumentsException | NoLoggedUser e) {
+                            Alert erreur = NodeCreations.createAlert("Erreur", "Une erreur est survenu lors de votre désabonnement", e.getMessage(), Alert.AlertType.ERROR);
+                            erreur.showAndWait();
+                        }
+                    });
+                    secondRow.getChildren().add(unfollowButton);
+                } else {
+                    Button followButton = NodeCreations.createButton("S'abonner");
+                    followButton.setOnAction(event -> {
+                        try {
+                            Facade.getInstance().followCompany(company.getId(), Facade.getInstance().getLoggedUser().getId());
+                            initialize(null,null);
+                        } catch (BadArgumentsException | NoLoggedUser e) {
+                            Alert erreur = NodeCreations.createAlert("Erreur", "Une erreur est survenu lors de votre désabonnement", e.getMessage(), Alert.AlertType.ERROR);
+                            erreur.showAndWait();
+                        }
+                    });
+                    secondRow.getChildren().add(followButton);
+                }
+            } catch (NoLoggedUser e) {
+                // do nothing
+            }
+
+            vBox.getChildren().add(secondRow);
 
             HBox thirdRow = new HBox();
 
@@ -127,26 +165,30 @@ public class CompanyDetails implements Initializable {
 
             vBox.getChildren().add(fifthRow);
 
-            HBox sixthRow = new HBox();
+            if (Facade.getInstance().isManagerOfCompany(company.getId())){
+                HBox sixthRow = new HBox();
 
-            Button createEvent = NodeCreations.createButton("Créer un événement");
-            createEvent.setOnAction(event -> {
-                sceneHelper.bringNodeToFront(EventCreation.class.getSimpleName());
-            });
-            Button createAdvertising = NodeCreations.createButton("Créer une publicité");
-            createAdvertising.setOnAction(event -> {
-                sceneHelper.bringNodeToFront(AdvertisingCreation.class.getSimpleName());
-            });
-            Button createReferencing = NodeCreations.createButton("Créer une référencement");
-            createReferencing.setOnAction(event -> {
-                sceneHelper.bringNodeToFront(ReferencingCreation.class.getSimpleName());
-            });
+                Button createEvent = NodeCreations.createButton("Créer un événement");
+                createEvent.setOnAction(event -> {
+                    sceneHelper.bringNodeToFront(EventCreation.class.getSimpleName());
+                });
+                Button createAdvertising = NodeCreations.createButton("Créer une publicité");
+                createAdvertising.setOnAction(event -> {
+                    sceneHelper.bringNodeToFront(AdvertisingCreation.class.getSimpleName());
+                });
+                Button createReferencing = NodeCreations.createButton("Créer une référencement");
+                createReferencing.setOnAction(event -> {
+                    sceneHelper.bringNodeToFront(ReferencingCreation.class.getSimpleName());
+                });
 
-            sixthRow.getChildren().add(createEvent);
-            sixthRow.getChildren().add(createAdvertising);
-            sixthRow.getChildren().add(createReferencing);
+                sixthRow.getChildren().add(createEvent);
+                sixthRow.getChildren().add(createAdvertising);
+                sixthRow.getChildren().add(createReferencing);
 
-            vBox.getChildren().add(sixthRow);
+                vBox.getChildren().add(sixthRow);
+            }
+
+
 
             if (Facade.getInstance().isManagerOfCompany(company.getId())){
                 HBox seventhRow = new HBox();
@@ -170,9 +212,14 @@ public class CompanyDetails implements Initializable {
             vBox.getChildren().add(new Label("Événements de l'entreprise : "));
             FlowPane flowPane = new FlowPane();
 
-            Facade.getInstance().getEventsByCompany(company.getId()).forEach(event -> {
-                flowPane.getChildren().add(new EventCard(event));
-            });
+            try{
+                Facade.getInstance().getEventsByCompany(company.getId()).forEach(event -> {
+                    flowPane.getChildren().add(new EventCard(event));
+                });
+            } catch (Exception e) {
+                // do nothing
+            }
+
 
             vBox.getChildren().add(flowPane);
 

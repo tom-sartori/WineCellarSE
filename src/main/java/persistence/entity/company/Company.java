@@ -19,7 +19,7 @@ public class Company implements Entity<Company> {
 	private ObjectId masterManager;
 	private List<ObjectId> managerList;
 	private ObjectId cellar;
-	private ArrayList<User> followerList;
+	private ArrayList<ObjectId> followerList;
 	@Nullable
 	private String phoneNumber;
 	@Nullable
@@ -108,11 +108,11 @@ public class Company implements Entity<Company> {
 		this.managerList = managerList;
 	}
 
-	public ArrayList<User> getFollowerList() {
+	public ArrayList<ObjectId> getFollowerList() {
 		return followerList;
 	}
 
-	public void setFollowerList(ArrayList<User> followerList) {
+	public void setFollowerList(ArrayList<ObjectId> followerList) {
 		this.followerList = followerList;
 	}
 
