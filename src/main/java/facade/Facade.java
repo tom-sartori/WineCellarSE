@@ -908,6 +908,16 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Find a bottle by id.
+     *
+     * @param id The id of the bottle.
+     * @return The bottle if found, otherwise throws a NotFoundException.
+     */
+    public Bottle findOne(ObjectId id) throws NotFoundException {
+        return BottleFacade.getInstance().findOne(id);
+    }
+
+    /**
      * Get all bottles from a cellar.
      *
      * @param cellarId The id of the cellar to get the bottles from.

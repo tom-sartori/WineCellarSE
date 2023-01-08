@@ -687,6 +687,15 @@ public interface FacadeInterface {
 	 */
 	ObjectId insertBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
 
+
+	/**
+	 * Find a bottle by id.
+	 *
+	 * @param id The id of the bottle.
+	 * @return The bottle if found, otherwise throws a NotFoundException.
+	 */
+	Bottle findOne(ObjectId id) throws NotFoundException;
+
 	/**
 	 * Get all bottles from a cellar.
 	 *
