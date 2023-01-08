@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import persistence.entity.partner.Partner;
+import ui.app.helpers.services.CustomSceneHelper;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,10 +29,13 @@ public class PartnerCard extends Pane {
 
 	private final double preferredHeight, preferredWidth;
 
+	private final int photoButtonSize;
+
 	public PartnerCard(Partner partner, double preferredHeight, double preferredWidth) {
 		this.partner = partner;
 		this.preferredHeight = preferredHeight;
 		this.preferredWidth = preferredWidth;
+		this.photoButtonSize = 20;
 
 		photo = new ImageView();
 		name = new Label();
@@ -67,13 +71,13 @@ public class PartnerCard extends Pane {
 		photo.setFitHeight(photoSize);
 		photo.setFitWidth(photoSize);
 
-		setOnMouseClicked(e -> {
-			// Action you want to do
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.initModality(Modality.APPLICATION_MODAL);
-			alert.setContentText("Sample Alert");
-			alert.showAndWait();
-		});
+//		setOnMouseClicked(e -> {
+//			// Action you want to do
+//			Alert alert = new Alert(AlertType.INFORMATION);
+//			alert.initModality(Modality.APPLICATION_MODAL);
+//			alert.setContentText("Sample Alert");
+//			alert.showAndWait();
+//		});
 
 		getChildren().addAll(photo, name);
 
@@ -88,8 +92,11 @@ public class PartnerCard extends Pane {
 	}
 
 	private void setAdminCard() {
-		int photoDeleteEditSize = 20;
+		setDeleteButton();
+		setEditButton();
+	}
 
+	private void setDeleteButton() {
 		photoDelete = new ImageView();
 		try {
 			photoDelete.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
@@ -98,11 +105,20 @@ public class PartnerCard extends Pane {
 			throw new RuntimeException(e);
 		}
 		photoDelete.setLayoutX(40);
-		photoDelete.setLayoutY(preferredHeight - photoDeleteEditSize - 40);
-		photoDelete.setFitHeight(photoDeleteEditSize);
-		photoDelete.setFitWidth(photoDeleteEditSize);
+		photoDelete.setLayoutY(preferredHeight - photoButtonSize - 40);
+		photoDelete.setFitHeight(photoButtonSize);
+		photoDelete.setFitWidth(photoButtonSize);
 
+		photoDelete.setOnMouseClicked(e -> {
+			// Delete the partner.
+			Facade.getInstance().deleteOnePartner(partner.getId());
+			new CustomSceneHelper().bringNodeToFront("partnerList");
+		});
 
+		getChildren().add(photoDelete);
+	}
+
+	private void setEditButton() {
 		photoEdit = new ImageView();
 		try {
 			photoEdit.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/edit.png")).getPath())));
@@ -111,10 +127,10 @@ public class PartnerCard extends Pane {
 			throw new RuntimeException(e);
 		}
 		photoEdit.setLayoutX(40);
-		photoEdit.setLayoutY(photoDelete.getLayoutY() - photoDeleteEditSize - 10);
-		photoEdit.setFitHeight(photoDeleteEditSize);
-		photoEdit.setFitWidth(photoDeleteEditSize);
+		photoEdit.setLayoutY(photoDelete.getLayoutY() - photoButtonSize - 10);
+		photoEdit.setFitHeight(photoButtonSize);
+		photoEdit.setFitWidth(photoButtonSize);
 
-		getChildren().addAll(photoDelete, photoEdit);
+		getChildren().add(photoEdit);
 	}
 }
