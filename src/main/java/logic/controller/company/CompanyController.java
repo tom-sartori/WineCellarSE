@@ -194,6 +194,32 @@ public class CompanyController extends AbstractController<Company> {
         return getDao().removeManager(companyId, managerId);
     }
 
+    /**
+     * Add a user to the list of users that follow the company.
+     *
+     * @param companyId The id of the company.
+     * @param userId The id of the user.
+     *
+     * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+     * @throws BadArgumentsException If the company or the user does not exist.
+     */
+    public ObjectId followCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException {
+        return getDao().followCompany(companyId, userId);
+    }
+
+    /**
+     * remove a user from the list of users that follow the company.
+     *
+     * @param companyId The id of the company.
+     * @param userId The id of the user.
+     *
+     * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+     * @throws BadArgumentsException If the company or the user does not exist.
+     */
+    public ObjectId unfollowCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException {
+        return getDao().unfollowCompany(companyId, userId);
+    }
+
 
 
 }
