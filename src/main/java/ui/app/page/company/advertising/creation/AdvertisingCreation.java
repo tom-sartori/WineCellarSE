@@ -56,7 +56,7 @@ public class AdvertisingCreation implements Initializable, Observer {
             formController.addField(new LabelField("Date de début", true));
             formController.addField(new LabelField("Date de fin", true));
             formController.addField(new Select("Entreprise", true, companyList));
-
+            formController.setSubmitButtonText("Payer");
             formController.initialize(null, null);
         }
     }

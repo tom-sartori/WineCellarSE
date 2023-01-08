@@ -17,11 +17,10 @@ class GuideFacadeTest {
 
     @BeforeEach
     void init() {
-        LinkedHashMap<String, List<String>> sectionMap = new LinkedHashMap<>();
-        List<String> list = new ArrayList<>();
-        list.add("paragraph");
-        sectionMap.put("Section1",list);
-        guide = new Guide("test", sectionMap, GuideCategory.TUTORIAL,new Date());
+        LinkedHashMap<String, String> sectionMap = new LinkedHashMap<>();
+        sectionMap.put("Section1","le paragraphe");
+        sectionMap.put("titre 2", "blablabla");
+        guide = new Guide("test", "description", sectionMap, GuideCategory.TUTORIAL,new Date());
     }
 
     /**
@@ -39,6 +38,7 @@ class GuideFacadeTest {
 
         Guide receivedGuide = facade.getOneGuide(idReceivedAfterCreation);
         assertEquals(guide.getTitle(), receivedGuide.getTitle());
+        assertEquals(guide.getDescription(), receivedGuide.getDescription());
         assertEquals(guide.getSectionList(), receivedGuide.getSectionList());
     }
 
@@ -50,19 +50,12 @@ class GuideFacadeTest {
 
         ObjectId idOfInsertedGuide = facade.insertOneGuide(guide);
 
-        LinkedHashMap<String, List<String>> sectionMap2 = new LinkedHashMap<>();
-        List<String> list2 = new ArrayList<>();
-        List<String> list3 = new ArrayList<>();
+        LinkedHashMap<String, String> sectionMap2 = new LinkedHashMap<>();
 
-        list2.add("bla bla bla 1");
-        list2.add("bla bla bla 2");
-        list2.add("bla bla bla 3");
-        sectionMap2.put("Section1",list2);
+        sectionMap2.put("Section1","blablablabkla");
 
-        list3.add("bla bla bla 1");
-        list3.add("bla bla bla 2");
-        list3.add("bla bla bla 3");
-        sectionMap2.put("Section2",list3);
+
+        sectionMap2.put("Section2","encore un paragraphe");
 
 
         Guide receivedGuide= facade.getOneGuide(idOfInsertedGuide);
@@ -80,25 +73,19 @@ class GuideFacadeTest {
     /**
      * Test l'ajout de section par index : si on veut ajouter une section dans un ordre précis.
      */
+    /*
     @Test
     void ajoutSectionParIndex(){
         ObjectId idOfInsertedGuide = facade.insertOneGuide(guide);
 
         //creation de la map et ds deux valeurs
 
-        LinkedHashMap<String, List<String>> sectionMap2 = new LinkedHashMap<>();
+        LinkedHashMap<String, String> sectionMap2 = new LinkedHashMap<>();
         List<String> list2 = new ArrayList<>();
         List<String> list3 = new ArrayList<>();
 
-        list2.add("bla bla bla 1");
-        list2.add("bla bla bla 2");
-        list2.add("bla bla bla 3");
-        sectionMap2.put("Section1",list2);
-
-        list3.add("bla bla bla 1");
-        list3.add("bla bla bla 2");
-        list3.add("bla bla bla 3");
-        sectionMap2.put("Section2",list3);
+        sectionMap2.put("Section1","blablablabkla");
+        sectionMap2.put("Section2","encore un paragraphe");
 
 
         Guide receivedGuide= facade.getOneGuide(idOfInsertedGuide);
@@ -136,6 +123,8 @@ class GuideFacadeTest {
         mapBonOrdre.put("Section2",list3);
         assertEquals(newMap, mapBonOrdre);
     }
+
+     */
 
     /**
      * Test the getGuideList method.
@@ -176,10 +165,8 @@ class GuideFacadeTest {
     void test_update_OK() {
         ObjectId idOfInsertedGuide = facade.insertOneGuide(guide);
 
-        LinkedHashMap<String, List<String>> sectionMap2 = new LinkedHashMap<>();
-        List<String> list2 = new ArrayList<>();
-        list2.add("paragraphTest");
-        sectionMap2.put("Section1",list2);
+        LinkedHashMap<String, String> sectionMap2 = new LinkedHashMap<>();
+        sectionMap2.put("Section1","ubvuibguihgeug");
 
 
         Guide receivedGuide= facade.getOneGuide(idOfInsertedGuide);

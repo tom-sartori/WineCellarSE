@@ -1,5 +1,6 @@
 package ui.app.page.company.referencing.list;
 
+import exception.NotFoundException;
 import facade.Facade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,29 +31,41 @@ public class ReferencingList implements Initializable {
     private String status;
     private final int nbColumn = 4;
 
-    //TODO : faire disparaitre les card si status vide/entreprise vide
-
     /**
      * Initializes the controller class and the select fields.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(State.getInstance().getCurrentUser() != null){
-            status = "Tous";
-            company = null;
+        if(Facade.getInstance().isUserLogged()){
 
-            List<Company> companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            List<Company> companies;
+            if(Facade.getInstance().isAdminLogged()){
+                companies = Facade.getInstance().getCompanyList();
+            } else {
+                companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            }
+
             if(select.getItems().size() == 0){
                 for (Company c : companies){
                     select.getItems().add(c.getName());
                 }
             }
+
+            //pre-select the first company
+            select.getSelectionModel().selectFirst();
+
+            company = companies.get(0).getId();
+            status = "Tous";
+
             if(selectStatus.getItems().size() == 0){
+                selectStatus.getItems().add("Tous");
                 selectStatus.getItems().add("A venir");
                 selectStatus.getItems().add("En cours");
                 selectStatus.getItems().add("Passé");
-                selectStatus.getItems().add("Tous");
             }
+
+            //pre-select the "Tous" choice
+            selectStatus.getSelectionModel().selectFirst();
 
             /**
              * Retrieve the list with the changed status if a company is selected.
@@ -77,6 +90,8 @@ public class ReferencingList implements Initializable {
                     }
                 }
             });
+
+            list(company,status);
         }
     }
 
@@ -86,21 +101,25 @@ public class ReferencingList implements Initializable {
      * @param status the status selected.
      */
     public void list(ObjectId company, String status){
-        cardList.clear();
-        List<Referencing> referencingList;
-        if(status.equals("Tous")){
-            referencingList = Facade.getInstance().getReferencingsByCompany(company);
-            referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
+        try {
+            cardList.clear();
+            List<Referencing> referencingList;
+            if(status.equals("Tous")){
+                referencingList = Facade.getInstance().getReferencingsByCompany(company);
+                referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
 
-        } else {
-            referencingList = Facade.getInstance().getReferencingsByCompanyByStatus(company, status);
-            referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
+            } else {
+                referencingList = Facade.getInstance().getReferencingsByCompanyByStatus(company, status);
+                referencingList.forEach(referencing -> cardList.add(new ReferencingCard(referencing)));
+            }
+
+            cardHolder.setAlignment(Pos.CENTER);
+            cardHolder.setVgap(20.00);
+            cardHolder.setHgap(20.00);
+            cardHolder.setStyle("-fx-padding:10px;");
+        } catch (NotFoundException e){
+
         }
-
-        cardHolder.setAlignment(Pos.CENTER);
-        cardHolder.setVgap(20.00);
-        cardHolder.setHgap(20.00);
-        cardHolder.setStyle("-fx-padding:10px;");
 
         onSearch();
     }

@@ -44,7 +44,7 @@ public class CompanyList implements Initializable {
                 titleHBox.getChildren().add(createCompany);
             }
         } catch (NoLoggedUser e) {
-            throw new RuntimeException(e);
+            // do nothing
         }
 
         listFlowPane.getChildren().clear();

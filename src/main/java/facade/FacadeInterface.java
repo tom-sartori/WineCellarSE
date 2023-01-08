@@ -578,6 +578,15 @@ public interface FacadeInterface {
 	boolean isManagerOfCellar(ObjectId cellarId);
 
 	/**
+	 * Return true if the user logged is manager of the company in parameter.
+	 *
+	 * @param companyId The id of the company to check.
+	 *
+	 * @return True if the user is a manager of the company. Otherwise, false.
+	 */
+	public boolean isManagerOfCompany(ObjectId companyId);
+
+	/**
 	 * Insert a referencing.
 	 *
 	 * @param referencing The referencing to insert.
@@ -865,6 +874,15 @@ public interface FacadeInterface {
 	 * @return A list of all the rates of the user if there are any, an empty list otherwise.
 	 */
 	List<Rate> getRateListFromUser(ObjectId userId) throws NotFoundException;
+
+	/**
+	 * Get all the rates of a subject.
+	 *
+	 * @param subjectId The id of the subject.
+	 *
+	 * @return A list of all the rates of the subject if there are any, an empty list otherwise.
+	 */
+	List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException;
 
 	/**
 	 * Update a rate.

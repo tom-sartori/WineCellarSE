@@ -77,4 +77,17 @@ public class RateDao extends AbstractDao<Rate> {
 		filter.append("ownerRef", new org.bson.BsonObjectId(userId));
 		return findAllWithFilter(filter);
 	}
+
+	/**
+	 * Get all the rates of a subject.
+	 *
+	 * @param subjectId The id of the subject.
+	 *
+	 * @return A list of all the rates of the subject if there are any, otherwise throws a NotFoundException.
+	 */
+	public List<Rate> getRateListFromSubject(ObjectId subjectId) throws NotFoundException {
+		BsonDocument filter = new BsonDocument();
+		filter.append("subjectRef", new org.bson.BsonObjectId(subjectId));
+		return findAllWithFilter(filter);
+	}
 }

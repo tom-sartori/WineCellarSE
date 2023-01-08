@@ -1,5 +1,6 @@
 package ui.app;
 
+import persistence.entity.guide.Guide;
 import persistence.entity.advertising.Advertising;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.Cellar;
@@ -13,6 +14,7 @@ import java.sql.SQLOutput;
 public class State {
 	private static State instance;
 	private User currentUser;
+	private Guide currentGuide;
 
 	private String previousPage;
 
@@ -48,6 +50,12 @@ public class State {
 	public void setCurrentUser(User currentUser) {
 		System.out.println("The current user is now: " + currentUser.getUsername() + ". ");
 		this.currentUser = currentUser;
+	}
+
+	public Guide getCurrentGuide() { return currentGuide;}
+
+	public void setCurrentGuide(Guide currentGuide) {
+		this.currentGuide = currentGuide;
 	}
 
 	public void setCurrentAdvertising(Advertising advertising) {
