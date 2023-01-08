@@ -86,7 +86,7 @@ public class EventList implements Initializable {
         try {
             cardList.clear();
             List<Event> eventList;
-            //TODO : si non connecté, récupérer la current company de state et getEventsByCompany(company)
+
             if(company != null){
                 eventList = Facade.getInstance().getEventsByCompany(company);
             } else {

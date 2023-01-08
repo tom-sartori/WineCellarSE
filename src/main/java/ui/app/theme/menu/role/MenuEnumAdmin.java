@@ -34,6 +34,7 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	COMPANY("Entreprise", CompanyPage.class),
 	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY),
 	COMPANYADMINLIST("Toutes les demandes d'entreprises ", CompanyAdmin.class, COMPANY),
+	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
 	ADVERTISINGREQUESTSLIST("Toutes les demandes de publicité", AdvertisingList.class, COMPANY),
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),

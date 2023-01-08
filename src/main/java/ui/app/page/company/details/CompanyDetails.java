@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import persistence.entity.cellar.Cellar;
@@ -17,8 +18,14 @@ import ui.app.component.card.CardComponent;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
 import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.advertising.creation.AdvertisingCreation;
+import ui.app.page.company.advertising.list.AdvertisingList;
+import ui.app.page.company.event.EventCard;
+import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.form.update.CompanyUpdate;
 import ui.app.page.company.list.CompanyList;
+import ui.app.page.company.referencing.creation.ReferencingCreation;
+import ui.app.page.company.referencing.list.ReferencingList;
 
 import java.net.URL;
 import java.util.Observable;
@@ -119,6 +126,55 @@ public class CompanyDetails implements Initializable {
             fifthRow.getChildren().add(new Label("Site web : " + company.getWebsiteLink()));
 
             vBox.getChildren().add(fifthRow);
+
+            HBox sixthRow = new HBox();
+
+            Button createEvent = NodeCreations.createButton("Créer un événement");
+            createEvent.setOnAction(event -> {
+                sceneHelper.bringNodeToFront(EventCreation.class.getSimpleName());
+            });
+            Button createAdvertising = NodeCreations.createButton("Créer une publicité");
+            createAdvertising.setOnAction(event -> {
+                sceneHelper.bringNodeToFront(AdvertisingCreation.class.getSimpleName());
+            });
+            Button createReferencing = NodeCreations.createButton("Créer une référencement");
+            createReferencing.setOnAction(event -> {
+                sceneHelper.bringNodeToFront(ReferencingCreation.class.getSimpleName());
+            });
+
+            sixthRow.getChildren().add(createEvent);
+            sixthRow.getChildren().add(createAdvertising);
+            sixthRow.getChildren().add(createReferencing);
+
+            vBox.getChildren().add(sixthRow);
+
+            if (Facade.getInstance().isManagerOfCompany(company.getId())){
+                HBox seventhRow = new HBox();
+
+                Button seeCompanyAdvertisings = NodeCreations.createButton("Voir les publicités");
+                seeCompanyAdvertisings.setOnAction(event -> {
+                    sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
+                });
+
+                Button seeCompanyReferencings = NodeCreations.createButton("Voir les référencements");
+                seeCompanyReferencings.setOnAction(event -> {
+                    sceneHelper.bringNodeToFront(ReferencingList.class.getSimpleName());
+                });
+
+                seventhRow.getChildren().add(seeCompanyAdvertisings);
+                seventhRow.getChildren().add(seeCompanyReferencings);
+
+                vBox.getChildren().add(seventhRow);
+            }
+
+            vBox.getChildren().add(new Label("Événements de l'entreprise : "));
+            FlowPane flowPane = new FlowPane();
+
+            Facade.getInstance().getEventsByCompany(company.getId()).forEach(event -> {
+                flowPane.getChildren().add(new EventCard(event));
+            });
+
+            vBox.getChildren().add(flowPane);
 
             mainPaneCreateBottle.getChildren().add(vBox);
 
