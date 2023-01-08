@@ -32,6 +32,9 @@ public class CompanyDetails implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        titlePaneCreateBottle.getChildren().clear();
+        mainPaneCreateBottle.getChildren().clear();
+
         titlePaneCreateBottle.getChildren().add(new Label("Détails d'une entreprise"));
 
         if (State.getInstance().getSelectedCompany() != null) {
@@ -76,10 +79,13 @@ public class CompanyDetails implements Initializable {
 
             HBox fourthRow = new HBox();
 
-            fourthRow.getChildren().add(NodeCreations.createButton("Supprimer"));
-            fourthRow.getChildren().add(NodeCreations.createButton("Modifier"));
+            if (Facade.getInstance().isManagerOfCompany(company.getId())){
+                fourthRow.getChildren().add(NodeCreations.createButton("Supprimer"));
+                fourthRow.getChildren().add(NodeCreations.createButton("Modifier"));
 
-            vBox.getChildren().add(fourthRow);
+                vBox.getChildren().add(fourthRow);
+            }
+
 
             HBox fifthRow = new HBox();
 
