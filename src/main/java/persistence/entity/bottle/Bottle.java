@@ -1,12 +1,15 @@
 package persistence.entity.bottle;
 
 import com.mongodb.lang.Nullable;
+import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Bottle implements Entity<Bottle> {
+
+    private ObjectId id;
     @Nullable
     private String bottleName;
     @Nullable
@@ -38,6 +41,19 @@ public class Bottle implements Entity<Bottle> {
         this.sizeUnit = sizeUnit;
         this.category = category;
         this.grapeList = grapeList;
+    }
+
+    @Override
+    public void handleOnCreate() {
+        setId(new ObjectId());
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getBottleName() {
@@ -133,12 +149,12 @@ public class Bottle implements Entity<Bottle> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bottle bottle = (Bottle) o;
-        return vintage == bottle.vintage && Double.compare(bottle.price, price) == 0 && Double.compare(bottle.alcoholPercentage, alcoholPercentage) == 0 && Double.compare(bottle.bottleSize, bottleSize) == 0 && Objects.equals(bottleName, bottle.bottleName) && Objects.equals(appellation, bottle.appellation) && Objects.equals(bottleImage, bottle.bottleImage) && Objects.equals(producer, bottle.producer) && Objects.equals(sizeUnit, bottle.sizeUnit) && Objects.equals(category, bottle.category) && Objects.equals(grapeList, bottle.grapeList);
+        return vintage == bottle.vintage && Double.compare(bottle.price, price) == 0 && Double.compare(bottle.alcoholPercentage, alcoholPercentage) == 0 && Double.compare(bottle.bottleSize, bottleSize) == 0 && Objects.equals(id, bottle.id) && Objects.equals(bottleName, bottle.bottleName) && Objects.equals(appellation, bottle.appellation) && Objects.equals(bottleImage, bottle.bottleImage) && Objects.equals(producer, bottle.producer) && Objects.equals(sizeUnit, bottle.sizeUnit) && Objects.equals(category, bottle.category) && Objects.equals(grapeList, bottle.grapeList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bottleName, vintage, appellation, bottleImage, price, producer, alcoholPercentage, bottleSize, sizeUnit, category, grapeList);
+        return Objects.hash(id, bottleName, vintage, appellation, bottleImage, price, producer, alcoholPercentage, bottleSize, sizeUnit, category, grapeList);
     }
 
     @Override
