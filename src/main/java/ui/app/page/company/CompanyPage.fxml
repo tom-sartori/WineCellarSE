@@ -17,6 +17,7 @@
         <fx:include source="form/update/CompanyUpdate.fxml" />
         <fx:include source="form/create/CompanyCreate.fxml" />
         <fx:include source="admin/CompanyAdmin.fxml" />
+        <fx:include source="list/user/CompanyListByUser.fxml" />
         <fx:include source="list/CompanyList.fxml" />
     </children>
     <properties>

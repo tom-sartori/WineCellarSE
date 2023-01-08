@@ -113,7 +113,6 @@ public class CompanyDetails implements Initializable {
                 vBox.getChildren().add(fourthRow);
             }
 
-
             HBox fifthRow = new HBox();
 
             fifthRow.getChildren().add(new Label("Téléphone : " + company.getPhoneNumber()));

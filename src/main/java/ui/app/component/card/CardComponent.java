@@ -18,6 +18,7 @@ import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
+import ui.app.page.company.admin.CompanyAdmin;
 import ui.app.page.company.details.CompanyDetails;
 
 import java.io.IOException;
@@ -30,6 +31,8 @@ public class CardComponent extends BorderPane {
     @FXML private FlowPane topFlowPane;
 
     @FXML private FlowPane bottomFlowPane;
+
+    private static final CustomSceneHelper sceneHelper = new CustomSceneHelper();
 
     public CardComponent() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardComponent.fxml"));
@@ -140,6 +143,7 @@ public class CardComponent extends BorderPane {
                 Facade.getInstance().acceptRequest(company.getId());
                 Alert successAlert = NodeCreations.createAlert("Succès", "Demande acceptée", "La demande a été acceptée avec succès", Alert.AlertType.INFORMATION);
                 successAlert.showAndWait();
+                sceneHelper.bringNodeToFront(CompanyAdmin.class.getSimpleName());
             } catch (Exception e) {
                 Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de l'acceptation de la demande", e.getMessage(), Alert.AlertType.ERROR);
                 erreur.showAndWait();
@@ -152,6 +156,7 @@ public class CardComponent extends BorderPane {
                 Facade.getInstance().refuseRequest(company.getId());
                 Alert success = NodeCreations.createAlert("Succès", "Demande refusée", "La demande a été refusée avec succès", Alert.AlertType.INFORMATION);
                 success.showAndWait();
+                sceneHelper.bringNodeToFront(CompanyAdmin.class.getSimpleName());
             } catch (Exception e) {
                 Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors du refus de la demande", e.getMessage(), Alert.AlertType.ERROR);
                 erreur.showAndWait();

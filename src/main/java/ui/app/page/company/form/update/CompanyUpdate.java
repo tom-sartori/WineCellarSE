@@ -165,6 +165,19 @@ public class CompanyUpdate implements Initializable, Observer {
             deleteManager(oneUser);
         });
 
+        Button makeMasterManager = NodeCreations.createButton("Promouvoir");
+        makeMasterManager.onActionProperty().set(event -> {
+            try {
+                Facade.getInstance().addManager(State.getInstance().getSelectedCompany().getId(), State.getInstance().getSelectedCompany().getMasterManager());
+                Facade.getInstance().promoteNewMasterManager(State.getInstance().getSelectedCompany().getId(), oneUser.getId());
+                deleteManager(oneUser);
+                initManagerList();
+            } catch (BadArgumentsException e) {
+                NodeCreations.createAlert("Erreur", "Erreur lors de la promotion du gestionnaire", e.getMessage(), Alert.AlertType.ERROR);
+            }
+        });
+
+        hBox.getChildren().add(makeMasterManager);
         hBox.getChildren().add(deleteManager);
 
         return hBox;
