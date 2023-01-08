@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
 <?import javafx.scene.control.ScrollPane?>
-<AnchorPane fx:id="companyDetails" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.details.CompanyDetails">
+<AnchorPane fx:id="companyCreate" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.form.create.CompanyCreate">
     <stylesheets>
-        <URL value="@/ui/app/page/company/details/CompanyDetails.css" />
+        <URL value="@/ui/app/page/company/form/create/CompanyCreate.css" />
     </stylesheets>
     <children>
         <ScrollPane layoutY="90.0" prefHeight="535.0" prefWidth="1280.0">
             <content>
                 <AnchorPane fx:id="mainPaneCreateBottle" minHeight="535.0" prefWidth="1260.0">
                     <children>
+                        <fx:include fx:id="form" source="../../../../component/form/Form.fxml" />
                     </children>
                 </AnchorPane>
             </content>
         </ScrollPane>
         <AnchorPane fx:id="titlePaneCreateBottle" prefHeight="90.0" prefWidth="1280.0" />
+        <!--        <fx:include fx:id="form" source="../../../component/form/Form.fxml" />-->
     </children>
     <properties>
         <!-- store controller at key "controller" in properties map -->

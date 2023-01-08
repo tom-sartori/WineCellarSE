@@ -7,6 +7,7 @@ import ui.app.page.cellar.lists.shared.SharedWithMeCellars;
 import ui.app.page.company.CompanyPage;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
+import ui.app.page.company.list.CompanyList;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.user.logout.Logout;
 import ui.app.page.user.profile.Profile;
@@ -20,6 +21,7 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	LOGOUT("Déconnexion", Logout.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
+	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY),
 	ADVERTISING("Publicités"),
 	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, ADVERTISING),
 	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, ADVERTISING),
