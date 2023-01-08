@@ -5,6 +5,8 @@ import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import exception.BadArgumentsException;
 import exception.NotFoundException;
+import logic.controller.cellar.CellarController;
+import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import persistence.dao.AbstractDao;
@@ -43,9 +45,31 @@ public class BottleDao extends AbstractDao<Bottle> {
 		throw new UnsupportedOperationException("This method is not available for BottleDao.");
 	}
 
+	/**
+	 * Find a bottle by id.
+	 *
+	 * @param id The id of the bottle.
+	 * @return The bottle if found, otherwise throws a NotFoundException.
+	 */
 	@Override
-	public Bottle findOne(ObjectId id) throws UnsupportedOperationException {
-		throw new UnsupportedOperationException("This method is not available for BottleDao.");
+	public Bottle findOne(ObjectId id) {
+
+		List<Cellar> all = CellarController.getInstance().findAll();
+
+		for (Cellar cellar : all) {
+			for (Wall wall : cellar.getWalls()) {
+				for (EmplacementBottle emplacementBottle : wall.getEmplacementBottleMap()) {
+					for (BottleQuantity bottleQuantity : emplacementBottle.getBottleList()) {
+						// TODO remove first if when the datatbase is updated.
+						if (bottleQuantity.getBottle().getId() != null && bottleQuantity.getBottle().getId().equals(id)) {
+							return bottleQuantity.getBottle();
+						}
+					}
+				}
+			}
+		}
+
+		throw new NotFoundException("Bottle not found.");
 	}
 
 	@Override
@@ -69,6 +93,7 @@ public class BottleDao extends AbstractDao<Bottle> {
 	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
 	 */
 	public ObjectId insertBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException {
+		bottle.handleOnCreate();
 		BottleQuantity bottleQuantity = new BottleQuantity(bottle, 1);
 		int indexOfWall = cellar.getWalls().indexOf(wall);
 		int indexOfEmplacement = wall.getEmplacementBottleMap().indexOf(emplacementBottle);

@@ -21,6 +21,7 @@ import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
 import persistence.entity.rate.Rate;
+import persistence.entity.user.Friend;
 import persistence.entity.user.User;
 
 import java.util.Date;
@@ -450,6 +451,57 @@ public interface FacadeInterface {
 	void logout();
 
 	/**
+	 * Add a friend to the logged user.
+	 *
+	 * @param username of the friend to add.
+	 * @return the friend requested.
+	 * @throws NotFoundException if the friend is not found.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	User addFriend(String username) throws NotFoundException, NoLoggedUser;
+
+	/**
+	 * Accept a friend request.
+	 *
+	 * @param username of the friend to accept.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	void acceptFriend(String username) throws NoLoggedUser;
+
+	/**
+	 * Remove a friend from the logged user.
+	 *
+	 * @param username of the friend to remove.
+	 * @return true if the friend has been removed, false otherwise.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	boolean removeFriend(String username) throws NoLoggedUser;
+
+	/**
+	 * Return the list of friends of the logged user.
+	 *
+	 * @param onlyAcceptedFriend True if you want only the accepted friends. False if you want all the friends.
+	 * @return The list of friends of the logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser;
+
+	/**
+	 * Return the list of friend requests of the logged user.
+	 *
+	 * @return The list of friend requests for the logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Friend> getFriendRequestList() throws NoLoggedUser;
+
+	/**
+	 * Refresh the logged user with the db.
+	 *
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	void refreshLoggedUser() throws NoLoggedUser;
+
+	/**
 	 * Get all users.
 	 *
 	 * @return A list of users.
@@ -686,6 +738,15 @@ public interface FacadeInterface {
 	 * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
 	 */
 	ObjectId insertBottle(Wall wall, Cellar cellar, Bottle bottle, EmplacementBottle emplacementBottle) throws BadArgumentsException;
+
+
+	/**
+	 * Find a bottle by id.
+	 *
+	 * @param id The id of the bottle.
+	 * @return The bottle if found, otherwise throws a NotFoundException.
+	 */
+	Bottle findOne(ObjectId id) throws NotFoundException;
 
 	/**
 	 * Get all bottles from a cellar.

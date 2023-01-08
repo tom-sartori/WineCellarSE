@@ -83,6 +83,27 @@ class BottleFacadeTest {
     }
 
     /**
+     * Test the findById method.
+     */
+    @Test
+    void findBottleById(){
+        try {
+            ObjectId cellarId = facade.insertOneCellar(cellar);
+//            cellar.setId(cellarId);
+
+            Bottle bottle = facade.findOne(new ObjectId("63ba6fa8fd18ac796d447e3a"));
+
+            System.out.println(bottle.getBottleName());
+            // CLEAN UP
+
+            facade.deleteOneCellar(cellarId);
+        } catch (NotFoundException e) {
+            fail(e.getMessage());
+        }
+
+    }
+
+    /**
      * Test the insertion of a bottle with a bad cellar.
      */
     @Test
