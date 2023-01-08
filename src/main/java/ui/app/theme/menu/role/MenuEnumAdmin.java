@@ -12,6 +12,7 @@ import ui.app.page.company.event.list.EventList;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.user.friend.FriendList;
 import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.logout.Logout;
@@ -27,6 +28,8 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	LOGIN("Se connecter", Login.class, USER),
 	LOGOUT("Déconnexion", Logout.class, USER),
 	PROFILE("Mon profil", Profile.class, USER),
+	FRIEND("Mes amis", FriendList.class, USER),
+	PARTNER("Partenaires", PartnerPage.class),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
 	ADVERTISINGREQUESTSLIST("Toutes les demandes de publicité", AdvertisingList.class, COMPANY),

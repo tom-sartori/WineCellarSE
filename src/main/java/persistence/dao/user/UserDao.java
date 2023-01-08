@@ -65,6 +65,17 @@ public class UserDao extends AbstractDao<User> {
 			updateList.add(Updates.set("email", entity.getEmail()));
 		}
 
+		if (entity.getFriends() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("friends", entity.getFriends()));
+		}
+
+		if (entity.getFriendRequests() != null) {
+			// Nullable attribute.
+			updateList.add(Updates.set("friendRequests", entity.getFriendRequests()));
+		}
+
+
 		return combine(updateList);
 	}
 
