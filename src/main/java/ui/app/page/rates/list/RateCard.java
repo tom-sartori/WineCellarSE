@@ -59,7 +59,16 @@ public class RateCard extends Pane {
 
         try{
 
+            TextArea textArea = new TextArea();
+            textArea.setWrapText(true);
 
+            textArea.setEditable(false);
+            textArea.setText(rate.getComment());
+            textArea.setLayoutX(85.0);
+            textArea.setLayoutY(7.0);
+            textArea.setPrefHeight(50.0);
+            textArea.setPrefWidth(170.0);
+            /*
             String commentaire = rate.getComment();
 
             Text commentaireText = new Text(commentaire);
@@ -73,7 +82,7 @@ public class RateCard extends Pane {
             commentaireFlow.setLayoutY(17.0);
             commentaireFlow.setPrefHeight(40.0);
             commentaireFlow.setPrefWidth(120.0);
-
+*/
 
             username.setText(Facade.getInstance().getOneUser(rate.getOwnerRef()).getUsername());
             username.setLayoutX(258.0);
@@ -87,7 +96,7 @@ public class RateCard extends Pane {
             note.setPrefHeight(17.0);
             note.setPrefWidth(76.0);
 
-            getChildren().addAll(commentaireFlow, username, note, boutonSuppression);
+            getChildren().addAll(textArea, username, note, boutonSuppression);
 
         }catch(Exception e){
         e.printStackTrace();
@@ -119,9 +128,11 @@ public class RateCard extends Pane {
         Optional<ButtonType> option = alert.showAndWait();
 
         if(option.get() != ButtonType.CANCEL){
+            rateList.getCardList().remove(this);
             Facade.getInstance().deleteOneRate(rate.getId());
+            rateList.onSearch();
+
         }
-        rateList.initialize(null, null );
     }
 
 
