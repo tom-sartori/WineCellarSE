@@ -34,7 +34,6 @@ public class RateCard extends Pane {
     private TextFlow commentaireFlow;
     private Label username;
     private Label note;
-    protected final Button boutonSuppression;
 
 
 
@@ -45,9 +44,7 @@ public class RateCard extends Pane {
         this.commentaireFlow = new TextFlow();
         username = new Label();
         note = new Label();
-        boutonSuppression = new Button("x");
-        boutonSuppression.setLayoutX(330.0);
-        boutonSuppression.setLayoutY(17.0);
+
 
         setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center; -fx-border-width: 1px");
 
@@ -96,19 +93,24 @@ public class RateCard extends Pane {
             note.setPrefHeight(17.0);
             note.setPrefWidth(76.0);
 
-            getChildren().addAll(textArea, username, note, boutonSuppression);
+            getChildren().addAll(textArea, username, note);
 
         }catch(Exception e){
         e.printStackTrace();
         }
 
-        boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                supprimerRate();
-            }
-        });
-
+        if (Facade.getInstance().isAdminLogged()){
+            Button boutonSuppression = new Button("x");
+            boutonSuppression.setLayoutX(330.0);
+            boutonSuppression.setLayoutY(17.0);
+            getChildren().add(boutonSuppression);
+            boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    supprimerRate();
+                }
+            });
+        }
 
     }
 

@@ -15,6 +15,7 @@ import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
+import ui.app.page.notification.NotificationPage;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.rates.RatePage;
 import ui.app.page.user.logout.Logout;
@@ -40,7 +41,8 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
 	GUIDE("Guides", Guides.class),
-	RATE("Notes", RatePage.class);
+	RATE("Notes", RatePage.class),
+	NOTIFICATION("Notifications", NotificationPage.class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

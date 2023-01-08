@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.bson.types.ObjectId;
+import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.rate.Rate;
 import persistence.entity.user.User;
@@ -36,29 +37,32 @@ public class RateList implements Initializable {
     @FXML
     private HBox hbox;
 
-
-
     private ObservableList<RateCard> cardList = FXCollections.observableArrayList();
     private final int nbColumn = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println(Facade.getInstance().isUserLogged());
+        if (Facade.getInstance().isUserLogged()){
+            formulaireCreation();
+        }
 
-                if (Facade.getInstance().isUserLogged()){
-                    formulaireCreation();
-                }
 
-        List<Rate> rateList = Facade.getInstance().getRateList();
-        cardList.clear();
+        if(State.getInstance().getSelectedBottle() != null){
+            List<Rate> rateList = Facade.getInstance().getRateListFromSubject(State.getInstance().getSelectedBottle().getId());
+            cardList.clear();
 
-        rateList.forEach(rate -> cardList.add(new RateCard(rate, this)));
+            rateList.forEach(rate -> cardList.add(new RateCard(rate, this)));
 
-        cardHolder.setAlignment(Pos.CENTER);
-        cardHolder.setVgap(30.00);
-        cardHolder.setHgap(30.00);
-        cardHolder.setStyle("-fx-padding:50px;-fx-alignment: center;");
+            cardHolder.setAlignment(Pos.CENTER);
+            cardHolder.setVgap(30.00);
+            cardHolder.setHgap(30.00);
+            cardHolder.setStyle("-fx-padding:50px;-fx-alignment: center;");
 
-        onSearch();
+            onSearch();
+        }
+
+
     }
 
     public ObservableList<RateCard> getCardList() {
@@ -72,7 +76,6 @@ public class RateList implements Initializable {
     @FXML
     public void onSearch() {
         int count = 0;
-
         cardHolder.getChildren().clear();
         for (RateCard card : cardList) {
             cardHolder.add(card, count % nbColumn, count / nbColumn);
@@ -105,8 +108,7 @@ public class RateList implements Initializable {
             // Récupère le texte écrit dans le LabelField
             String text = labelField.getValue();
             ObjectId ownerRef = new ObjectId("63b8cb0d459add6fa390fcc0");
-            ObjectId subjectRef = new ObjectId("63a5c45048f0c9194a9295ef");
-            Rate rate = new Rate(ownerRef, subjectRef, sliderValue, text, false, new Date());
+            Rate rate = new Rate(ownerRef, State.getInstance().getSelectedBottle().getId(), sliderValue, text, false, new Date());
             try {
                 Facade.getInstance().insertOneRate(rate);
                 slider.setValue(1);

@@ -37,6 +37,11 @@ public class GuideCreation implements Initializable, Observer {
     @FXML
     private Button boutonAjoutParagraphe;
 
+    @FXML
+    private AnchorPane anchorButtonRetour;
+
+    @FXML
+    private AnchorPane anchorForm;
 
     private GuideCategory selectedCategory;
     private static int nbClique = 0;
@@ -50,43 +55,52 @@ public class GuideCreation implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(Facade.getInstance().isAdminLogged()){
+            formController.addObserver(this);
 
-        formController.addObserver(this);
+            formController.clearFieldList();
 
-        formController.clearFieldList();
-
-        formController.addField(new LabelField("Titre du guide", true));
-        formController.addField(new LabelField("description", true));
-        formController.initialize(null, null);
+            formController.addField(new LabelField("Titre du guide", true));
+            formController.addField(new LabelField("description", true));
+            formController.initialize(null, null);
 
 
 
-        boutonAjoutParagraphe.setOnAction(new EventHandler<ActionEvent>() {
+            boutonAjoutParagraphe.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                nbClique+=1;
-                formController.addField(new LabelField("titre paragraphe "+nbClique, true));
-                formController.addField(new LabelField("contenu "+nbClique, true));
-                //formController.getVBox().getChildren().add(new Button("supprimer"));
-                formController.initialize(null, null);
-                ///TODO changer boutton submit
+                @Override
+                public void handle(ActionEvent event) {
+                    nbClique+=1;
+                    formController.addField(new LabelField("titre paragraphe "+nbClique, true));
+                    formController.addField(new LabelField("contenu "+nbClique, true));
+                    //formController.getVBox().getChildren().add(new Button("supprimer"));
+                    formController.initialize(null, null);
+                    ///TODO changer boutton submit
 
-            }
-        });
-        //guideCreation.getChildren().add(boutonAjoutParagraphe);
+                }
+            });
+            //guideCreation.getChildren().add(boutonAjoutParagraphe);
 
-        // Créer une liste observable des valeurs de l'énumération GuideCategory
-        ObservableList<GuideCategory> categories = FXCollections.observableArrayList(GuideCategory.values());
+            // Créer une liste observable des valeurs de l'énumération GuideCategory
+            ObservableList<GuideCategory> categories = FXCollections.observableArrayList(GuideCategory.values());
 
-        // Définir la liste observable comme source de données pour le ComboBox
-        categoryComboBox.setItems(categories);
+            // Définir la liste observable comme source de données pour le ComboBox
+            categoryComboBox.setItems(categories);
 
-        // Définir un gestionnaire d'évènements pour la sélection d'un élément dans le ComboBox
-        categoryComboBox.setOnAction(event -> {
-            // Récupérer la catégorie sélectionnée
-            selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
-        });
+            // Définir un gestionnaire d'évènements pour la sélection d'un élément dans le ComboBox
+            categoryComboBox.setOnAction(event -> {
+                // Récupérer la catégorie sélectionnée
+                selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
+            });
+
+            Button buttonRetour = new Button("Retour");
+            buttonRetour.setOnAction(e -> {
+                sceneHelper.bringNodeToFront(GuideList.class.getSimpleName());
+            });
+
+            anchorButtonRetour.getChildren().add(buttonRetour);
+        }
+
 
     }
 
@@ -130,10 +144,6 @@ public class GuideCreation implements Initializable, Observer {
 
     public void setVisible(boolean visible) {
         guideCreation.setVisible(visible);
-    }
-
-    public void ajoutParagraphe(){
-        label.setText("Bonjour");
     }
 
     public void onAction() {

@@ -1,5 +1,6 @@
 package ui.app.page.guides.list;
 
+import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,9 +30,9 @@ import java.util.*;
 public class GuideCard extends Pane {
     protected final Label title;
     protected final Label description;
-    protected final Button boutonSuppression;
     protected final Button boutonModification;
     protected Date creationDate;
+    private Button boutonSuppression;
     private final double preferredHeight, preferredWidth;
     private Guide guide;
     private CustomSceneHelper sceneHelper = new CustomSceneHelper();
@@ -48,11 +49,8 @@ public class GuideCard extends Pane {
 
         title = new Label();
         description = new Label();
-        boutonSuppression = new Button("x");
-        boutonModification = new Button("Modifier");
 
-        boutonSuppression.setLayoutX(10.0);
-        boutonSuppression.setLayoutY(10.0);
+        boutonModification = new Button("Modifier");
 
         setPrefHeight(preferredHeight);
         setPrefWidth(preferredWidth);
@@ -91,17 +89,29 @@ public class GuideCard extends Pane {
             sceneHelper.bringNodeToFront(GuideDetails.class.getSimpleName());
         });
 
-        getChildren().addAll(title, description, boutonSuppression);
+        getChildren().addAll(title, description);
 
 
+            if(Facade.getInstance().isAdminLogged()){
+                boutonSuppression = new Button("x");
 
-        boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                supprimerGuide();
+                boutonSuppression.setLayoutX(10.0);
+                boutonSuppression.setLayoutY(10.0);
+                getChildren().add(boutonSuppression);
+
+                boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        supprimerGuide();
+                    }
+
+                });
             }
 
-        });
+
+
+
+
 
         boutonModification.setOnAction(new EventHandler<ActionEvent>() {
             @Override

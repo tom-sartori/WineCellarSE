@@ -19,7 +19,7 @@ public class NotificationFacadeTest {
 
     @BeforeEach
     void init() {
-        ObjectId idSubject = new ObjectId("6390648cc25c501853ae4d7c");
+        ObjectId idSubject = new ObjectId("63b8cb0d459add6fa390fcc0");
         Calendar cal = Calendar.getInstance();
         cal.set(2022, Calendar.DECEMBER,13);
         Date date = cal.getTime();
@@ -78,6 +78,7 @@ public class NotificationFacadeTest {
             ObjectId notificationId1 = facade.insertOneNotification(notification);
 
             List<Notification> notificationFromUserAfter = facade.getNotificationListFromUser(userId);
+            System.out.println(notificationFromUserAfter);
 
             int sizeAfter = notificationFromUserAfter.size();
 

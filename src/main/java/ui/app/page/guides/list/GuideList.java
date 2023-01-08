@@ -107,10 +107,6 @@ public void onSearch() {
     }
 }
 
-    public void goToCreationPage(){
-        sceneHelper.bringNodeToFront(GuideCreation.class.getSimpleName());
-    }
-
     public void onAction() {
         this.initialize(null, null);
     }

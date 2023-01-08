@@ -28,27 +28,6 @@ public class RatePage implements Initializable{
     @FXML
     private RateList rateListController;
 
-    @FXML
-    private Form formController;
-
-    // Ajoutez une référence à l'élément ListView
-    @FXML
-    private ListView<Label> commentList;
-
-    @FXML
-    private VBox vboxTab;
-
-    @FXML
-    private AnchorPane formPane;
-
-
-    // Ajoutez une référence à l'objet TextField qui représente le champ de texte du formulaire
-    @FXML
-    private TextField commentField;
-
-    @FXML
-    private HBox hboxForm;
-
 
     /**
      * Initializes the controller class.
