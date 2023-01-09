@@ -177,6 +177,9 @@ public class CellarDao extends AbstractDao<Cellar> {
      */
     public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         int indexOfWall = cellar.getWalls().indexOf(wall);
+        if (indexOfWall == -1){
+            throw new BadArgumentsException("Le mur indiqué n'est pas dans la cave");
+        }
         return addOrRemoveFromSet(cellar.getId(), emplacementBottle, "walls." + indexOfWall + ".emplacementBottleMap", true);
     }
 
