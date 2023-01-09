@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane fx:id="conversationPage" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.conversation.ConversationPage">
+    <stylesheets>
+        <URL value="@/ui/app/page/conversation/ConversationPage.css" />
+    </stylesheets>
+    <children>
+        <Rectangle fill="#0d47a1" height="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Messages" />
+
+        <ScrollPane fx:id="rightScrollBar" layoutX="354.0" layoutY="85.0" maxWidth="930.0" onMouseClicked="#onClickRightScrollBar" prefHeight="550.0" prefWidth="930.0" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="50.0" />
+        <ScrollPane fx:id="leftScrollPane" layoutX="36.0" layoutY="85.0" prefHeight="600.0" prefWidth="350.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0" />
+
+        <TextArea fx:id="sendMessage" prefHeight="50.0" prefWidth="660.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" />
+        <Button fx:id="sendButton" mnemonicParsing="false" onAction="#onSend" prefHeight="50.0" prefWidth="275.0" text="Envoyer" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+    </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
+</AnchorPane>

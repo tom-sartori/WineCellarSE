@@ -12,7 +12,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
+import org.bson.types.ObjectId;
+import persistence.entity.conversation.Conversation;
 import persistence.entity.user.Friend;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.conversation.ConversationPage;
+import ui.app.page.partner.detail.PartnerDetail;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -86,13 +91,18 @@ public class FriendCard extends Pane {
 		}
 
 
-		photo.setOnMouseClicked(e -> {
-			// Action you want to do
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.initModality(Modality.APPLICATION_MODAL);
-			alert.setContentText("Sample Alert");
-			alert.showAndWait();
-		});
+		if (Facade.getInstance().isUserLogged()) {
+			photo.setOnMouseClicked(e -> {
+				// Create a conversation.
+				try {
+					ObjectId conversationId = Facade.getInstance().insertOneConversation(new Conversation(Facade.getInstance().getLoggedUser().getUsername(), friend.getUsername()));
+					new CustomSceneHelper().bringNodeToFront("conversationPage");
+					ConversationPage conversationPage = (ConversationPage) new CustomSceneHelper().getController("conversationPage");
+					conversationPage.setRightScrollBar(conversationId);
+				} catch (NoLoggedUser ignore) {
+				}
+			});
+		}
 
 		getChildren().addAll(photo, name);
 
