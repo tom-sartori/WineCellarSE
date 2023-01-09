@@ -61,7 +61,13 @@ public class Select extends Field implements Initializable {
         this.isRequired = isRequired;
     }
 
-    @Override
+    public Select(String labelText, String value, boolean isRequired, String[] options) {
+        this(labelText, isRequired, options);
+        choiceBox.setValue(value);
+    }
+
+
+        @Override
     public String getLabel() {
         return label.getText();
     }

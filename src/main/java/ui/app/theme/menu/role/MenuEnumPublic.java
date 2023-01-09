@@ -13,6 +13,7 @@ import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
 import ui.app.page.guides.Guides;
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.partner.list.PartnerList;
 import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
 import ui.app.page.user.register.Register;
@@ -21,10 +22,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum MenuEnumPublic implements MenuEnumInterface {
-	USER("Utilisateur"),
+	USER("Utilisateur", Login.class),
 	REGISTER("S'enregistrer", Register.class, USER),
 	LOGIN("Se connecter", Login.class, USER),
-	PARTNER("Partenaires", PartnerPage.class),
+	PARTNER("Partenaires", PartnerList.class),
 	COMPANY("Entreprise", CompanyPage.class),
 	CELLAR("Caves", CellarPage.class),
 	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),

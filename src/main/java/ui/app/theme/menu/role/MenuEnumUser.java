@@ -16,6 +16,7 @@ import ui.app.page.company.event.list.EventList;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.partner.PartnerPage;
+import ui.app.page.partner.list.PartnerList;
 import ui.app.page.user.friend.FriendList;
 import ui.app.page.rates.RatePage;
 import ui.app.page.user.logout.Logout;
@@ -25,11 +26,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum MenuEnumUser implements MenuEnumInterface {
-	USER("Utilisateur"),
+	USER("Utilisateur", Profile.class),
 	PROFILE("Mon profil", Profile.class, USER),
 	FRIEND("Mes amis", FriendList.class, USER),
 	LOGOUT("Déconnexion", Logout.class, USER),
-	PARTNER("Partenaires", PartnerPage.class),
+	PARTNER("Partenaires", PartnerList.class),
 	COMPANY("Entreprise", CompanyPage.class),
 	ADVERTISINGLIST("Toutes vos publicités", AdvertisingList.class, COMPANY),
 	ADVERTISINGCREATION("Créer une publicité", AdvertisingCreation.class, COMPANY),

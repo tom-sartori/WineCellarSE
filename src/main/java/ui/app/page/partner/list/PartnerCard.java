@@ -2,8 +2,6 @@ package ui.app.page.partner.list;
 
 import facade.Facade;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -11,9 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import persistence.entity.partner.Partner;
 import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.partner.detail.PartnerDetail;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -71,24 +69,18 @@ public class PartnerCard extends Pane {
 		photo.setFitHeight(photoSize);
 		photo.setFitWidth(photoSize);
 
-//		setOnMouseClicked(e -> {
-//			// Action you want to do
-//			Alert alert = new Alert(AlertType.INFORMATION);
-//			alert.initModality(Modality.APPLICATION_MODAL);
-//			alert.setContentText("Sample Alert");
-//			alert.showAndWait();
-//		});
+		photo.setOnMouseClicked(e -> {
+			// See detail view.
+			PartnerDetail partnerDetail = (PartnerDetail) new CustomSceneHelper().getController("partnerDetail");
+			partnerDetail.switchToDetail(partner);
+			new CustomSceneHelper().getNodeById("partnerDetail").toFront();
+		});
 
 		getChildren().addAll(photo, name);
-
 
 		if (Facade.getInstance().isAdminLogged()) {
 			setAdminCard();
 		}
-	}
-
-	public PartnerCard(Partner partner) {
-		this(partner, 230.0, 230.0);
 	}
 
 	private void setAdminCard() {
@@ -130,6 +122,13 @@ public class PartnerCard extends Pane {
 		photoEdit.setLayoutY(photoDelete.getLayoutY() - photoButtonSize - 10);
 		photoEdit.setFitHeight(photoButtonSize);
 		photoEdit.setFitWidth(photoButtonSize);
+
+		photoEdit.setOnMouseClicked(e -> {
+			// Edit the partner.
+			PartnerDetail partnerDetail = (PartnerDetail) new CustomSceneHelper().getController("partnerDetail");
+			partnerDetail.switchToUpdate(partner);
+			new CustomSceneHelper().getNodeById("partnerDetail").toFront();
+		});
 
 		getChildren().add(photoEdit);
 	}
