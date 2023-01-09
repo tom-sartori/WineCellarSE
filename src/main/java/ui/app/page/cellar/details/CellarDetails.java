@@ -166,21 +166,6 @@ public class CellarDetails implements Initializable {
 
         scrollableBorderPane.setTop(hbox);
 
-        // barre de recherche
-
-        HBox searchHbox = new HBox();
-
-        LabelField searchField = new LabelField("Rechercher une bouteille", false);
-
-        Button researchButton = new Button("Rechercher");
-
-        researchButton.setCursor(Cursor.HAND);
-        // TODO researchButton.setOnAction(event -> {
-
-        searchHbox.getChildren().addAll(searchField, researchButton);
-
-        mainVBox.getChildren().add(searchHbox);
-
         // boutton de mise à jour (dispo seulement si on est le propriétaire)
 
         if(isOwner){
