@@ -13,6 +13,7 @@ import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.guides.Guides;
 import ui.app.page.guides.guideCreation.GuideCreation;
+import ui.app.page.guides.list.GuideList;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
@@ -37,7 +38,7 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
 	GUIDE("Guides"),
-	GUIDEALL("Les guides", Guides.class, GUIDE),
+	GUIDEALL("Les guides", GuideList.class, GUIDE),
 	GUIDECREATION("Création d'un guide", GuideCreation.class, GUIDE),
 	RATE("Notes",RatePage .class);
 

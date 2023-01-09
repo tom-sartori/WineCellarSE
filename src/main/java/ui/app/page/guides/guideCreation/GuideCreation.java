@@ -37,8 +37,6 @@ public class GuideCreation implements Initializable, Observer {
     @FXML
     private Button boutonAjoutParagraphe;
 
-    @FXML
-    private AnchorPane anchorButtonRetour;
 
     @FXML
     private AnchorPane anchorForm;
@@ -55,7 +53,7 @@ public class GuideCreation implements Initializable, Observer {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(Facade.getInstance().isAdminLogged()){
+
             formController.addObserver(this);
 
             formController.clearFieldList();
@@ -92,17 +90,10 @@ public class GuideCreation implements Initializable, Observer {
                 // Récupérer la catégorie sélectionnée
                 selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
             });
-
-            Button buttonRetour = new Button("Retour");
-            buttonRetour.setOnAction(e -> {
-                sceneHelper.bringNodeToFront(GuideList.class.getSimpleName());
-            });
-
-            anchorButtonRetour.getChildren().add(buttonRetour);
         }
 
 
-    }
+
 
     @Override
     public void update(Observable o, Object arg) {
@@ -141,16 +132,12 @@ public class GuideCreation implements Initializable, Observer {
             formController.showErrorLabel("Erreur");
         }
     }
-
+/*
     public void setVisible(boolean visible) {
         guideCreation.setVisible(visible);
     }
-
+*/
     public void onAction() {
         this.initialize(null, null);
-    }
-
-    public void goBack(){
-        sceneHelper.bringNodeToFront(GuideList.class.getSimpleName());
     }
 }

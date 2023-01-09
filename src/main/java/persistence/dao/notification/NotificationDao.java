@@ -7,6 +7,8 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import persistence.dao.AbstractDao;
 import persistence.entity.notification.Notification;
+import persistence.entity.user.User;
+
 import java.util.List;
 
 /**

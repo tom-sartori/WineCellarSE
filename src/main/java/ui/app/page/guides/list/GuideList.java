@@ -14,7 +14,6 @@ import javafx.scene.layout.HBox;
 import persistence.entity.guide.Guide;
 import persistence.entity.guide.GuideCategory;
 import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.guides.guideCreation.GuideCreation;
 
 import java.net.URL;
 import java.util.List;
@@ -32,7 +31,6 @@ public class GuideList implements Initializable {
     private GuideCategory selectedCategoryFiltreLabel;
 
     private ObservableList<GuideCard> cardList = FXCollections.observableArrayList();
-
 
 
     private final int nbColumn = 2;

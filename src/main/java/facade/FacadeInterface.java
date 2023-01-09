@@ -496,6 +496,8 @@ public interface FacadeInterface {
 	 */
 	ObjectId insertOneNotification(Notification notification);
 
+	void insertOneNotificationListUser(Notification notification, List<User> listUser);
+
 	/**
 	 * Get all notifications.
 	 *

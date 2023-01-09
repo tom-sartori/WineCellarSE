@@ -16,6 +16,7 @@ import ui.app.page.company.event.list.EventList;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.notification.NotificationPage;
+import ui.app.page.notification.list.NotificationList;
 import ui.app.page.partner.PartnerPage;
 import ui.app.page.rates.RatePage;
 import ui.app.page.user.logout.Logout;

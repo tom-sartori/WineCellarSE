@@ -18,8 +18,6 @@
         <Button fx:id="boutonAjoutParagraphe" layoutX="388.0" layoutY="438.0" mnemonicParsing="false" text="ajouter un paragraphe" />
         <ComboBox fx:id="categoryComboBox" layoutX="938.0" layoutY="260.0" prefWidth="150.0" />
         <Label fx:id="selectedCategoryLabel" layoutX="888.0" layoutY="211.0" text="Catégories :" />
-        <AnchorPane fx:id="anchorButtonRetour">
-        </AnchorPane>
 
 
     </children>
