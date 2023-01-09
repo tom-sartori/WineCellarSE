@@ -16,7 +16,7 @@ class ConversationFacadeTest {
 		String username = "michel";
 		String password = "michel";
 
-		String username2 = "jeanjean";
+		String username2 = "jean";
 
 		Facade.getInstance().login(username, password);
 

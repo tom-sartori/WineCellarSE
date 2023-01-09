@@ -1050,5 +1050,19 @@ public interface FacadeInterface {
 	 */
 	List<Conversation> getConversationList() throws NoLoggedUser;
 
+	/**
+	 * The current user send a message to the conversation in params.
+	 *
+	 * @param conversationId The id of the conversation.
+	 * @param message The message to send.
+	 */
 	void sendMessage(ObjectId conversationId, String message);
+
+	/**
+	 * Find one conversation.
+	 *
+	 * @param id of the conversation to find.
+	 * @return the conversation.
+	 */
+	Conversation findOneConversation(ObjectId id);
 }

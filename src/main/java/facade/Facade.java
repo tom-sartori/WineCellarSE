@@ -1362,8 +1362,25 @@ public class Facade implements FacadeInterface {
         return ConversationFacade.getInstance().getConversationList();
     }
 
+    /**
+     * The current user send a message to the conversation in params.
+     *
+     * @param conversationId The id of the conversation.
+     * @param message The message to send.
+     */
     @Override
     public void sendMessage(ObjectId conversationId, String message) {
         ConversationFacade.getInstance().sendMessage(conversationId, message);
+    }
+
+    /**
+     * Find one conversation.
+     *
+     * @param id of the conversation to find.
+     * @return the conversation.
+     */
+    @Override
+    public Conversation findOneConversation(ObjectId id) {
+        return ConversationFacade.getInstance().findOneConversation(id);
     }
 }

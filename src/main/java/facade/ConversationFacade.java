@@ -82,7 +82,23 @@ class ConversationFacade {
         return ConversationController.getInstance().deleteOne(id);
     }
 
+    /**
+     * The current user send a message to the conversation in params.
+     *
+     * @param conversationId The id of the conversation.
+     * @param message The message to send.
+     */
     protected void sendMessage(ObjectId conversationId, String message) {
         ConversationController.getInstance().sendMessage(conversationId, message);
+    }
+
+    /**
+     * Find one conversation.
+     *
+     * @param id of the conversation to find.
+     * @return the conversation.
+     */
+    protected Conversation findOneConversation(ObjectId id) {
+        return ConversationController.getInstance().findOne(id);
     }
 }

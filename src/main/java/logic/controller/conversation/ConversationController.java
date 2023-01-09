@@ -75,10 +75,10 @@ public class ConversationController extends AbstractController<Conversation> {
     }
 
     /**
-     * The logged user send a message to the conversation in params.
+     * The current user send a message to the conversation in params.
      *
-     * @param conversationId id of the wanted conversation.
-     * @param message message sending.
+     * @param conversationId The id of the conversation.
+     * @param message The message to send.
      */
     public void sendMessage(ObjectId conversationId, String message) {
         Conversation conversation = getDao().findOne(conversationId);

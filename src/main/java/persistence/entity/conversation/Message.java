@@ -59,6 +59,6 @@ public class Message implements Entity<Message> {
 
 	@Override
 	public int compareTo(Message o) {
-		return date.compareTo(o.date);
+		return o.date.compareTo(date);
 	}
 }

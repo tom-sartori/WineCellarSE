@@ -18,19 +18,19 @@
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Mes amis" />
         <Accordion fx:id="accordion" prefHeight="575.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
             <panes>
-                <TitledPane animated="false" text="Ajouter un amis">
+                <TitledPane text="Ajouter un amis">
                     <content>
                         <fx:include fx:id="form" source="../../../component/form/Form.fxml" />
                     </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Demandes d'amis" onMouseClicked="#onClickRequestList">
+                <TitledPane text="Demandes d'amis" onMouseClicked="#onClickRequestList">
                     <content>
                         <ScrollPane prefHeight="200.0" prefWidth="200.0" >
                             <GridPane fx:id="requestCardHolder"/>
                         </ScrollPane>
                     </content>
                 </TitledPane>
-                <TitledPane fx:id="friendTitledPane" animated="false" text="Amis" onMouseClicked="#onClickFriendList">
+                <TitledPane fx:id="friendTitledPane" text="Amis" onMouseClicked="#onClickFriendList">
                     <content>
                         <ScrollPane prefHeight="200.0" prefWidth="200.0" >
                             <GridPane fx:id="friendCardHolder" />

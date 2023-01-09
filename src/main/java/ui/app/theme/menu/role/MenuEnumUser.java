@@ -12,6 +12,7 @@ import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
 import ui.app.page.company.list.user.CompanyListByUser;
 import ui.app.page.company.referencing.ReferencingCard;
+import ui.app.page.conversation.ConversationPage;
 import ui.app.page.guides.Guides;
 import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
@@ -44,7 +45,8 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
 	GUIDE("Guides", Guides.class),
 	COMPANYBYUSER("Mes entreprises", CompanyListByUser.class, COMPANY),
-	RATE("Notes", RatePage.class);
+	RATE("Notes", RatePage.class),
+	CONVERSATION("Messages", ConversationPage.class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

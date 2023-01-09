@@ -83,6 +83,6 @@ public class Conversation implements Entity<Conversation> {
 
 	@Override
 	public int compareTo(Conversation o) {
-		return lastUpdate.compareTo(o.lastUpdate);
+		return o.lastUpdate.compareTo(lastUpdate);
 	}
 }
