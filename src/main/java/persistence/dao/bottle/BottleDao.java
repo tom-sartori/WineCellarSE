@@ -6,11 +6,10 @@ import constant.CollectionNames;
 import exception.BadArgumentsException;
 import exception.NotFoundException;
 import logic.controller.cellar.CellarController;
-import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import persistence.dao.AbstractDao;
-import persistence.dao.cellar.CellarDAO;
+import persistence.dao.cellar.CellarDao;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -112,7 +111,7 @@ public class BottleDao extends AbstractDao<Bottle> {
 		List<Bottle> bottles = new ArrayList<>();
 
 		// Get the cellar
-		Cellar cellar = CellarDAO.getInstance().findOne(cellarId);
+		Cellar cellar = CellarDao.getInstance().findOne(cellarId);
 
 		// Get all bottles from the cellar
 		for (Wall wall : cellar.getWalls()) {

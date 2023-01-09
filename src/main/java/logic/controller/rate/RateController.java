@@ -2,15 +2,10 @@ package logic.controller.rate;
 
 import exception.NotFoundException;
 import logic.controller.AbstractController;
-import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.dao.cellar.CellarDAO;
 import persistence.dao.rate.RateDao;
-import persistence.entity.Entity;
-import persistence.entity.cellar.Cellar;
 import persistence.entity.rate.Rate;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
