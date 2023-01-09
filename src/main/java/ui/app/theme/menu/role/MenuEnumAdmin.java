@@ -49,7 +49,7 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	COMPANYBYUSER("Mes entreprises", CompanyListByUser.class, COMPANY),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
-	RATE("Notes",RatePage .class),
+	RATE("Notes",RatePage.class),
 	CONVERSATION("Messages", ConversationPage.class);
 
 	private final String navigationTitle;
