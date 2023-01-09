@@ -15,6 +15,7 @@ import persistence.entity.company.Company;
 import ui.app.State;
 import ui.app.page.company.advertising.AdvertisingCard;
 
+import javax.xml.stream.events.Comment;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,8 +31,8 @@ public class AdvertisingList implements Initializable {
 
     private final int nbColumn = 2;
 
-    private ObjectId company;
-    private String status;
+    private static ObjectId company;
+    private static String status;
 
     /**
      * Initializes the controller class, the select fields for the company and the status.
@@ -43,11 +44,21 @@ public class AdvertisingList implements Initializable {
             List<Company> companies;
             if(Facade.getInstance().isAdminLogged()){
                 companies = Facade.getInstance().getCompanyList();
+                System.out.println(companies.size());
             } else {
                 companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             }
-            company = companies.get(0).getId();
-            status = "Toutes";
+
+            if(company == null && status == null){
+                company = companies.get(0).getId();
+                status = "Toutes";
+                select.getSelectionModel().selectFirst();
+                selectStatus.getSelectionModel().selectFirst();
+            } else {
+                Company c = Facade.getInstance().getOneCompany(company);
+                select.setValue(c.getName());
+                selectStatus.setValue(status);
+            }
 
             if(select.getItems().size() == 0){
                 for (Company c : companies){
@@ -68,9 +79,6 @@ public class AdvertisingList implements Initializable {
                 }
             });
 
-            //pre-select the "Toutes" choice
-            select.getSelectionModel().selectFirst();
-
             /**
              * If the user is not admin, they can see all status.
              * Admins can see only unvalidated advertisings.
@@ -84,9 +92,6 @@ public class AdvertisingList implements Initializable {
                     selectStatus.getItems().add("Demandes");
                 }
 
-                //pre-select the "Toutes" choice
-                selectStatus.getSelectionModel().selectFirst();
-
                 selectStatus.setOnAction((event) -> {
                     String selectedItem = selectStatus.getValue();
                     status = selectedItem;
@@ -99,6 +104,7 @@ public class AdvertisingList implements Initializable {
                 if(!select.getItems().contains("Toutes")){
                     select.getItems().add("Toutes");
                 }
+                status = "Demandes";
                 selectStatus.setVisible(false);
             }
 
@@ -126,6 +132,7 @@ public class AdvertisingList implements Initializable {
                 }
             } else {
                 advertisingList = Facade.getInstance().getNotValidatedAdvertisings();
+                System.out.println("hhhhhhhhhhhh "+advertisingList.size());
             }
 
             int maxWidth = 1280;

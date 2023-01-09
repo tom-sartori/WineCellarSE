@@ -16,6 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import persistence.entity.referencing.Referencing;
 import ui.app.State;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.referencing.list.ReferencingList;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,6 +33,8 @@ public class ReferencingCard extends Pane {
 	private Button supprimer;
 	@FXML
 	private Label status, paymentDate, level, startDate, endDate, price, nameCompany;
+
+	private CustomSceneHelper sceneHelper = new CustomSceneHelper();
 
 	public ReferencingCard(Referencing referencing) {
 		this.referencing = referencing;
@@ -78,6 +82,8 @@ public class ReferencingCard extends Pane {
 				if (option.get() == ButtonType.OK) {
 					Facade.getInstance().deleteOneReferencing(referencing.getId());
 				}
+
+				sceneHelper.bringNodeToFront(ReferencingList.class.getSimpleName());
 			}
 		});
 

@@ -27,8 +27,8 @@ public class ReferencingList implements Initializable {
     @FXML
     private ChoiceBox<String> select, selectStatus;
 
-    private ObjectId company;
-    private String status;
+    private static ObjectId company;
+    private static String status;
     private final int nbColumn = 4;
 
     /**
@@ -45,17 +45,22 @@ public class ReferencingList implements Initializable {
                 companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             }
 
+            if(company == null && status == null){
+                company = companies.get(0).getId();
+                status = "Tous";
+                select.getSelectionModel().selectFirst();
+                selectStatus.getSelectionModel().selectFirst();
+            } else {
+                Company c = Facade.getInstance().getOneCompany(company);
+                select.setValue(c.getName());
+                selectStatus.setValue(status);
+            }
+
             if(select.getItems().size() == 0){
                 for (Company c : companies){
                     select.getItems().add(c.getName());
                 }
             }
-
-            //pre-select the first company
-            select.getSelectionModel().selectFirst();
-
-            company = companies.get(0).getId();
-            status = "Tous";
 
             if(selectStatus.getItems().size() == 0){
                 selectStatus.getItems().add("Tous");
@@ -63,9 +68,6 @@ public class ReferencingList implements Initializable {
                 selectStatus.getItems().add("En cours");
                 selectStatus.getItems().add("Passé");
             }
-
-            //pre-select the "Tous" choice
-            selectStatus.getSelectionModel().selectFirst();
 
             /**
              * Retrieve the list with the changed status if a company is selected.
