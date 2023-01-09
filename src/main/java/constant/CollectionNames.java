@@ -13,6 +13,7 @@ public final class CollectionNames {
     public final static String SAMPLE = null;
     public final static String ADVERTISING = "advertisings";
     public final static String USER = "users";
+    public final static String CONVERSATION = "conversations";
     public final static String RATE = "rates";
     public final static String NOTIFICATION = "notifications";
     public final static String COMPANY = "companies";

@@ -10,6 +10,7 @@ import exception.user.NoLoggedUser;
 import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
 import persistence.entity.advertising.Advertising;
+import persistence.entity.conversation.Conversation;
 import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
@@ -1337,5 +1338,32 @@ public class Facade implements FacadeInterface {
      */
     public List<Event> getEventsByCompany(ObjectId company) {
         return EventFacade.getInstance().getEventsByCompany(company);
+    }
+
+    /**
+     * Insert a conversation.
+     *
+     * @param conversation The conversation to insert.
+     * @return The id of the inserted conversation.
+     */
+    @Override
+    public ObjectId insertOneConversation(Conversation conversation) {
+        return ConversationFacade.getInstance().insertOneConversation(conversation);
+    }
+
+    /**
+     * Return the conversations where the logged user is.
+     *
+     * @return a list of conversations.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public List<Conversation> getConversationList() throws NoLoggedUser {
+        return ConversationFacade.getInstance().getConversationList();
+    }
+
+    @Override
+    public void sendMessage(ObjectId conversationId, String message) {
+        ConversationFacade.getInstance().sendMessage(conversationId, message);
     }
 }

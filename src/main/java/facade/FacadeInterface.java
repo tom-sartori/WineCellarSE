@@ -9,6 +9,7 @@ import exception.InvalidUsernameException;
 import exception.NotFoundException;
 
 import persistence.entity.advertising.Advertising;
+import persistence.entity.conversation.Conversation;
 import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
@@ -1032,4 +1033,22 @@ public interface FacadeInterface {
 	 * @return A list of events.
 	 */
 	List<Event> getEventsByCompany(ObjectId company);
+
+	/**
+	 * Insert a conversation.
+	 *
+	 * @param conversation The conversation to insert.
+	 * @return The id of the inserted conversation.
+	 */
+	ObjectId insertOneConversation(Conversation conversation);
+
+	/**
+	 * Return the conversations where the logged user is.
+	 *
+	 * @return a list of conversations.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Conversation> getConversationList() throws NoLoggedUser;
+
+	void sendMessage(ObjectId conversationId, String message);
 }
