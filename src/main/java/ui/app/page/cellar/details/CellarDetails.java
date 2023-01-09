@@ -10,9 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -114,20 +112,18 @@ public class CellarDetails implements Initializable {
                 i++;
             }
             options[i] = "Voir toutes ses bouteilles";
-            Select select = new Select("Test", true, options);
+            Select select = new Select("Cave selectionnée", true, options);
             if (seeAllBottles){
                 select.getChoiceBox().setValue("Voir toutes ses bouteilles");
             } else {
                 select.getChoiceBox().setValue(currentCellar.getName());
             }
             select.getChoiceBox().getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-                System.out.println("Test: " + newValue);
                 if (newValue.intValue() < cellarsFromUser.size()){
                     seeAllBottles = false;
                     State.getInstance().setSelectedCellar(cellarsFromUser.get(newValue.intValue()));
 
                 } else {
-                    System.out.println("Voir toutes les bouteilles");
                     State.getInstance().setSelectedCellar(null);
                     seeAllBottles = true;
                 }
@@ -157,7 +153,8 @@ public class CellarDetails implements Initializable {
                 State.getInstance().setSelectedCellar(cellar);
                 refresh();
             } catch (BadCredentialException e) {
-                NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", e.getMessage(), Alert.AlertType.ERROR);
+                Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", e.getMessage(), Alert.AlertType.ERROR);
+                erreur.showAndWait();
             }
 
         });
@@ -196,7 +193,6 @@ public class CellarDetails implements Initializable {
         // create table
 
         if (seeAllBottles && isOwner) {
-            System.out.println("bouteilles");
             List<BottleQuantity> bottleListFromUser = new ArrayList<>();
             for (Cellar cellar : cellarsFromUser) {
                 cellar.getWalls().forEach(wall -> {
@@ -259,7 +255,17 @@ public class CellarDetails implements Initializable {
 
         for (Wall wall: currentCellar.getWalls()) {
 
-            mainVBox.getChildren().add(new Label("Mur: " + wall.getName()));
+            HBox wallParams = new HBox();
+
+            wallParams.setAlignment(Pos.CENTER);
+            wallParams.setSpacing(15);
+
+            wallParams.getChildren().add(new Label("Mur: " + wall.getName()));
+
+            Region region1 = new Region();
+            HBox.setHgrow(region1, Priority.ALWAYS);
+
+            wallParams.getChildren().add(region1);
 
             if (isOwner) {
                 Button addEmplacementButton = new Button("Ajouter un emplacement");
@@ -275,7 +281,7 @@ public class CellarDetails implements Initializable {
                     }
                     refresh();
                 });
-                mainVBox.getChildren().add(addEmplacementButton);
+                wallParams.getChildren().add(addEmplacementButton);
 
                 Button deleteWallButton = NodeCreations.createButton("Supprimer le mur");
                 deleteWallButton.setOnAction(event -> {
@@ -294,8 +300,10 @@ public class CellarDetails implements Initializable {
                         refresh();
                     }
                 });
-                mainVBox.getChildren().add(deleteWallButton);
+                wallParams.getChildren().add(deleteWallButton);
             }
+
+            mainVBox.getChildren().add(wallParams);
 
             for (EmplacementBottle emplacementBottle: wall.getEmplacementBottleMap()) {
 

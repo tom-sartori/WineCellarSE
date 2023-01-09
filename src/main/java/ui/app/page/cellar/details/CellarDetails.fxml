@@ -18,7 +18,7 @@
                 <BorderPane fx:id="scrollableBorderPane" minHeight="530.0" prefWidth="1260.0" style="-fx-background-color: #fff;" />
             </content>
         </ScrollPane>
-        <Label fx:id="cellarName" layoutX="567.0" layoutY="23.0" text="Detail of ">
+        <Label fx:id="cellarName" layoutX="507.0" layoutY="23.0" text="Detail of ">
             <font>
                 <Font size="35.0" />
             </font>
