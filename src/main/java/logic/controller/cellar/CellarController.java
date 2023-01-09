@@ -5,8 +5,7 @@ import exception.NotFoundException;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
 import persistence.dao.bottle.BottleDao;
-import persistence.dao.cellar.CellarDAO;
-import persistence.entity.bottle.Bottle;
+import persistence.dao.cellar.CellarDao;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
@@ -36,7 +35,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId addCellarReader(ObjectId user, ObjectId cellar) throws BadArgumentsException {
-        return CellarDAO.getInstance().addCellarReader(user, cellar);
+        return CellarDao.getInstance().addCellarReader(user, cellar);
     }
 
     /**
@@ -48,7 +47,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId removeCellarReader(ObjectId user, ObjectId cellar) throws BadArgumentsException{
-        return CellarDAO.getInstance().removeCellarReader(user, cellar);
+        return CellarDao.getInstance().removeCellarReader(user, cellar);
     }
 
     /**
@@ -60,7 +59,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId addCellarManager(ObjectId user, ObjectId cellar) throws BadArgumentsException {
-        return CellarDAO.getInstance().addCellarManager(user, cellar);
+        return CellarDao.getInstance().addCellarManager(user, cellar);
     }
 
     /**
@@ -72,7 +71,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId removeCellarManager(ObjectId user, ObjectId cellar) throws BadArgumentsException {
-        return CellarDAO.getInstance().removeCellarManager(user, cellar);
+        return CellarDao.getInstance().removeCellarManager(user, cellar);
     }
 
     /**
@@ -84,7 +83,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId addWall(Wall wall, ObjectId cellar) throws BadArgumentsException{
-        return CellarDAO.getInstance().addWall(wall, cellar);
+        return CellarDao.getInstance().addWall(wall, cellar);
     }
 
     /**
@@ -96,7 +95,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId removeWall(Wall wall, ObjectId cellar) throws BadArgumentsException {
-        return CellarDAO.getInstance().removeWall(wall, cellar);
+        return CellarDao.getInstance().removeWall(wall, cellar);
     }
 
     /**
@@ -109,7 +108,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException{
-        return CellarDAO.getInstance().addEmplacement(cellar, wall, emplacementBottle);
+        return CellarDao.getInstance().addEmplacement(cellar, wall, emplacementBottle);
     }
 
     /**
@@ -122,7 +121,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the update was successful, otherwise throws a BadArgumentsException.
      */
     public ObjectId removeEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException {
-        return CellarDAO.getInstance().removeEmplacement(cellar, wall, emplacementBottle);
+        return CellarDao.getInstance().removeEmplacement(cellar, wall, emplacementBottle);
     }
 
     /**
@@ -139,7 +138,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return The id of the updated cellar if the bottle was found and updated, otherwise throws a BadArgumentsException.
      */
     public ObjectId increaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) throws BadArgumentsException{
-        return CellarDAO.getInstance().increaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
+        return CellarDao.getInstance().increaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
     }
 
     /**
@@ -159,7 +158,7 @@ public class CellarController extends AbstractController<Cellar> {
     public ObjectId decreaseBottleQuantity(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle, BottleQuantity bottleQuantity) throws BadArgumentsException {
         if (bottleQuantity.getQuantity() > 0) {
             // decrease the quantity
-            return CellarDAO.getInstance().decreaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
+            return CellarDao.getInstance().decreaseBottleQuantity(cellar, wall, emplacementBottle, bottleQuantity);
         }
         else{
             // remove the bottle
@@ -174,7 +173,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return A list of all public cellars if there are any, otherwise throws a NotFoundException.
      */
     public List<Cellar> getPublicCellars() throws NotFoundException {
-        return CellarDAO.getInstance().getPublicCellars();
+        return CellarDao.getInstance().getPublicCellars();
     }
 
     /**
@@ -185,7 +184,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return A list of all the cellars of the user if there are any, otherwise throws a NotFoundException.
      */
     public List<Cellar> getCellarsFromUser(ObjectId userId) throws NotFoundException {
-        return CellarDAO.getInstance().getCellarsFromUser(userId);
+        return CellarDao.getInstance().getCellarsFromUser(userId);
     }
 
     /**
@@ -196,7 +195,7 @@ public class CellarController extends AbstractController<Cellar> {
      * @return A list of all the cellars where the user is a reader if there are any, otherwise throws a NotFoundException.
      */
     public List<Cellar> getReadOnlyCellarsFromUser(ObjectId userId) throws NotFoundException {
-        return CellarDAO.getInstance().getReadOnlyCellarsFromUser(userId);
+        return CellarDao.getInstance().getReadOnlyCellarsFromUser(userId);
     }
 
     /**
@@ -207,12 +206,12 @@ public class CellarController extends AbstractController<Cellar> {
      * @return A list of all the cellars where the user is a manager if there are any, otherwise throws a NotFoundException.
      */
     public List<Cellar> getCellarsWhereUserIsManager(ObjectId userId) throws NotFoundException {
-        return CellarDAO.getInstance().getCellarsWhereUserIsManager(userId);
+        return CellarDao.getInstance().getCellarsWhereUserIsManager(userId);
     }
 
     @Override
-    protected CellarDAO getDao() {
-        return CellarDAO.getInstance();
+    protected CellarDao getDao() {
+        return CellarDao.getInstance();
     }
 
 }

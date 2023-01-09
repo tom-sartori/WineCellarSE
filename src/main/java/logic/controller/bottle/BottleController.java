@@ -5,7 +5,7 @@ import exception.NotFoundException;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
 import persistence.dao.bottle.BottleDao;
-import persistence.dao.cellar.CellarDAO;
+import persistence.dao.cellar.CellarDao;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
@@ -81,7 +81,7 @@ public class BottleController extends AbstractController<Bottle> {
             throw new NotFoundException("Cellar id is null.");
         }
 
-        Cellar cellar = CellarDAO.getInstance().findOne(cellarId);
+        Cellar cellar = CellarDao.getInstance().findOne(cellarId);
 
         if (cellar == null) {
             throw new NotFoundException("Cellar not found.");
@@ -152,7 +152,7 @@ public class BottleController extends AbstractController<Bottle> {
             throw new BadArgumentsException("The cellar id is null.");
         }
 
-        Cellar one = CellarDAO.getInstance().findOne(cellarId);
+        Cellar one = CellarDao.getInstance().findOne(cellarId);
 
         if (one == null) {
             throw new BadArgumentsException("The cellar does not exist.");

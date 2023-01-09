@@ -8,14 +8,13 @@ import exception.user.NoLoggedUser;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
-import persistence.dao.cellar.CellarDAO;
+import persistence.dao.cellar.CellarDao;
 import persistence.dao.company.CompanyDao;
 import persistence.dao.user.UserDao;
 import persistence.entity.user.Friend;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.company.Company;
 import persistence.entity.user.User;
-import ui.app.State;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -176,7 +175,7 @@ public class UserController extends AbstractController<User> {
             boolean isOwner;
             boolean isManager;
 
-            Cellar cellar = CellarDAO.getInstance().findOne(cellarId);
+            Cellar cellar = CellarDao.getInstance().findOne(cellarId);
 
             isOwner = loggedUser.getId().equals(cellar.getOwnerRef());
             isManager = cellar.getManagers().contains(loggedUser.getId());

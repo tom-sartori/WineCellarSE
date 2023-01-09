@@ -166,21 +166,6 @@ public class CellarDetails implements Initializable {
 
         scrollableBorderPane.setTop(hbox);
 
-        // barre de recherche
-
-        HBox searchHbox = new HBox();
-
-        LabelField searchField = new LabelField("Rechercher une bouteille", false);
-
-        Button researchButton = new Button("Rechercher");
-
-        researchButton.setCursor(Cursor.HAND);
-        // TODO researchButton.setOnAction(event -> {
-
-        searchHbox.getChildren().addAll(searchField, researchButton);
-
-        mainVBox.getChildren().add(searchHbox);
-
         // boutton de mise à jour (dispo seulement si on est le propriétaire)
 
         if(isOwner){
@@ -281,9 +266,12 @@ public class CellarDetails implements Initializable {
                 addEmplacementButton.setCursor(Cursor.HAND);
                 addEmplacementButton.setOnAction(event -> {
                     try {
+                        State.getInstance().setSelectedCellar(Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId()));
                         Facade.getInstance().addEmplacement(State.getInstance().getSelectedCellar(), wall, new EmplacementBottle(new ArrayList<>(), new ArrayList<>()));
                     } catch (BadArgumentsException e) {
-                        NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout de l'emplacement", e.getMessage(), Alert.AlertType.ERROR);
+                        Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout de l'emplacement", e.getMessage(), Alert.AlertType.ERROR);
+                        erreur.showAndWait();
+
                     }
                     refresh();
                 });
@@ -298,6 +286,7 @@ public class CellarDetails implements Initializable {
 
                     if (buttonType.get() == ButtonType.OK) {
                         try {
+                            State.getInstance().setSelectedCellar(Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId()));
                             Facade.getInstance().removeWall(wall, State.getInstance().getSelectedCellar().getId());
                         } catch (BadArgumentsException e) {
                             NodeCreations.createAlert("Erreur", "Erreur lors de la suppression du mur", e.getMessage(),Alert.AlertType.ERROR);
@@ -323,6 +312,7 @@ public class CellarDetails implements Initializable {
 
                         if (buttonType.get() == ButtonType.OK) {
                             try {
+                                State.getInstance().setSelectedCellar(Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId()));
                                 Facade.getInstance().removeEmplacement(State.getInstance().getSelectedCellar(), wall, emplacementBottle);
                             } catch (BadArgumentsException e) {
                                 NodeCreations.createAlert("Erreur", "Erreur lors de la suppression de l'emplacement", e.getMessage(),Alert.AlertType.ERROR);
