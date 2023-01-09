@@ -2,13 +2,17 @@ package ui.app.theme.menu.role;
 
 import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
+import ui.app.page.cellar.lists.friendscellar.FriendCellarList;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
 import ui.app.page.cellar.lists.shared.SharedWithMeCellars;
 import ui.app.page.company.CompanyPage;
+import ui.app.page.company.admin.CompanyAdmin;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
+import ui.app.page.company.list.CompanyList;
+import ui.app.page.company.list.user.CompanyListByUser;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.partner.PartnerPage;
@@ -31,10 +35,15 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	FRIEND("Mes amis", FriendList.class, USER),
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
+	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY),
+	COMPANYADMINLIST("Toutes les demandes d'entreprises ", CompanyAdmin.class, COMPANY),
+	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
 	ADVERTISINGREQUESTSLIST("Toutes les demandes de publicité", AdvertisingList.class, COMPANY),
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),
+	CELLARFROMFRIENDS("Les caves de mes amis", FriendCellarList.class, CELLAR),
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
+	COMPANYBYUSER("Mes entreprises", CompanyListByUser.class, COMPANY),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
 	RATE("Notes",RatePage .class);
 

@@ -6,6 +6,7 @@ import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.company.Company;
 import persistence.entity.user.User;
 
 import java.sql.SQLOutput;
@@ -26,6 +27,8 @@ public class State {
 	private EmplacementBottle selectedEmplacementBottle;
 
 	private Bottle selectedBottle;
+
+	private Company selectedCompany;
 
 	private State() { }
 
@@ -98,5 +101,13 @@ public class State {
 
 	public void setSelectedBottle(Bottle selectedBottle) {
 		this.selectedBottle = selectedBottle;
+	}
+
+	public Company getSelectedCompany() {
+		return selectedCompany;
+	}
+
+	public void setSelectedCompany(Company selectedCompany) {
+		this.selectedCompany = selectedCompany;
 	}
 }

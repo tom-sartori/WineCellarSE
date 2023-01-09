@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<AnchorPane fx:id="companyList" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.list.CompanyList">
+    <stylesheets>
+        <URL value="@/ui/app/page/company/list/CompanyList.css" />
+    </stylesheets>
+    <children>
+        <HBox fx:id="titleHBox" prefWidth="1280" prefHeight="90"/>
+        <ScrollPane layoutY="90" prefWidth="1280" prefHeight="535">
+            <content>
+                <FlowPane fx:id="listFlowPane" prefWidth="1260" minHeight="535"/>
+            </content>
+        </ScrollPane>
+    </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
+</AnchorPane>

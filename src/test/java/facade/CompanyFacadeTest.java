@@ -285,6 +285,7 @@ class CompanyFacadeTest {
     void Test_findAllAccessibleCompanies(){
 
         try {
+            company.setName("Apple");
             ObjectId objectId = facade.insertOneCompany(company);
 
             facade.acceptRequest(objectId);
@@ -318,21 +319,26 @@ class CompanyFacadeTest {
     void Test_findAllUnAccessibleCompanies(){
 
         try {
+            company.setName("Pizza2");
             ObjectId objectId = facade.insertOneCompany(company);
 
             assertNotNull(objectId);
 
             List<Company> before = facade.findAllUnaccessibleCompanies();
 
+            company.setName("Pizza3");
             ObjectId objectId1 = facade.insertOneCompany(company);
             facade.acceptRequest(objectId1);
+            company.setName("Apple1");
             ObjectId objectId2 = facade.insertOneCompany(company);
+            company.setName("Apple3");
             ObjectId objectId3 = facade.insertOneCompany(company);
 
             List<Company> after = facade.findAllUnaccessibleCompanies();
 
             assertEquals(before.size() + 2, after.size());
 
+            System.out.println(after.toString());
             // CLEAN UP
 
             facade.deleteOneCompany(objectId);

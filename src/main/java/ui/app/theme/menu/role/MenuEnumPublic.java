@@ -2,6 +2,7 @@ package ui.app.theme.menu.role;
 
 import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
+import ui.app.page.company.list.CompanyList;
 import ui.app.page.company.referencing.ReferencingPage;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
@@ -27,11 +28,12 @@ public enum MenuEnumPublic implements MenuEnumInterface {
 	PARTNER("Partenaires", PartnerPage.class),
 	COMPANY("Entreprise", CompanyPage.class),
 	CELLAR("Caves", CellarPage.class),
-	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
 	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
 
 	GUIDE("Guides",Guides .class),
-	RATE("Notes",RatePage .class);
+	RATE("Notes",RatePage .class),
+	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
+	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

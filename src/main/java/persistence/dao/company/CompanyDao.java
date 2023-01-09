@@ -124,6 +124,32 @@ public class CompanyDao extends AbstractDao<Company> {
 		return addOrRemoveFromSet(companyId, managerId, "managerList", false);
 	}
 
+	/**
+	 * Add a user to the list of users that follow the company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param userId The id of the user.
+	 *
+	 * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+	 * @throws BadArgumentsException If the company or the user does not exist.
+	 */
+	public ObjectId followCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException {
+		return addOrRemoveFromSet(companyId, userId, "followerList", true);
+	}
+
+	/**
+	 * remove a user from the list of users that follow the company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param userId The id of the user.
+	 *
+	 * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+	 * @throws BadArgumentsException If the company or the user does not exist.
+	 */
+	public ObjectId unfollowCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException {
+		return addOrRemoveFromSet(companyId, userId, "followerList", false);
+	}
+
 	@Override
 	protected String getCollectionName() {
 		return CollectionNames.COMPANY;
