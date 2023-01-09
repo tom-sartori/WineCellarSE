@@ -1,18 +1,14 @@
 package ui.app.helpers.services;
 
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import ui.Starter;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /*
  * This class helps get FXML components from the main scene and can call functions from different controllers to change then.
@@ -102,6 +98,16 @@ public  class CustomSceneHelper {
         if (controller instanceof Initializable) {
             ((Initializable) controller).initialize(null, null);
         }
+    }
+
+    public Initializable getController(String nodeName) {
+        // Get the controller of the node and run initialize() on it. This is used to refresh the page when it is brought to the front.
+        Node node = getNodeById(nodeName);
+        Object controller = node.getProperties().get("controller");
+        if (controller instanceof Initializable) {
+            return ((Initializable) controller);
+        }
+        return null;
     }
 
     public void refreshMenu() {
