@@ -138,24 +138,27 @@ public class CellarDetails implements Initializable {
                 label.setFont(javafx.scene.text.Font.font("System Bold", 30));
                 hbox.getChildren().add(label);
             }
-
         }
 
         LabelField labelField = new LabelField("Créer une nouvelle cave", true);
 
         hbox.getChildren().add(labelField);
 
-        Button createCellarButton = new Button("Créer");
-        createCellarButton.setCursor(Cursor.HAND);
+        Button createCellarButton = NodeCreations.createButton("Créer");
         createCellarButton.setOnAction(event -> {
-            Cellar cellar = new Cellar(labelField.getValue(),false, new ArrayList<>(), new ArrayList<>(),State.getInstance().getCurrentUser().getId(),new ArrayList<>());
-            try {
-                Facade.getInstance().insertOneCellar(cellar);
-                State.getInstance().setSelectedCellar(cellar);
-                refresh();
-            } catch (BadCredentialException e) {
-                Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", e.getMessage(), Alert.AlertType.ERROR);
-                erreur.showAndWait();
+            if (!labelField.getValue().equals("")){
+                Cellar cellar = new Cellar(labelField.getValue(),false, new ArrayList<>(), new ArrayList<>(),State.getInstance().getCurrentUser().getId(),new ArrayList<>());
+                try {
+                    Facade.getInstance().insertOneCellar(cellar);
+                    State.getInstance().setSelectedCellar(cellar);
+                    refresh();
+                } catch (BadCredentialException e) {
+                    Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", e.getMessage(), Alert.AlertType.ERROR);
+                    erreur.showAndWait();
+                }
+            }
+            else{
+                NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", "Entrez un nom valide pour votre cave !", Alert.AlertType.ERROR);
             }
 
         });
@@ -190,7 +193,6 @@ public class CellarDetails implements Initializable {
             HBox.setHgrow(region, Priority.ALWAYS);
 
             cellarParameters.getChildren().add(region);
-
 
             cellarParameters.getChildren().add(updateButton);
 
@@ -251,11 +253,8 @@ public class CellarDetails implements Initializable {
         }
 
         scrollableBorderPane.setCenter(mainVBox);
-
     }
 
-
-    // TODO CLEAN CODE
     public void createAndAddCurrentTable(){
 
         // Creating table header

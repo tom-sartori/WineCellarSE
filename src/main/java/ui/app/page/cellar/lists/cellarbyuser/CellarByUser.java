@@ -12,6 +12,7 @@ import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.component.card.CardComponent;
 import ui.app.page.cellar.details.CellarDetails;
+import ui.app.page.cellar.forms.create.CellarForm;
 
 import java.net.URL;
 import java.util.List;
@@ -21,6 +22,8 @@ public class CellarByUser implements Initializable {
 
     @FXML
     private FlowPane cardHolder;
+
+    private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
 
     /**
      * Initializes the controller class.
@@ -43,5 +46,9 @@ public class CellarByUser implements Initializable {
                 cardHolder.getChildren().add(card);
             }
         }
+    }
+
+    public void redirectToCreateCellar(){
+        sceneHelper.bringNodeToFront(CellarForm.class.getSimpleName());
     }
 }
