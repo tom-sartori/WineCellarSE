@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <AnchorPane id="advertisingCard" prefHeight="139.0" prefWidth="523.0" style="-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-width: 1px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.company.advertising.AdvertisingCard">
    <children>
       <Label fx:id="name" layoutX="14.0" layoutY="7.0" prefHeight="17.0" prefWidth="111.0" text="Nom" wrapText="true" />
@@ -12,5 +10,6 @@
       <Label fx:id="nameCompany" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="405.0" layoutY="7.0" prefHeight="17.0" prefWidth="100.0" text="NomEntreprise" wrapText="true" />
       <Button fx:id="action2" layoutX="14.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Action2" />
       <ImageView fx:id="image" fitHeight="130.0" fitWidth="255.0" layoutX="138.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="update" layoutX="435.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Update" />
    </children>
 </AnchorPane>

@@ -13,6 +13,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import persistence.entity.company.Company;
 import persistence.entity.event.Event;
+import ui.app.State;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.event.list.EventList;
+import ui.app.page.company.event.update.EventUpdate;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.company.event.list.EventList;
 
@@ -27,7 +31,7 @@ public class EventCard extends Pane {
 	@FXML
 	private AnchorPane eventCard;
 	@FXML
-	private Button supprimer;
+	private Button supprimer, update;
 
 	@FXML
 	private TextArea description;
@@ -56,6 +60,7 @@ public class EventCard extends Pane {
 		startDate = (Label) eventCard.lookup("#startDate");
 		endDate = (Label) eventCard.lookup("#endDate");
 		supprimer = (Button) eventCard.lookup("#supprimer");
+		update = (Button) eventCard.lookup("#update");
 
 		nameCompany.setText(company.getName());
 		name.setText(event1.getName());
@@ -77,6 +82,7 @@ public class EventCard extends Pane {
 
 		if(Facade.getInstance().isManagerOfCompany(company.getId())){
 			supprimer.setVisible(true);
+			update.setVisible(true);
 			supprimer.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -95,9 +101,18 @@ public class EventCard extends Pane {
 
 			});
 
+			update.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					State.getInstance().setCurrentEvent(event1);
+					sceneHelper.bringNodeToFront(EventUpdate.class.getSimpleName());
+				}
+			});
+
 			getChildren().addAll(supprimer);
 		}
 		else {
+			update.setVisible(false);
 			supprimer.setVisible(false);
 		}
 	}

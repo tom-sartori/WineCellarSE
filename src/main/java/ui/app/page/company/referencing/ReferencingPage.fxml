@@ -10,6 +10,7 @@
     <children>
         <Button mnemonicParsing="false" text="Sample" />
         <fx:include fx:id="referencingCreation" source="creation/ReferencingCreation.fxml" />
+        <fx:include fx:id="referencingUpdate" source="update/ReferencingUpdate.fxml" />
         <fx:include fx:id="referencingList" source="list/ReferencingList.fxml" />
     </children>
     <properties>

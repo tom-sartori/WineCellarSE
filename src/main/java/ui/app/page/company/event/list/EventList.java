@@ -58,14 +58,14 @@ public class EventList implements Initializable {
 
             if(company == null){
                 company = companies.get(0).getId();
-                select.getSelectionModel().selectFirst();
+                select.getSelectionModel().select("Tous");
             } else {
                 Company c = Facade.getInstance().getOneCompany(company);
                 select.setValue(c.getName());
             }
 
             /**
-             * If "Toutes" is selected, create a list with all the events else
+             * If "Tous" is selected, create a list with all the events else
              * retrieve the company selected and create a list of events.
              */
             select.setOnAction((event) -> {
