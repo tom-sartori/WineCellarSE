@@ -92,11 +92,16 @@ public class AdvertisingCreation implements Initializable, Observer {
             try {
                 Date startDate=new SimpleDateFormat("dd/MM/yyyy").parse(startDateString);
                 Date endDate=new SimpleDateFormat("dd/MM/yyyy").parse(endDateString);
+                Date now = new Date();
 
                 if (!startDate.before(endDate)) {
                     // Invalid startDate and endDate.
                     formController.showErrorLabel("Dates invalides");
                     return;
+                }
+
+                if(startDate.before(now)){
+                    startDate = now;
                 }
 
                 for(Company c : companies) {

@@ -25,7 +25,7 @@ class CompanyFacadeTest {
      */
     @BeforeEach
     void init() {
-        company = new Company("Google", "type1", " 4 rue de Ganges, 34090, Montpellier", false, null, new ArrayList<>(), new Cellar(), "06 43 54 23 53", null, null, null);
+        company = new Company("Microsoft1", "type1", " 4 rue de Ganges, 34090, Montpellier", false, null, new ArrayList<>(), new ObjectId(), "06 43 54 23 53", null, null, null);
     }
 
     /**
@@ -61,7 +61,9 @@ class CompanyFacadeTest {
 
         List<Company> before = facade.getCompanyList();
 
+        company.setName("Microsoft11");
         ObjectId objectId1 = facade.insertOneCompany(company);
+        company.setName("Microsoft111");
         ObjectId objectId2 = facade.insertOneCompany(company);
 
         List<Company> after = facade.getCompanyList();
@@ -142,7 +144,7 @@ class CompanyFacadeTest {
         try {
             ObjectId objectId = facade.insertOneCompany(company);
 
-            User user = new User("mich", "mich");
+            User user = new User("Lorenzo1000", "mich");
 
             ObjectId userId = facade.register(user);
 
@@ -158,8 +160,10 @@ class CompanyFacadeTest {
 
             // CLEAN UP
 
+            facade.login("michel","michel");
             facade.deleteOneCompany(objectId);
             facade.deleteOneUser(user.getUsername());
+            facade.logout();
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }
@@ -173,7 +177,7 @@ class CompanyFacadeTest {
         try {
             ObjectId objectId = facade.insertOneCompany(company);
 
-            User user = new User("mich", "mich");
+            User user = new User("Lorenzo10000", "mich");
 
             ObjectId userId = facade.register(user);
 
@@ -188,9 +192,10 @@ class CompanyFacadeTest {
             assertEquals(userId, companyAfter.getManagerList().get(0));
 
             // CLEAN UP
-
+            facade.login("michel","michel");
             facade.deleteOneCompany(objectId);
             facade.deleteOneUser(user.getUsername());
+            facade.logout();
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }
@@ -204,7 +209,7 @@ class CompanyFacadeTest {
         try {
             ObjectId objectId = facade.insertOneCompany(company);
 
-            User user = new User("mich", "mich");
+            User user = new User("Lorenzo100000", "mich");
 
             ObjectId userId = facade.register(user);
 
@@ -228,8 +233,10 @@ class CompanyFacadeTest {
 
             // CLEAN UP
 
+            facade.login("michel","michel");
             facade.deleteOneCompany(objectId);
             facade.deleteOneUser(user.getUsername());
+            facade.logout();
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }
@@ -285,6 +292,7 @@ class CompanyFacadeTest {
     void Test_findAllAccessibleCompanies(){
 
         try {
+            company.setName("Apple");
             ObjectId objectId = facade.insertOneCompany(company);
 
             facade.acceptRequest(objectId);
@@ -293,8 +301,10 @@ class CompanyFacadeTest {
 
             List<Company> before = facade.findAllAccessibleCompanies();
 
+            company.setName("Apple1");
             ObjectId objectId1 = facade.insertOneCompany(company);
             facade.acceptRequest(objectId1);
+            company.setName("Apple11");
             ObjectId objectId2 = facade.insertOneCompany(company);
 
             List<Company> after = facade.findAllAccessibleCompanies();
@@ -318,21 +328,26 @@ class CompanyFacadeTest {
     void Test_findAllUnAccessibleCompanies(){
 
         try {
+            company.setName("Pizza2");
             ObjectId objectId = facade.insertOneCompany(company);
 
             assertNotNull(objectId);
 
             List<Company> before = facade.findAllUnaccessibleCompanies();
 
+            company.setName("Pizza3");
             ObjectId objectId1 = facade.insertOneCompany(company);
             facade.acceptRequest(objectId1);
+            company.setName("Apple1");
             ObjectId objectId2 = facade.insertOneCompany(company);
+            company.setName("Apple3");
             ObjectId objectId3 = facade.insertOneCompany(company);
 
             List<Company> after = facade.findAllUnaccessibleCompanies();
 
             assertEquals(before.size() + 2, after.size());
 
+            System.out.println(after.toString());
             // CLEAN UP
 
             facade.deleteOneCompany(objectId);
@@ -350,7 +365,7 @@ class CompanyFacadeTest {
     @Test
     void Test_findCompaniesByUserId() throws MustBeAnAdminException {
         try {
-            User user = new User("Lorenzo10", "Lorenzo5");
+            User user = new User("Lorenzo1000000000000", "Lorenzo5");
 
             ObjectId userId = facade.register(user);
 
@@ -366,6 +381,7 @@ class CompanyFacadeTest {
 
             company.setMasterManager(null);
 
+            company.setName("Microsoft11111111");
             ObjectId objectId1 = facade.insertOneCompany(company);
 
             assertNotNull(objectId1);
@@ -378,10 +394,14 @@ class CompanyFacadeTest {
 
             assertEquals(before.size() + 1, after.size());
 
+            facade.login("michel","michel");
+
             // CLEAN UP
 
             facade.deleteOneCompany(objectId);
+            facade.deleteOneCompany(objectId1);
             facade.deleteOneUser(user.getUsername());
+            facade.logout();
         } catch (BadArgumentsException e) {
             throw new RuntimeException(e);
         }

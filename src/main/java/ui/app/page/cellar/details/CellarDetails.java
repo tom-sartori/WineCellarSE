@@ -10,9 +10,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -114,20 +113,18 @@ public class CellarDetails implements Initializable {
                 i++;
             }
             options[i] = "Voir toutes ses bouteilles";
-            Select select = new Select("Test", true, options);
+            Select select = new Select("Cave selectionnée", true, options);
             if (seeAllBottles){
                 select.getChoiceBox().setValue("Voir toutes ses bouteilles");
             } else {
                 select.getChoiceBox().setValue(currentCellar.getName());
             }
             select.getChoiceBox().getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-                System.out.println("Test: " + newValue);
                 if (newValue.intValue() < cellarsFromUser.size()){
                     seeAllBottles = false;
                     State.getInstance().setSelectedCellar(cellarsFromUser.get(newValue.intValue()));
 
                 } else {
-                    System.out.println("Voir toutes les bouteilles");
                     State.getInstance().setSelectedCellar(null);
                     seeAllBottles = true;
                 }
@@ -141,23 +138,27 @@ public class CellarDetails implements Initializable {
                 label.setFont(javafx.scene.text.Font.font("System Bold", 30));
                 hbox.getChildren().add(label);
             }
-
         }
 
         LabelField labelField = new LabelField("Créer une nouvelle cave", true);
 
         hbox.getChildren().add(labelField);
 
-        Button createCellarButton = new Button("Créer");
-        createCellarButton.setCursor(Cursor.HAND);
+        Button createCellarButton = NodeCreations.createButton("Créer");
         createCellarButton.setOnAction(event -> {
-            Cellar cellar = new Cellar(labelField.getValue(),false, new ArrayList<>(), new ArrayList<>(),State.getInstance().getCurrentUser().getId(),new ArrayList<>());
-            try {
-                Facade.getInstance().insertOneCellar(cellar);
-                State.getInstance().setSelectedCellar(cellar);
-                refresh();
-            } catch (BadCredentialException e) {
-                NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", e.getMessage(), Alert.AlertType.ERROR);
+            if (!labelField.getValue().equals("")){
+                Cellar cellar = new Cellar(labelField.getValue(),false, new ArrayList<>(), new ArrayList<>(),State.getInstance().getCurrentUser().getId(),new ArrayList<>());
+                try {
+                    Facade.getInstance().insertOneCellar(cellar);
+                    State.getInstance().setSelectedCellar(cellar);
+                    refresh();
+                } catch (BadCredentialException e) {
+                    Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", e.getMessage(), Alert.AlertType.ERROR);
+                    erreur.showAndWait();
+                }
+            }
+            else{
+                NodeCreations.createAlert("Erreur", "Erreur lors de la création de la cave", "Entrez un nom valide pour votre cave !", Alert.AlertType.ERROR);
             }
 
         });
@@ -166,31 +167,34 @@ public class CellarDetails implements Initializable {
 
         scrollableBorderPane.setTop(hbox);
 
-        // barre de recherche
-
-        HBox searchHbox = new HBox();
-
-        LabelField searchField = new LabelField("Rechercher une bouteille", false);
-
-        Button researchButton = new Button("Rechercher");
-
-        researchButton.setCursor(Cursor.HAND);
-        // TODO researchButton.setOnAction(event -> {
-
-        searchHbox.getChildren().addAll(searchField, researchButton);
-
-        mainVBox.getChildren().add(searchHbox);
-
         // boutton de mise à jour (dispo seulement si on est le propriétaire)
 
         if(isOwner){
-            Button updateButton = new Button("Modifer la cave");
+            HBox cellarParameters = new HBox();
+
+            cellarParameters.setSpacing(15);
+            cellarParameters.setAlignment(Pos.CENTER);
+            cellarParameters.setPadding(new Insets(15));
+
+            Button addWallButton = new Button("Ajouter un mur");
+            addWallButton.setCursor(Cursor.HAND);
+            addWallButton.setOnAction(event -> {
+                sceneHelper.bringNodeToFront(AddWallForm.class.getSimpleName());
+            });
+            cellarParameters.getChildren().add(addWallButton);
+
+            Button updateButton = new Button("Modifier la cave");
             updateButton.setCursor(Cursor.HAND);
             updateButton.setOnAction(event -> {
                 sceneHelper.bringNodeToFront(UpdateCellarForm.class.getSimpleName());
             });
 
-            mainVBox.getChildren().add(updateButton);
+            Region region = new Region();
+            HBox.setHgrow(region, Priority.ALWAYS);
+
+            cellarParameters.getChildren().add(region);
+
+            cellarParameters.getChildren().add(updateButton);
 
             Button deleteButton = new Button("Supprimer la cave");
             deleteButton.setCursor(Cursor.HAND);
@@ -205,13 +209,14 @@ public class CellarDetails implements Initializable {
                     sceneHelper.bringNodeToFront(CellarByUser.class.getSimpleName());
                 }
             });
-            mainVBox.getChildren().add(deleteButton);
+            cellarParameters.getChildren().add(deleteButton);
+
+            mainVBox.getChildren().add(cellarParameters);
         }
 
         // create table
 
         if (seeAllBottles && isOwner) {
-            System.out.println("bouteilles");
             List<BottleQuantity> bottleListFromUser = new ArrayList<>();
             for (Cellar cellar : cellarsFromUser) {
                 cellar.getWalls().forEach(wall -> {
@@ -248,11 +253,8 @@ public class CellarDetails implements Initializable {
         }
 
         scrollableBorderPane.setCenter(mainVBox);
-
     }
 
-
-    // TODO CLEAN CODE
     public void createAndAddCurrentTable(){
 
         // Creating table header
@@ -263,31 +265,38 @@ public class CellarDetails implements Initializable {
         tableHeaders.add("Producteur");
         tableHeaders.add("Quantité");
 
-        if (isOwner){
-            Button addWallButton = new Button("Ajouter un mur");
-            addWallButton.setCursor(Cursor.HAND);
-            addWallButton.setOnAction(event -> {
-                sceneHelper.bringNodeToFront(AddWallForm.class.getSimpleName());
-            });
-            mainVBox.getChildren().add(addWallButton);
-        }
-
         for (Wall wall: currentCellar.getWalls()) {
 
-            mainVBox.getChildren().add(new Label("Mur: " + wall.getName()));
+            HBox wallParams = new HBox();
+
+            wallParams.setAlignment(Pos.CENTER);
+            wallParams.setSpacing(15);
+            wallParams.setPadding(new Insets(15));
+
+            Label labelWall = new Label("Mur: " + wall.getName());
+            labelWall.setFont(javafx.scene.text.Font.font("System Bold", 25));
+            wallParams.getChildren().add(labelWall);
+
+            Region region1 = new Region();
+            HBox.setHgrow(region1, Priority.ALWAYS);
+
+            wallParams.getChildren().add(region1);
 
             if (isOwner) {
                 Button addEmplacementButton = new Button("Ajouter un emplacement");
                 addEmplacementButton.setCursor(Cursor.HAND);
                 addEmplacementButton.setOnAction(event -> {
                     try {
+                        State.getInstance().setSelectedCellar(Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId()));
                         Facade.getInstance().addEmplacement(State.getInstance().getSelectedCellar(), wall, new EmplacementBottle(new ArrayList<>(), new ArrayList<>()));
                     } catch (BadArgumentsException e) {
-                        NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout de l'emplacement", e.getMessage(), Alert.AlertType.ERROR);
+                        Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de l'ajout de l'emplacement", e.getMessage(), Alert.AlertType.ERROR);
+                        erreur.showAndWait();
+
                     }
                     refresh();
                 });
-                mainVBox.getChildren().add(addEmplacementButton);
+                wallParams.getChildren().add(addEmplacementButton);
 
                 Button deleteWallButton = NodeCreations.createButton("Supprimer le mur");
                 deleteWallButton.setOnAction(event -> {
@@ -298,6 +307,7 @@ public class CellarDetails implements Initializable {
 
                     if (buttonType.get() == ButtonType.OK) {
                         try {
+                            State.getInstance().setSelectedCellar(Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId()));
                             Facade.getInstance().removeWall(wall, State.getInstance().getSelectedCellar().getId());
                         } catch (BadArgumentsException e) {
                             NodeCreations.createAlert("Erreur", "Erreur lors de la suppression du mur", e.getMessage(),Alert.AlertType.ERROR);
@@ -305,14 +315,39 @@ public class CellarDetails implements Initializable {
                         refresh();
                     }
                 });
-                mainVBox.getChildren().add(deleteWallButton);
+                wallParams.getChildren().add(deleteWallButton);
             }
+
+            mainVBox.getChildren().add(wallParams);
 
             for (EmplacementBottle emplacementBottle: wall.getEmplacementBottleMap()) {
 
-                mainVBox.getChildren().add(new Label("Emplacement n°" + (wall.getEmplacementBottleMap().indexOf(emplacementBottle)+1)));
+                HBox emplacementHBox = new HBox();
+
+                emplacementHBox.setAlignment(Pos.CENTER);
+                emplacementHBox.setSpacing(15);
+
+                emplacementHBox.setPadding(new Insets(15));
+
+                Label labelEmplacement = new Label("Emplacement n°" + (wall.getEmplacementBottleMap().indexOf(emplacementBottle) + 1));
+                labelEmplacement.setFont(javafx.scene.text.Font.font("System Bold", 20));
+                emplacementHBox.getChildren().add(labelEmplacement);
 
                 if (isOwner) {
+                    Button addBottleButton = NodeCreations.createButton("Ajouter une bouteille");
+                    addBottleButton.setOnAction(event -> {
+                        State.getInstance().setSelectedCellar(currentCellar);
+                        State.getInstance().setSelectedEmplacementBottle(emplacementBottle);
+                        State.getInstance().setSelectedWall(wall);
+                        sceneHelper.bringNodeToFront(CreateBottleForm.class.getSimpleName());
+                    });
+                    emplacementHBox.getChildren().add(addBottleButton);
+
+                    Region regionEmplacement = new Region();
+                    HBox.setHgrow(regionEmplacement, Priority.ALWAYS);
+
+                    emplacementHBox.getChildren().add(regionEmplacement);
+
                     Button deleteEmplacementButton = new Button("Supprimer l'emplacement");
                     deleteEmplacementButton.setCursor(Cursor.HAND);
                     deleteEmplacementButton.setOnAction(event -> {
@@ -323,6 +358,7 @@ public class CellarDetails implements Initializable {
 
                         if (buttonType.get() == ButtonType.OK) {
                             try {
+                                State.getInstance().setSelectedCellar(Facade.getInstance().getOneCellar(State.getInstance().getSelectedCellar().getId()));
                                 Facade.getInstance().removeEmplacement(State.getInstance().getSelectedCellar(), wall, emplacementBottle);
                             } catch (BadArgumentsException e) {
                                 NodeCreations.createAlert("Erreur", "Erreur lors de la suppression de l'emplacement", e.getMessage(),Alert.AlertType.ERROR);
@@ -330,8 +366,10 @@ public class CellarDetails implements Initializable {
                             refresh();
                         }
                     });
-                    mainVBox.getChildren().add(deleteEmplacementButton);
+                    emplacementHBox.getChildren().add(deleteEmplacementButton);
                 }
+
+                mainVBox.getChildren().add(emplacementHBox);
 
                 HBox tableActionsHbox = new HBox();
 
@@ -348,17 +386,6 @@ public class CellarDetails implements Initializable {
                 actionsVbox.getChildren().add(actions);
 
                 tableActionsHbox.getChildren().addAll(table, actionsVbox);
-
-                if (isOwner){
-                    Button addBottleButton = NodeCreations.createButton("Ajouter une bouteille");
-                    addBottleButton.setOnAction(event -> {
-                        State.getInstance().setSelectedCellar(currentCellar);
-                        State.getInstance().setSelectedEmplacementBottle(emplacementBottle);
-                        State.getInstance().setSelectedWall(wall);
-                        sceneHelper.bringNodeToFront(CreateBottleForm.class.getSimpleName());
-                    });
-                    mainVBox.getChildren().add(addBottleButton);
-                }
 
                 for (BottleQuantity bottleQuantity: emplacementBottle.getBottleList()) {
 

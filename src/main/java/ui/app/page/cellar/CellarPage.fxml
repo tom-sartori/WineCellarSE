@@ -15,6 +15,7 @@
         <fx:include source="../bottle/create/CreateBottleForm.fxml" />
         <fx:include source="forms/addwallform/AddWallForm.fxml" />
         <fx:include source="lists/shared/SharedWithMeCellars.fxml" />
+        <fx:include source="lists/friendscellar/FriendCellarList.fxml" />
         <fx:include source="lists/publiccellars/PublicCellars.fxml" />
     </children>
     <properties>

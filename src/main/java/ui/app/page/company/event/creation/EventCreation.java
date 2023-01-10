@@ -55,6 +55,8 @@ public class EventCreation implements Initializable, Observer {
             formController.addField(new LabelField("Date de fin", true));
             formController.addField(new Select("Entreprise", true, companyList));
 
+            formController.setSubmitButtonText("Ajouter");
+
             //formController.addField(new Select("Entreprise", true, State.getInstance().getCurrentUser().);
 
             formController.initialize(null, null);

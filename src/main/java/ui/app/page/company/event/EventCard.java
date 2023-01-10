@@ -1,6 +1,5 @@
 package ui.app.page.company.event;
 
-import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,11 +11,14 @@ import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import org.bson.types.ObjectId;
 import persistence.entity.company.Company;
 import persistence.entity.event.Event;
-import persistence.entity.user.User;
 import ui.app.State;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.event.list.EventList;
+import ui.app.page.company.event.update.EventUpdate;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.event.list.EventList;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,24 +26,26 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class EventCard extends Pane {
-	private Event event;
+	private Event event1;
 
 	@FXML
 	private AnchorPane eventCard;
 	@FXML
-	private Button supprimer;
+	private Button supprimer, update;
 
 	@FXML
 	private TextArea description;
 	@FXML
 	private Label name, address, startDate, endDate, nameCompany;
 
+	private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
+
 	//TODO : bouton supprimer apparait pas automatiquement quand on se connecte
 
-	public EventCard(Event event) {
+	public EventCard(Event event1) {
 
-		this.event = event;
-		Company company = Facade.getInstance().getOneCompany(event.getCompany());
+		this.event1 = event1;
+		Company company = Facade.getInstance().getOneCompany(event1.getCompany());
 		try {
 			eventCard = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("EventCard.fxml")));
 		}
@@ -56,14 +60,15 @@ public class EventCard extends Pane {
 		startDate = (Label) eventCard.lookup("#startDate");
 		endDate = (Label) eventCard.lookup("#endDate");
 		supprimer = (Button) eventCard.lookup("#supprimer");
+		update = (Button) eventCard.lookup("#update");
 
 		nameCompany.setText(company.getName());
-		name.setText(event.getName());
-		address.setText(event.getAddress());
-		description.setText(event.getDescription());
+		name.setText(event1.getName());
+		address.setText(event1.getAddress());
+		description.setText(event1.getDescription());
 		SimpleDateFormat pattern = new SimpleDateFormat("dd/MM/yyyy");
-		String endDate1 = pattern.format(event.getEndDate());
-		String startDate1 = pattern.format(event.getStartDate());
+		String endDate1 = pattern.format(event1.getEndDate());
+		String startDate1 = pattern.format(event1.getStartDate());
 		startDate.setText(startDate1);
 		endDate.setText(endDate1);
 
@@ -77,25 +82,37 @@ public class EventCard extends Pane {
 
 		if(Facade.getInstance().isManagerOfCompany(company.getId())){
 			supprimer.setVisible(true);
+			update.setVisible(true);
 			supprimer.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
-				public void handle(ActionEvent event1) {
+				public void handle(ActionEvent event) {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 					alert.setTitle("Confirmation");
 					alert.setHeaderText(null);
-					alert.setContentText("Voulez-vous réellement supprimer l'évènement " + event.getName() + " ?");
+					alert.setContentText("Voulez-vous réellement supprimer l'évènement " + event1.getName() + " ?");
 
 					Optional<ButtonType> option = alert.showAndWait();
 
 					if (option.get() == ButtonType.OK) {
-						Facade.getInstance().deleteOneReferencing(event.getId());
+						Facade.getInstance().deleteOneEvent(event1.getId());
 					}
+					sceneHelper.bringNodeToFront(EventList.class.getSimpleName());
+				}
+
+			});
+
+			update.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					State.getInstance().setCurrentEvent(event1);
+					sceneHelper.bringNodeToFront(EventUpdate.class.getSimpleName());
 				}
 			});
 
 			getChildren().addAll(supprimer);
 		}
 		else {
+			update.setVisible(false);
 			supprimer.setVisible(false);
 		}
 	}

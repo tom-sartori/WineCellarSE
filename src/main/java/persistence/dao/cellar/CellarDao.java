@@ -1,7 +1,6 @@
 package persistence.dao.cellar;
 
 import com.mongodb.client.model.Updates;
-import com.mongodb.client.result.UpdateResult;
 import constant.CollectionNames;
 import exception.BadArgumentsException;
 import exception.NotFoundException;
@@ -10,7 +9,6 @@ import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import persistence.dao.AbstractDao;
-import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
@@ -25,23 +23,23 @@ import static com.mongodb.client.model.Updates.combine;
 /**
  * Cellar DAO.
  */
-public class CellarDAO extends AbstractDao<Cellar> {
+public class CellarDao extends AbstractDao<Cellar> {
 
-    private static CellarDAO instance;
+    private static CellarDao instance;
 
     /**
      * Singleton instance.
      */
-    private CellarDAO() { }
+    private CellarDao() { }
 
     /**
      * Get the singleton instance of the DAO.
      *
      * @return The singleton instance.
      */
-    public static CellarDAO getInstance() {
+    public static CellarDao getInstance() {
         if(instance == null) {
-            instance = new CellarDAO();
+            instance = new CellarDao();
         }
         return instance;
     }
@@ -179,6 +177,9 @@ public class CellarDAO extends AbstractDao<Cellar> {
      */
     public ObjectId addEmplacement(Cellar cellar, Wall wall, EmplacementBottle emplacementBottle) throws BadArgumentsException {
         int indexOfWall = cellar.getWalls().indexOf(wall);
+        if (indexOfWall == -1){
+            throw new BadArgumentsException("Le mur indiqué n'est pas dans la cave");
+        }
         return addOrRemoveFromSet(cellar.getId(), emplacementBottle, "walls." + indexOfWall + ".emplacementBottleMap", true);
     }
 

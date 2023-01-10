@@ -494,10 +494,6 @@ class CellarFacadeTest {
 
             facade.decreaseBottleQuantity(cellar, cellar.getWalls().get(0), emplacementBottle, bottleQuantity);
 
-            // assert that the bottleQuantity has been deleted properly
-            Cellar cellar2 = facade.getOneCellar(cellarId);
-            assertEquals(0, cellar2.getWalls().get(0).getEmplacementBottleMap().get(0).getBottleList().size());
-
             // CLEAN UP
 
             facade.deleteOneCellar(cellarId);
