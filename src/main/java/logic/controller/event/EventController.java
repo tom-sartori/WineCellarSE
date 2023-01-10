@@ -3,8 +3,8 @@ package logic.controller.event;
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
-import persistence.dao.event.EventDao;
+import persistence.dao.mongodb.AbstractMongoDao;
+import persistence.dao.mongodb.event.EventMongoDao;
 import persistence.entity.event.Event;
 
 import java.util.List;
@@ -38,8 +38,8 @@ public class EventController extends AbstractController<Event> {
      * @return the DAO of the specific Controller (EventDao).
      */
     @Override
-    protected AbstractDao<Event> getDao() {
-        return EventDao.getInstance();
+    protected AbstractMongoDao<Event> getDao() {
+        return EventMongoDao.getInstance();
     }
 
     /**

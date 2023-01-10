@@ -1,9 +1,9 @@
-package persistence.dao.advertising;
+package persistence.dao.mongodb.advertising;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import org.bson.conversions.Bson;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.advertising.Advertising;
 
 import java.util.ArrayList;
@@ -15,24 +15,24 @@ import static com.mongodb.client.model.Updates.combine;
  * AdvertisingDao class extending Dao class parametrized with Advertising class.
  */
 
-public class AdvertisingDao extends AbstractDao<Advertising> {
+public class AdvertisingMongoDao extends AbstractMongoDao<Advertising> {
 
 	/**
 	 * Instance of AdvertisingDao to ensure Singleton design pattern.
 	 */
-	private static AdvertisingDao instance;
+	private static AdvertisingMongoDao instance;
 
 	/**
 	 * Private constructor for AdvertisingDao to ensure Singleton design pattern.
 	 */
-	private AdvertisingDao() { }
+	private AdvertisingMongoDao() { }
 
 	/**
 	 * @return the instance of AdvertisingDao to ensure Singleton design pattern.
 	 */
-	public static AdvertisingDao getInstance() {
+	public static AdvertisingMongoDao getInstance() {
 		if (instance == null) {
-			instance = new AdvertisingDao();
+			instance = new AdvertisingMongoDao();
 		}
 		return instance;
 	}

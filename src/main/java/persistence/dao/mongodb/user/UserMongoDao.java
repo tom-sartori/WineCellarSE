@@ -1,4 +1,4 @@
-package persistence.dao.user;
+package persistence.dao.mongodb.user;
 
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.model.Updates;
@@ -9,7 +9,7 @@ import exception.NotFoundException;
 import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.user.User;
 
 import java.util.ArrayList;
@@ -18,16 +18,16 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 
-public class UserDao extends AbstractDao<User> {
+public class UserMongoDao extends AbstractMongoDao<User> {
 
-	private static UserDao instance;
+	private static UserMongoDao instance;
 
-	private UserDao() {
+	private UserMongoDao() {
 	}
 
-	public static UserDao getInstance() {
+	public static UserMongoDao getInstance() {
 		if (instance == null) {
-			instance = new UserDao();
+			instance = new UserMongoDao();
 		}
 		return instance;
 	}

@@ -1,4 +1,4 @@
-package persistence.dao.company;
+package persistence.dao.mongodb.company;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
@@ -9,7 +9,7 @@ import org.bson.BsonDocument;
 import org.bson.BsonObjectId;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.company.Company;
 
 import java.util.ArrayList;
@@ -17,15 +17,15 @@ import java.util.List;
 
 import static com.mongodb.client.model.Updates.combine;
 
-public class CompanyDao extends AbstractDao<Company> {
+public class CompanyMongoDao extends AbstractMongoDao<Company> {
 
-	private static CompanyDao instance;
+	private static CompanyMongoDao instance;
 
-	private CompanyDao() { }
+	private CompanyMongoDao() { }
 
-	public static CompanyDao getInstance() {
+	public static CompanyMongoDao getInstance() {
 		if (instance == null) {
-			instance = new CompanyDao();
+			instance = new CompanyMongoDao();
 		}
 		return instance;
 	}

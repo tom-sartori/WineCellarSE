@@ -5,7 +5,7 @@ import facade.Facade;
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.dao.conversation.ConversationDao;
+import persistence.dao.mongodb.conversation.ConversationMongoDao;
 import persistence.entity.conversation.Conversation;
 import persistence.entity.conversation.Message;
 import persistence.entity.user.User;
@@ -41,8 +41,8 @@ public class ConversationController extends AbstractController<Conversation> {
      * @return the DAO of the specific Controller (ConversationDao).
      */
     @Override
-    protected ConversationDao getDao() {
-        return ConversationDao.getInstance();
+    protected ConversationMongoDao getDao() {
+        return ConversationMongoDao.getInstance();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package logic.controller.sample;
 
 import logic.controller.AbstractController;
-import persistence.dao.sample.SampleDao;
+import persistence.dao.mongodb.sample.SampleMongoDao;
 import persistence.entity.sample.Sample;
 
 /**
@@ -33,7 +33,7 @@ public class SampleController extends AbstractController<Sample> {
      * @return the DAO of the specific Controller (SampleDao).
      */
     @Override
-    protected SampleDao getDao() {
-        return SampleDao.getInstance();
+    protected SampleMongoDao getDao() {
+        return SampleMongoDao.getInstance();
     }
 }

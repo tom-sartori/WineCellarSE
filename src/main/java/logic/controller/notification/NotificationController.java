@@ -2,7 +2,7 @@ package logic.controller.notification;
 
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
-import persistence.dao.notification.NotificationDao;
+import persistence.dao.mongodb.notification.NotificationMongoDao;
 import persistence.entity.notification.Notification;
 import java.util.List;
 
@@ -35,8 +35,8 @@ public class NotificationController extends AbstractController<Notification> {
      * @return the DAO of the specific Controller (NotificationDao).
      */
     @Override
-    protected NotificationDao getDao() {
-        return NotificationDao.getInstance();
+    protected NotificationMongoDao getDao() {
+        return NotificationMongoDao.getInstance();
     }
 
 
@@ -48,6 +48,6 @@ public class NotificationController extends AbstractController<Notification> {
      * @return A list of all the notifications of the user.
      */
     public List<Notification> getNotificationListFromUser(ObjectId userId) throws Exception {
-        return NotificationDao.getInstance().getNotificationListFromUser(userId);
+        return NotificationMongoDao.getInstance().getNotificationListFromUser(userId);
     }
 }

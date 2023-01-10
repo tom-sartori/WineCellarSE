@@ -3,8 +3,8 @@ package logic.controller.advertising;
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
-import persistence.dao.advertising.AdvertisingDao;
+import persistence.dao.mongodb.AbstractMongoDao;
+import persistence.dao.mongodb.advertising.AdvertisingMongoDao;
 import persistence.entity.advertising.Advertising;
 
 import java.util.Date;
@@ -103,8 +103,8 @@ public class AdvertisingController extends AbstractController<Advertising> {
      * @return the DAO of the specific Controller (AdvertisingDao).
      */
     @Override
-    protected AbstractDao<Advertising> getDao() {
-        return AdvertisingDao.getInstance();
+    protected AbstractMongoDao<Advertising> getDao() {
+        return AdvertisingMongoDao.getInstance();
     }
 
     /**

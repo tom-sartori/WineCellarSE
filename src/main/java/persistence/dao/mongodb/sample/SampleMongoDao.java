@@ -1,8 +1,8 @@
-package persistence.dao.sample;
+package persistence.dao.mongodb.sample;
 
 import constant.CollectionNames;
 import org.bson.conversions.Bson;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.sample.Sample;
 
 import java.util.ArrayList;
@@ -10,15 +10,15 @@ import java.util.List;
 
 import static com.mongodb.client.model.Updates.combine;
 
-public class SampleDao extends AbstractDao<Sample> {
+public class SampleMongoDao extends AbstractMongoDao<Sample> {
 
-	private static SampleDao instance;
+	private static SampleMongoDao instance;
 
-	private SampleDao() { }
+	private SampleMongoDao() { }
 
-	public static SampleDao getInstance() {
+	public static SampleMongoDao getInstance() {
 		if (instance == null) {
-			instance = new SampleDao();
+			instance = new SampleMongoDao();
 		}
 		return instance;
 	}

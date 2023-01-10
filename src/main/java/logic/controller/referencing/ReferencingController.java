@@ -4,7 +4,7 @@ import facade.Facade;
 import logic.controller.AbstractController;
 import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.dao.referencing.ReferencingDao;
+import persistence.dao.mongodb.referencing.ReferencingMongoDao;
 import persistence.entity.referencing.Referencing;
 
 import java.util.Date;
@@ -130,7 +130,7 @@ public class ReferencingController extends AbstractController<Referencing> {
      * @return the DAO of the specific Controller (ReferencingDao).
      */
     @Override
-    protected ReferencingDao getDao() {
-        return ReferencingDao.getInstance();
+    protected ReferencingMongoDao getDao() {
+        return ReferencingMongoDao.getInstance();
     }
 }

@@ -1,32 +1,32 @@
-package persistence.dao.event;
+package persistence.dao.mongodb.event;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import org.bson.conversions.Bson;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.event.Event;
 
 /**
  * EventDao class extending Dao class parametrized with Event class.
  */
-public class EventDao extends AbstractDao<Event> {
+public class EventMongoDao extends AbstractMongoDao<Event> {
 
 	/**
 	 * Instance of EventDao to ensure Singleton design pattern.
 	 */
-	private static EventDao instance;
+	private static EventMongoDao instance;
 
 	/**
 	 * Private constructor for EventDao to ensure Singleton design pattern.
 	 */
-	private EventDao() { }
+	private EventMongoDao() { }
 
 	/**
 	 * @return the instance of EventDao to ensure Singleton design pattern.
 	 */
-	public static EventDao getInstance() {
+	public static EventMongoDao getInstance() {
 		if (instance == null) {
-			instance = new EventDao();
+			instance = new EventMongoDao();
 		}
 		return instance;
 	}

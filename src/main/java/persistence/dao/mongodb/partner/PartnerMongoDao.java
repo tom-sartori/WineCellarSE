@@ -1,9 +1,9 @@
-package persistence.dao.partner;
+package persistence.dao.mongodb.partner;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import org.bson.conversions.Bson;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.partner.Partner;
 
 import java.util.ArrayList;
@@ -11,15 +11,15 @@ import java.util.List;
 
 import static com.mongodb.client.model.Updates.combine;
 
-public class PartnerDao extends AbstractDao<Partner> {
+public class PartnerMongoDao extends AbstractMongoDao<Partner> {
 
-	private static PartnerDao instance;
+	private static PartnerMongoDao instance;
 
-	private PartnerDao() { }
+	private PartnerMongoDao() { }
 
-	public static PartnerDao getInstance() {
+	public static PartnerMongoDao getInstance() {
 		if (instance == null) {
-			instance = new PartnerDao();
+			instance = new PartnerMongoDao();
 		}
 		return instance;
 	}

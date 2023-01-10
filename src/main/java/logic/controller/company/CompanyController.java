@@ -7,7 +7,7 @@ import logic.controller.AbstractController;
 import logic.controller.notification.NotificationController;
 import logic.controller.user.UserController;
 import org.bson.types.ObjectId;
-import persistence.dao.company.CompanyDao;
+import persistence.dao.mongodb.company.CompanyMongoDao;
 import persistence.entity.company.Company;
 import persistence.entity.notification.Notification;
 import persistence.entity.user.User;
@@ -43,8 +43,8 @@ public class CompanyController extends AbstractController<Company> {
      * @return the DAO of the specific Controller (CompanyDao).
      */
     @Override
-    protected CompanyDao getDao() {
-        return CompanyDao.getInstance();
+    protected CompanyMongoDao getDao() {
+        return CompanyMongoDao.getInstance();
     }
 
     // TODO Only available to current masterManager

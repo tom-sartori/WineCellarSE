@@ -1,4 +1,4 @@
-package persistence.dao;
+package persistence.dao.mongodb;
 
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
@@ -12,6 +12,7 @@ import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import persistence.connector.MongoConnector;
+import persistence.dao.Dao;
 import persistence.entity.Entity;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import static com.mongodb.client.model.Filters.eq;
  *
  * @param <T> The entity class which extends the Entity interface.
  */
-public abstract class AbstractDao<T extends Entity<T>> implements Dao<T> {
+public abstract class AbstractMongoDao<T extends Entity<T>> implements Dao<T> {
 	protected static final String databaseName = "winecellar-db";
 	protected static final MongoConnector mongoConnector = MongoConnector.getInstance();
 

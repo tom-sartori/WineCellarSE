@@ -1,11 +1,11 @@
-package persistence.dao.conversation;
+package persistence.dao.mongodb.conversation;
 
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.conversation.Conversation;
 
 import java.util.ArrayList;
@@ -14,15 +14,15 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.all;
 import static com.mongodb.client.model.Updates.combine;
 
-public class ConversationDao extends AbstractDao<Conversation> {
+public class ConversationMongoDao extends AbstractMongoDao<Conversation> {
 
-	private static ConversationDao instance;
+	private static ConversationMongoDao instance;
 
-	private ConversationDao() { }
+	private ConversationMongoDao() { }
 
-	public static ConversationDao getInstance() {
+	public static ConversationMongoDao getInstance() {
 		if (instance == null) {
-			instance = new ConversationDao();
+			instance = new ConversationMongoDao();
 		}
 		return instance;
 	}

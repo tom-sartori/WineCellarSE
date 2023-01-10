@@ -1,8 +1,8 @@
 package logic.controller.partner;
 
 import logic.controller.AbstractController;
-import persistence.dao.AbstractDao;
-import persistence.dao.partner.PartnerDao;
+import persistence.dao.mongodb.AbstractMongoDao;
+import persistence.dao.mongodb.partner.PartnerMongoDao;
 import persistence.entity.partner.Partner;
 
 /**
@@ -34,7 +34,7 @@ public class PartnerController extends AbstractController<Partner> {
      * @return the DAO of the specific Controller (PartnerDao).
      */
     @Override
-    protected AbstractDao<Partner> getDao() {
-        return PartnerDao.getInstance();
+    protected AbstractMongoDao<Partner> getDao() {
+        return PartnerMongoDao.getInstance();
     }
 }

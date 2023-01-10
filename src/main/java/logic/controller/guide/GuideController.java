@@ -1,9 +1,9 @@
 package logic.controller.guide;
 
 import logic.controller.AbstractController;
-import persistence.dao.guide.GuideDao;
+import persistence.dao.mongodb.guide.GuideMongoDao;
 import persistence.entity.guide.Guide;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 
 /**
  * GuideController class extending Controller class parametized with Guide class.
@@ -35,8 +35,8 @@ public class GuideController extends AbstractController<Guide> {
      * @return the DAO of the specific Controller (GuideDao).
      */
     @Override
-    protected AbstractDao<Guide> getDao() {
-        return GuideDao.getInstance();
+    protected AbstractMongoDao<Guide> getDao() {
+        return GuideMongoDao.getInstance();
     }
 
 }

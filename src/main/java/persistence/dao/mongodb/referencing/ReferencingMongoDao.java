@@ -1,9 +1,9 @@
-package persistence.dao.referencing;
+package persistence.dao.mongodb.referencing;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import org.bson.conversions.Bson;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.referencing.Referencing;
 
 import java.util.ArrayList;
@@ -11,15 +11,15 @@ import java.util.List;
 
 import static com.mongodb.client.model.Updates.combine;
 
-public class ReferencingDao extends AbstractDao<Referencing> {
+public class ReferencingMongoDao extends AbstractMongoDao<Referencing> {
 
-	private static ReferencingDao instance;
+	private static ReferencingMongoDao instance;
 
-	private ReferencingDao() { }
+	private ReferencingMongoDao() { }
 
-	public static ReferencingDao getInstance() {
+	public static ReferencingMongoDao getInstance() {
 		if (instance == null) {
-			instance = new ReferencingDao();
+			instance = new ReferencingMongoDao();
 		}
 		return instance;
 	}

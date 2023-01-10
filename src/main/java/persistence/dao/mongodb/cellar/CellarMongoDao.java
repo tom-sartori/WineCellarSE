@@ -1,4 +1,4 @@
-package persistence.dao.cellar;
+package persistence.dao.mongodb.cellar;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
@@ -8,7 +8,7 @@ import org.bson.BsonBoolean;
 import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
@@ -23,23 +23,23 @@ import static com.mongodb.client.model.Updates.combine;
 /**
  * Cellar DAO.
  */
-public class CellarDao extends AbstractDao<Cellar> {
+public class CellarMongoDao extends AbstractMongoDao<Cellar> {
 
-    private static CellarDao instance;
+    private static CellarMongoDao instance;
 
     /**
      * Singleton instance.
      */
-    private CellarDao() { }
+    private CellarMongoDao() { }
 
     /**
      * Get the singleton instance of the DAO.
      *
      * @return The singleton instance.
      */
-    public static CellarDao getInstance() {
+    public static CellarMongoDao getInstance() {
         if(instance == null) {
-            instance = new CellarDao();
+            instance = new CellarMongoDao();
         }
         return instance;
     }

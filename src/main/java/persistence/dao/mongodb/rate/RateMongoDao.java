@@ -1,4 +1,4 @@
-package persistence.dao.rate;
+package persistence.dao.mongodb.rate;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
@@ -6,7 +6,7 @@ import exception.NotFoundException;
 import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.rate.Rate;
 
 import java.util.List;
@@ -15,24 +15,24 @@ import java.util.List;
  * RateDao class extending Dao class parametrized with Event class.
  */
 
-public class RateDao extends AbstractDao<Rate> {
+public class RateMongoDao extends AbstractMongoDao<Rate> {
 
 	/**
 	 * Instance of RateDao to ensure Singleton design pattern.
 	 */
-	private static RateDao instance;
+	private static RateMongoDao instance;
 
 	/**
 	 * Private constructor for RateDao to ensure Singleton design pattern.
 	 */
-	private RateDao() { }
+	private RateMongoDao() { }
 
 	/**
 	 * @return the instance of RateDao to ensure Singleton design pattern.
 	 */
-	public static RateDao getInstance() {
+	public static RateMongoDao getInstance() {
 		if (instance == null) {
-			instance = new RateDao();
+			instance = new RateMongoDao();
 		}
 		return instance;
 	}

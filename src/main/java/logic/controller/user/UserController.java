@@ -8,9 +8,9 @@ import exception.user.NoLoggedUser;
 import logic.controller.AbstractController;
 import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
-import persistence.dao.cellar.CellarDao;
-import persistence.dao.company.CompanyDao;
-import persistence.dao.user.UserDao;
+import persistence.dao.mongodb.cellar.CellarMongoDao;
+import persistence.dao.mongodb.company.CompanyMongoDao;
+import persistence.dao.mongodb.user.UserMongoDao;
 import persistence.entity.user.Friend;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.company.Company;
@@ -53,8 +53,8 @@ public class UserController extends AbstractController<User> {
      * @return the DAO of the specific Controller (UserDao).
      */
     @Override
-    protected UserDao getDao() {
-        return UserDao.getInstance();
+    protected UserMongoDao getDao() {
+        return UserMongoDao.getInstance();
     }
 
     private void setLoggedUser(User user) {
@@ -175,7 +175,7 @@ public class UserController extends AbstractController<User> {
             boolean isOwner;
             boolean isManager;
 
-            Cellar cellar = CellarDao.getInstance().findOne(cellarId);
+            Cellar cellar = CellarMongoDao.getInstance().findOne(cellarId);
 
             isOwner = loggedUser.getId().equals(cellar.getOwnerRef());
             isManager = cellar.getManagers().contains(loggedUser.getId());
@@ -201,7 +201,7 @@ public class UserController extends AbstractController<User> {
             boolean isOwner;
             boolean isManager;
 
-            Company company = CompanyDao.getInstance().findOne(companyId);
+            Company company = CompanyMongoDao.getInstance().findOne(companyId);
 
             isOwner = loggedUser.getId().equals(company.getMasterManager());
             isManager = company.getManagerList().contains(loggedUser.getId());

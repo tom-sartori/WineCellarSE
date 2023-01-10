@@ -1,4 +1,4 @@
-package persistence.dao.bottle;
+package persistence.dao.mongodb.bottle;
 
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.model.Updates;
@@ -8,8 +8,8 @@ import exception.NotFoundException;
 import logic.controller.cellar.CellarController;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
-import persistence.dao.cellar.CellarDao;
+import persistence.dao.mongodb.AbstractMongoDao;
+import persistence.dao.mongodb.cellar.CellarMongoDao;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
@@ -21,15 +21,15 @@ import java.util.List;
 
 import static com.mongodb.client.model.Updates.combine;
 
-public class BottleDao extends AbstractDao<Bottle> {
+public class BottleMongoDao extends AbstractMongoDao<Bottle> {
 
-	private static BottleDao instance;
+	private static BottleMongoDao instance;
 
-	private BottleDao() { }
+	private BottleMongoDao() { }
 
-	public static BottleDao getInstance() {
+	public static BottleMongoDao getInstance() {
 		if (instance == null) {
-			instance = new BottleDao();
+			instance = new BottleMongoDao();
 		}
 		return instance;
 	}
@@ -111,7 +111,7 @@ public class BottleDao extends AbstractDao<Bottle> {
 		List<Bottle> bottles = new ArrayList<>();
 
 		// Get the cellar
-		Cellar cellar = CellarDao.getInstance().findOne(cellarId);
+		Cellar cellar = CellarMongoDao.getInstance().findOne(cellarId);
 
 		// Get all bottles from the cellar
 		for (Wall wall : cellar.getWalls()) {

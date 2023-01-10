@@ -1,37 +1,36 @@
-package persistence.dao.notification;
+package persistence.dao.mongodb.notification;
 
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
 import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.notification.Notification;
-import persistence.entity.user.User;
 
 import java.util.List;
 
 /**
  * NotificationDao class extending Dao class parametrized with Notification class.
  */
-public class NotificationDao extends AbstractDao<Notification> {
+public class NotificationMongoDao extends AbstractMongoDao<Notification> {
 
 	/**
 	 * Instance of NotificationDao to ensure Singleton design pattern.
 	 */
-	private static NotificationDao instance;
+	private static NotificationMongoDao instance;
 
 	/**
 	 * Private constructor for NotificationDao to ensure Singleton design pattern.
 	 */
-	private NotificationDao() { }
+	private NotificationMongoDao() { }
 
 	/**
 	 * @return the instance of NotificationDao to ensure Singleton design pattern.
 	 */
-	public static NotificationDao getInstance() {
+	public static NotificationMongoDao getInstance() {
 		if (instance == null) {
-			instance = new NotificationDao();
+			instance = new NotificationMongoDao();
 		}
 		return instance;
 	}

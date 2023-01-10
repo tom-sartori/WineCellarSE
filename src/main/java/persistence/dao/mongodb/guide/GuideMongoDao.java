@@ -1,27 +1,27 @@
-package persistence.dao.guide;
+package persistence.dao.mongodb.guide;
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
-import persistence.dao.AbstractDao;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.guide.Guide;
 import org.bson.conversions.Bson;
 
-public class GuideDao extends AbstractDao<Guide> {
+public class GuideMongoDao extends AbstractMongoDao<Guide> {
 
-    private static GuideDao instance;
+    private static GuideMongoDao instance;
 
     /**
      * Singleton instance.
      */
-    private GuideDao() { }
+    private GuideMongoDao() { }
 
     /**
      * Get the singleton instance of the DAO.
      *
      * @return The singleton instance.
      */
-    public static GuideDao getInstance() {
+    public static GuideMongoDao getInstance() {
         if (instance == null) {
-            instance = new GuideDao();
+            instance = new GuideMongoDao();
         }
         return instance;
     }
