@@ -45,22 +45,38 @@ public class ReferencingList implements Initializable {
                 companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             }
 
-            if(company == null && status == null){
-                company = companies.get(0).getId();
+            Company c = State.getInstance().getSelectedCompany();
+            if(c == null){
+                c = companies.get(0);
+            }
+            company = c.getId();
+
+            if(status == null){
                 status = "Tous";
-                select.getSelectionModel().selectFirst();
-                selectStatus.getSelectionModel().selectFirst();
-            } else {
-                Company c = Facade.getInstance().getOneCompany(company);
-                select.setValue(c.getName());
-                selectStatus.setValue(status);
             }
 
+            select.getSelectionModel().select(c.getName());
+            selectStatus.getSelectionModel().select(status);
+
             if(select.getItems().size() == 0){
-                for (Company c : companies){
-                    select.getItems().add(c.getName());
+                for (Company comp : companies){
+                    select.getItems().add(comp.getName());
                 }
             }
+
+            /**
+             * Retrieve the list with the changed company and the status.
+             */
+            select.setOnAction((event) -> {
+                String selectedItem = select.getValue();
+                for(Company comp : companies){
+                    if(comp.getName().equals(selectedItem)){
+                        company = comp.getId();
+                        list(comp.getId(), status);
+                        State.getInstance().setSelectedCompany(comp);
+                    }
+                }
+            });
 
             if(selectStatus.getItems().size() == 0){
                 selectStatus.getItems().add("Tous");
@@ -77,19 +93,6 @@ public class ReferencingList implements Initializable {
                 status = selectedItem;
                 if(company != null) {
                     list(company,status);
-                }
-            });
-
-            /**
-             * Retrieve the list with the changed company and the status.
-             */
-            select.setOnAction((event) -> {
-                String selectedItem = select.getValue();
-                for(Company c : companies){
-                    if(c.getName().equals(selectedItem)){
-                        company = c.getId();
-                        list(c.getId(), status);
-                    }
                 }
             });
 

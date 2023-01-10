@@ -31,7 +31,7 @@ public class AdvertisingList implements Initializable {
 
     private final int nbColumn = 2;
 
-    private static ObjectId company;
+    private ObjectId company;
     private static String status;
 
     /**
@@ -49,20 +49,26 @@ public class AdvertisingList implements Initializable {
                 companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             }
 
-            if(company == null && status == null){
-                company = companies.get(0).getId();
+            /**
+             * If the list was open from de the detail page of a company, the select is initialized with this company
+             * Else it is initialized with the first company from the list companies.
+             */
+            Company c = State.getInstance().getSelectedCompany();
+            if(c == null){
+                c = companies.get(0);
+            }
+            company = c.getId();
+
+            if(status == null){
                 status = "Toutes";
-                select.getSelectionModel().selectFirst();
-                selectStatus.getSelectionModel().selectFirst();
-            } else {
-                Company c = Facade.getInstance().getOneCompany(company);
-                select.setValue(c.getName());
-                selectStatus.setValue(status);
             }
 
+            select.getSelectionModel().select(c.getName());
+            selectStatus.getSelectionModel().select(status);
+
             if(select.getItems().size() == 0){
-                for (Company c : companies){
-                    select.getItems().add(c.getName());
+                for (Company comp : companies){
+                    select.getItems().add(comp.getName());
                 }
             }
 
@@ -71,10 +77,11 @@ public class AdvertisingList implements Initializable {
                 if(selectedItem.equals("Toutes")){
                     list(null, status);
                 }
-                for(Company c : companies){
-                    if(c.getName().equals(selectedItem)){
-                        company = c.getId();
-                        list(c.getId(),status);
+                for(Company comp : companies){
+                    if(comp.getName().equals(selectedItem)){
+                        company = comp.getId();
+                        list(comp.getId(),status);
+                        State.getInstance().setSelectedCompany(comp);
                     }
                 }
             });
