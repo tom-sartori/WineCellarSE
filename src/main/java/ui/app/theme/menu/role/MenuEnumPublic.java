@@ -2,34 +2,30 @@ package ui.app.theme.menu.role;
 
 import ui.app.page.cellar.CellarPage;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
-import ui.app.page.company.list.CompanyList;
-import ui.app.page.company.referencing.ReferencingPage;
-import ui.app.page.company.referencing.creation.ReferencingCreation;
-import ui.app.page.company.referencing.list.ReferencingList;
-import ui.app.page.company.CompanyPage;
 import ui.app.page.company.event.list.EventList;
+import ui.app.page.company.list.CompanyList;
 import ui.app.page.guides.list.GuideList;
-import ui.app.page.partner.PartnerPage;
-
 import ui.app.page.partner.list.PartnerList;
-import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
+import ui.app.page.user.profile.Profile;
 import ui.app.page.user.register.Register;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum MenuEnumPublic implements MenuEnumInterface {
-	USER("Utilisateur", Login.class),
-	REGISTER("S'enregistrer", Register.class, USER),
-	LOGIN("Se connecter", Login.class, USER),
+	CELLAR("Caves",CellarPage.class),
+	PUBLIC_CELLARS("Caves publiques", PublicCellars.class, CELLAR),
+	COMPANY("Entreprise", CompanyList.class),
+	COMPANY_LIST("Toutes les entreprises", CompanyList.class, COMPANY),
+	EVENT_LIST("Tous les évènements", EventList.class, COMPANY),
 	PARTNER("Partenaires", PartnerList.class),
-	COMPANY("Entreprise", CompanyPage.class),
-	CELLAR("Caves", CellarPage.class),
-	EVENTLIST("Tous les évènements", EventList.class, COMPANY),
-	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
+	PARTNER_LIST("Liste des partenaires", PartnerList.class, PARTNER),
 	GUIDE("Guides", GuideList.class),
-	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY);
+	GUIDE_ALL("Les guides", GuideList.class, GUIDE),
+	USER("Utilisateur", Login.class),
+	LOGIN("Se connecter", Login.class, USER),
+	REGISTER("S'inscrire", Register.class, USER);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;
