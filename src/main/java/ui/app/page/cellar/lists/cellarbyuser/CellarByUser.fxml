@@ -13,7 +13,7 @@
         <URL value="@/ui/app/page/cellar/lists/cellarbyuser/CellarByUser.css" />
     </stylesheets>
     <children>
-        <Button layoutX="1138.0" layoutY="15.0" mnemonicParsing="false" text="Ajouter une cave" />
+        <Button layoutX="1138.0" layoutY="15.0" mnemonicParsing="false" text="Ajouter une cave" onAction="#redirectToCreateCellar"/>
         <Label layoutX="564.0" layoutY="23.0" text="Mes caves">
             <font>
                 <Font size="35.0" />

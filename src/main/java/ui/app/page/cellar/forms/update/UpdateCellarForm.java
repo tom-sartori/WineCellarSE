@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -19,10 +20,7 @@ import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UpdateCellarForm implements Initializable {
 
@@ -287,9 +285,20 @@ public class UpdateCellarForm implements Initializable {
      * @param isPublic the new isPublic status of the cellar.
      */
     public void validateAction(String name, boolean isPublic){
-        currentCellar.setName(name);
-        currentCellar.setPublic(isPublic);
-        Facade.getInstance().updateOneCellar(currentCellar.getId(), currentCellar);
+        if (!Objects.equals(name, "")){
+            currentCellar.setName(name);
+            currentCellar.setPublic(isPublic);
+        }else{
+            Alert alert = NodeCreations.createAlert("Mauvais argument", "Veuillez entrer un nom valide", "Veuillez entrer un nom valide pour votre cave", Alert.AlertType.ERROR);
+            alert.show();
+        }
+
+        try{
+            Facade.getInstance().updateOneCellar(currentCellar.getId(), currentCellar);
+        }catch (Exception e){
+            Alert mauvaisArguments = NodeCreations.createAlert("Mauvais arguments", "Les valeurs de vos champs sont incorrectes !", e.getMessage(), Alert.AlertType.ERROR);
+            mauvaisArguments.showAndWait();
+        }
         refresh();
     }
 
