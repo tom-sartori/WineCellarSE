@@ -9,6 +9,7 @@ import exception.InvalidUsernameException;
 import exception.NotFoundException;
 
 import persistence.entity.advertising.Advertising;
+import persistence.entity.conversation.Conversation;
 import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
@@ -21,6 +22,7 @@ import persistence.entity.company.Company;
 import persistence.entity.partner.Partner;
 import persistence.entity.referencing.Referencing;
 import persistence.entity.rate.Rate;
+import persistence.entity.user.Friend;
 import persistence.entity.user.User;
 
 import java.util.Date;
@@ -450,6 +452,57 @@ public interface FacadeInterface {
 	void logout();
 
 	/**
+	 * Add a friend to the logged user.
+	 *
+	 * @param username of the friend to add.
+	 * @return the friend requested.
+	 * @throws NotFoundException if the friend is not found.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	User addFriend(String username) throws NotFoundException, NoLoggedUser;
+
+	/**
+	 * Accept a friend request.
+	 *
+	 * @param username of the friend to accept.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	void acceptFriend(String username) throws NoLoggedUser;
+
+	/**
+	 * Remove a friend from the logged user.
+	 *
+	 * @param username of the friend to remove.
+	 * @return true if the friend has been removed, false otherwise.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	boolean removeFriend(String username) throws NoLoggedUser;
+
+	/**
+	 * Return the list of friends of the logged user.
+	 *
+	 * @param onlyAcceptedFriend True if you want only the accepted friends. False if you want all the friends.
+	 * @return The list of friends of the logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser;
+
+	/**
+	 * Return the list of friend requests of the logged user.
+	 *
+	 * @return The list of friend requests for the logged user.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Friend> getFriendRequestList() throws NoLoggedUser;
+
+	/**
+	 * Refresh the logged user with the db.
+	 *
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	void refreshLoggedUser() throws NoLoggedUser;
+
+	/**
 	 * Get all users.
 	 *
 	 * @return A list of users.
@@ -826,6 +879,28 @@ public interface FacadeInterface {
 	ObjectId removeManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException;
 
 	/**
+	 * Add a user to the list of users that follow the company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param userId The id of the user.
+	 *
+	 * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+	 * @throws BadArgumentsException If the company or the user does not exist.
+	 */
+	ObjectId followCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException;
+
+	/**
+	 * remove a user from the list of users that follow the company.
+	 *
+	 * @param companyId The id of the company.
+	 * @param userId The id of the user.
+	 *
+	 * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+	 * @throws BadArgumentsException If the company or the user does not exist.
+	 */
+	ObjectId unfollowCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException;
+
+	/**
 	 * Refuse a request to publish a new Company.
 	 *
 	 * @param companyId The id of the company to refuse.
@@ -962,4 +1037,36 @@ public interface FacadeInterface {
 	 * @return A list of events.
 	 */
 	List<Event> getEventsByCompany(ObjectId company);
+
+	/**
+	 * Insert a conversation.
+	 *
+	 * @param conversation The conversation to insert.
+	 * @return The id of the inserted conversation.
+	 */
+	ObjectId insertOneConversation(Conversation conversation);
+
+	/**
+	 * Return the conversations where the logged user is.
+	 *
+	 * @return a list of conversations.
+	 * @throws NoLoggedUser if there is no user logged.
+	 */
+	List<Conversation> getConversationList() throws NoLoggedUser;
+
+	/**
+	 * The current user send a message to the conversation in params.
+	 *
+	 * @param conversationId The id of the conversation.
+	 * @param message The message to send.
+	 */
+	void sendMessage(ObjectId conversationId, String message);
+
+	/**
+	 * Find one conversation.
+	 *
+	 * @param id of the conversation to find.
+	 * @return the conversation.
+	 */
+	Conversation findOneConversation(ObjectId id);
 }

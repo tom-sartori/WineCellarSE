@@ -23,6 +23,13 @@ public class Notification implements Entity<Notification> {
 		this.date = date;
 	}
 
+	public Notification(ObjectId ownerRef, String message) {
+		this.ownerRef = ownerRef;
+		this.message = message;
+		this.isRead = false;
+		this.date = new Date();
+	}
+
 	@Override
 	public void handleOnCreate() {
 		this.id = null;

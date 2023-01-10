@@ -13,5 +13,15 @@
         <fx:include source="referencing/ReferencingPage.fxml" />
         <fx:include source="event/EventPage.fxml" />
         <fx:include source="advertising/AdvertisingPage.fxml" />
+        <fx:include source="details/CompanyDetails.fxml" />
+        <fx:include source="form/update/CompanyUpdate.fxml" />
+        <fx:include source="form/create/CompanyCreate.fxml" />
+        <fx:include source="admin/CompanyAdmin.fxml" />
+        <fx:include source="list/user/CompanyListByUser.fxml" />
+        <fx:include source="list/CompanyList.fxml" />
     </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
 </AnchorPane>

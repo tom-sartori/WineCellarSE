@@ -1,13 +1,17 @@
 package ui.app;
 
+import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.advertising.Advertising;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
+import persistence.entity.company.Company;
+import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
 
+import java.sql.Ref;
 import java.sql.SQLOutput;
 
 public class State {
@@ -19,6 +23,10 @@ public class State {
 
 	private Advertising currentAdvertising;
 
+	private Referencing currentReferencing;
+
+	private Event currentEvent;
+
 	private Cellar selectedCellar;
 
 	private Wall selectedWall;
@@ -26,6 +34,8 @@ public class State {
 	private EmplacementBottle selectedEmplacementBottle;
 
 	private Bottle selectedBottle;
+
+	private Company selectedCompany;
 
 	private State() { }
 
@@ -58,6 +68,22 @@ public class State {
 	public void setCurrentAdvertising(Advertising advertising) {
 		this.currentAdvertising = advertising;
 		System.out.println("The current advertising is now: " + currentAdvertising.getName() + ". ");
+	}
+
+	public Referencing getCurrentReferencing() {
+		return currentReferencing;
+	}
+
+	public Event getCurrentEvent() {
+		return currentEvent;
+	}
+
+	public void setCurrentEvent(Event currentEvent) {
+		this.currentEvent = currentEvent;
+	}
+
+	public void setCurrentReferencing(Referencing currentReferencing) {
+		this.currentReferencing = currentReferencing;
 	}
 
 	public String getPreviousPage() {
@@ -98,5 +124,13 @@ public class State {
 
 	public void setSelectedBottle(Bottle selectedBottle) {
 		this.selectedBottle = selectedBottle;
+	}
+
+	public Company getSelectedCompany() {
+		return selectedCompany;
+	}
+
+	public void setSelectedCompany(Company selectedCompany) {
+		this.selectedCompany = selectedCompany;
 	}
 }

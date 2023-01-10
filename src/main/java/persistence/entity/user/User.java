@@ -4,6 +4,8 @@ import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -19,6 +21,8 @@ public class User implements Entity<User> {
 	private String lastname;
 	@Nullable
 	private String email;
+	private List<Friend> friends;
+	private List<Friend> friendRequests;
 
 	public User() { }
 
@@ -26,6 +30,8 @@ public class User implements Entity<User> {
 		this.username = username;
 		this.password = password;
 		this.admin = false;
+		this.friends = new ArrayList<>();
+		this.friendRequests = new ArrayList<>();
 	}
 
 	public User(String username, String password, @Nullable String firstname, @Nullable String lastname, @Nullable String email) {
@@ -35,6 +41,8 @@ public class User implements Entity<User> {
 		this.lastname = lastname;
 		this.email = email;
 		this.admin = false;
+		this.friends = new ArrayList<>();
+		this.friendRequests = new ArrayList<>();
 	}
 
 	@Override
@@ -106,17 +114,67 @@ public class User implements Entity<User> {
 		this.email = email;
 	}
 
+	public List<Friend> getFriends() {
+		if (friends == null) {
+			friends = new ArrayList<>();
+		}
+		return friends;
+	}
+
+	public void setFriends(List<Friend> friends) {
+		this.friends = friends;
+	}
+
+	public void addFriend(Friend friend) {
+		if (this.friends == null) {
+			this.friends = new ArrayList<>();
+		}
+		this.friends.add(friend);
+	}
+
+	public void removeFriend(String username) {
+		if (this.friends == null) {
+			return;
+		}
+		this.friends.removeIf(friend -> friend.getUsername().equals(username));
+	}
+
+	public List<Friend> getFriendRequests() {
+		if (friendRequests == null) {
+			friendRequests = new ArrayList<>();
+		}
+		return friendRequests;
+	}
+
+	public void setFriendRequests(List<Friend> friendRequests) {
+		this.friendRequests = friendRequests;
+	}
+
+	public void addFriendRequest(Friend friend) {
+		if (this.friendRequests == null) {
+			this.friendRequests = new ArrayList<>();
+		}
+		this.friendRequests.add(friend);
+	}
+
+	public void removeFriendRequest(String username) {
+		if (this.friendRequests == null) {
+			return;
+		}
+		this.friendRequests.removeIf(friend -> friend.getUsername().equals(username));
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return admin == user.admin && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email);
+		return admin == user.admin && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(friends, user.friends) && Objects.equals(friendRequests, user.friendRequests);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, username, password, admin, firstname, lastname, email);
+		return Objects.hash(id, username, password, admin, firstname, lastname, email, friends, friendRequests);
 	}
 
 	@Override

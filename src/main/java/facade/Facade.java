@@ -1,7 +1,6 @@
 package facade;
 
 
-import logic.controller.event.EventController;
 import exception.BadArgumentsException;
 import exception.BadCredentialException;
 import exception.InvalidUsernameException;
@@ -11,6 +10,7 @@ import exception.user.NoLoggedUser;
 import logic.controller.advertising.AdvertisingController;
 import org.bson.types.ObjectId;
 import persistence.entity.advertising.Advertising;
+import persistence.entity.conversation.Conversation;
 import persistence.entity.event.Event;
 import persistence.entity.guide.Guide;
 import persistence.entity.bottle.Bottle;
@@ -19,11 +19,11 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.company.Company;
-import persistence.entity.guide.Guide;
 import persistence.entity.notification.Notification;
 import persistence.entity.partner.Partner;
 import persistence.entity.rate.Rate;
 import persistence.entity.referencing.Referencing;
+import persistence.entity.user.Friend;
 import persistence.entity.user.User;
 
 import java.util.Date;
@@ -584,6 +584,75 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Add a friend to the logged user.
+     *
+     * @param username of the friend to add.
+     * @return the friend requested.
+     * @throws NotFoundException if the friend is not found.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public User addFriend(String username) throws NotFoundException, NoLoggedUser {
+        return UserFacade.getInstance().addFriend(username);
+    }
+
+    /**
+     * Accept a friend request.
+     *
+     * @param username of the friend to accept.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public void acceptFriend(String username) throws NoLoggedUser {
+        UserFacade.getInstance().acceptFriend(username);
+    }
+
+    /**
+     * Remove a friend from the logged user.
+     *
+     * @param username of the friend to remove.
+     * @return true if the friend has been removed, false otherwise.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public boolean removeFriend(String username) throws NoLoggedUser {
+        return UserFacade.getInstance().removeFriend(username);
+    }
+
+    /**
+     * Return the list of friends of the logged user.
+     *
+     * @param onlyAcceptedFriend True if you want only the accepted friends. False if you want all the friends.
+     * @return The list of friends of the logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public List<Friend> getFriendList(boolean onlyAcceptedFriend) throws NoLoggedUser {
+        return UserFacade.getInstance().getFriendList(onlyAcceptedFriend);
+    }
+
+    /**
+     * Return the list of friend requests of the logged user.
+     *
+     * @return The list of friend requests for the logged user.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+	@Override
+	public List<Friend> getFriendRequestList() throws NoLoggedUser {
+		return UserFacade.getInstance().getFriendRequestList();
+	}
+
+    /**
+     * Refresh the logged user with the db.
+     *
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public void refreshLoggedUser() throws NoLoggedUser {
+        UserFacade.getInstance().refreshLoggedUser();
+    }
+
+	/**
      * Get one user by its id.
      * @param id The id of the user.
      * @return The user.
@@ -1082,6 +1151,32 @@ public class Facade implements FacadeInterface {
     }
 
     /**
+     * Add a user to the list of users that follow the company.
+     *
+     * @param companyId The id of the company.
+     * @param userId The id of the user.
+     *
+     * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+     * @throws BadArgumentsException If the company or the user does not exist.
+     */
+    public ObjectId followCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().followCompany(companyId, userId);
+    }
+
+    /**
+     * remove a user from the list of users that follow the company.
+     *
+     * @param companyId The id of the company.
+     * @param userId The id of the user.
+     *
+     * @return The id of the company if the user was added successfully, else throws a BadArgumentsException.
+     * @throws BadArgumentsException If the company or the user does not exist.
+     */
+    public ObjectId unfollowCompany(ObjectId companyId, ObjectId userId) throws BadArgumentsException {
+        return CompanyFacade.getInstance().unfollowCompany(companyId, userId);
+    }
+
+    /**
      * Refuse a request to publish a new Company.
      *
      * @param companyId The id of the company to refuse.
@@ -1253,5 +1348,49 @@ public class Facade implements FacadeInterface {
      */
     public List<Event> getEventsByCompany(ObjectId company) {
         return EventFacade.getInstance().getEventsByCompany(company);
+    }
+
+    /**
+     * Insert a conversation.
+     *
+     * @param conversation The conversation to insert.
+     * @return The id of the inserted conversation.
+     */
+    @Override
+    public ObjectId insertOneConversation(Conversation conversation) {
+        return ConversationFacade.getInstance().insertOneConversation(conversation);
+    }
+
+    /**
+     * Return the conversations where the logged user is.
+     *
+     * @return a list of conversations.
+     * @throws NoLoggedUser if there is no user logged.
+     */
+    @Override
+    public List<Conversation> getConversationList() throws NoLoggedUser {
+        return ConversationFacade.getInstance().getConversationList();
+    }
+
+    /**
+     * The current user send a message to the conversation in params.
+     *
+     * @param conversationId The id of the conversation.
+     * @param message The message to send.
+     */
+    @Override
+    public void sendMessage(ObjectId conversationId, String message) {
+        ConversationFacade.getInstance().sendMessage(conversationId, message);
+    }
+
+    /**
+     * Find one conversation.
+     *
+     * @param id of the conversation to find.
+     * @return the conversation.
+     */
+    @Override
+    public Conversation findOneConversation(ObjectId id) {
+        return ConversationFacade.getInstance().findOneConversation(id);
     }
 }

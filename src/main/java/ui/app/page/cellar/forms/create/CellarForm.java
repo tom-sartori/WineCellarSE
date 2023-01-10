@@ -37,8 +37,8 @@ public class CellarForm implements Initializable, Observer {
     public void update(Observable o, Object arg) {
         Map<String, Object> labelFieldMap = (Map<String, Object>) arg;
 
-        // TODO handle possible errors
         Cellar cellar = new Cellar(labelFieldMap.get("Nom de la cave").toString(),false, new ArrayList<>(), new ArrayList<>(),State.getInstance().getCurrentUser().getId(),new ArrayList<>());
+
         try {
             Facade.getInstance().insertOneCellar(cellar);
             State.getInstance().setSelectedCellar(cellar);

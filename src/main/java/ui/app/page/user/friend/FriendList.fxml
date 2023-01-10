@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<?import javafx.scene.layout.GridPane?>
+<AnchorPane fx:id="friendList" prefHeight="625.0" prefWidth="1280.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.user.friend.FriendList">
+    <stylesheets>
+        <URL value="@/ui/app/page/user/friend/FriendList.css" />
+    </stylesheets>
+    <children>
+        <Rectangle fill="#0d47a1" height="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Mes amis" />
+        <Accordion fx:id="accordion" prefHeight="575.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+            <panes>
+                <TitledPane text="Ajouter un amis">
+                    <content>
+                        <fx:include fx:id="form" source="../../../component/form/Form.fxml" />
+                    </content>
+                </TitledPane>
+                <TitledPane text="Demandes d'amis" onMouseClicked="#onClickRequestList">
+                    <content>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" >
+                            <GridPane fx:id="requestCardHolder"/>
+                        </ScrollPane>
+                    </content>
+                </TitledPane>
+                <TitledPane fx:id="friendTitledPane" text="Amis" onMouseClicked="#onClickFriendList">
+                    <content>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" >
+                            <GridPane fx:id="friendCardHolder" />
+                        </ScrollPane>
+                    </content>
+                </TitledPane>
+            </panes>
+        </Accordion>
+    </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
+</AnchorPane>

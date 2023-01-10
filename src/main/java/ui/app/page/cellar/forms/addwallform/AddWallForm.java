@@ -50,20 +50,18 @@ public class AddWallForm implements Initializable, Observer {
     public void update(Observable o, Object arg) {
         Map<String, Object> labelFieldMap = (Map<String, Object>) arg;
 
-        // TODO verif les inputs
         String name = labelFieldMap.get("Nom du mur").toString();
         String image = labelFieldMap.get("image").toString();
 
         Wall wall = new Wall(image, new ArrayList<>(), name);
 
-        // TODO verif authorisation d'insérer dans la cave
-        if (State.getInstance().getSelectedCellar() != null){
+        if (State.getInstance().getSelectedCellar() != null && Facade.getInstance().isManagerOfCellar(State.getInstance().getSelectedCellar().getId())){
             try {
                 Facade.getInstance().addWall(wall, State.getInstance().getSelectedCellar().getId());
                 CustomSceneHelper sceneHelper = new CustomSceneHelper();
                 sceneHelper.bringNodeToFront(CellarDetails.class.getSimpleName());
             } catch (BadArgumentsException e) {
-                throw new RuntimeException(e);
+                formController.showErrorLabel("Mauvais arguments");
             }
         }
     }

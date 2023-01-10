@@ -27,8 +27,8 @@ public class ReferencingList implements Initializable {
     @FXML
     private ChoiceBox<String> select, selectStatus;
 
-    private ObjectId company;
-    private String status;
+    private static ObjectId company;
+    private static String status;
     private final int nbColumn = 4;
 
     /**
@@ -45,17 +45,38 @@ public class ReferencingList implements Initializable {
                 companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             }
 
+            Company c = State.getInstance().getSelectedCompany();
+            if(c == null){
+                c = companies.get(0);
+            }
+            company = c.getId();
+
+            if(status == null){
+                status = "Tous";
+            }
+
+            select.getSelectionModel().select(c.getName());
+            selectStatus.getSelectionModel().select(status);
+
             if(select.getItems().size() == 0){
-                for (Company c : companies){
-                    select.getItems().add(c.getName());
+                for (Company comp : companies){
+                    select.getItems().add(comp.getName());
                 }
             }
 
-            //pre-select the first company
-            select.getSelectionModel().selectFirst();
-
-            company = companies.get(0).getId();
-            status = "Tous";
+            /**
+             * Retrieve the list with the changed company and the status.
+             */
+            select.setOnAction((event) -> {
+                String selectedItem = select.getValue();
+                for(Company comp : companies){
+                    if(comp.getName().equals(selectedItem)){
+                        company = comp.getId();
+                        list(comp.getId(), status);
+                        State.getInstance().setSelectedCompany(comp);
+                    }
+                }
+            });
 
             if(selectStatus.getItems().size() == 0){
                 selectStatus.getItems().add("Tous");
@@ -63,9 +84,6 @@ public class ReferencingList implements Initializable {
                 selectStatus.getItems().add("En cours");
                 selectStatus.getItems().add("Passé");
             }
-
-            //pre-select the "Tous" choice
-            selectStatus.getSelectionModel().selectFirst();
 
             /**
              * Retrieve the list with the changed status if a company is selected.
@@ -75,19 +93,6 @@ public class ReferencingList implements Initializable {
                 status = selectedItem;
                 if(company != null) {
                     list(company,status);
-                }
-            });
-
-            /**
-             * Retrieve the list with the changed company and the status.
-             */
-            select.setOnAction((event) -> {
-                String selectedItem = select.getValue();
-                for(Company c : companies){
-                    if(c.getName().equals(selectedItem)){
-                        company = c.getId();
-                        list(c.getId(), status);
-                    }
                 }
             });
 

@@ -1,0 +1,23 @@
+#conversationPage {
+
+}
+
+.message{
+    -fx-font-size: 17px;
+    -fx-padding: 5px;
+    -fx-background-radius: 10px;
+}
+
+.message-sent{
+    -fx-background-color: #147efb;
+    -fx-text-fill: #fff;
+}
+
+.message-received{
+    -fx-background-color: #aeb9cc;
+    -fx-text-fill: #000;
+}
+
+.left-button{
+    -fx-background-radius: 10px;
+}

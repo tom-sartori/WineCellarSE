@@ -54,7 +54,7 @@ public class ReferencingCreation implements Initializable, Observer {
             formController.addField(new LabelField("Niveau d'importance /5", true));
             formController.addField(new Select("Entreprise", true, companyList));
             //formController.addField(new Select("Entreprise", true, State.getInstance().getCurrentUser().);
-
+            formController.setSubmitButtonText("Payer");
             formController.initialize(null, null);
         }
     }
@@ -123,7 +123,7 @@ public class ReferencingCreation implements Initializable, Observer {
                 }
 
                 /**
-                 * The importanceLevel shoul be between 1 and 5.
+                 * The importanceLevel should be between 1 and 5.
                  */
                 int importanceLevel = Integer.parseInt(labelFieldMap.get("Niveau d'importance /5").toString());
                 if(importanceLevel>5 || importanceLevel<=0) {

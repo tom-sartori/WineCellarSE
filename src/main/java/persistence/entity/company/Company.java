@@ -3,8 +3,9 @@ package persistence.entity.company;
 import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
-import persistence.entity.cellar.Cellar;
+import persistence.entity.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +18,8 @@ public class Company implements Entity<Company> {
 	private boolean isAccessible;
 	private ObjectId masterManager;
 	private List<ObjectId> managerList;
-	private Cellar cellar;
+	private ObjectId cellar;
+	private ArrayList<ObjectId> followerList;
 	@Nullable
 	private String phoneNumber;
 	@Nullable
@@ -29,7 +31,7 @@ public class Company implements Entity<Company> {
 
 	public Company() { }
 
-	public Company(String name, String type, String address, boolean isAccessible, ObjectId masterManager, List<ObjectId> managerList, Cellar cellar, @Nullable String phoneNumber, @Nullable String description, @Nullable String websiteLink, @Nullable String logoLink) {
+	public Company(String name, String type, String address, boolean isAccessible, ObjectId masterManager, List<ObjectId> managerList, ObjectId cellar, @Nullable String phoneNumber, @Nullable String description, @Nullable String websiteLink, @Nullable String logoLink) {
 		this.name = name;
 		this.type = type;
 		this.address = address;
@@ -41,6 +43,7 @@ public class Company implements Entity<Company> {
 		this.description = description;
 		this.websiteLink = websiteLink;
 		this.logoLink = logoLink;
+		this.followerList = new ArrayList<>();
 	}
 
 	@Override
@@ -105,11 +108,19 @@ public class Company implements Entity<Company> {
 		this.managerList = managerList;
 	}
 
-	public Cellar getCellar() {
+	public ArrayList<ObjectId> getFollowerList() {
+		return followerList;
+	}
+
+	public void setFollowerList(ArrayList<ObjectId> followerList) {
+		this.followerList = followerList;
+	}
+
+	public ObjectId getCellar() {
 		return cellar;
 	}
 
-	public void setCellar(Cellar cellar) {
+	public void setCellar(ObjectId cellar) {
 		this.cellar = cellar;
 	}
 
@@ -154,12 +165,12 @@ public class Company implements Entity<Company> {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Company company = (Company) o;
-		return isAccessible == company.isAccessible && Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(type, company.type) && Objects.equals(address, company.address) && Objects.equals(masterManager, company.masterManager) && Objects.equals(managerList, company.managerList) && Objects.equals(cellar, company.cellar) && Objects.equals(phoneNumber, company.phoneNumber) && Objects.equals(description, company.description) && Objects.equals(websiteLink, company.websiteLink) && Objects.equals(logoLink, company.logoLink);
+		return isAccessible == company.isAccessible && Objects.equals(id, company.id) && Objects.equals(name, company.name) && Objects.equals(type, company.type) && Objects.equals(address, company.address) && Objects.equals(masterManager, company.masterManager) && Objects.equals(managerList, company.managerList) && Objects.equals(cellar, company.cellar) && Objects.equals(followerList, company.followerList) && Objects.equals(phoneNumber, company.phoneNumber) && Objects.equals(description, company.description) && Objects.equals(websiteLink, company.websiteLink) && Objects.equals(logoLink, company.logoLink);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, type, address, isAccessible, masterManager, managerList, cellar, phoneNumber, description, websiteLink, logoLink);
+		return Objects.hash(id, name, type, address, isAccessible, masterManager, managerList, cellar, followerList, phoneNumber, description, websiteLink, logoLink);
 	}
 
 	@Override
