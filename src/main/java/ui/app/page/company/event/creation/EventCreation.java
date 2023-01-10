@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import org.bson.types.ObjectId;
 import persistence.entity.company.Company;
 import persistence.entity.event.Event;
+import persistence.entity.notification.Notification;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.select.Select;
@@ -98,6 +100,12 @@ public class EventCreation implements Initializable, Observer {
                 }
 
                 Event event = new Event(labelFieldMap.get("Nom").toString(), labelFieldMap.get("Adresse").toString(), labelFieldMap.get("Description").toString(), startDate, endDate, companySelected.getId());
+
+                //Send the notifications to subscribers of the company.
+                List<ObjectId> followers = companySelected.getFollowerList();
+                String message = "L'évènement "+event.getName()+" a été créé ! Allez le consulter !";
+                Notification notification = new Notification(null, message);
+                Facade.getInstance().insertOneNotificationListId(notification, followers);
 
                 // The form is valid. Try to create the referencing.
                 Facade.getInstance().insertOneEvent(event);
