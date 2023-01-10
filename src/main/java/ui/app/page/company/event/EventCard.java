@@ -62,6 +62,8 @@ public class EventCard extends Pane {
 		supprimer = (Button) eventCard.lookup("#supprimer");
 		update = (Button) eventCard.lookup("#update");
 
+		description.setEditable(false);
+
 		nameCompany.setText(company.getName());
 		name.setText(event1.getName());
 		address.setText(event1.getAddress());
