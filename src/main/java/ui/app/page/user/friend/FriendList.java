@@ -11,7 +11,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import persistence.entity.notification.Notification;
 import persistence.entity.user.Friend;
+import persistence.entity.user.User;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
 
@@ -135,8 +137,14 @@ public class FriendList implements Initializable, Observer {
 
         try {
             // The form is valid. Try to add the friend.
-            Facade.getInstance()
+            User requestedUser = Facade.getInstance()
                     .addFriend(labelFieldMap.get(labelUsername).toString());
+
+            Facade.getInstance().insertOneNotification(
+                    new Notification(
+                            requestedUser.getId(),
+                            "Vous avez reçu une demande d'ami de la part de " + Facade.getInstance().getLoggedUser().getUsername() + "."
+                    ));
             initialize(null, null);
         } catch (NoLoggedUser ignore) {
         } catch (NotFoundException e) {
