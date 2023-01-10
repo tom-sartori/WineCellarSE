@@ -29,9 +29,6 @@ import java.util.Optional;
 public class GuideCard extends Pane {
     protected final Label title;
     protected final Label description;
-    protected final Button boutonModification;
-    protected Date creationDate;
-    private Button boutonSuppression;
     private final double preferredHeight, preferredWidth;
     private Guide guide;
     private CustomSceneHelper sceneHelper = new CustomSceneHelper();
@@ -45,8 +42,6 @@ public class GuideCard extends Pane {
 
         title = new Label();
         description = new Label();
-
-        boutonModification = new Button("Modifier");
 
         setPrefHeight(preferredHeight);
         setPrefWidth(preferredWidth);
@@ -75,7 +70,23 @@ public class GuideCard extends Pane {
         description.setText(guide.getDescription());
         description.setFont(new Font(17.0));
 
-        setOnMouseClicked(e -> {
+
+        ImageView loop = new ImageView();
+        try {
+            loop.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/loop.png")).getPath())));
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        int photoSize3 = 20;
+        loop.setFitHeight(photoSize3);
+        loop.setFitWidth(photoSize3);
+        loop.setLayoutX(10.0);
+        loop.setLayoutY(10.0);
+        getChildren().add(loop);
+
+
+        loop.setOnMouseClicked(e -> {
             // Action you want to do
             State.getInstance().setCurrentGuide(guide);
             sceneHelper.bringNodeToFront(GuideDetails.class.getSimpleName());
@@ -86,7 +97,7 @@ public class GuideCard extends Pane {
         if(Facade.getInstance().isAdminLogged()){
             ImageView trash = new ImageView();
             try {
-                trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
+                trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash2.png")).getPath())));
             }
             catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -94,21 +105,34 @@ public class GuideCard extends Pane {
             int photoSize = 20;
             trash.setFitHeight(photoSize);
             trash.setFitWidth(photoSize);
-            trash.setLayoutX(10.0);
+            trash.setLayoutX(40.0);
             trash.setLayoutY(10.0);
             getChildren().add(trash);
 
             trash.setOnMouseClicked(e -> {
                 supprimerGuide();
             });
+
+            ImageView pen = new ImageView();
+            try {
+                pen.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/edit2.png")).getPath())));
+            }
+            catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            int photoSize2 = 20;
+            pen.setFitHeight(photoSize2);
+            pen.setFitWidth(photoSize2);
+            pen.setLayoutX(70.0);
+            pen.setLayoutY(10.0);
+            getChildren().add(pen);
+
+            pen.setOnMouseClicked(e -> {
+                State.getInstance().setCurrentGuide(guide);
+                sceneHelper.bringNodeToFront(GuideModification.class.getSimpleName());
+            });
         }
 
-        boutonModification.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                sceneHelper.bringNodeToFront(GuideModification.class.getSimpleName());
-            }
-        });
     }
 
     public Guide getGuide() {

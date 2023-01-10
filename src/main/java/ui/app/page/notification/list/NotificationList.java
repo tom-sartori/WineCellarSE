@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 import persistence.entity.notification.Notification;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,6 +29,7 @@ public class NotificationList implements Initializable {
         try {
             ObjectId idUser = Facade.getInstance().getLoggedUser().getId();
             List<Notification> notifList = Facade.getInstance().getNotificationListFromUser(idUser);
+            Collections.sort(notifList);
             cardList.clear();
             notifList.forEach(notif -> cardList.add(new NotificationCard(notif, this)));
             cardHolder.setAlignment(Pos.CENTER);

@@ -84,6 +84,6 @@ public class Notification implements Entity<Notification> {
 
 	@Override
 	public int compareTo(Notification o) {
-		return date.compareTo(o.date);
+		return o.date.compareTo(date);
 	}
 }
