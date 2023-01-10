@@ -15,9 +15,7 @@
       <Label fx:id="address" layoutX="10.0" layoutY="43.0" prefHeight="17.0" prefWidth="335.0" text="Adresse" />
       <TextArea fx:id="description" layoutX="10.0" layoutY="64.0" prefHeight="66.0" prefWidth="424.0" wrapText="true" />
       <Label fx:id="nameCompany" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="336.0" layoutY="15.0" prefHeight="17.0" prefWidth="182.0" text="NomEntreprise" />
+      <Button fx:id="update" layoutX="446.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Update" />
    </children>
-   <properties>
-      <!-- store controller at key "controller" in properties map -->
-      <controller><fx:reference source="controller"/></controller>
-   </properties>
+
 </AnchorPane>

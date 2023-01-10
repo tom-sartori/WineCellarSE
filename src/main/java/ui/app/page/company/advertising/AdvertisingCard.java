@@ -20,6 +20,7 @@ import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.company.advertising.details.AdvertisingDetails;
 import ui.app.page.company.advertising.list.AdvertisingList;
+import ui.app.page.company.advertising.update.AdvertisingUpdate;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +41,7 @@ public class AdvertisingCard extends Pane {
 	private Advertising advertising;
 
 	@FXML
-	private Button supprimer, action2;
+	private Button supprimer, action2, update;
 	@FXML
 	private AnchorPane advertisingCard;
 	private CustomSceneHelper sceneHelper;
@@ -65,12 +66,14 @@ public class AdvertisingCard extends Pane {
 		nameCompany = (Label) advertisingCard.lookup("#nameCompany");
 		supprimer = (Button) advertisingCard.lookup("#supprimer");
 		action2 = (Button) advertisingCard.lookup("#action2");
+		update = (Button) advertisingCard.lookup("#update");
 
 		name.setText(advertising.getName());
 		nameCompany.setText(Facade.getInstance().getOneCompany(advertising.getCompany()).getName());
 
 		try {
 			if (Facade.getInstance().getLoggedUser().isAdmin()) {
+				update.setVisible(true);
 				action2.setText("Valider");
 
 				/**
@@ -89,7 +92,19 @@ public class AdvertisingCard extends Pane {
 						sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
 					}
 				});
+
+				/**
+				 * Update the advertising and create an alert.
+				 */
+				update.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						State.getInstance().setCurrentAdvertising(advertising);
+						sceneHelper.bringNodeToFront(AdvertisingUpdate.class.getSimpleName());
+					}
+				});
 			} else {
+				update.setVisible(false);
 				action2.setText("Renouveler");
 
 				/**

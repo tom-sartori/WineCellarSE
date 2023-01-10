@@ -1,5 +1,6 @@
 package ui.app.page.company.referencing;
 
+import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import persistence.entity.referencing.Referencing;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.company.referencing.list.ReferencingList;
+import ui.app.page.company.referencing.update.ReferencingUpdate;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -30,7 +32,7 @@ public class ReferencingCard extends Pane {
 	@FXML
 	private AnchorPane referencingCard;
 	@FXML
-	private Button supprimer;
+	private Button supprimer, update;
 	@FXML
 	private Label status, paymentDate, level, startDate, endDate, price, nameCompany;
 
@@ -55,6 +57,7 @@ public class ReferencingCard extends Pane {
 		endDate = (Label) referencingCard.lookup("#endDate");
 		price = (Label) referencingCard.lookup("#price");
 		supprimer = (Button) referencingCard.lookup("#supprimer");
+		update = (Button) referencingCard.lookup("#update");
 
 		status.setText(referencing.getStatus());
 		nameCompany.setText(Facade.getInstance().getOneCompany(referencing.getCompany()).getName());
@@ -95,8 +98,30 @@ public class ReferencingCard extends Pane {
 		dropShadow.setBlurType(BlurType.TWO_PASS_BOX);
 		setEffect(dropShadow);
 
+		try {
+			if (Facade.getInstance().getLoggedUser().isAdmin()) {
+				update.setVisible(true);
+				update.setVisible(true);
+				/**
+				 * Update the referencing and create an alert.
+				 */
+				update.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						State.getInstance().setCurrentReferencing(referencing);
+						sceneHelper.bringNodeToFront(ReferencingUpdate.class.getSimpleName());
+					}
+				});
+			} else {
+				update.setVisible(false);
+			}
+		} catch (NoLoggedUser e) {
+			throw new RuntimeException(e);
+		}
+
 		getChildren().addAll(supprimer);
 	}
+
 	public ReferencingCard() {}
 
 }

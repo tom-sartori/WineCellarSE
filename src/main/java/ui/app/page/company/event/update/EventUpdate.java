@@ -1,9 +1,8 @@
-package ui.app.page.company.event.creation;
+package ui.app.page.company.event.update;
 
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import persistence.entity.company.Company;
 import persistence.entity.event.Event;
@@ -11,12 +10,14 @@ import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.select.Select;
 import ui.app.component.form.Form;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.list.CompanyList;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class EventCreation implements Initializable, Observer {
+public class EventUpdate implements Initializable, Observer {
 
     @FXML
     private AnchorPane eventCreation;
@@ -30,13 +31,21 @@ public class EventCreation implements Initializable, Observer {
 
     private Company companySelected;
 
+    private Event event;
+
+    private CustomSceneHelper sceneHelper = new CustomSceneHelper();
+
     /**
      * Initializes the controller class and create the fields for the form.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if(State.getInstance().getCurrentUser() != null){
-            companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
+            event = State.getInstance().getCurrentEvent();
+            String startDate=new SimpleDateFormat("dd/MM/yyyy").format(event.getStartDate());
+            String endDate=new SimpleDateFormat("dd/MM/yyyy").format(event.getEndDate());
+
+            companies = Facade.getInstance().getCompanyList();
             companyList = new String[companies.size()];
             int i = 0;
             for(Company c : companies){
@@ -44,16 +53,20 @@ public class EventCreation implements Initializable, Observer {
                 i++;
             }
 
+            Company company = Facade.getInstance().getOneCompany(event.getCompany());
+            Select select = new Select("Entreprise", true, companyList);
+            select.getChoiceBox().getSelectionModel().select(company.getName());
+
             formController.addObserver(this);
 
             formController.clearFieldList();
 
-            formController.addField(new LabelField("Nom", true));
-            formController.addField(new LabelField("Adresse", true));
-            formController.addField(new LabelField("Description", true));
-            formController.addField(new LabelField("Date de début", true));
-            formController.addField(new LabelField("Date de fin", true));
-            formController.addField(new Select("Entreprise", true, companyList));
+            formController.addField(new LabelField("Nom", event.getName(),true));
+            formController.addField(new LabelField("Adresse", event.getAddress(),true));
+            formController.addField(new LabelField("Description",event.getDescription(), true));
+            formController.addField(new LabelField("Date de début", startDate, true));
+            formController.addField(new LabelField("Date de fin", endDate, true));
+            formController.addField(select);
 
             formController.setSubmitButtonText("Ajouter");
 
@@ -78,17 +91,21 @@ public class EventCreation implements Initializable, Observer {
                  * Transform the date typed by the user into a usable date.
                  */
                 SimpleDateFormat pattern = new SimpleDateFormat("dd/MM/yyyy");
-                Date startDate = pattern.parse(startDateString);
-                Date endDate = pattern.parse(endDateString);
+                Date newStartDate = pattern.parse(startDateString);
+                Date newEndDate = pattern.parse(endDateString);
                 Date now = new Date();
 
                 /**
                  * The event should not finish before it starts.
                  */
-                if (!startDate.before(endDate)) {
+                if (!newStartDate.before(newEndDate)) {
                     // Invalid startDate and endDate.
                     formController.showErrorLabel("Dates invalides");
                     return;
+                }
+
+                if(newStartDate.before(now)){
+                    newStartDate = now;
                 }
 
                 for(Company c : companies) {
@@ -97,16 +114,13 @@ public class EventCreation implements Initializable, Observer {
                     }
                 }
 
-                Event event = new Event(labelFieldMap.get("Nom").toString(), labelFieldMap.get("Adresse").toString(), labelFieldMap.get("Description").toString(), startDate, endDate, companySelected.getId());
+                Event event2 = new Event(labelFieldMap.get("Nom").toString(), labelFieldMap.get("Adresse").toString(), labelFieldMap.get("Description").toString(), newStartDate, newEndDate, companySelected.getId());
 
-                // The form is valid. Try to create the referencing.
-                Facade.getInstance().insertOneEvent(event);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Nouvel évènement");
-                alert.setHeaderText(null);
-                alert.setContentText("L'évènement " + event.getName() + " a bien été créé !");
+                // The form is valid. Try to update the event.
+                Facade.getInstance().updateOneEvent(event.getId(), event2);
 
-                alert.showAndWait();
+                sceneHelper.bringNodeToFront(CompanyList.class.getSimpleName());
+
             } catch (Exception e) {
                 formController.showErrorLabel("Format du formulaire invalide. ");
             }
