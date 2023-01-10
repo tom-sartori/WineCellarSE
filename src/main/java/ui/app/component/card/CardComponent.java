@@ -16,7 +16,7 @@ import persistence.entity.cellar.Cellar;
 import persistence.entity.company.Company;
 import persistence.entity.user.User;
 import ui.app.State;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
 import ui.app.page.company.admin.CompanyAdmin;
 import ui.app.page.company.details.CompanyDetails;

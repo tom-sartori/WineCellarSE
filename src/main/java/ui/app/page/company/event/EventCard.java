@@ -14,11 +14,9 @@ import javafx.scene.layout.Pane;
 import persistence.entity.company.Company;
 import persistence.entity.event.Event;
 import ui.app.State;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.company.event.list.EventList;
 import ui.app.page.company.event.update.EventUpdate;
-import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.company.event.list.EventList;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

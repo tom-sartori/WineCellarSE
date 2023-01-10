@@ -6,12 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.Wall;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
 
 import java.net.URL;

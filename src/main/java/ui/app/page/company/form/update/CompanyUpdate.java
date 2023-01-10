@@ -18,7 +18,7 @@ import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
 
 import java.net.URL;

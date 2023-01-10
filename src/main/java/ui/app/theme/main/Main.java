@@ -7,7 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ui.Starter;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.ResourceBundle;

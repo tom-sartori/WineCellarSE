@@ -3,15 +3,11 @@ package ui.app.page.cellar.lists.cellarbyuser;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import persistence.entity.cellar.Cellar;
-import persistence.entity.user.User;
 import ui.app.State;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.component.card.CardComponent;
-import ui.app.page.cellar.details.CellarDetails;
 import ui.app.page.cellar.forms.create.CellarForm;
 
 import java.net.URL;

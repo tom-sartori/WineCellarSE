@@ -1,19 +1,13 @@
 package ui.app.page.company.admin;
 
-import constant.NodeCreations;
 import exception.NotFoundException;
-import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import ui.app.component.card.CardComponent;
-import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.company.form.create.CompanyCreate;
 
 import java.net.URL;
 import java.util.ResourceBundle;

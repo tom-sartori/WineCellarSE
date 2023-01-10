@@ -2,7 +2,7 @@ package ui.app.page.user.logout;
 
 import facade.Facade;
 import javafx.fxml.Initializable;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.ResourceBundle;

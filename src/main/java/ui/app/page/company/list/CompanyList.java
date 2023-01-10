@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import persistence.entity.company.Company;
 import persistence.entity.referencing.Referencing;
 import ui.app.component.card.CardComponent;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.company.form.create.CompanyCreate;
 
 import java.net.URL;

@@ -1,11 +1,8 @@
 package ui.app.page.guides.list;
 
 import facade.Facade;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
@@ -16,13 +13,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import persistence.entity.guide.Guide;
 import ui.app.State;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.guides.guideDetails.GuideDetails;
 import ui.app.page.guides.guideModification.GuideModification;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 

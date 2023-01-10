@@ -18,9 +18,7 @@ import persistence.entity.company.Company;
 import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.component.card.CardComponent;
-import ui.app.component.field.labelfield.LabelField;
-import ui.app.component.form.Form;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.company.advertising.creation.AdvertisingCreation;
 import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.company.event.EventCard;
@@ -31,8 +29,6 @@ import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class CompanyDetails implements Initializable {

@@ -17,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import persistence.entity.referencing.Referencing;
 import ui.app.State;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.company.referencing.update.ReferencingUpdate;
 

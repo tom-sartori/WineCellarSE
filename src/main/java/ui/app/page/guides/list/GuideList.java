@@ -10,7 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import persistence.entity.guide.Guide;
 import persistence.entity.guide.GuideCategory;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.List;

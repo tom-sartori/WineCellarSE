@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.theme.menu.role.MenuEnumInterface;
 
 import java.io.IOException;

@@ -11,7 +11,7 @@ import persistence.entity.user.User;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.Map;

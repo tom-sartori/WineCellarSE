@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import ui.app.component.card.CardComponent;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.company.form.create.CompanyCreate;
 
 import java.net.URL;

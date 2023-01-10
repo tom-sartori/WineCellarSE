@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -16,7 +15,7 @@ import org.bson.types.ObjectId;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.user.User;
 import ui.app.State;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.cellar.lists.publiccellars.PublicCellars;
 
 import java.net.URL;

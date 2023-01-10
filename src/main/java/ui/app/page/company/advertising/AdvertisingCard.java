@@ -17,7 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import persistence.entity.advertising.Advertising;
 import ui.app.State;
-import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.company.advertising.details.AdvertisingDetails;
 import ui.app.page.company.advertising.list.AdvertisingList;
 import ui.app.page.company.advertising.update.AdvertisingUpdate;
