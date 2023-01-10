@@ -104,7 +104,7 @@ public class EventCreation implements Initializable, Observer {
                 //Send the notifications to subscribers of the company.
                 List<ObjectId> followers = companySelected.getFollowerList();
                 String message = "L'évènement "+event.getName()+" a été créé ! Allez le consulter !";
-                Notification notification = new Notification(null, message, false, now);
+                Notification notification = new Notification(null, message);
                 Facade.getInstance().insertOneNotificationListId(notification, followers);
 
                 // The form is valid. Try to create the referencing.
