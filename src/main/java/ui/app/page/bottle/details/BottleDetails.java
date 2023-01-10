@@ -17,6 +17,7 @@ import persistence.entity.bottle.Bottle;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
+import ui.app.page.rates.list.RateList;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,6 +44,8 @@ public class BottleDetails implements Initializable {
 
     @FXML
     private AnchorPane rateList;
+    @FXML
+    private RateList rateListController;
 
     /**
      * Initializes the controller class.
@@ -219,11 +222,12 @@ public class BottleDetails implements Initializable {
 
             logoBottlePane.getChildren().add(new Label("Logo"));
 
-            Node rateListNode = (AnchorPane) mainPaneBottleDetails.getParent().lookup("#rateList");
             HBox rateListRow = new HBox();
-            rateListRow.getChildren().add((AnchorPane) rateList);
+            rateListRow.getChildren().add(rateList);
             rateListRow.setAlignment(Pos.CENTER);
             mainPaneBottleDetails.getChildren().add(rateListRow);
+
+            rateListController.initialize(null,null);
 
         }
     }

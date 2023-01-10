@@ -31,12 +31,6 @@ public class GuideDetails extends Pane implements Initializable {
     private AnchorPane guideDetailsController;
 
     @FXML
-    private Label titleGuide;
-
-    @FXML
-    private Label titleParagraph;
-
-    @FXML
     private VBox paneLabel;
 
     @FXML
@@ -56,39 +50,18 @@ public class GuideDetails extends Pane implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Guide guide = State.getInstance().getCurrentGuide();
         if (guide != null ){
-            //this.guide = guide;
 
-            titleGuide.setText(guide.getTitle());
-
-/*
-            // Récupérer les valeurs et les clés
-            for (Map.Entry<String, List<String>> entry : guide.getSectionList().entrySet()) {
-                listTitre.add(entry.getKey()); // liste de tout les titres de paragraphe du guide
-                List<String> value = entry.getValue();
-                for (String i : value){
-                    listContenu1.add(i); //liste de tous les paragraphes du guide
-                }
-            }
-            */
             paneLabel.setAlignment(Pos.CENTER);
             paneLabel.setPadding(new Insets(30, 10, 10, 10));
             paneLabel.setPrefWidth(900);
-            /*
-            for(Map.Entry<String, String> entry : guide.getSectionList().entrySet()){
 
-                Label titreParagraphe = new Label(entry.getKey());
-                Label contenuParagraphe = new Label(entry.getValue());
-                titreParagraphe.setStyle("-fx-font-weight: bold");
-                titreParagraphe.setStyle("-fx-font-size: 20");
-                titreParagraphe.setPadding(new Insets(10, 0, 0, 0)); // Ajoute un espace de 10 pixels en haut du titre
-                contenuParagraphe.setPadding(new Insets(10, 0, 0, 0)); // Ajoute un espace de 10 pixels en haut du contenu
-
-                paneLabel.getChildren().addAll(titreParagraphe, contenuParagraphe);
-
-
-            }
-
-             */
+            Label titreGuide = new Label();
+            titreGuide.setLayoutY(177.0);
+            titreGuide.setPrefHeight(36.0);
+            titreGuide.setPrefWidth(1183.0);
+            titreGuide.setFont(Font.font("System Bold", 25.0));
+            titreGuide.setText(guide.getTitle());
+            paneLabel.getChildren().add(titreGuide);
 
             for (Map.Entry<String, String> entry : guide.getSectionList().entrySet()) {
                 String titre = entry.getKey();
@@ -111,12 +84,14 @@ public class GuideDetails extends Pane implements Initializable {
 
 
                 // Ajouter les TextFlow au Pane
+
                 paneLabel.getChildren().add(titreTextFlow);
                 paneLabel.getChildren().add(contenuTextFlow);
             }
         }
         Button buttonRetour = new Button("Retour");
         buttonRetour.setOnAction(e -> {
+            paneLabel.getChildren().clear(); // retire tous les enfants de la vue avant de les remplacer
             sceneHelper.bringNodeToFront(GuideList.class.getSimpleName());
         });
 
@@ -124,10 +99,10 @@ public class GuideDetails extends Pane implements Initializable {
 
     }
 
-
-
     public void onAction() {
         this.initialize(null, null);
     }
+
+
 
 }

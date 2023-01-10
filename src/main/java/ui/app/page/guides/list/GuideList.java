@@ -6,15 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import persistence.entity.guide.Guide;
 import persistence.entity.guide.GuideCategory;
 import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.guides.guideCreation.GuideCreation;
 
 import java.net.URL;
 import java.util.List;
@@ -32,7 +28,6 @@ public class GuideList implements Initializable {
     private GuideCategory selectedCategoryFiltreLabel;
 
     private ObservableList<GuideCard> cardList = FXCollections.observableArrayList();
-
 
 
     private final int nbColumn = 2;
@@ -77,38 +72,21 @@ public class GuideList implements Initializable {
             // Appeler la méthode onSearch pour filtrer la liste de guides
             onSearch();
         });
-
-
     }
-/*
+
     @FXML
     public void onSearch() {
         int count = 0;
 
         cardHolder.getChildren().clear();
+
         for (GuideCard card : cardList) {
-            cardHolder.add(card, count % nbColumn, count / nbColumn);
-            count++;
+            // Vérifier si la catégorie du guide correspond à la catégorie sélectionnée
+            if (selectedCategoryFiltreLabel == null || selectedCategoryFiltreLabel == card.getGuide().getCategory()) {
+                cardHolder.add(card, count % nbColumn, count / nbColumn);
+                count++;
+            }
         }
-    }
-*/
-@FXML
-public void onSearch() {
-    int count = 0;
-
-    cardHolder.getChildren().clear();
-
-    for (GuideCard card : cardList) {
-        // Vérifier si la catégorie du guide correspond à la catégorie sélectionnée
-        if (selectedCategoryFiltreLabel == null || selectedCategoryFiltreLabel == card.getGuide().getCategory()) {
-            cardHolder.add(card, count % nbColumn, count / nbColumn);
-            count++;
-        }
-    }
-}
-
-    public void goToCreationPage(){
-        sceneHelper.bringNodeToFront(GuideCreation.class.getSimpleName());
     }
 
     public void onAction() {

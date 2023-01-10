@@ -1,22 +1,23 @@
 package ui.app.page.rates.list;
 
+import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import persistence.entity.rate.Rate;
 
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -30,26 +31,15 @@ public class RateCard extends Pane {
     @FXML
     private Button supprimer;
 
-
-    private TextFlow commentaireFlow;
     private Label username;
     private Label note;
-    protected final Button boutonSuppression;
-
-
-
 
     public RateCard(Rate rate, RateList rateList){
         this.rate = rate;
         this.rateList = rateList;
-        this.commentaireFlow = new TextFlow();
         username = new Label();
-        note = new Label();
-        boutonSuppression = new Button("x");
-        boutonSuppression.setLayoutX(330.0);
-        boutonSuppression.setLayoutY(17.0);
 
-        setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center; -fx-border-width: 1px");
+        setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center; -fx-border-width: 1px; -fx-padding:5px;");
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setHeight(3);
@@ -57,57 +47,83 @@ public class RateCard extends Pane {
         dropShadow.setBlurType(BlurType.TWO_PASS_BOX);
         setEffect(dropShadow);
 
-        try{
+        TextArea textArea = new TextArea();
+        textArea.setWrapText(true);
 
-            TextArea textArea = new TextArea();
-            textArea.setWrapText(true);
+        textArea.setEditable(false);
+        textArea.setText(rate.getComment());
+        textArea.setLayoutX(85.0);
+        textArea.setLayoutY(7.0);
+        textArea.setPrefHeight(45.0);
+        textArea.setPrefWidth(170.0);
 
-            textArea.setEditable(false);
-            textArea.setText(rate.getComment());
-            textArea.setLayoutX(85.0);
-            textArea.setLayoutY(7.0);
-            textArea.setPrefHeight(50.0);
-            textArea.setPrefWidth(170.0);
-            /*
-            String commentaire = rate.getComment();
+        username.setText(Facade.getInstance().getOneUser(rate.getOwnerRef()).getUsername());
+        username.setLayoutX(262.0);
+        username.setLayoutY(17.0);
+        username.setPrefHeight(17.0);
+        username.setPrefWidth(70.0);
 
-            Text commentaireText = new Text(commentaire);
-            commentaireText.setWrappingWidth(120.0);
+        GridPane starsGrid = new GridPane();
+        starsGrid.setLayoutX(8.0);
+        starsGrid.setLayoutY(17.0);
 
+        for (int i = 1; i <= rate.getRate() ; i++) {
+            ImageView star = new ImageView();
+            try {
+                star.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/star.png")).getPath())));
+            }
+            catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            int photoSize = 15;
+            star.setFitHeight(photoSize);
+            star.setFitWidth(photoSize);
 
-            commentaireFlow.getChildren().add(commentaireText);
-
-
-            commentaireFlow.setLayoutX(85.0);
-            commentaireFlow.setLayoutY(17.0);
-            commentaireFlow.setPrefHeight(40.0);
-            commentaireFlow.setPrefWidth(120.0);
-*/
-
-            username.setText(Facade.getInstance().getOneUser(rate.getOwnerRef()).getUsername());
-            username.setLayoutX(258.0);
-            username.setLayoutY(17.0);
-            username.setPrefHeight(17.0);
-            username.setPrefWidth(70.0);
-
-            note.setText("Note : "+ rate.getRate());
-            note.setLayoutX(14.0);
-            note.setLayoutY(17.0);
-            note.setPrefHeight(17.0);
-            note.setPrefWidth(76.0);
-
-            getChildren().addAll(textArea, username, note, boutonSuppression);
-
-        }catch(Exception e){
-        e.printStackTrace();
+            starsGrid.add(star, i, 1);
         }
 
-        boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                supprimerRate();
+        getChildren().addAll(textArea, username, starsGrid);
+
+        if (Facade.getInstance().isAdminLogged()){
+            ImageView trash = new ImageView();
+            try {
+                trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
             }
-        });
+            catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            int photoSize = 20;
+            trash.setFitHeight(photoSize);
+            trash.setFitWidth(photoSize);
+            trash.setLayoutX(330.0);
+            trash.setLayoutY(17.0);
+            getChildren().add(trash);
+
+            trash.setOnMouseClicked(e -> {
+                supprimerRate();
+            });
+        }
+        try{
+            if(Facade.getInstance().getLoggedUser().getId().equals(rate.getOwnerRef())){
+                ImageView trash = new ImageView();
+                try {
+                    trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
+                }
+                catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                int photoSize = 20;
+                trash.setFitHeight(photoSize);
+                trash.setFitWidth(photoSize);
+                trash.setLayoutX(330.0);
+                trash.setLayoutY(17.0);
+                getChildren().add(trash);
+
+                trash.setOnMouseClicked(e -> {
+                    supprimerRate();
+                });
+            }
+        }catch(NoLoggedUser ignore){ }
 
 
     }

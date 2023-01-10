@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane id="notificationPage" fx:id="notificationPage" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.app.page.notification.NotificationPage"
+            prefHeight="625.0" prefWidth="1280.0">
+    <children>
+        <fx:include fx:id="notificationList" source="list/NotificationList.fxml" />
+    </children>
+    <properties>
+        <!-- store controller at key "controller" in properties map -->
+        <controller><fx:reference source="controller"/></controller>
+    </properties>
+</AnchorPane>

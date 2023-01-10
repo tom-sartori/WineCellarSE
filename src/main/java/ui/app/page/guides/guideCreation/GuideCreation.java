@@ -37,13 +37,11 @@ public class GuideCreation implements Initializable, Observer {
     @FXML
     private Button boutonAjoutParagraphe;
 
+    @FXML
+    private AnchorPane anchorForm;
 
     private GuideCategory selectedCategory;
     private static int nbClique = 0;
-
-    CustomSceneHelper sceneHelper = new CustomSceneHelper();
-
-    Label label = new Label();
 
     /**
      * Initializes the controller class.
@@ -51,44 +49,44 @@ public class GuideCreation implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        formController.addObserver(this);
+            formController.addObserver(this);
 
-        formController.clearFieldList();
+            formController.clearFieldList();
 
-        formController.addField(new LabelField("Titre du guide", true));
-        formController.addField(new LabelField("description", true));
-        formController.initialize(null, null);
+            formController.addField(new LabelField("Titre du guide", true));
+            formController.addField(new LabelField("description", true));
+            formController.initialize(null, null);
+
+            boutonAjoutParagraphe.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    nbClique+=1;
+                    formController.addField(new LabelField("titre paragraphe "+nbClique, true));
+                    formController.addField(new LabelField("contenu "+nbClique, true));
+                    //formController.getVBox().getChildren().add(new Button("supprimer"));
+                    formController.initialize(null, null);
+                    ///TODO changer boutton submit
+
+                }
+            });
+            //guideCreation.getChildren().add(boutonAjoutParagraphe);
+
+            // Créer une liste observable des valeurs de l'énumération GuideCategory
+            ObservableList<GuideCategory> categories = FXCollections.observableArrayList(GuideCategory.values());
+
+            // Définir la liste observable comme source de données pour le ComboBox
+            categoryComboBox.setItems(categories);
+
+            // Définir un gestionnaire d'évènements pour la sélection d'un élément dans le ComboBox
+            categoryComboBox.setOnAction(event -> {
+                // Récupérer la catégorie sélectionnée
+                selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
+            });
+        }
 
 
 
-        boutonAjoutParagraphe.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                nbClique+=1;
-                formController.addField(new LabelField("titre paragraphe "+nbClique, true));
-                formController.addField(new LabelField("contenu "+nbClique, true));
-                //formController.getVBox().getChildren().add(new Button("supprimer"));
-                formController.initialize(null, null);
-                ///TODO changer boutton submit
-
-            }
-        });
-        //guideCreation.getChildren().add(boutonAjoutParagraphe);
-
-        // Créer une liste observable des valeurs de l'énumération GuideCategory
-        ObservableList<GuideCategory> categories = FXCollections.observableArrayList(GuideCategory.values());
-
-        // Définir la liste observable comme source de données pour le ComboBox
-        categoryComboBox.setItems(categories);
-
-        // Définir un gestionnaire d'évènements pour la sélection d'un élément dans le ComboBox
-        categoryComboBox.setOnAction(event -> {
-            // Récupérer la catégorie sélectionnée
-            selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
-        });
-
-    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -128,19 +126,7 @@ public class GuideCreation implements Initializable, Observer {
         }
     }
 
-    public void setVisible(boolean visible) {
-        guideCreation.setVisible(visible);
-    }
-
-    public void ajoutParagraphe(){
-        label.setText("Bonjour");
-    }
-
     public void onAction() {
         this.initialize(null, null);
-    }
-
-    public void goBack(){
-        sceneHelper.bringNodeToFront(GuideList.class.getSimpleName());
     }
 }

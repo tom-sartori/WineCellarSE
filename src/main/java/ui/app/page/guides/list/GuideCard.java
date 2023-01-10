@@ -3,42 +3,39 @@ package ui.app.page.guides.list;
 import facade.Facade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import persistence.entity.guide.Guide;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
-import ui.app.page.guides.guideCreation.GuideCreation;
 import ui.app.page.guides.guideDetails.GuideDetails;
 import ui.app.page.guides.guideModification.GuideModification;
 
-
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 
 public class GuideCard extends Pane {
     protected final Label title;
     protected final Label description;
-    protected final Button boutonSuppression;
     protected final Button boutonModification;
     protected Date creationDate;
+    private Button boutonSuppression;
     private final double preferredHeight, preferredWidth;
     private Guide guide;
     private CustomSceneHelper sceneHelper = new CustomSceneHelper();
     private GuideList guideList;
-
-
-
 
     public GuideCard(Guide guide, GuideList guideList, double preferredHeight, double preferredWidth) {
         this.guide = guide;
@@ -48,11 +45,8 @@ public class GuideCard extends Pane {
 
         title = new Label();
         description = new Label();
-        boutonSuppression = new Button("x");
-        boutonModification = new Button("Modifier");
 
-        boutonSuppression.setLayoutX(10.0);
-        boutonSuppression.setLayoutY(10.0);
+        boutonModification = new Button("Modifier");
 
         setPrefHeight(preferredHeight);
         setPrefWidth(preferredWidth);
@@ -70,9 +64,7 @@ public class GuideCard extends Pane {
         title.setLayoutY(40);
         title.setPrefHeight(26.0);
         title.setPrefWidth(preferredWidth);
-
         title.setText(guide.getTitle());
-
         title.setFont(new Font(17.0));
 
         description.setContentDisplay(javafx.scene.control.ContentDisplay.LEFT);
@@ -80,9 +72,7 @@ public class GuideCard extends Pane {
         description.setLayoutY(80);
         description.setPrefHeight(26.0);
         description.setPrefWidth(preferredWidth);
-
         description.setText(guide.getDescription());
-
         description.setFont(new Font(17.0));
 
         setOnMouseClicked(e -> {
@@ -91,17 +81,27 @@ public class GuideCard extends Pane {
             sceneHelper.bringNodeToFront(GuideDetails.class.getSimpleName());
         });
 
-        getChildren().addAll(title, description, boutonSuppression);
+        getChildren().addAll(title, description);
 
-
-
-        boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                supprimerGuide();
+        if(Facade.getInstance().isAdminLogged()){
+            ImageView trash = new ImageView();
+            try {
+                trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
             }
+            catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            int photoSize = 20;
+            trash.setFitHeight(photoSize);
+            trash.setFitWidth(photoSize);
+            trash.setLayoutX(10.0);
+            trash.setLayoutY(10.0);
+            getChildren().add(trash);
 
-        });
+            trash.setOnMouseClicked(e -> {
+                supprimerGuide();
+            });
+        }
 
         boutonModification.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -125,7 +125,6 @@ public class GuideCard extends Pane {
         alert.setHeaderText(null);
         alert.setContentText("Voulez-vous vraiment supprimer"+guide.getTitle()+"?");
         Optional<ButtonType> option = alert.showAndWait();
-
         if(option.get() != ButtonType.CANCEL){
             Facade.getInstance().deleteOneGuide(guide.getId());
         }

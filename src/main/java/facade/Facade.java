@@ -784,6 +784,16 @@ public class Facade implements FacadeInterface {
         return NotificationFacade.getInstance().insertOneNotification(notification);
     }
 
+    @Override
+    public void insertOneNotificationListUser(Notification notification, List<User> listUser){
+        NotificationFacade.getInstance().insertOneNotificationListUser(notification, listUser);
+    }
+
+    @Override
+    public void insertOneNotificationListId(Notification notification, List<ObjectId> idList){
+        NotificationFacade.getInstance().insertOneNotificationListId(notification, idList);
+    }
+
     /**
      * Get all notifications.
      *

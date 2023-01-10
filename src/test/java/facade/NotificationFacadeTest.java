@@ -4,8 +4,10 @@ import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.entity.notification.Notification;
+import persistence.entity.user.User;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,11 +21,12 @@ public class NotificationFacadeTest {
 
     @BeforeEach
     void init() {
-        ObjectId idSubject = new ObjectId("6390648cc25c501853ae4d7c");
+        ObjectId idSubject1 = new ObjectId("63b8cb0d459add6fa390fcc0");
+
         Calendar cal = Calendar.getInstance();
         cal.set(2022, Calendar.DECEMBER,13);
         Date date = cal.getTime();
-        notification = new Notification(idSubject, "nouvelle demande d'ami", false, date);
+        notification = new Notification(idSubject1, "nouvelle demande d'ami", false, date);
     }
 
     /**
@@ -78,6 +81,7 @@ public class NotificationFacadeTest {
             ObjectId notificationId1 = facade.insertOneNotification(notification);
 
             List<Notification> notificationFromUserAfter = facade.getNotificationListFromUser(userId);
+            System.out.println(notificationFromUserAfter);
 
             int sizeAfter = notificationFromUserAfter.size();
 
@@ -145,5 +149,23 @@ public class NotificationFacadeTest {
 
         assertTrue(facade.deleteOneNotification(notificationIdInserted));
         assertEquals(initialNumberOfNotification - 1, facade.getNotificationList().size());
+    }
+
+    @Test
+    void test_envoie_notif_listUser(){
+        ObjectId idSubject1 = new ObjectId("63b8cb0d459add6fa390fcc0");
+        ObjectId idSubject2 = new ObjectId("63ba917785c1ee62a8a95db6");
+        User user1 = Facade.getInstance().getOneUser(idSubject1);
+        User user2 = Facade.getInstance().getOneUser(idSubject2);
+        List<User> listUser = new ArrayList<>();
+        listUser.add(user1);
+        listUser.add(user2);
+        Calendar cal = Calendar.getInstance();
+        cal.set(2022, Calendar.DECEMBER,13);
+        Date date = cal.getTime();
+
+        facade.insertOneNotificationListUser(new Notification(null, "test notif list user", false, date), listUser);
+
+
     }
 }

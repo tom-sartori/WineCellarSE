@@ -3,6 +3,7 @@ package facade;
 import logic.controller.notification.NotificationController;
 import org.bson.types.ObjectId;
 import persistence.entity.notification.Notification;
+import persistence.entity.user.User;
 
 import java.util.List;
 
@@ -39,6 +40,22 @@ class NotificationFacade {
     protected ObjectId insertOneNotification(Notification notification) {
         return NotificationController.getInstance().insertOne(notification);
     }
+
+    protected void insertOneNotificationListUser(Notification notification, List<User> listUser){
+        for (User user: listUser) {
+            notification.setOwnerRef(user.getId());
+            insertOneNotification(notification);
+        }
+    }
+
+    protected void insertOneNotificationListId(Notification notification, List<ObjectId> idList){
+        for (ObjectId id: idList) {
+            notification.setOwnerRef(id);
+            insertOneNotification(notification);
+        }
+    }
+
+
 
     /**
      * Get all notifications.
