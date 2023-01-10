@@ -1,9 +1,12 @@
 package ui.app.page.bottle.create;
 
+import constant.NodeCreations;
 import exception.BadArgumentsException;
+import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import persistence.entity.bottle.Bottle;
@@ -50,7 +53,6 @@ public class CreateBottleForm implements Initializable, Observer {
         formController.addField(new LabelField("Prix", false));
         formController.addField(new LabelField("Raisins", true));
 
-        // TODO replace submit button text from "connexion" to "créer"
         formController.initialize(null, null);
 
     }
@@ -59,7 +61,6 @@ public class CreateBottleForm implements Initializable, Observer {
     public void update(Observable o, Object arg) {
         Map<String, Object> labelFieldMap = (Map<String, Object>) arg;
 
-        // TODO verif les inputs
         String name = labelFieldMap.get("Nom de la bouteille").toString();
         int vintage = Integer.parseInt(labelFieldMap.get("Millésime").toString());
         String appellation = labelFieldMap.get("Appellation").toString();
@@ -76,17 +77,20 @@ public class CreateBottleForm implements Initializable, Observer {
 
         Bottle bottle = new Bottle(name,vintage,appellation,bottleImage, price, producer, alcoholPercentage, bottleSize, bottleSizeUnit, category, grapeList);
 
-
-        // TODO verif authorisation d'insérer dans la cave
-        if (State.getInstance().getSelectedWall() != null && State.getInstance().getSelectedEmplacementBottle() != null && State.getInstance().getSelectedCellar() != null){
-            try {
-                Facade.getInstance().insertBottle(State.getInstance().getSelectedWall(), State.getInstance().getSelectedCellar(), bottle, State.getInstance().getSelectedEmplacementBottle());
-                CustomSceneHelper sceneHelper = new CustomSceneHelper();
-                sceneHelper.bringNodeToFront(CellarDetails.class.getSimpleName());
-            } catch (BadArgumentsException e) {
-                throw new RuntimeException(e);
+        try {
+            if (Facade.getInstance().isManagerOfCellar(Facade.getInstance().getLoggedUser().getId()) && State.getInstance().getSelectedWall() != null && State.getInstance().getSelectedEmplacementBottle() != null && State.getInstance().getSelectedCellar() != null){
+                try {
+                    Facade.getInstance().insertBottle(State.getInstance().getSelectedWall(), State.getInstance().getSelectedCellar(), bottle, State.getInstance().getSelectedEmplacementBottle());
+                    CustomSceneHelper sceneHelper = new CustomSceneHelper();
+                    sceneHelper.bringNodeToFront(CellarDetails.class.getSimpleName());
+                } catch (BadArgumentsException e) {
+                    Alert alert = NodeCreations.createAlert("Mauvais arguments", "Entrez des arguments valides", e.getMessage(), Alert.AlertType.ERROR);
+                    alert.show();
+                }
             }
+        } catch (NoLoggedUser e) {
+            Alert alert = NodeCreations.createAlert("Aucun utilisateur connecté", "Veuillez vous connectez", e.getMessage(), Alert.AlertType.ERROR);
+            alert.show();
         }
-
     }
 }

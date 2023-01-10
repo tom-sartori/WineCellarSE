@@ -3,6 +3,7 @@ package ui.app.page.cellar.details;
 import constant.NodeCreations;
 import exception.BadArgumentsException;
 import exception.BadCredentialException;
+import exception.NotFoundException;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
+import persistence.entity.advertising.Advertising;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
@@ -26,6 +28,7 @@ import ui.app.page.bottle.details.BottleDetails;
 import ui.app.page.cellar.forms.addwallform.AddWallForm;
 import ui.app.page.cellar.forms.update.UpdateCellarForm;
 import ui.app.page.cellar.lists.cellarbyuser.CellarByUser;
+import ui.app.page.company.advertising.AdvertisingCard;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,7 +36,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-// TODO refactor class to separate methods
 public class CellarDetails implements Initializable {
 
     @FXML
@@ -449,7 +451,19 @@ public class CellarDetails implements Initializable {
                 mainVBox.getChildren().add(tableActionsHbox);
             }
 
-            // TODO Add avertisement entre chaque mur
+            try{
+                Advertising randomAdvertising = Facade.getInstance().getRandomAdvertising();
+
+                HBox advertisingBox = new HBox();
+                advertisingBox.setPadding(new Insets(20));
+                advertisingBox.setAlignment(Pos.CENTER);
+                advertisingBox.getChildren().add(new AdvertisingCard(randomAdvertising, "cellarList"));
+
+                mainVBox.getChildren().add(advertisingBox);
+            }catch (NotFoundException ignored){
+                // do nothing
+            }
+
         }
     }
 

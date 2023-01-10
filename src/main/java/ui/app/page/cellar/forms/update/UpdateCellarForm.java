@@ -78,10 +78,6 @@ public class UpdateCellarForm implements Initializable {
         TextField name = new TextField(currentCellar.getName());
         form.getChildren().add(name);
 
-        // TODO mettre une image sur une cave ?!
-//        form.getChildren().add(new Label("Image de la cave ?"));
-//        TextField image = new TextField(currentCellar.);
-
         form.getChildren().add(new Label("Cave publique ?"));
         CheckBox isPublic = new CheckBox();
         isPublic.setSelected(currentCellar.isPublic());

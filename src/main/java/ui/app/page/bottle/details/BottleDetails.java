@@ -76,7 +76,6 @@ public class BottleDetails implements Initializable {
                 editButton.setText("Save");
             } else {
                 editButton.setText("Edit");
-                // TODO verifier que les champs sont remplis et que les valeurs sont correctes
 
                 Bottle selectedBottle = new Bottle();
                 selectedBottle.setBottleName(textFields.get(0).getText());
@@ -129,7 +128,6 @@ public class BottleDetails implements Initializable {
         return vBox;
     }
 
-    // TODO GENERALIZE WITH FUNCTION ABOVE
     public VBox createLabelField(String label, ArrayList<String> value) {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER_LEFT);
