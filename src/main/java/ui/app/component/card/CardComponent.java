@@ -88,7 +88,7 @@ public class CardComponent extends BorderPane {
 
             card.addNode(new Label("Propriétaire: " + oneUser.getUsername()));
 
-            Button button = new Button("Voir");
+            Button button = NodeCreations.createButton("Voir");
             button.onActionProperty().set(event -> {
                 State.getInstance().setSelectedCellar(cellar);
                 CustomSceneHelper sceneHelper = new CustomSceneHelper();
@@ -97,8 +97,8 @@ public class CardComponent extends BorderPane {
 
             card.addBottomNode(button);
         }catch (Exception e){
-            NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une cave", e.getMessage(), Alert.AlertType.ERROR);
-            //TODO alert error
+            Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une cave", e.getMessage(), Alert.AlertType.ERROR);
+            erreur.show();
         }
         return card;
     }
@@ -120,7 +120,7 @@ public class CardComponent extends BorderPane {
             label1.setWrapText(true);
             card.addNode(label1);
 
-            Button button = new Button("Voir");
+            Button button = NodeCreations.createButton("Voir");
             button.onActionProperty().set(event -> {
                 State.getInstance().setSelectedCompany(company);
                 CustomSceneHelper sceneHelper = new CustomSceneHelper();
@@ -129,7 +129,8 @@ public class CardComponent extends BorderPane {
 
             card.addBottomNode(button);
         }catch (Exception e){
-            NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une entreprise", e.getMessage(), Alert.AlertType.ERROR);
+            Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une entreprise", e.getMessage(), Alert.AlertType.ERROR);
+            erreur.show();
         }
         return card;
     }

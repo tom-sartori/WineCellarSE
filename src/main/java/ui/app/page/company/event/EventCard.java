@@ -17,6 +17,8 @@ import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.company.event.list.EventList;
 import ui.app.page.company.event.update.EventUpdate;
+import ui.app.helpers.services.CustomSceneHelper;
+import ui.app.page.company.event.list.EventList;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -105,7 +107,6 @@ public class EventCard extends Pane {
 					State.getInstance().setCurrentEvent(event1);
 					sceneHelper.bringNodeToFront(EventUpdate.class.getSimpleName());
 				}
-
 			});
 
 			getChildren().addAll(supprimer);

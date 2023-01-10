@@ -15,6 +15,7 @@ import persistence.entity.company.Company;
 import ui.app.State;
 import ui.app.page.company.advertising.AdvertisingCard;
 
+import javax.xml.stream.events.Comment;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
