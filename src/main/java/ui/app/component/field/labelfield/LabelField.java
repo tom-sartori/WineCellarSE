@@ -89,4 +89,8 @@ public class LabelField extends Field implements Initializable {
     public void setReadOnly(boolean readOnly) {
         textField.setEditable(!readOnly);
     }
+
+    public void setValue(String value){
+        textField.setText(value);
+    }
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="guideCreation" fx:id="guideCreation" prefHeight="625.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.guides.guideCreation.GuideCreation">
+<AnchorPane id="guideCreation" fx:id="guideCreation" style="-fx-background-color: #fff;" prefHeight="625.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.app.page.guides.guideCreation.GuideCreation">
     <stylesheets>
         <URL value="@/ui/app/page/guides/guideCreation/GuideCreation.css" />
     </stylesheets>
@@ -18,8 +18,6 @@
         <Button fx:id="boutonAjoutParagraphe" layoutX="388.0" layoutY="438.0" mnemonicParsing="false" text="ajouter un paragraphe" />
         <ComboBox fx:id="categoryComboBox" layoutX="938.0" layoutY="260.0" prefWidth="150.0" />
         <Label fx:id="selectedCategoryLabel" layoutX="888.0" layoutY="211.0" text="Catégories :" />
-
-
     </children>
     <properties>
         <!-- store controller at key "controller" in properties map -->

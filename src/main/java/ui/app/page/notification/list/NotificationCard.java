@@ -6,9 +6,16 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import persistence.entity.notification.Notification;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 public class NotificationCard extends Pane {
@@ -26,40 +33,47 @@ public class NotificationCard extends Pane {
         date = new Label();
         message = new TextArea();
 
-        setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center; -fx-border-width: 1px");
+        setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center; -fx-border-width: 1px; -fx-padding: 15px" );
         DropShadow dropShadow = new DropShadow();
         dropShadow.setHeight(3);
         dropShadow.setWidth(3);
         dropShadow.setBlurType(BlurType.TWO_PASS_BOX);
         setEffect(dropShadow);
 
-        date.setText(notif.getDate().toString());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        date.setText(formatter.format(notif.getDate()));
+        date.setLayoutY(5.0);
+        date.setLayoutX(5.0);
         message.setWrapText(true);
+        message.setStyle("-fx-border-color: transparent;");
 
         message.setEditable(false);
         message.setText(notif.getMessage());
-        message.setLayoutX(69.0);
+        message.setLayoutX(100.0);
         message.setLayoutY(35.0);
-        message.setPrefHeight(70.0);
-        message.setPrefWidth(249.0);
+        message.setPrefHeight(55.0);
+        message.setPrefWidth(250.0);
 
         getChildren().addAll(date, message);
 
-        boutonSuppression = new Button();
-        boutonSuppression.setText("x");
-        boutonSuppression.setLayoutX(100.0);
+        ImageView trash = new ImageView();
+        try {
+            trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        int photoSize = 20;
+        trash.setFitHeight(photoSize);
+        trash.setFitWidth(photoSize);
+        trash.setLayoutX(400.0);
+        trash.setLayoutY(5.0);
+        getChildren().add(trash);
 
-        getChildren().add(boutonSuppression);
-
-        boutonSuppression.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                supprimerNotification();
-            }
-
+        trash.setOnMouseClicked(e -> {
+            supprimerNotification();
         });
-
-
     }
 
     public void supprimerNotification(){

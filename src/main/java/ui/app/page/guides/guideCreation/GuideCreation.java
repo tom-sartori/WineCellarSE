@@ -37,16 +37,11 @@ public class GuideCreation implements Initializable, Observer {
     @FXML
     private Button boutonAjoutParagraphe;
 
-
     @FXML
     private AnchorPane anchorForm;
 
     private GuideCategory selectedCategory;
     private static int nbClique = 0;
-
-    CustomSceneHelper sceneHelper = new CustomSceneHelper();
-
-    Label label = new Label();
 
     /**
      * Initializes the controller class.
@@ -61,8 +56,6 @@ public class GuideCreation implements Initializable, Observer {
             formController.addField(new LabelField("Titre du guide", true));
             formController.addField(new LabelField("description", true));
             formController.initialize(null, null);
-
-
 
             boutonAjoutParagraphe.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -132,11 +125,7 @@ public class GuideCreation implements Initializable, Observer {
             formController.showErrorLabel("Erreur");
         }
     }
-/*
-    public void setVisible(boolean visible) {
-        guideCreation.setVisible(visible);
-    }
-*/
+
     public void onAction() {
         this.initialize(null, null);
     }

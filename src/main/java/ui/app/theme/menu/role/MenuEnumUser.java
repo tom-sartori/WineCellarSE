@@ -42,8 +42,7 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
 	GUIDE("Guides", Guides.class),
-	RATE("Notes", RatePage.class),
-	NOTIFICATION("Notifications", NotificationPage.class);
+	NOTIFICATION("Notifications", NotificationList.class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

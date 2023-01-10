@@ -9,25 +9,20 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import org.bson.types.ObjectId;
-import persistence.entity.bottle.Bottle;
-import persistence.entity.cellar.Cellar;
 import persistence.entity.rate.Rate;
-import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class RateList implements Initializable {
 
@@ -42,27 +37,24 @@ public class RateList implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println(Facade.getInstance().isUserLogged());
+        hbox.getChildren().clear();
+        cardHolder.getChildren().clear();
+        cardList.clear();
         if (Facade.getInstance().isUserLogged()){
             formulaireCreation();
         }
 
-
         if(State.getInstance().getSelectedBottle() != null){
             List<Rate> rateList = Facade.getInstance().getRateListFromSubject(State.getInstance().getSelectedBottle().getId());
-            cardList.clear();
-
             rateList.forEach(rate -> cardList.add(new RateCard(rate, this)));
 
             cardHolder.setAlignment(Pos.CENTER);
             cardHolder.setVgap(30.00);
-            cardHolder.setHgap(30.00);
+//            cardHolder.setHgap(30.00);
             cardHolder.setStyle("-fx-padding:50px;-fx-alignment: center;");
 
             onSearch();
         }
-
-
     }
 
     public ObservableList<RateCard> getCardList() {
@@ -78,7 +70,7 @@ public class RateList implements Initializable {
         int count = 0;
         cardHolder.getChildren().clear();
         for (RateCard card : cardList) {
-            cardHolder.add(card, count % nbColumn, count / nbColumn);
+            cardHolder.add(card, 1, count / nbColumn);
             count++;
         }
     }
@@ -88,8 +80,10 @@ public class RateList implements Initializable {
     }
 
     public void formulaireCreation(){
+        hbox.getChildren().clear();
         hbox.setAlignment(Pos.CENTER);
         LabelField labelField = new LabelField("Ajouter un commentaire", true);
+//        labelField.setStyle("-fx-background-color: lightgrey;");
         Button createRateButton = new Button("Créer");
         Slider slider = new Slider();
         slider.setMin(1);
@@ -107,18 +101,23 @@ public class RateList implements Initializable {
             int sliderValue = (int) Math.round(slider.getValue());
             // Récupère le texte écrit dans le LabelField
             String text = labelField.getValue();
-            ObjectId ownerRef = new ObjectId("63b8cb0d459add6fa390fcc0");
-            Rate rate = new Rate(ownerRef, State.getInstance().getSelectedBottle().getId(), sliderValue, text, false, new Date());
+
+            ObjectId ownerRef = null;
             try {
+                ownerRef = Facade.getInstance().getLoggedUser().getId();
+                Rate rate = new Rate(ownerRef, State.getInstance().getSelectedBottle().getId(), sliderValue, text, false, new Date());
                 Facade.getInstance().insertOneRate(rate);
+                labelField.setValue("");
                 slider.setValue(1);
 
                 cardList.add(new RateCard(rate, this));
                 onSearch();
+            } catch (NoLoggedUser e) {
+                e.printStackTrace();
             } catch (BadCredentialException e) {
-                NodeCreations.createAlert("Erreur", "Erreur lors de la création de l'avis", e.getMessage(), Alert.AlertType.ERROR);
+                Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de l'avis", e.getMessage(), Alert.AlertType.ERROR);
+                erreur.show();
             }
-
         });
     }
 

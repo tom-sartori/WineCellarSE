@@ -29,9 +29,7 @@ public enum MenuEnumPublic implements MenuEnumInterface {
 	CELLAR("Caves", CellarPage.class),
 	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
 	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
-
-	GUIDE("Guides",Guides .class),
-	RATE("Notes",RatePage .class);
+	GUIDE("Guides",Guides .class);
 
 	private final String navigationTitle;
 	private final Class<?> controllerClass;

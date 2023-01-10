@@ -720,6 +720,11 @@ public class Facade implements FacadeInterface {
         NotificationFacade.getInstance().insertOneNotificationListUser(notification, listUser);
     }
 
+    @Override
+    public void insertOneNotificationListId(Notification notification, List<ObjectId> idList){
+        NotificationFacade.getInstance().insertOneNotificationListId(notification, idList);
+    }
+
     /**
      * Get all notifications.
      *

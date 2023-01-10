@@ -48,6 +48,15 @@ class NotificationFacade {
         }
     }
 
+    protected void insertOneNotificationListId(Notification notification, List<ObjectId> idList){
+        for (ObjectId id: idList) {
+            notification.setOwnerRef(id);
+            insertOneNotification(notification);
+        }
+    }
+
+
+
     /**
      * Get all notifications.
      *
