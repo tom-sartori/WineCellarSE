@@ -97,8 +97,8 @@ public class CardComponent extends BorderPane {
 
             card.addBottomNode(button);
         }catch (Exception e){
-            NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une cave", e.getMessage(), Alert.AlertType.ERROR);
-            //TODO alert error
+            Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une cave", e.getMessage(), Alert.AlertType.ERROR);
+            erreur.show();
         }
         return card;
     }
@@ -129,7 +129,8 @@ public class CardComponent extends BorderPane {
 
             card.addBottomNode(button);
         }catch (Exception e){
-            NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une entreprise", e.getMessage(), Alert.AlertType.ERROR);
+            Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la création de la carte d'une entreprise", e.getMessage(), Alert.AlertType.ERROR);
+            erreur.show();
         }
         return card;
     }
