@@ -57,7 +57,6 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	GUIDEALL("Les guides", GuideList.class, GUIDE),
 	GUIDECREATION("Création d'un guide", GuideCreation.class, GUIDE),
 	NOTIFICATION("Notifications",NotificationList .class),
-	RATE("Notes",RatePage.class),
 	CONVERSATION("Messages", ConversationPage.class);
 
 	private final String navigationTitle;

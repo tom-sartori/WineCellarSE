@@ -48,7 +48,6 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	GUIDE("Guides", Guides.class),
 	NOTIFICATION("Notifications", NotificationList.class),
 	COMPANYBYUSER("Mes entreprises", CompanyListByUser.class, COMPANY),
-	RATE("Notes", RatePage.class),
 	CONVERSATION("Messages", ConversationPage.class);
 
 	private final String navigationTitle;
