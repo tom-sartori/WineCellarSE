@@ -1,11 +1,15 @@
 package logic.controller.company;
 
 import exception.BadArgumentsException;
+import exception.user.NoLoggedUser;
 import facade.Facade;
 import logic.controller.AbstractController;
+import logic.controller.notification.NotificationController;
+import logic.controller.user.UserController;
 import org.bson.types.ObjectId;
 import persistence.dao.company.CompanyDao;
 import persistence.entity.company.Company;
+import persistence.entity.notification.Notification;
 import persistence.entity.user.User;
 
 import java.util.List;
@@ -178,6 +182,12 @@ public class CompanyController extends AbstractController<Company> {
      * @throws BadArgumentsException if the company or the manager does not exist.
      */
     public ObjectId addManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException {
+        try {
+            Notification notification = new Notification(UserController.getInstance().getLoggedUser().getId(), "Vous avez ajouté un nouveau manager !");
+            NotificationController.getInstance().insertOne(notification);
+        } catch (NoLoggedUser e) {
+            throw new RuntimeException(e);
+        }
         return getDao().addManager(companyId, managerId);
     }
 
@@ -191,6 +201,12 @@ public class CompanyController extends AbstractController<Company> {
      * @throws BadArgumentsException If the company or the manager does not exist.
      */
     public ObjectId removeManager(ObjectId companyId, ObjectId managerId) throws BadArgumentsException {
+        try {
+            Notification notification = new Notification(UserController.getInstance().getLoggedUser().getId(), "Vous avez retiré un manager avec succès !");
+            NotificationController.getInstance().insertOne(notification);
+        } catch (NoLoggedUser e) {
+            throw new RuntimeException(e);
+        }
         return getDao().removeManager(companyId, managerId);
     }
 

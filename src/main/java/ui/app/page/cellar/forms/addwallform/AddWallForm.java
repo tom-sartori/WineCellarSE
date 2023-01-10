@@ -42,7 +42,6 @@ public class AddWallForm implements Initializable, Observer {
         formController.addField(new LabelField("Nom du mur", true));
         formController.addField(new LabelField("image", false));
 
-        // TODO replace submit button text from "connexion" to "créer"
         formController.initialize(null, null);
     }
 

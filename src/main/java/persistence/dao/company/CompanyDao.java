@@ -96,7 +96,6 @@ public class CompanyDao extends AbstractDao<Company> {
 		return allWithFilter;
 	}
 
-	// TODO SEND NOTIF
 	/**
 	 * Add a manager to a company.
 	 *
@@ -110,7 +109,6 @@ public class CompanyDao extends AbstractDao<Company> {
 		return addOrRemoveFromSet(companyId, managerId, "managerList", true);
 	}
 
-	// TODO SEND NOTIF
 	/**
 	 * Removes a manager from a company.
 	 *
