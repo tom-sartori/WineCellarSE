@@ -5,10 +5,13 @@ import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import org.bson.types.ObjectId;
+import persistence.entity.notification.Notification;
 import persistence.entity.user.User;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.labelfield.labelfieldmasked.LabelFieldMasked;
 import ui.app.component.form.Form;
+import ui.app.helpers.services.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.Map;
@@ -65,7 +68,7 @@ public class Register implements Initializable, Observer {
 
         try {
             // The form is valid. Try to register and log in.
-            Facade.getInstance()
+            ObjectId userId = Facade.getInstance()
                     .register(
                             new User(
                                     labelFieldMap.get(labelUsername).toString(),
@@ -76,8 +79,18 @@ public class Register implements Initializable, Observer {
                             )
                     );
 
+            Facade.getInstance().insertOneNotification(
+                    new Notification(
+                            userId,
+                            "Votre compte a été créé avec succès. Bienvenue !"
+                    ));
+
             Facade.getInstance()
                     .login(labelFieldMap.get(labelUsername).toString(), labelFieldMap.get(labelPassword).toString());
+
+            CustomSceneHelper customSceneHelper = new CustomSceneHelper();
+            customSceneHelper.refreshMenu();
+            customSceneHelper.bringNodeToFront("profile");
         }
         catch (InvalidUsernameException e) {
             formController.showErrorLabel("Nom d'utilisateur invalide. ");
