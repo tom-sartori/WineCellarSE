@@ -6,15 +6,16 @@ import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.company.Company;
+import persistence.entity.user.User;
 import ui.app.State;
 import ui.app.component.card.CardComponent;
 import ui.app.component.field.labelfield.LabelField;
@@ -52,7 +53,16 @@ public class CompanyDetails implements Initializable {
         titlePaneCreateBottle.getChildren().clear();
         mainPaneCreateBottle.getChildren().clear();
 
-        titlePaneCreateBottle.getChildren().add(new Label("Détails d'une entreprise"));
+        HBox title = new HBox();
+
+        title.setAlignment(Pos.CENTER);
+        title.setPrefWidth(1280);
+
+        Label label1 = new Label("Détails d'une entreprise");
+        label1.setFont(new Font(45));
+        title.getChildren().add(label1);
+
+        titlePaneCreateBottle.getChildren().add(title);
 
         if (State.getInstance().getSelectedCompany() != null) {
             State.getInstance().setSelectedCompany(Facade.getInstance().getOneCompany(State.getInstance().getSelectedCompany().getId()));
@@ -67,28 +77,75 @@ public class CompanyDetails implements Initializable {
 
             HBox firstRow = new HBox();
 
+            Region regionFirstRowFirst = new Region();
+            HBox.setHgrow(regionFirstRowFirst, Priority.ALWAYS);
+
+            firstRow.getChildren().add(regionFirstRowFirst);
+
+            firstRow.setPadding(new Insets(40));
+            firstRow.setSpacing(20);
+
             firstRow.setPrefWidth(1260);
             firstRow.setAlignment(javafx.geometry.Pos.CENTER);
             firstRow.setSpacing(10.0);
 
-            VBox logoAndAdress = new VBox();
-            logoAndAdress.getChildren().add(new Label("Logo: " + company.getLogoLink()));
-            logoAndAdress.getChildren().add(new Label("Adresse: " + company.getAddress()));
+            Label labelAdress = new Label(company.getAddress());
+
+            labelAdress.setWrapText(true);
+
+            firstRow.getChildren().add(labelAdress);
 
             VBox nameAndType = new VBox();
-            nameAndType.getChildren().add(new Label("Nom de la société: " + company.getName()));
-            nameAndType.getChildren().add(new Label("Type entreprise: " + company.getType()));
 
-            firstRow.getChildren().add(logoAndAdress);
+            nameAndType.setAlignment(Pos.TOP_CENTER);
+
+            Label labelCompanyName = new Label(company.getName());
+            labelCompanyName.setFont(new Font(40));
+
+            nameAndType.getChildren().add(labelCompanyName);
+
+            Label labelTypeCompany = new Label(company.getType());
+            labelTypeCompany.setFont(new Font(30));
+            nameAndType.getChildren().add(labelTypeCompany);
+
+            Region regionFirstRowSecond = new Region();
+            HBox.setHgrow(regionFirstRowSecond, Priority.ALWAYS);
+
+            firstRow.getChildren().add(regionFirstRowSecond);
+
             firstRow.getChildren().add(nameAndType);
 
-            firstRow.getChildren().add(new Label("Master manager : " + company.getMasterManager().toString()));
+            User masterManager = Facade.getInstance().getOneUser(company.getMasterManager());
+
+            Region regionFirstRowThird = new Region();
+            HBox.setHgrow(regionFirstRowThird, Priority.ALWAYS);
+
+            firstRow.getChildren().add(regionFirstRowThird);
+
+            firstRow.getChildren().add(new Label("Gérant : " + masterManager.getUsername()));
+
+            Region regionFirstRowFourth = new Region();
+            HBox.setHgrow(regionFirstRowFourth, Priority.ALWAYS);
+
+            firstRow.getChildren().add(regionFirstRowFourth);
 
             vBox.getChildren().add(firstRow);
 
             HBox secondRow = new HBox();
 
-            secondRow.getChildren().add(new Label("Description : " + company.getDescription()));
+            secondRow.setAlignment(Pos.TOP_CENTER);
+
+            VBox vBox1 = new VBox();
+
+            vBox1.setSpacing(15);
+            vBox1.setMaxWidth(300);
+
+            vBox1.getChildren().add(new Label("Description"));
+            Label label = new Label(company.getDescription());
+            label.setWrapText(true);
+            vBox1.getChildren().add(label);
+
+            secondRow.getChildren().add(vBox1);
 
             try{
                 if (company.getFollowerList().contains(Facade.getInstance().getLoggedUser().getId())){
@@ -124,6 +181,9 @@ public class CompanyDetails implements Initializable {
 
             HBox thirdRow = new HBox();
 
+            thirdRow.setAlignment(Pos.CENTER);
+            thirdRow.setPadding(new Insets(30));
+
             Cellar oneCellar = Facade.getInstance().getOneCellar(company.getCellar());
             thirdRow.getChildren().add(CardComponent.createCellarCard(oneCellar));
 
@@ -133,9 +193,20 @@ public class CompanyDetails implements Initializable {
 
             HBox fourthRow = new HBox();
 
-            if (Facade.getInstance().isManagerOfCompany(company.getId())){
-                Button deleteButton = NodeCreations.createButton("Supprimer");
+            fourthRow.setAlignment(Pos.CENTER);
+            fourthRow.setSpacing(50);
+            fourthRow.setPadding(new Insets(20));
 
+            if (Facade.getInstance().isManagerOfCompany(company.getId())){
+
+                Button modifier = NodeCreations.createButton("Modifier");
+                modifier.setOnAction(event -> {
+                    State.getInstance().setSelectedCompany(company);
+                    sceneHelper.bringNodeToFront(CompanyUpdate.class.getSimpleName());
+                });
+                fourthRow.getChildren().add(modifier);
+
+                Button deleteButton = NodeCreations.createButton("Supprimer");
                 deleteButton.setOnAction(event -> {
                     Alert alert = NodeCreations.createAlert("Suppression d'une entreprise", "Confirmation de suppression","Êtes-vous sûr de vouloir supprimer cette entreprise ?", Alert.AlertType.CONFIRMATION);
                     alert.showAndWait();
@@ -145,22 +216,22 @@ public class CompanyDetails implements Initializable {
                         sceneHelper.bringNodeToFront(CompanyList.class.getSimpleName());
                     }
                 });
-
                 fourthRow.getChildren().add(deleteButton);
-
-                Button modifier = NodeCreations.createButton("Modifier");
-                modifier.setOnAction(event -> {
-                    State.getInstance().setSelectedCompany(company);
-                    sceneHelper.bringNodeToFront(CompanyUpdate.class.getSimpleName());
-                });
-                fourthRow.getChildren().add(modifier);
 
                 vBox.getChildren().add(fourthRow);
             }
 
             HBox fifthRow = new HBox();
 
+            fifthRow.setPadding(new Insets(15));
+
             fifthRow.getChildren().add(new Label("Téléphone : " + company.getPhoneNumber()));
+
+            Region regionBetweenTelephoneAndWebSite = new Region();
+            HBox.setHgrow(regionBetweenTelephoneAndWebSite, Priority.ALWAYS);
+
+            fifthRow.getChildren().add(regionBetweenTelephoneAndWebSite);
+
             fifthRow.getChildren().add(new Label("Site web : " + company.getWebsiteLink()));
 
             vBox.getChildren().add(fifthRow);
