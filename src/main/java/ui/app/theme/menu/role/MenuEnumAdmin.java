@@ -53,7 +53,7 @@ public enum MenuEnumAdmin implements MenuEnumInterface {
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	COMPANYBYUSER("Mes entreprises", CompanyListByUser.class, COMPANY),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
-	GUIDE("Guides"),
+	GUIDE("Guides", GuideList.class),
 	GUIDEALL("Les guides", GuideList.class, GUIDE),
 	GUIDECREATION("Création d'un guide", GuideCreation.class, GUIDE),
 	NOTIFICATION("Notifications",NotificationList .class),

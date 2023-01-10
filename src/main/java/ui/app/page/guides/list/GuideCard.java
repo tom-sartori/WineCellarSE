@@ -97,7 +97,7 @@ public class GuideCard extends Pane {
         if(Facade.getInstance().isAdminLogged()){
             ImageView trash = new ImageView();
             try {
-                trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash2.png")).getPath())));
+                trash.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/trash.png")).getPath())));
             }
             catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -115,7 +115,7 @@ public class GuideCard extends Pane {
 
             ImageView pen = new ImageView();
             try {
-                pen.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/edit2.png")).getPath())));
+                pen.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/edit.png")).getPath())));
             }
             catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
