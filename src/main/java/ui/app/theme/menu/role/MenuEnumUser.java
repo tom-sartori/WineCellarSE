@@ -37,7 +37,7 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	PARTNER("Partenaires", PartnerList.class),
 	COMPANY("Entreprise", CompanyPage.class),
 	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY),
-	EVENTLIST("Tous vos évènements", EventList.class, COMPANY),
+	EVENTLIST("Tous les évènements", EventList.class, COMPANY),
 	CELLAR("Caves",CellarPage .class),
 	CELLARBYUSER("Mes caves", CellarByUser.class, CELLAR),
 	CELLARFROMFRIENDS("Les caves de mes amis", FriendCellarList.class, CELLAR),
