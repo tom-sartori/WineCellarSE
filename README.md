@@ -1,14 +1,24 @@
 # WineCellarSE
 
-Bonsoir
+4-th year engineering project during for the course Software Engineering. 
+Made in java and javafx with MongoDb. 
 
-[Maven javafx setup](https://openjfx.io/openjfx-docs/#maven)
-To run : 
+[GitHub link of the project](https://github.com/tom-sartori/WineCellarSE)
+
+
+## To run the project
 ```shell
 mvn clean javafx:run
 ```
 
-If fx or tests doesn't work, try to run : 
+## To build the project
+If fx or tests doesn't work, try to build the project first.
 ```shell
 mvn clean install
 ```
+
+## To generate the javadoc
+```shell
+mvn javadoc:javadoc
+```
+Then, open `./target/site/apidocs/index.html` in your browser.
