@@ -19,6 +19,7 @@ import persistence.entity.advertising.Advertising;
 import ui.app.State;
 import ui.app.helpers.services.CustomSceneHelper;
 import ui.app.page.company.advertising.details.AdvertisingDetails;
+import ui.app.page.company.advertising.list.AdvertisingList;
 
 import java.io.IOException;
 import java.net.URL;
@@ -85,6 +86,7 @@ public class AdvertisingCard extends Pane {
 						alert.setContentText(advertising.getName() + " est validé !");
 
 						Optional<ButtonType> option = alert.showAndWait();
+						sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
 					}
 				});
 			} else {
@@ -124,6 +126,7 @@ public class AdvertisingCard extends Pane {
 								throw new RuntimeException(e);
 							}
 						});
+						sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
 					}
 				});
 			}
@@ -144,6 +147,7 @@ public class AdvertisingCard extends Pane {
 				if (option.get() == ButtonType.OK) {
 					Facade.getInstance().deleteOneAdvertising(advertising.getId());
 				}
+				sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
 			}
 		});
 

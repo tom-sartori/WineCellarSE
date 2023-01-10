@@ -29,6 +29,8 @@ public class EventList implements Initializable {
     private ObservableList<EventCard> cardList = FXCollections.observableArrayList();
     private final int nbColumn = 2;
 
+    private static ObjectId company;
+
     /**
      * Initializes the controller class and the select field.
      */
@@ -53,8 +55,14 @@ public class EventList implements Initializable {
                     select.getItems().add(c.getName());
                 }
             }
-            //pre-select the "Tous" choice
-            select.getSelectionModel().selectFirst();
+
+            if(company == null){
+                company = companies.get(0).getId();
+                select.getSelectionModel().selectFirst();
+            } else {
+                Company c = Facade.getInstance().getOneCompany(company);
+                select.setValue(c.getName());
+            }
 
             /**
              * If "Toutes" is selected, create a list with all the events else
@@ -67,6 +75,7 @@ public class EventList implements Initializable {
                 } else {
                     for(Company c : companies){
                         if(c.getName().equals(selectedItem)){
+                            company = c.getId();
                             list(c.getId());
                         }
                     }

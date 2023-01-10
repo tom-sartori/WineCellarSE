@@ -15,6 +15,7 @@ import persistence.entity.company.Company;
 import ui.app.State;
 import ui.app.page.company.advertising.AdvertisingCard;
 
+import javax.xml.stream.events.Comment;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,7 +32,7 @@ public class AdvertisingList implements Initializable {
     private final int nbColumn = 2;
 
     private ObjectId company;
-    private String status;
+    private static String status;
 
     /**
      * Initializes the controller class, the select fields for the company and the status.
@@ -43,15 +44,31 @@ public class AdvertisingList implements Initializable {
             List<Company> companies;
             if(Facade.getInstance().isAdminLogged()){
                 companies = Facade.getInstance().getCompanyList();
+                System.out.println(companies.size());
             } else {
                 companies = Facade.getInstance().findAllCompaniesByUserId(State.getInstance().getCurrentUser().getId());
             }
-            company = companies.get(0).getId();
-            status = "Toutes";
+
+            /**
+             * If the list was open from de the detail page of a company, the select is initialized with this company
+             * Else it is initialized with the first company from the list companies.
+             */
+            Company c = State.getInstance().getSelectedCompany();
+            if(c == null){
+                c = companies.get(0);
+            }
+            company = c.getId();
+
+            if(status == null){
+                status = "Toutes";
+            }
+
+            select.getSelectionModel().select(c.getName());
+            selectStatus.getSelectionModel().select(status);
 
             if(select.getItems().size() == 0){
-                for (Company c : companies){
-                    select.getItems().add(c.getName());
+                for (Company comp : companies){
+                    select.getItems().add(comp.getName());
                 }
             }
 
@@ -60,16 +77,14 @@ public class AdvertisingList implements Initializable {
                 if(selectedItem.equals("Toutes")){
                     list(null, status);
                 }
-                for(Company c : companies){
-                    if(c.getName().equals(selectedItem)){
-                        company = c.getId();
-                        list(c.getId(),status);
+                for(Company comp : companies){
+                    if(comp.getName().equals(selectedItem)){
+                        company = comp.getId();
+                        list(comp.getId(),status);
+                        State.getInstance().setSelectedCompany(comp);
                     }
                 }
             });
-
-            //pre-select the "Toutes" choice
-            select.getSelectionModel().selectFirst();
 
             /**
              * If the user is not admin, they can see all status.
@@ -84,9 +99,6 @@ public class AdvertisingList implements Initializable {
                     selectStatus.getItems().add("Demandes");
                 }
 
-                //pre-select the "Toutes" choice
-                selectStatus.getSelectionModel().selectFirst();
-
                 selectStatus.setOnAction((event) -> {
                     String selectedItem = selectStatus.getValue();
                     status = selectedItem;
@@ -99,6 +111,7 @@ public class AdvertisingList implements Initializable {
                 if(!select.getItems().contains("Toutes")){
                     select.getItems().add("Toutes");
                 }
+                status = "Demandes";
                 selectStatus.setVisible(false);
             }
 
@@ -126,6 +139,7 @@ public class AdvertisingList implements Initializable {
                 }
             } else {
                 advertisingList = Facade.getInstance().getNotValidatedAdvertisings();
+                System.out.println("hhhhhhhhhhhh "+advertisingList.size());
             }
 
             int maxWidth = 1280;

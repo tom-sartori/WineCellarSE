@@ -15,7 +15,7 @@
     <children>
         <Rectangle fill="#0d47a1" height="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <Label fx:id="price" alignment="CENTER" contentDisplay="CENTER" layoutX="601.0" layoutY="16.0" styleClass="h1" text="Vos évènements" />
-        <ChoiceBox fx:id="select" layoutX="76.0" layoutY="29.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="select" layoutX="76.0" layoutY="12.5" prefWidth="150.0" />
         <ScrollPane layoutX="4.0" layoutY="47.0" prefHeight="575.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <GridPane fx:id="cardHolder" alignment="TOP_CENTER" layoutX="12.0" layoutY="109.0" />
         </ScrollPane>
