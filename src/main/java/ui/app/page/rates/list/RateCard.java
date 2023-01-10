@@ -2,8 +2,6 @@ package ui.app.page.rates.list;
 
 import exception.user.NoLoggedUser;
 import facade.Facade;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
@@ -13,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.TextFlow;
 import persistence.entity.rate.Rate;
 
 import java.io.FileInputStream;

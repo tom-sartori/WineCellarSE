@@ -1,12 +1,9 @@
 package ui.app.page.cellar.lists.friendscellar;
 
-import constant.NodeCreations;
 import exception.user.NoLoggedUser;
 import facade.Facade;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.FlowPane;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.user.Friend;

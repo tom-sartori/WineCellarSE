@@ -1,18 +1,15 @@
 package ui.app;
 
-import persistence.entity.event.Event;
-import persistence.entity.guide.Guide;
 import persistence.entity.advertising.Advertising;
 import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;
 import persistence.entity.cellar.Wall;
 import persistence.entity.company.Company;
+import persistence.entity.event.Event;
+import persistence.entity.guide.Guide;
 import persistence.entity.referencing.Referencing;
 import persistence.entity.user.User;
-
-import java.sql.Ref;
-import java.sql.SQLOutput;
 
 public class State {
 	private static State instance;

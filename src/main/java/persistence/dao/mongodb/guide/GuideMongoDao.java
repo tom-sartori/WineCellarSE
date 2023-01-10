@@ -1,9 +1,10 @@
 package persistence.dao.mongodb.guide;
+
 import com.mongodb.client.model.Updates;
 import constant.CollectionNames;
+import org.bson.conversions.Bson;
 import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.entity.guide.Guide;
-import org.bson.conversions.Bson;
 
 public class GuideMongoDao extends AbstractMongoDao<Guide> {
 

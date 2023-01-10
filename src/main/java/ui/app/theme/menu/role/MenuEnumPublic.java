@@ -7,7 +7,6 @@ import ui.app.page.company.list.CompanyList;
 import ui.app.page.guides.list.GuideList;
 import ui.app.page.partner.list.PartnerList;
 import ui.app.page.user.login.Login;
-import ui.app.page.user.profile.Profile;
 import ui.app.page.user.register.Register;
 
 import java.util.Arrays;

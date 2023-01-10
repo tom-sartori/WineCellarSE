@@ -1,11 +1,8 @@
 package facade;
 
 import exception.NotFoundException;
-import logic.controller.cellar.CellarController;
 import logic.controller.rate.RateController;
-import org.bson.BsonDocument;
 import org.bson.types.ObjectId;
-import persistence.entity.cellar.Cellar;
 import persistence.entity.rate.Rate;
 
 import java.util.List;

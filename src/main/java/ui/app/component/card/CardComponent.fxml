@@ -1,6 +1,6 @@
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <fx:root type="javafx.scene.layout.BorderPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: lightgrey;-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-border-color: black;-fx-border-width: 1px;" xmlns:fx="http://javafx.com/fxml">
     <top>
         <FlowPane fx:id="topFlowPane" style="-fx-alignment: center">

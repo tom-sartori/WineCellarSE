@@ -3,7 +3,6 @@ package persistence.entity.company;
 import com.mongodb.lang.Nullable;
 import org.bson.types.ObjectId;
 import persistence.entity.Entity;
-import persistence.entity.user.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,7 +17,6 @@ import persistence.entity.cellar.Wall;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 
 /**

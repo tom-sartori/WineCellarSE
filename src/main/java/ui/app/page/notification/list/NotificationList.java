@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import org.bson.types.ObjectId;
 import persistence.entity.notification.Notification;

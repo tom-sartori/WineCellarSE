@@ -4,7 +4,6 @@ import exception.BadArgumentsException;
 import exception.NotFoundException;
 import logic.controller.cellar.CellarController;
 import org.bson.types.ObjectId;
-import persistence.entity.bottle.Bottle;
 import persistence.entity.cellar.BottleQuantity;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.cellar.EmplacementBottle;

@@ -1,9 +1,9 @@
 package logic.controller.guide;
 
 import logic.controller.AbstractController;
+import persistence.dao.mongodb.AbstractMongoDao;
 import persistence.dao.mongodb.guide.GuideMongoDao;
 import persistence.entity.guide.Guide;
-import persistence.dao.mongodb.AbstractMongoDao;
 
 /**
  * GuideController class extending Controller class parametized with Guide class.

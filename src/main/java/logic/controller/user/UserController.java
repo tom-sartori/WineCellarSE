@@ -11,9 +11,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import persistence.dao.mongodb.cellar.CellarMongoDao;
 import persistence.dao.mongodb.company.CompanyMongoDao;
 import persistence.dao.mongodb.user.UserMongoDao;
-import persistence.entity.user.Friend;
 import persistence.entity.cellar.Cellar;
 import persistence.entity.company.Company;
+import persistence.entity.user.Friend;
 import persistence.entity.user.User;
 
 import java.util.List;

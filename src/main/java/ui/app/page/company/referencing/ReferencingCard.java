@@ -21,7 +21,6 @@ import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.company.referencing.update.ReferencingUpdate;
 
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Objects;

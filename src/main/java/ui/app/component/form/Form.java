@@ -6,11 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import persistence.entity.guide.Guide;
 import ui.app.component.errorlabel.ErrorLabel;
 import ui.app.component.field.Field;
 

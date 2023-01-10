@@ -1,11 +1,10 @@
 package persistence.entity.guide;
 
-import persistence.entity.Entity;
 import org.bson.types.ObjectId;
+import persistence.entity.Entity;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Objects;
 
 public class Guide implements Entity<Guide>{
