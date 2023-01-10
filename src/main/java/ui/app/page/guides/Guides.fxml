@@ -8,6 +8,7 @@
     </stylesheets>
     <children>
         <fx:include fx:id="guideCreation" source="./guideCreation/GuideCreation.fxml" />
+        <fx:include fx:id="guideModification" source="./guideModification/GuideModification.fxml" />
         <fx:include fx:id="guideDetails" source="./guideDetails/GuideDetails.fxml" />
         <fx:include fx:id="guideList" source="list/GuideList.fxml" />
     </children>

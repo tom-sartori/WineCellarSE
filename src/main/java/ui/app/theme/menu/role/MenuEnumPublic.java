@@ -7,13 +7,10 @@ import ui.app.page.company.referencing.ReferencingPage;
 import ui.app.page.company.referencing.creation.ReferencingCreation;
 import ui.app.page.company.referencing.list.ReferencingList;
 import ui.app.page.company.CompanyPage;
-import ui.app.page.company.advertising.creation.AdvertisingCreation;
-import ui.app.page.company.advertising.list.AdvertisingList;
-import ui.app.page.company.event.EventPage;
-import ui.app.page.company.event.creation.EventCreation;
 import ui.app.page.company.event.list.EventList;
-import ui.app.page.guides.Guides;
+import ui.app.page.guides.list.GuideList;
 import ui.app.page.partner.PartnerPage;
+
 import ui.app.page.partner.list.PartnerList;
 import ui.app.page.rates.RatePage;
 import ui.app.page.user.login.Login;
@@ -30,8 +27,8 @@ public enum MenuEnumPublic implements MenuEnumInterface {
 	COMPANY("Entreprise", CompanyPage.class),
 	CELLAR("Caves", CellarPage.class),
 	EVENTLIST("Tous les évènements", EventList.class, COMPANY),
-	GUIDE("Guides",Guides .class),
 	PUBLICCELLARS("Caves publiques", PublicCellars.class, CELLAR),
+	GUIDE("Guides", GuideList.class),
 	COMPANYLIST("Toutes les entreprises", CompanyList.class, COMPANY);
 
 	private final String navigationTitle;

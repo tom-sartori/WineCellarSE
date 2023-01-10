@@ -1,8 +1,6 @@
 package ui.app.page.notification.list;
 
 import facade.Facade;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -14,7 +12,6 @@ import persistence.entity.notification.Notification;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
