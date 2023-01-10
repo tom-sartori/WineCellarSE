@@ -47,7 +47,7 @@ public enum MenuEnumUser implements MenuEnumInterface {
 	CELLARSHAREDWITHME("Mes caves partagées", SharedWithMeCellars.class, CELLAR),
 	PUBLICCELLARS("Caves publiques",PublicCellars .class, CELLAR),
 	GUIDE("Guides", GuideList.class),
-	NOTIFICATION("Notifications", NotificationList.class);
+	NOTIFICATION("Notifications", NotificationList.class),
 	COMPANYBYUSER("Mes entreprises", CompanyListByUser.class, COMPANY),
 	CONVERSATION("Messages", ConversationPage.class);
 
