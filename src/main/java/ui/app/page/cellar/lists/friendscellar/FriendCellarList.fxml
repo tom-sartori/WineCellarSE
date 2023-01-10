@@ -11,9 +11,9 @@
         <URL value="@/ui/app/page/cellar/lists/friendscellar/FriendCellarList.css" />
     </stylesheets>
     <children>
-        <ScrollPane layoutY="90" prefWidth="1280" prefHeight="562">
+        <ScrollPane layoutY="90" prefWidth="1280" prefHeight="535">
             <content>
-                <FlowPane fx:id="cardHolder" layoutX="1.0" layoutY="62.0" prefHeight="562.0" prefWidth="1260.0" style="-fx-padding: 10 10 10 10" />
+                <FlowPane fx:id="cardHolder" layoutX="1.0" layoutY="62.0" prefHeight="535.0" prefWidth="1260.0" style="-fx-padding: 10 10 10 10" />
             </content>
         </ScrollPane>
         <Label layoutX="488.0" layoutY="14.0" text="Liste des caves de mes amis">
