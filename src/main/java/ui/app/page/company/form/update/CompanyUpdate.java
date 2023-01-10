@@ -173,7 +173,8 @@ public class CompanyUpdate implements Initializable, Observer {
                 deleteManager(oneUser);
                 initManagerList();
             } catch (BadArgumentsException e) {
-                NodeCreations.createAlert("Erreur", "Erreur lors de la promotion du gestionnaire", e.getMessage(), Alert.AlertType.ERROR);
+                Alert erreur = NodeCreations.createAlert("Erreur", "Erreur lors de la promotion du gestionnaire", e.getMessage(), Alert.AlertType.ERROR);
+                erreur.show();
             }
         });
 
