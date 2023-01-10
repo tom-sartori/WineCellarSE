@@ -88,7 +88,7 @@ public class CardComponent extends BorderPane {
 
             card.addNode(new Label("Propriétaire: " + oneUser.getUsername()));
 
-            Button button = new Button("Voir");
+            Button button = NodeCreations.createButton("Voir");
             button.onActionProperty().set(event -> {
                 State.getInstance().setSelectedCellar(cellar);
                 CustomSceneHelper sceneHelper = new CustomSceneHelper();
@@ -120,7 +120,7 @@ public class CardComponent extends BorderPane {
             label1.setWrapText(true);
             card.addNode(label1);
 
-            Button button = new Button("Voir");
+            Button button = NodeCreations.createButton("Voir");
             button.onActionProperty().set(event -> {
                 State.getInstance().setSelectedCompany(company);
                 CustomSceneHelper sceneHelper = new CustomSceneHelper();
