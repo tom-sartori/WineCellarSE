@@ -11,6 +11,14 @@ Made in java and javafx with MongoDb.
 mvn clean javafx:run
 ```
 
+## Credentials 
+- Admin
+    - username: michel
+    - password: michel
+- User
+  - username: lorenzo
+  - password: lorenzo
+
 ## To build the project
 If fx or tests doesn't work, try to build the project first.
 ```shell
