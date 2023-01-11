@@ -291,8 +291,8 @@ public class UpdateCellarForm implements Initializable {
 
         try{
             Facade.getInstance().updateOneCellar(currentCellar.getId(), currentCellar);
-        }catch (Exception e){
             sceneHelper.bringNodeToFront(CellarDetails.class.getSimpleName());
+        }catch (Exception e){
             Alert mauvaisArguments = NodeCreations.createAlert("Mauvais arguments", "Les valeurs de vos champs sont incorrectes !", e.getMessage(), Alert.AlertType.ERROR);
             mauvaisArguments.showAndWait();
         }
