@@ -13,6 +13,7 @@ import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.select.Select;
 import ui.app.component.form.Form;
+import ui.app.helpers.CustomSceneHelper;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -76,6 +77,8 @@ public class AdvertisingCreation implements Initializable, Observer {
         if (option.get() == ButtonType.OK) {
             ObjectId id = Facade.getInstance().insertOneAdvertising(ad);
             Facade.getInstance().payOneAdvertising(id);
+
+            new CustomSceneHelper().bringNodeToFront("advertisingList");
         }
     }
 

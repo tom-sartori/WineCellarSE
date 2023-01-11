@@ -78,7 +78,7 @@ public class CreateBottleForm implements Initializable, Observer {
         Bottle bottle = new Bottle(name,vintage,appellation,bottleImage, price, producer, alcoholPercentage, bottleSize, bottleSizeUnit, category, grapeList);
 
         try {
-            if (Facade.getInstance().isManagerOfCellar(Facade.getInstance().getLoggedUser().getId()) && State.getInstance().getSelectedWall() != null && State.getInstance().getSelectedEmplacementBottle() != null && State.getInstance().getSelectedCellar() != null){
+            if (Facade.getInstance().isManagerOfCellar(State.getInstance().getSelectedCellar().getId()) && State.getInstance().getSelectedWall() != null && State.getInstance().getSelectedEmplacementBottle() != null && State.getInstance().getSelectedCellar() != null){
                 try {
                     Facade.getInstance().insertBottle(State.getInstance().getSelectedWall(), State.getInstance().getSelectedCellar(), bottle, State.getInstance().getSelectedEmplacementBottle());
                     CustomSceneHelper sceneHelper = new CustomSceneHelper();
@@ -88,7 +88,7 @@ public class CreateBottleForm implements Initializable, Observer {
                     alert.show();
                 }
             }
-        } catch (NoLoggedUser e) {
+        } catch (Exception e) {
             Alert alert = NodeCreations.createAlert("Aucun utilisateur connecté", "Veuillez vous connectez", e.getMessage(), Alert.AlertType.ERROR);
             alert.show();
         }

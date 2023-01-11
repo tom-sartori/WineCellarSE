@@ -20,6 +20,7 @@ import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
 import ui.app.helpers.CustomSceneHelper;
 import ui.app.page.cellar.details.CellarDetails;
+import ui.app.page.company.list.CompanyList;
 
 import java.net.URL;
 import java.util.*;
@@ -263,6 +264,7 @@ public class CompanyUpdate implements Initializable, Observer {
                 initialize(null, null);
                 Alert success = NodeCreations.createAlert("Mise à jour réussie", "L'entreprise a bien été mise à jour", "L'entreprise a bien été mise à jour", Alert.AlertType.INFORMATION);
                 success.showAndWait();
+                sceneHelper.bringNodeToFront(CompanyList.class.getSimpleName());
             }
         } catch (Exception e) {
             Alert error = NodeCreations.createAlert("Mise à jour refusé", "Vous n'êtes pas propriétaire de l'entreprise", "Vous n'êtes pas propriétaire de l'entreprise, vous ne pouvez donc pas la modifier", Alert.AlertType.ERROR);

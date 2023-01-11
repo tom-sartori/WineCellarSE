@@ -109,24 +109,24 @@ public class GuideCard extends Pane {
                 supprimerGuide();
             });
 
-            ImageView pen = new ImageView();
-            try {
-                pen.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/edit.png")).getPath())));
-            }
-            catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            int photoSize2 = 20;
-            pen.setFitHeight(photoSize2);
-            pen.setFitWidth(photoSize2);
-            pen.setLayoutX(70.0);
-            pen.setLayoutY(10.0);
-            getChildren().add(pen);
-
-            pen.setOnMouseClicked(e -> {
-                State.getInstance().setCurrentGuide(guide);
-                sceneHelper.bringNodeToFront(GuideModification.class.getSimpleName());
-            });
+//            ImageView pen = new ImageView();
+//            try {
+//                pen.setImage(new Image(new FileInputStream(Objects.requireNonNull(getClass().getResource("../../../../assets/edit.png")).getPath())));
+//            }
+//            catch (FileNotFoundException e) {
+//                throw new RuntimeException(e);
+//            }
+//            int photoSize2 = 20;
+//            pen.setFitHeight(photoSize2);
+//            pen.setFitWidth(photoSize2);
+//            pen.setLayoutX(70.0);
+//            pen.setLayoutY(10.0);
+//            getChildren().add(pen);
+//
+//            pen.setOnMouseClicked(e -> {
+//                State.getInstance().setCurrentGuide(guide);
+//                sceneHelper.bringNodeToFront(GuideModification.class.getSimpleName());
+//            });
         }
 
     }

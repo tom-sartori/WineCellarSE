@@ -13,6 +13,7 @@ import ui.app.State;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.field.select.Select;
 import ui.app.component.form.Form;
+import ui.app.helpers.CustomSceneHelper;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -115,6 +116,8 @@ public class EventCreation implements Initializable, Observer {
                 alert.setContentText("L'évènement " + event.getName() + " a bien été créé !");
 
                 alert.showAndWait();
+
+                new CustomSceneHelper().bringNodeToFront("eventList");
             } catch (Exception e) {
                 formController.showErrorLabel("Format du formulaire invalide. ");
             }

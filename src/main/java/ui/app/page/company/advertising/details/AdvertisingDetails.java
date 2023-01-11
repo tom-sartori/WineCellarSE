@@ -30,7 +30,7 @@ public class AdvertisingDetails implements Initializable {
     @FXML
     private TextArea description, urlCompany;
     @FXML
-    private Button retour, statistiques, modifier;
+    private Button retour, statistiques;
 
     private final CustomSceneHelper sceneHelper = new CustomSceneHelper();
 

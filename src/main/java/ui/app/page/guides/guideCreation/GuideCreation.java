@@ -17,6 +17,7 @@ import persistence.entity.guide.Guide;
 import persistence.entity.guide.GuideCategory;
 import ui.app.component.field.labelfield.LabelField;
 import ui.app.component.form.Form;
+import ui.app.helpers.CustomSceneHelper;
 
 import java.net.URL;
 import java.util.*;
@@ -105,13 +106,13 @@ public class GuideCreation implements Initializable, Observer {
                 Facade.getInstance()
                         .insertOneGuide(new Guide(labelFieldMap.get("Titre du guide").toString(), labelFieldMap.get("description").toString(), sectionMap, selectedCategory, new Date()));
 
-
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Confirmation");
                 alert.setHeaderText(null);
                 alert.setContentText("Nouveau guide ajouté !");
                 Optional<ButtonType> option = alert.showAndWait();
 
+                new CustomSceneHelper().bringNodeToFront("guideList");
             }else {
                 // Afficher l'alerte
                 Alert alert = new Alert(Alert.AlertType.ERROR);

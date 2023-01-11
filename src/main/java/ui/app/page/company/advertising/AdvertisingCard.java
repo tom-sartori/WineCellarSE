@@ -73,7 +73,7 @@ public class AdvertisingCard extends Pane {
 
 		try {
 			if (Facade.getInstance().getLoggedUser().isAdmin()) {
-				update.setVisible(true);
+				update.setVisible(false);
 				action2.setText("Valider");
 
 				/**

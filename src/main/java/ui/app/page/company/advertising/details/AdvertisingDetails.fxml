@@ -17,7 +17,6 @@
             <children>
                <TextArea fx:id="description" layoutX="270.0" layoutY="207.0" prefHeight="111.0" prefWidth="550.0" />
                <Button fx:id="statistiques" layoutX="672.0" layoutY="169.0" mnemonicParsing="false" text="Statistiques" />
-               <Button fx:id="modifier" layoutX="759.0" layoutY="169.0" mnemonicParsing="false" text="Modifier" />
                <TextArea fx:id="urlCompany" layoutX="269.0" layoutY="491.0" prefHeight="25.0" prefWidth="423.0" />
                <Label fx:id="nom" layoutX="269.0" layoutY="173.0" prefHeight="17.0" prefWidth="113.0" text="Nom" />
                <ImageView fx:id="image" fitHeight="150.0" fitWidth="135.0" layoutX="477.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
