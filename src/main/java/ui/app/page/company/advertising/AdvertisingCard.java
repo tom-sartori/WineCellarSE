@@ -145,9 +145,7 @@ public class AdvertisingCard extends Pane {
 					}
 				});
 			}
-		} catch (NoLoggedUser e) {
-			throw new RuntimeException(e);
-		}
+		} catch (NoLoggedUser ignore) { }
 
 		supprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

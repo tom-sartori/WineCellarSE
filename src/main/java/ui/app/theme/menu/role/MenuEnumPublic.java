@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum MenuEnumPublic implements MenuEnumInterface {
-	CELLAR("Caves",CellarPage.class),
+	CELLAR("Caves", PublicCellars.class),
 	PUBLIC_CELLARS("Caves publiques", PublicCellars.class, CELLAR),
 	COMPANY("Entreprise", CompanyList.class),
 	COMPANY_LIST("Toutes les entreprises", CompanyList.class, COMPANY),

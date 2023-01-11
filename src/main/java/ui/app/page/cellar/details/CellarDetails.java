@@ -456,7 +456,7 @@ public class CellarDetails implements Initializable {
                 HBox advertisingBox = new HBox();
                 advertisingBox.setPadding(new Insets(20));
                 advertisingBox.setAlignment(Pos.CENTER);
-                advertisingBox.getChildren().add(new AdvertisingCard(randomAdvertising, "cellarList"));
+                advertisingBox.getChildren().add(new AdvertisingCard(randomAdvertising, "cellarDetails"));
 
                 mainVBox.getChildren().add(advertisingBox);
             }catch (NotFoundException ignored){
