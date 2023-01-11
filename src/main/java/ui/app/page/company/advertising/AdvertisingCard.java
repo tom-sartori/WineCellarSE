@@ -51,6 +51,7 @@ public class AdvertisingCard extends Pane {
 	public AdvertisingCard(Advertising advertising, String previousPage) {
 		this.advertising = advertising;
 		this.previousPage = previousPage;
+		State.getInstance().setPreviousPage(previousPage);
 		sceneHelper = new CustomSceneHelper();
 
 		try {
@@ -70,11 +71,16 @@ public class AdvertisingCard extends Pane {
 
 		name.setText(advertising.getName());
 		nameCompany.setText(Facade.getInstance().getOneCompany(advertising.getCompany()).getName());
+		supprimer.setVisible(false);
+		action2.setVisible(false);
+		update.setVisible(false);
 
 		try {
 			if (Facade.getInstance().getLoggedUser().isAdmin()) {
 				update.setVisible(false);
 				action2.setText("Valider");
+				supprimer.setVisible(true);
+				action2.setVisible(true);
 
 				/**
 				 * Validate the advertising and create an alert.
@@ -111,58 +117,66 @@ public class AdvertisingCard extends Pane {
 				 * Create the renewal alert to enter the new date.
 				 * Check the validity of the new date and renew the advertising.
 				 */
-				action2.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						Date previousDate = advertising.getEndDate();
-						TextInputDialog dialog = new TextInputDialog();
 
-						dialog.setTitle("Renouveler la publicité");
-						dialog.setHeaderText("Entrez la nouvelle date de fin:");
-						dialog.setContentText("Date de fin :");
+				if(Facade.getInstance().isUserLogged()){
+					action2.setVisible(true);
+					action2.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event) {
+							Date previousDate = advertising.getEndDate();
+							TextInputDialog dialog = new TextInputDialog();
 
-						Optional<String> result = dialog.showAndWait();
+							dialog.setTitle("Renouveler la publicité");
+							dialog.setHeaderText("Entrez la nouvelle date de fin:");
+							dialog.setContentText("Date de fin :");
 
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.initModality(Modality.APPLICATION_MODAL);
+							Optional<String> result = dialog.showAndWait();
 
-						result.ifPresent(date -> {
-							try {
-								Date endDate=new SimpleDateFormat("dd/MM/yyyy").parse(date);
-								Date now = new Date();
-								if (endDate.before(now) || endDate.before(advertising.getEndDate())) {
-									alert.setContentText("La nouvelle date n'est pas valide");
-									alert.showAndWait();
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.initModality(Modality.APPLICATION_MODAL);
+
+							result.ifPresent(date -> {
+								try {
+									Date endDate=new SimpleDateFormat("dd/MM/yyyy").parse(date);
+									Date now = new Date();
+									if (endDate.before(now) || endDate.before(advertising.getEndDate())) {
+										alert.setContentText("La nouvelle date n'est pas valide");
+										alert.showAndWait();
+									}
+									else {
+										createPriceAlert(previousDate);
+									}
+								} catch (ParseException e) {
+									throw new RuntimeException(e);
 								}
-								else {
-									createPriceAlert(previousDate);
-								}
-							} catch (ParseException e) {
-								throw new RuntimeException(e);
-							}
-						});
-						sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
-					}
-				});
+							});
+							sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
+						}
+					});
+				}
 			}
 		} catch (NoLoggedUser ignore) { }
 
-		supprimer.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmation");
-				alert.setHeaderText(null);
-				alert.setContentText("Voulez-vous réellement supprimer "+advertising.getName()+" ?");
 
-				Optional<ButtonType> option = alert.showAndWait();
+		if(Facade.getInstance().isUserLogged()) {
+			supprimer.setVisible(true);
+			supprimer.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Confirmation");
+					alert.setHeaderText(null);
+					alert.setContentText("Voulez-vous réellement supprimer "+advertising.getName()+" ?");
 
-				if (option.get() == ButtonType.OK) {
-					Facade.getInstance().deleteOneAdvertising(advertising.getId());
+					Optional<ButtonType> option = alert.showAndWait();
+
+					if (option.get() == ButtonType.OK) {
+						Facade.getInstance().deleteOneAdvertising(advertising.getId());
+					}
+					sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
 				}
-				sceneHelper.bringNodeToFront(AdvertisingList.class.getSimpleName());
-			}
-		});
+			});
+		}
 
 		setStyle("-fx-background-color:#FFF; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-alignment: center;");
 
